@@ -26,17 +26,17 @@ module load Subread/1.5.2-foss-2016b
 checkAndMake () {
   echo "Checking if $1 exists"
   if [[ ! -d $1 ]]
-  then 
-    echo "Creating $1"
-    mkdir -p $1
+    then 
+      echo "Creating $1"
+      mkdir -p $1
   fi
-  
+    
   if [[ -d $1 ]]
-  then
-    echo "Found $1"
-  else
-    echo "$1 could not be created or found"
-    exit 1
+    then
+      echo "Found $1"
+    else
+      echo "$1 could not be created or found"
+      exit 1
   fi  
   
 }
@@ -48,13 +48,13 @@ if [[ ! -d ${REFS} ]]
 then
   echo "Couldn't find ${REFS}"
   exit 1
-if
+fi
 GTF=${REFS}/Danio_rerio.GRCz11.98.chr.gtf.gz
 if [[ ! -f ${GTF} ]]
 then
   echo "Couldn't find ${GTF}"
   exit 1
-if
+fi
 
 # Raw Data
 RAWDIR=${PROJROOT}/0_rawData
