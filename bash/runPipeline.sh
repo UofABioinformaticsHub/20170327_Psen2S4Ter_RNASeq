@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -p batch
 #SBATCH -N 1
-#SBATCH -n 16
+#SBATCH -n 12
 #SBATCH --time=36:00:00
 #SBATCH --mem=32GB
 #SBATCH -o /data/biohub/20170327_Psen2S4Ter_RNASeq/slurm/%x_%j.out
@@ -73,6 +73,8 @@ checkAndMake ${ALIGNDIR}
 checkAndMake ${ALIGNDIR}/bam
 checkAndMake ${ALIGNDIR}/FastQC
 checkAndMake ${ALIGNDIR}/log
+
+echo "All directories checked and created"
 
 ##----------------------------------------------------------------------------##
 ##                              Initial FastQC                                ##
@@ -188,3 +190,4 @@ for R1 in ${TRIMDATA}/fastq/*R1.fastq.gz
   do
     ${PROJROOT}/bash/singleKallisto.sh ${R1}
   done
+  
