@@ -80,7 +80,7 @@ echo "All directories checked and created"
 ##                              Initial FastQC                                ##
 ##----------------------------------------------------------------------------##
 
-fastqc -t ${CORES} -o ${RAWDATA}/FastQC --noextract ${RAWDATA}/fastq/*fastq.gz
+fastqc -t ${CORES} -o ${RAWDIR}/FastQC --noextract ${RAWDIR}/fastq/*fastq.gz
 
 ##----------------------------------------------------------------------------##
 ##                              Trimming                                      ##
@@ -117,7 +117,7 @@ for R1 in ${RAWDIR}/fastq/*R1.fastq.gz
     
   done
 
-fastqc -t ${CORES} -o ${TRIMDATA}/FastQC --noextract ${TRIMDATA}/fastq/*fastq.gz
+fastqc -t ${CORES} -o ${TRIMDIR}/FastQC --noextract ${TRIMDIR}/fastq/*fastq.gz
 
 
 ##----------------------------------------------------------------------------##
@@ -125,7 +125,7 @@ fastqc -t ${CORES} -o ${TRIMDATA}/FastQC --noextract ${TRIMDATA}/fastq/*fastq.gz
 ##----------------------------------------------------------------------------##
 
 ## Aligning, filtering and sorting
-for R1 in ${TRIMDATA}/fastq/*R1.fastq.gz
+for R1 in ${TRIMDIR}/fastq/*R1.fastq.gz
  do
 
  BNAME=$(basename ${R1%_R1.fastq.gz})
@@ -138,19 +138,19 @@ for R1 in ${TRIMDATA}/fastq/*R1.fastq.gz
     --genomeDir ${REFS}/star \
     --readFilesIn ${R1} ${R2} \
     --readFilesCommand gunzip -c \
-    --outFileNamePrefix ${ALIGNDATA}/bam/${BNAME} \
+    --outFileNamePrefix ${ALIGNDIR}/bam/${BNAME} \
     --outSAMtype BAM SortedByCoordinate
 
  done
 
 ## Move the log files into their own folder
-mv ${ALIGNDATA}/bam/*out ${ALIGNDATA}/log
-mv ${ALIGNDATA}/bam/*tab ${ALIGNDATA}/log
+mv ${ALIGNDIR}/bam/*out ${ALIGNDIR}/log
+mv ${ALIGNDIR}/bam/*tab ${ALIGNDIR}/log
 
 ## Fastqc and indexing
-for BAM in ${ALIGNDATA}/bam/*.bam
+for BAM in ${ALIGNDIR}/bam/*.bam
 do
-  fastqc -t ${CORES} -f bam_mapped -o ${ALIGNDATA}/FastQC --noextract ${BAM}
+  fastqc -t ${CORES} -f bam_mapped -o ${ALIGNDIR}/FastQC --noextract ${BAM}
   samtools index ${BAM}
 done
 
@@ -160,7 +160,7 @@ done
 ##----------------------------------------------------------------------------##
 
 ## Feature Counts - obtaining all sorted bam files
-sampleList=`find ${ALIGNDATA}/bam -name "*out.bam" | tr '\n' ' '`
+sampleList=`find ${ALIGNDIR}/bam -name "*out.bam" | tr '\n' ' '`
 
 ## Extract gtf for featureCounts
 zcat ${GTF} > temp.gtf
@@ -172,21 +172,21 @@ featureCounts -Q 10 \
   -p \
   --fracOverlap 1 \
   -a temp.gtf \
-  -o ${ALIGNDATA}/featureCounts/counts.out ${sampleList}
+  -o ${ALIGNDIR}/featureCounts/counts.out ${sampleList}
 
 ## Remove the temporary gtf
 rm temp.gtf
 
  ## Storing the output in a single file
-cut -f1,7- ${ALIGNDATA}/featureCounts/counts.out | \
-  sed 1d > ${ALIGNDATA}/featureCounts/genes.out
+cut -f1,7- ${ALIGNDIR}/featureCounts/counts.out | \
+  sed 1d > ${ALIGNDIR}/featureCounts/genes.out
 
 ##----------------------------------------------------------------------------##
 ##                                  kallisto                                  ##
 ##----------------------------------------------------------------------------##
 
 ## Aligning, filtering and sorting
-for R1 in ${TRIMDATA}/fastq/*R1.fastq.gz
+for R1 in ${TRIMDIR}/fastq/*R1.fastq.gz
   do
     ${PROJROOT}/bash/singleKallisto.sh ${R1}
   done
