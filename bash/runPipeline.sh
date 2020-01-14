@@ -80,7 +80,7 @@ echo "All directories checked and created"
 ##                              Initial FastQC                                ##
 ##----------------------------------------------------------------------------##
 
-fastqc -t ${CORES} -o ${RAWDIR}/FastQC --noextract ${RAWDIR}/fastq/*fastq.gz
+# fastqc -t ${CORES} -o ${RAWDIR}/FastQC --noextract ${RAWDIR}/fastq/*fastq.gz
 
 ##----------------------------------------------------------------------------##
 ##                              Trimming                                      ##
@@ -100,7 +100,8 @@ for R1 in ${RAWDIR}/fastq/*R1.fastq.gz
     echo -e "Output file 2 will be ${out2}"
     echo -e "Trimming:\t${BNAME}"
     
-    LOG=${TRIMDIR}/log/${BNAME}.info
+    LOG=${TRIMDIR}/log/$(basename ${BNAME}).info
+    echo -e "Trimming info will be written to ${LOG}" 
     
     cutadapt \
       -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC \
@@ -111,9 +112,8 @@ for R1 in ${RAWDIR}/fastq/*R1.fastq.gz
       --trim-n \
       --max-n=1 \
       --nextseq-trim=30 \
-      --info-file=${LOG} \
       ${R1} \
-      ${R2} 
+      ${R2} > ${LOG}
     
   done
 
