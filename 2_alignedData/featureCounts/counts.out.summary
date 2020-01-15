@@ -1,0 +1,12 @@
+Status	/data/biohub/20170327_Psen2S4Ter_RNASeq/2_alignedData/bam/Ps2Ex3M1_WT_6month_07_07_2016_F3_86_FemAligned.sortedByCoord.out.bam	/data/biohub/20170327_Psen2S4Ter_RNASeq/2_alignedData/bam/Ps2Ex3M1_Heter_6month_07_07_2016_F3_80_FemAligned.sortedByCoord.out.bam	/data/biohub/20170327_Psen2S4Ter_RNASeq/2_alignedData/bam/Ps2Ex3M1_Heter_6month_07_07_2016_F3_81_FemAligned.sortedByCoord.out.bam	/data/biohub/20170327_Psen2S4Ter_RNASeq/2_alignedData/bam/Ps2Ex3M1_Hom_6month_07_07_2016_F3_82_FemAligned.sortedByCoord.out.bam	/data/biohub/20170327_Psen2S4Ter_RNASeq/2_alignedData/bam/Ps2Ex3M1_Hom_6month_07_07_2016_F3_85_FemAligned.sortedByCoord.out.bam	/data/biohub/20170327_Psen2S4Ter_RNASeq/2_alignedData/bam/Ps2Ex3M1_Heter_6month_07_07_2016_F3_84_FemAligned.sortedByCoord.out.bam	/data/biohub/20170327_Psen2S4Ter_RNASeq/2_alignedData/bam/Ps2Ex3M1_WT_6month_07_07_2016_F3_79_FemAligned.sortedByCoord.out.bam	/data/biohub/20170327_Psen2S4Ter_RNASeq/2_alignedData/bam/Ps2Ex3M1_Hom_6month_07_07_2016_F3_78_FemAligned.sortedByCoord.out.bam	/data/biohub/20170327_Psen2S4Ter_RNASeq/2_alignedData/bam/Ps2Ex3M1_WT_6month_07_07_2016_F3_95_FemAligned.sortedByCoord.out.bam	/data/biohub/20170327_Psen2S4Ter_RNASeq/2_alignedData/bam/Ps2Ex3M1_Hom_6month_07_07_2016_F3_83_FemAligned.sortedByCoord.out.bam	/data/biohub/20170327_Psen2S4Ter_RNASeq/2_alignedData/bam/Ps2Ex3M1_Heter_6month_07_07_2016_F3_89_FemAligned.sortedByCoord.out.bam	/data/biohub/20170327_Psen2S4Ter_RNASeq/2_alignedData/bam/Ps2Ex3M1_WT_6month_07_07_2016_F3_88_FemAligned.sortedByCoord.out.bam
+Assigned	15953499	15815527	17026801	14746801	16667945	15738056	11878943	15196360	15154263	15939491	16218107	15226349
+Unassigned_Ambiguity	54949	37934	37147	37913	43233	37994	40910	38375	43324	34868	41125	41639
+Unassigned_MultiMapping	5031247	15343759	14543384	11035835	14280378	23663749	7911838	14565397	8286558	13376355	15404528	13587523
+Unassigned_NoFeatures	12090700	12509918	11630283	11240609	11633025	9931438	11126429	13280401	11883774	11606999	13905076	12651033
+Unassigned_Unmapped	0	0	0	0	0	0	0	0	0	0	0	0
+Unassigned_MappingQuality	0	0	0	0	0	0	0	0	0	0	0	0
+Unassigned_FragmentLength	0	0	0	0	0	0	0	0	0	0	0	0
+Unassigned_Chimera	0	0	0	0	0	0	0	0	0	0	0	0
+Unassigned_Secondary	0	0	0	0	0	0	0	0	0	0	0	0
+Unassigned_Nonjunction	0	0	0	0	0	0	0	0	0	0	0	0
+Unassigned_Duplicate	0	0	0	0	0	0	0	0	0	0	0	0
