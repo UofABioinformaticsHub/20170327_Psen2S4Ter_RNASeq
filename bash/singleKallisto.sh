@@ -41,3 +41,4 @@ kallisto quant \
 	-i ${IDX} \
 	-o ${OUTDIR} \
 	${F1} ${F2} 
+	
