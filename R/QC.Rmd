@@ -1,0 +1,210 @@
+---
+title: "QC of Pse2S4Ter Zebrafish"
+author: "Steve Pederson"
+date: "15/01/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	warning = FALSE,
+	message = FALSE
+)
+```
+
+```{r}
+library(ngsReports)
+library(tidyverse)
+library(magrittr)
+library(edgeR)
+library(limma)
+library(AnnotationHub)
+library(multcomp)
+```
+
+```{r}
+if (interactive()) setwd(here::here("R"))
+theme_set(theme_bw())
+```
+
+
+```{r annotationSetup}
+ah <- AnnotationHub() %>%
+	subset(species == "Danio rerio") %>%
+	subset(rdataclass == "EnsDb")
+ensDb <- ah[["AH74989"]]
+grGenes <- genes(ensDb)
+grTrans <- transcripts(ensDb)
+trLengths <- exonsBy(ensDb, "tx") %>%
+	width() %>%
+	vapply(sum, integer(1))
+mcols(grTrans)$length <- trLengths[names(grTrans)]
+```
+
+
+```{r}
+kallisto <- list.dirs("../3_kallisto/") %>%
+	setdiff("../3_kallisto/") %>%
+	catchKallisto()
+```
+
+
+```{r checkGenotype, fig.cap = "CPM obtained for both WT and the S4Ter mutant transcript of psen2"}
+cpm(kallisto$counts) %>%
+	.[c("ENSDART00000006381.8", "psen2S4Ter"),] %>%
+	as.data.frame() %>%
+	rownames_to_column("ID") %>%
+	pivot_longer(cols = contains("kall"), names_to = "Sample", values_to = "CPM") %>%
+	mutate(
+		Sample = basename(Sample),
+		ID = case_when(
+			ID == "psen2S4Ter" ~ "psen2S4Ter",
+			ID != "psen2S4Ter" ~ "psen2wt"
+		),
+		Genotype = str_extract(Sample, "(Heter|Hom|WT)"),
+		Sample = str_replace(Sample, "Ps2Ex3M1_(Heter|Hom|WT)_.+(F3_[0-9]+)_.+", "\\1_\\2")
+	) %>%
+	ggplot(aes(Sample, logCPM, fill = ID)) +
+	geom_bar(stat = "identity") +
+	facet_wrap(~Genotype, nrow = 1, scales = "free_x")
+```
+
+```{r}
+gcSamples <- kallisto$counts %>%
+	cpm(log = TRUE) %>%
+	as.data.frame() %>%
+	rownames_to_column("tx_id") %>%
+	dplyr::filter(
+		tx_id != "psen2S4Ter"
+	) %>%
+	as_tibble() %>%
+	pivot_longer(
+		cols = contains("kall"), 
+		names_to = "Sample", 
+		values_to = "logCPM"
+	) %>%
+	dplyr::filter(
+		logCPM > 0
+	) %>%
+	mutate(
+		Genotype = str_extract(Sample, "(Heter|Hom|WT)"),
+		Sample = basename(Sample),
+		Sample = str_replace(Sample, "Ps2Ex3M1_(Heter|Hom|WT)_.+(F3_[0-9]+)_.+", "\\1_\\2"),
+		tx_id_version = tx_id,
+		tx_id = str_replace(tx_id, "(ENSDART[0-9]+).[0-9]+", "\\1")
+	) %>%
+	left_join(
+		mcols(grTrans) %>% as.data.frame()
+	) %>%
+	dplyr::select(
+		ends_with("id"), Sample, Genotype, logCPM, gc_content, length
+	) %>%
+	mutate(
+		Sample = as.factor(Sample),
+		Genotype = as.factor(Genotype),
+		length = log10(length)
+	) %>%
+	with(
+		lm(gc_content ~ Sample, weights = logCPM)
+	) %>%
+	glht(
+		linfct = mcp("Sample" = "Tukey")
+	) %>%
+	summary(
+		test = adjusted("none")
+	)
+bind_rows(
+	gcSamples$test %>%
+		.[c("coefficients", "sigma", "tstat", "pvalues")] %>%
+		as.data.frame() %>%
+		rownames_to_column("Comparison") %>%
+		as_tibble() %>%
+		separate(Comparison, c("Sample1", "Sample2"), sep = " - "),
+	gcSamples$test %>%
+		.[c("coefficients", "sigma", "tstat", "pvalues")] %>%
+		as.data.frame() %>%
+		rownames_to_column("Comparison") %>%
+		as_tibble() %>%
+		separate(Comparison, c("Sample2", "Sample1"), sep = " - ") %>%
+		mutate(coefficients = -coefficients),
+) %>%
+	mutate(
+		Genotype2 = str_extract(Sample2, "(Het|Hom|WT)"),
+		Genotype1 = str_extract(Sample1, "(Het|Hom|WT)")
+	) %>%
+	ggplot(aes(Sample2, Sample1, colour = coefficients)) +
+	geom_point(aes(size = -log10(pvalues))) +
+	scale_colour_gradient2(
+		low = rgb(0.2, 0.2, 0.8),
+		mid = "white",
+		high = rgb(0.8, 0.2, 0.2), 
+		midpoint = 0
+	) +
+	scale_size_continuous() +
+	labs(
+		colour = expression(paste(Delta, bar(GC))),
+		size = expression(paste(-log[10], "(p)"))
+	) +
+	facet_grid(Genotype1~Genotype2, scales = "free") +
+	theme(
+		axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
+		axis.title = element_blank()
+	)
+```
+
+```{r}
+gcMeans <-kallisto$counts %>%
+	cpm() %>%
+	as.data.frame() %>%
+	rownames_to_column("tx_id") %>%
+	dplyr::filter(
+		tx_id != "psen2S4Ter"
+	) %>%
+	as_tibble() %>%
+	pivot_longer(
+		cols = contains("kall"), 
+		names_to = "Sample", 
+		values_to = "CPM"
+	) %>%
+	dplyr::filter(
+		CPM > 0
+	) %>%
+	mutate(
+		Genotype = str_extract(Sample, "(Heter|Hom|WT)"),
+		Sample = basename(Sample),
+		Sample = str_replace(Sample, "Ps2Ex3M1_(Heter|Hom|WT)_.+(F3_[0-9]+)_.+", "\\1_\\2"),
+		tx_id_version = tx_id,
+		tx_id = str_replace(tx_id, "(ENSDART[0-9]+).[0-9]+", "\\1")
+	) %>%
+	left_join(
+		mcols(grTrans) %>% as.data.frame()
+	) %>%
+	dplyr::select(
+		ends_with("id"), Sample, Genotype, CPM, gc_content, length
+	) %>%
+	mutate(
+		Sample = as.factor(Sample),
+		Genotype = as.factor(Genotype),
+		logLength = log10(length)
+	) %>%
+	group_by(Genotype) %>%
+	summarise(
+		meanGC = weighted.mean(0.01*gc_content, CPM),
+		sd = sum(CPM * (0.01*gc_content - meanGC)^2) / (sum(CPM) - 1),
+		n = n()
+	)
+```
+
+```{r}
+testMeans <- function(df){
+	stopifnot(nrow(df) == 2)
+	z <- diff(df$meanGC) / sqrt(sum(df$sd^2) / 2)
+	tibble(
+		z = z,
+		p  = pnorm(abs(z), lower.tail = FALSE)*2
+	)
+}
+testMeans(gcMeans[1:2,])
+```
+
