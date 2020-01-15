@@ -1,0 +1,9 @@
+{
+	"n_targets": 51747,
+	"n_bootstraps": 50,
+	"n_processed": 30558083,
+	"kallisto_version": "0.43.1",
+	"index_version": 10,
+	"start_time": "Wed Jan 15 12:16:12 2020",
+	"call": "kallisto quant -b 50 --rf-stranded -t 1 -i //data/biorefs/reference_genomes/ensembl-release-98/danio_rerio//kallisto/Danio_rerio.GRCz11.cdna.primary_assembly.psen2S4Ter.idx -o /data/biohub/20170327_Psen2S4Ter_RNASeq/3_kallisto/Ps2Ex3M1_WT_6month_07_07_2016_F3_95_Fem /data/biohub/20170327_Psen2S4Ter_RNASeq/1_trimmedData/fastq/Ps2Ex3M1_WT_6month_07_07_2016_F3_95_Fem_R1.fastq.gz /data/biohub/20170327_Psen2S4Ter_RNASeq/1_trimmedData/fastq/Ps2Ex3M1_WT_6month_07_07_2016_F3_95_Fem_R2.fastq.gz"
+}
