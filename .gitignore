@@ -11,6 +11,7 @@
 *bw
 *gtf
 slurm/
+*Rproj
 .Rproj.user
 .Rhistory
 *star_index*
