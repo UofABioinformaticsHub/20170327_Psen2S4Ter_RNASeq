@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Steve Pederson" />
+
+
+<title>QC of Psen2S4Ter Zebrafish</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">20170327_Psen2S4Ter_RNASeq</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">QC of Psen2S4Ter Zebrafish</h1>
+<h4 class="author">Steve Pederson</h4>
+<h4 class="date">20 January, 2020</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-01-20
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>20170327_Psen2S4Ter_RNASeq/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown file has staged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200119code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200119)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200119code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200119)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree3f0a8ccf475af3b48b5e7369f9b33e185ff89586targetblank3f0a8cca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/3f0a8ccf475af3b48b5e7369f9b33e185ff89586" target="_blank">3f0a8cc</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree3f0a8ccf475af3b48b5e7369f9b33e185ff89586targetblank3f0a8cca" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+
+Unstaged changes:
+    Modified:   analysis/QC.Rmd
+
+Staged changes:
+    Modified:   _workflowr.yml
+    Modified:   analysis/QC.Rmd
+    Modified:   analysis/_site.yml
+    Modified:   analysis/about.Rmd
+    Modified:   analysis/index.Rmd
+    Deleted:    analysis/license.Rmd
+    Modified:   data/samples.csv
+    New:        output/top30Overrepresented.fa
+    New:        output/top30Overrepresented_BlastResults.txt
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/36049d604390ae721b4b4aa4ee762f47f8bf839e/analysis/QC.Rmd" target="_blank">36049d6</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-19
+</td>
+<td>
+Moved files to workflowr structure
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="setup" class="section level1">
+<h1>Setup</h1>
+<pre class="r"><code>library(ngsReports)
+library(tidyverse)
+library(magrittr)
+library(edgeR)
+library(limma)
+library(AnnotationHub)
+library(ensembldb)
+library(scales)
+library(pander)
+library(cowplot)
+library(corrplot)</code></pre>
+<pre class="r"><code>if (interactive()) setwd(here::here())
+theme_set(theme_bw())
+panderOptions(&quot;big.mark&quot;, &quot;,&quot;)
+panderOptions(&quot;table.split.table&quot;, Inf)
+panderOptions(&quot;table.style&quot;, &quot;rmarkdown&quot;)
+twoCols &lt;- c(rgb(0.8, 0.1, 0.1), rgb(0.2, 0.2, 0.8))</code></pre>
+<pre class="r"><code>ah &lt;- AnnotationHub() %&gt;%
+    subset(species == &quot;Danio rerio&quot;) %&gt;%
+    subset(rdataclass == &quot;EnsDb&quot;)
+ensDb &lt;- ah[[&quot;AH74989&quot;]]
+grGenes &lt;- genes(ensDb)
+grTrans &lt;- transcripts(ensDb)
+trLengths &lt;- exonsBy(ensDb, &quot;tx&quot;) %&gt;%
+    width() %&gt;%
+    vapply(sum, integer(1))
+mcols(grTrans)$length &lt;- trLengths[names(grTrans)]
+rRnaTrans &lt;- grTrans %&gt;%
+    subset(grepl(&quot;rRNA&quot;, tx_biotype)) %&gt;%
+    mcols() %&gt;%
+    .[[&quot;tx_id_version&quot;]]</code></pre>
+<p>In order to perform adequate QC, an <code>EnsDb</code> object was obtained for Ensembl release 98 using the <code>AnnotationHub</code> package. This provided the GC content and length for each of the 65,905 transcripts contained in that release.</p>
+<pre class="r"><code>samples &lt;- read_csv(&quot;data/samples.csv&quot;) %&gt;%
+    mutate(reads = str_extract(fqName, &quot;R[12]&quot;)) %&gt;%
+    dplyr::rename(Filename = fqName)
+labels &lt;- structure(
+    samples$sampleID,
+    names = samples$Filename
+)</code></pre>
+<p>Metadata for each fastq file was also loaded. Reads were provided as paired-end reads, with <span class="math inline">\(n=4\)</span> samples for each genotype.</p>
+</div>
+<div id="raw-data" class="section level1">
+<h1>Raw Data</h1>
+<div id="library-sizes" class="section level2">
+<h2>Library Sizes</h2>
+<pre class="r"><code>rawFqc &lt;- list.files(
+    path = &quot;data/0_rawData/FastQC/&quot;,
+    pattern = &quot;zip&quot;,
+    full.names = TRUE
+    ) %&gt;%
+    FastqcDataList()</code></pre>
+<p>Library Sizes for the raw, unprocessed dataset ranged between <em>27,979,654</em> and <em>37,144,975</em> reads.</p>
+<pre class="r"><code>r1 &lt;- grepl(&quot;R1&quot;, fqName(rawFqc))
+plotReadTotals(rawFqc[r1], labels = labels[r1], barCols = twoCols)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/QC.Rmd/plotLibSizes-1.png" alt="*Library Sizes for each sample before any processing was undertaken.*" width="672" />
+<p class="caption">
+<em>Library Sizes for each sample before any processing was undertaken.</em>
+</p>
+</div>
+</div>
+<div id="gc-content" class="section level2">
+<h2>GC Content</h2>
+<p>As this was a total RNA dataset, GC content will provide a clear marker of the success of rRNA depletion. This was plotted, with all R2 reads showing a far greater spike in GC content at 81%, which is likely due to incomplete rRNA depletion. In particular, the mutant samples appeared most significantly affected raising possibility that overall GC content may be affected in these samples.</p>
+<pre class="r"><code>gcPlots &lt;- list(
+    r1 = plotGcContent(
+        x = rawFqc[r1], 
+        labels = labels[r1],
+        plotType = &quot;line&quot;,
+        gcType = &quot;Transcriptome&quot;,
+        species = &quot;Drerio&quot;
+    ),
+    r2 = plotGcContent(
+        x = rawFqc[!r1], 
+        labels = labels[!r1],
+        plotType = &quot;line&quot;,
+        gcType = &quot;Transcriptome&quot;,
+        species = &quot;Drerio&quot;
+    )
+)
+lg &lt;- get_legend(gcPlots$r2) 
+plot_grid(
+    plotlist = list(
+        r1 = gcPlots$r1 + 
+            ggtitle(&quot;R1: GC Distribution&quot;, subtitle = c()) +
+            theme(legend.position = &quot;none&quot;),
+        r2 = gcPlots$r2 + 
+            ggtitle(&quot;R2: GC Distribution&quot;, subtitle = c()) +
+            theme(legend.position = &quot;none&quot;),
+        lg = lg),
+    nrow = 1,
+    rel_widths = c(1,1,1)
+)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/QC.Rmd/gcPlots-1.png" alt="*GC content for R1 and R2 reads. Notably, the R2 reads had clearer spikes in GC content above 70%*" width="672" />
+<p class="caption">
+<em>GC content for R1 and R2 reads. Notably, the R2 reads had clearer spikes in GC content above 70%</em>
+</p>
+</div>
+<pre class="r"><code>rawGC &lt;- getModule(rawFqc, &quot;Per_sequence_GC&quot;) %&gt;% 
+    group_by(Filename) %&gt;% 
+    mutate(Freq = Count / sum(Count)) %&gt;%
+    dplyr::filter(GC_Content &gt; 70) %&gt;% 
+    summarise(Freq = sum(Freq)) %&gt;% 
+    arrange(desc(Freq)) %&gt;%
+    left_join(samples) 
+rawGC %&gt;%
+    ggplot(aes(sampleID, Freq, fill = reads)) +
+    geom_bar(stat = &quot;identity&quot;, position = &quot;dodge&quot;) +
+    facet_wrap(~genotype, scales = &quot;free_x&quot;) +
+    scale_y_continuous(labels = percent) +
+    scale_fill_manual(values = twoCols) +
+    labs(x = &quot;Sample&quot;, y = &quot;Percent of Total&quot;)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/QC.Rmd/gcPerc-1.png" alt="*Percentages of each library which contain &gt;70% GC. Using the known theoretical distribution, this should be 0.19% of the total library.*" width="768" />
+<p class="caption">
+<em>Percentages of each library which contain &gt;70% GC. Using the known theoretical distribution, this should be 0.19% of the total library.</em>
+</p>
+</div>
+</div>
+<div id="over-represented-sequences" class="section level2">
+<h2>Over-represented Sequences</h2>
+<p>The top <a href="../output/top30Overrepresented.fa">30 Overrepresented sequences</a> were analysed using <code>blastn</code> and most were found to be <a href="../output/top30Overrepresented_BlastResults.txt">mitochondrial rRNA sequences</a>.</p>
+<pre class="r"><code>getModule(rawFqc, &quot;Overrep&quot;) %&gt;% 
+    group_by(Sequence, Possible_Source) %&gt;% 
+    summarise(`Found In` = n(), `Highest Percentage` = max(Percentage)) %&gt;% 
+    arrange(desc(`Highest Percentage`), desc(`Found In`)) %&gt;% 
+    ungroup() %&gt;% 
+    dplyr::slice(1:30) %&gt;%
+    mutate(`Highest Percentage` = percent_format(0.01)(`Highest Percentage`/100)) %&gt;%
+    pander(
+        justify = &quot;llrr&quot;,
+        caption = paste(
+            &quot;*Top&quot;, nrow(.),&quot;Overrepresented sequences.&quot;,
+            &quot;The number of samples they were found in is shown,&quot;,
+            &quot;along with the percentage of the most &#39;contaminated&#39; sample.*&quot;
+            )
+    )</code></pre>
+<table>
+<caption><em>Top 30 Overrepresented sequences. The number of samples they were found in is shown, along with the percentage of the most ‘contaminated’ sample.</em></caption>
+<thead>
+<tr class="header">
+<th align="left">Sequence</th>
+<th align="left">Possible_Source</th>
+<th align="right">Found In</th>
+<th align="right">Highest Percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">GTGGGTTCAGGTAATTAATTTAAAGCTACTTTCGTGTTTGGGCCTCTAGC</td>
+<td align="left">No Hit</td>
+<td align="right">12</td>
+<td align="right">1.72%</td>
+</tr>
+<tr class="even">
+<td align="left">CTGGGGGAGCGGCCGCCCCGCGGCGCCCCCTCTCGTTCCCGTCTCCGGAG</td>
+<td align="left">No Hit</td>
+<td align="right">10</td>
+<td align="right">1.69%</td>
+</tr>
+<tr class="odd">
+<td align="left">CCGCTGTATTACTCAGGCTGCACTGCAGTGTCTATTCACAGGCGCGATCC</td>
+<td align="left">No Hit</td>
+<td align="right">12</td>
+<td align="right">1.32%</td>
+</tr>
+<tr class="even">
+<td align="left">GGCCCGGCGCACGTCCAGAGTCGCCGCCGCACACCGCAGCGCATCCCCCC</td>
+<td align="left">No Hit</td>
+<td align="right">9</td>
+<td align="right">1.31%</td>
+</tr>
+<tr class="odd">
+<td align="left">CTCCTGAAAAGGTTGTATCCTTTGTTAAAGGGGCTGTACCCTCTTTAACT</td>
+<td align="left">No Hit</td>
+<td align="right">11</td>
+<td align="right">1.11%</td>
+</tr>
+<tr class="even">
+<td align="left">GGTTCAGGTAATTAATTTAAAGCTACTTTCGTGTTTGGGCCTCTAGCATC</td>
+<td align="left">No Hit</td>
+<td align="right">12</td>
+<td align="right">1.09%</td>
+</tr>
+<tr class="odd">
+<td align="left">GGGGTGTACGAAGCTGAACTTTTATTCATCTCCCAGACAACCAGCTATTG</td>
+<td align="left">No Hit</td>
+<td align="right">12</td>
+<td align="right">1.07%</td>
+</tr>
+<tr class="even">
+<td align="left">GGCCCGGCGCACGTCCAGAGTCGCCGCCGCGCACCGCAGCGCATCCCCCC</td>
+<td align="left">No Hit</td>
+<td align="right">10</td>
+<td align="right">1.03%</td>
+</tr>
+<tr class="odd">
+<td align="left">CGAGAGGCTCTAGTTGATATACTACGGCGTAAAGGGTGGTTAAGGAACAA</td>
+<td align="left">No Hit</td>
+<td align="right">12</td>
+<td align="right">1.01%</td>
+</tr>
+<tr class="even">
+<td align="left">GGGGGAGCGGCCGCCCCGCGGCGCCCCCTCTCGTTCCCGTCTCCGGAGCG</td>
+<td align="left">No Hit</td>
+<td align="right">9</td>
+<td align="right">0.87%</td>
+</tr>
+<tr class="odd">
+<td align="left">CCTCCTTCAAGTATTGTTTCATGTTACATTTTCGTATATTCTGGGGTAGA</td>
+<td align="left">No Hit</td>
+<td align="right">12</td>
+<td align="right">0.82%</td>
+</tr>
+<tr class="even">
+<td align="left">CCCGCTGTATTACTCAGGCTGCACTGCAGTGTCTATTCACAGGCGCGATC</td>
+<td align="left">No Hit</td>
+<td align="right">12</td>
+<td align="right">0.79%</td>
+</tr>
+<tr class="odd">
+<td align="left">GTTCAGGTAATTAATTTAAAGCTACTTTCGTGTTTGGGCCTCTAGCATCT</td>
+<td align="left">No Hit</td>
+<td align="right">12</td>
+<td align="right">0.79%</td>
+</tr>
+<tr class="even">
+<td align="left">GGGTTCAGGTAATTAATTTAAAGCTACTTTCGTGTTTGGGCCTCTAGCAT</td>
+<td align="left">No Hit</td>
+<td align="right">12</td>
+<td align="right">0.78%</td>
+</tr>
+<tr class="odd">
+<td align="left">CGGGTCGGGTGGGTGGCCGGCATCACCGCGGACCTCGGGCGCCCTTTTGG</td>
+<td align="left">No Hit</td>
+<td align="right">12</td>
+<td align="right">0.73%</td>
+</tr>
+<tr class="even">
+<td align="left">GGGCCTCTAGCATCTAAAAGCGTATAACAGTTAAAGGGCCGTTTGGCTTT</td>
+<td align="left">No Hit</td>
+<td align="right">11</td>
+<td align="right">0.68%</td>
+</tr>
+<tr class="odd">
+<td align="left">CAGTGGCGTGCGCCTGTAATCCAAGCTACTGGGAGGCTGAGGCTGGCGGA</td>
+<td align="left">No Hit</td>
+<td align="right">11</td>
+<td align="right">0.64%</td>
+</tr>
+<tr class="even">
+<td align="left">CGGGTCGGGTGGGTAGCCGGCATCACCGCGGACCTCGGGCGCCCTTTTGG</td>
+<td align="left">No Hit</td>
+<td align="right">12</td>
+<td align="right">0.57%</td>
+</tr>
+<tr class="odd">
+<td align="left">CTTAGACGACCTGGTAGTCCAAGGCTCCCCCAGGAGCACCATATCGATAC</td>
+<td align="left">No Hit</td>
+<td align="right">11</td>
+<td align="right">0.54%</td>
+</tr>
+<tr class="even">
+<td align="left">AGCTGGGGAGATCCGCGAGAAGGGCCCGGCGCACGTCCAGAGTCGCCGCC</td>
+<td align="left">No Hit</td>
+<td align="right">11</td>
+<td align="right">0.53%</td>
+</tr>
+<tr class="odd">
+<td align="left">GGCCTCTAGCATCTAAAAGCGTATAACAGTTAAAGGGCCGTTTGGCTTTA</td>
+<td align="left">No Hit</td>
+<td align="right">10</td>
+<td align="right">0.53%</td>
+</tr>
+<tr class="even">
+<td align="left">CAGCCTATTTAACTTAGGGCCAACCCGTCTCTGTGGCAATAGAGTGGGAA</td>
+<td align="left">No Hit</td>
+<td align="right">12</td>
+<td align="right">0.51%</td>
+</tr>
+<tr class="odd">
+<td align="left">GGGTGGGTGGCCGGCATCACCGCGGACCTCGGGCGCCCTTTTGGACGTGG</td>
+<td align="left">No Hit</td>
+<td align="right">10</td>
+<td align="right">0.50%</td>
+</tr>
+<tr class="even">
+<td align="left">GGGAGCGGCCGCCCCGCGGCGCCCCCTCTCGTTCCCGTCTCCGGAGCGCG</td>
+<td align="left">No Hit</td>
+<td align="right">9</td>
+<td align="right">0.49%</td>
+</tr>
+<tr class="odd">
+<td align="left">CTGGGAGATGAATAAAAGTTCAGCTTCGTACACCCCAAATTAAAAAATTA</td>
+<td align="left">No Hit</td>
+<td align="right">10</td>
+<td align="right">0.48%</td>
+</tr>
+<tr class="even">
+<td align="left">GCCTATTTAACTTAGGGCCAACCCGTCTCTGTGGCAATAGAGTGGGAAGA</td>
+<td align="left">No Hit</td>
+<td align="right">12</td>
+<td align="right">0.47%</td>
+</tr>
+<tr class="odd">
+<td align="left">GGTCGGGTGGGTGGCCGGCATCACCGCGGACCTCGGGCGCCCTTTTGGAC</td>
+<td align="left">No Hit</td>
+<td align="right">11</td>
+<td align="right">0.45%</td>
+</tr>
+<tr class="even">
+<td align="left">CCCCCGAACCCTTCCAAGCCGAACCGGAGCCGGTCGCGGCGCACCGCCGA</td>
+<td align="left">No Hit</td>
+<td align="right">10</td>
+<td align="right">0.45%</td>
+</tr>
+<tr class="odd">
+<td align="left">GTCGGGTGGGTGGCCGGCATCACCGCGGACCTCGGGCGCCCTTTTGGACG</td>
+<td align="left">No Hit</td>
+<td align="right">10</td>
+<td align="right">0.43%</td>
+</tr>
+<tr class="even">
+<td align="left">GCCCACTACGACAACGTGTTTTGTAAATTATGATCTTTATTCTCCTGAAA</td>
+<td align="left">No Hit</td>
+<td align="right">10</td>
+<td align="right">0.43%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="trimming" class="section level2">
+<h2>Trimming</h2>
+<pre class="r"><code>trimFqc &lt;- list.files(
+    path = &quot;data/1_trimmedData/FastQC/&quot;, 
+    pattern = &quot;zip&quot;, 
+    full.names = TRUE
+) %&gt;%
+    FastqcDataList()
+trimStats &lt;- readTotals(rawFqc) %&gt;%
+    dplyr::rename(Raw = Total_Sequences) %&gt;%
+    left_join(readTotals(trimFqc), by = &quot;Filename&quot;) %&gt;%
+    dplyr::rename(Trimmed = Total_Sequences) %&gt;%
+    dplyr::filter(grepl(&quot;R1&quot;, Filename)) %&gt;%
+    mutate(
+        Discarded = 1 - Trimmed/Raw,
+        Retained = Trimmed / Raw
+    )</code></pre>
+<p>After adapter trimming between <em>4.16%</em> and <em>5.08%</em> of reads were discarded. No other improvement was noted.</p>
+</div>
+</div>
+<div id="aligned-data" class="section level1">
+<h1>Aligned Data</h1>
+<p>Trimmed reads were:</p>
+<ol style="list-style-type: decimal">
+<li>aligned to the reference genome using <code>STAR 2.7.0d</code> and summarised to each gene using <code>featureCounts</code>. These counts were to be used for all gene-level analysis</li>
+<li>aligned using kallisto to a modified transcriptome which contained the <em>psen2<sup>S4Ter</sup></em> sequence as an ‘alternative’ transcript of <em>psen2</em>. This data was used for genotype checking, and assessing any GC bias in the data. Whilst transcript-level information is included for rRNA genes in the <code>EnsDb</code> object, these transcripts are <strong>excluded</strong> by default from the reference transcriptome provided by Ensembl.</li>
+</ol>
+<div id="genotype-checking" class="section level2">
+<h2>Genotype Checking</h2>
+<pre class="r"><code>cpm(kallisto$counts) %&gt;%
+    .[c(&quot;ENSDART00000006381.8&quot;, &quot;psen2S4Ter&quot;),] %&gt;%
+    as.data.frame() %&gt;%
+    rownames_to_column(&quot;psen2&quot;) %&gt;%
+    pivot_longer(cols = contains(&quot;kall&quot;), names_to = &quot;Sample&quot;, values_to = &quot;CPM&quot;) %&gt;%
+    mutate(
+        Sample = basename(Sample),
+        psen2 = case_when(
+            psen2 == &quot;psen2S4Ter&quot; ~ &quot;S4Ter&quot;,
+            psen2 != &quot;psen2S4Ter&quot; ~ &quot;WT&quot;
+        )
+    ) %&gt;%
+    left_join(samples, by = c(&quot;Sample&quot; = &quot;sampleName&quot;)) %&gt;%
+    ggplot(aes(sampleID, CPM, fill = psen2)) +
+    geom_bar(stat = &quot;identity&quot;) +
+    scale_fill_manual(values = twoCols) +
+    facet_wrap(~genotype, nrow = 1, scales = &quot;free_x&quot;)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/QC.Rmd/checkGenotype-1.png" alt="*CPM obtained for both WT and S4Ter mutant transcripts of psen2*" width="768" />
+<p class="caption">
+<em>CPM obtained for both WT and S4Ter mutant transcripts of psen2</em>
+</p>
+</div>
+<p>As all samples demonstrated the expected expression patterns, no mislabelling was detected in this dataset.</p>
+</div>
+<div id="gc-content-1" class="section level2">
+<h2>GC Content</h2>
+<pre class="r"><code>gcInfo &lt;- kallisto$counts %&gt;%
+    as.data.frame() %&gt;%
+    rownames_to_column(&quot;tx_id&quot;) %&gt;%
+    dplyr::filter(
+        tx_id != &quot;psen2S4Ter&quot;
+    ) %&gt;%
+    as_tibble() %&gt;%
+    pivot_longer(
+        cols = contains(&quot;kall&quot;), 
+        names_to = &quot;sampleName&quot;, 
+        values_to = &quot;counts&quot;
+    ) %&gt;%
+    dplyr::filter(
+        counts &gt; 0
+    ) %&gt;%
+    mutate(
+        sampleName = basename(sampleName),
+        tx_id_version = tx_id,
+        tx_id = str_replace(tx_id, &quot;(ENSDART[0-9]+).[0-9]+&quot;, &quot;\\1&quot;)
+    ) %&gt;%
+    left_join(
+        mcols(grTrans) %&gt;% as.data.frame()
+    ) %&gt;%
+    dplyr::select(
+        ends_with(&quot;id&quot;), sampleName, counts, gc_content, length
+    ) %&gt;%
+    split(f = .$sampleName) %&gt;%
+    lapply(function(x){
+        DataFrame(
+            gc = Rle(x$gc_content/100, x$counts),
+            logLen = Rle(log10(x$length), x$counts)
+        )
+    }
+    ) 
+gcSummary &lt;- gcInfo %&gt;%
+    vapply(function(x){
+        c(mean(x$gc), sd(x$gc), mean(x$logLen), sd(x$logLen))
+        }, numeric(4)
+        ) %&gt;%
+    t() %&gt;%
+    set_colnames(
+        c(&quot;mn_gc&quot;, &quot;sd_gc&quot;, &quot;mn_logLen&quot;, &quot;sd_logLen&quot;)
+    ) %&gt;%
+    as.data.frame() %&gt;%
+    rownames_to_column(&quot;sampleName&quot;) %&gt;%
+    as_tibble() %&gt;%
+    left_join(dplyr::filter(samples, reads == &quot;R1&quot;)) %&gt;%
+    dplyr::select(starts_with(&quot;sample&quot;), genotype, contains(&quot;_&quot;))</code></pre>
+<pre class="r"><code>gcCors &lt;- rawGC %&gt;%
+    dplyr::filter(reads == &quot;R1&quot;) %&gt;%
+    dplyr::select(starts_with(&quot;sample&quot;), genotype, Freq, reads) %&gt;%
+    left_join(gcSummary) %&gt;%
+    dplyr::select(Freq, mn_gc, mn_logLen) %&gt;%
+    cor()</code></pre>
+<p>The initial QC steps identified an unusually large proportion of reads with &gt;70% GC content. As such an exploration of any residual impacts this may have on the remainder of the library was performed.</p>
+<p>A <em>run length encoded</em> (RLE) vector was formed for each sample taking the number of reads for each transcript as the run lengths, and both the GC content and length of each transcript as the values. Transcript lengths were transformed to the log<sub>10</sub> scale due to the wide variety of lengths contained in the transcriptome.</p>
+<p>From these RLEs, the mean GC and mean length was calculated for each sample, and these values were compared to the proportion of raw reads with &gt; 70% GC, taking these values from the R1 libraries only.</p>
+<ul>
+<li><strong>A correlation of -30% was found between the mean GC content after summarisation to transcript-level counts and the proportion of the original sequence libraries with &gt;70% GC.</strong> This makes intuitive sense and suggests that the amount of high-GC reads in the initial libraries, as representative of incomplete rRNA removal, negatively biases the GC composition of the non-ribosomal RNA component of the library.</li>
+<li><strong>A correlation of -80% was found was found between the mean transcript length of the libraries after summarisation to transcript-level counts and the proportion of the original sequence libraries with &gt;70% GC.</strong> This is far less obvious mechanistically, but suggests that <strong>incomplete rRNA removal also biases the fragmentation or length selection process</strong>.</li>
+</ul>
+<p>Given the more successful rRNA-removal in the wild-type samples, this dataset is likely to contain significant GC and Length bias which is non-biological in origin.</p>
+<pre class="r"><code>a &lt;- gcSummary %&gt;%
+    left_join(rawGC) %&gt;%
+    dplyr::filter(reads == &quot;R1&quot;) %&gt;%
+    ggplot(aes(Freq, mn_logLen)) +
+    geom_point(aes(colour = genotype), size = 3) +
+    geom_smooth(method = &quot;lm&quot;) +
+    scale_shape_manual(values = c(19, 1)) +
+    labs(
+        x = &quot;Proportion of initial library with &gt; 70% GC&quot;,
+        y = &quot;Mean log(length)&quot;,
+        colour = &quot;Genotype&quot;
+    ) 
+b &lt;- gcSummary %&gt;%
+    left_join(rawGC) %&gt;%
+        dplyr::filter(reads == &quot;R1&quot;) %&gt;%
+    ggplot(aes(Freq, mn_gc)) +
+    geom_point(aes(colour = genotype), size = 3) +
+    geom_smooth(method = &quot;lm&quot;) +
+    scale_shape_manual(values = c(19, 1)) +
+    scale_y_continuous(labels = percent) +
+    labs(
+        x = &quot;Proportion of initial library with &gt; 70% GC&quot;,
+        y = &quot;Mean GC Content&quot;,
+        colour = &quot;Genotype&quot;
+    ) 
+plot_grid(
+    a + theme(legend.position = &quot;none&quot;),
+    b + theme(legend.position = &quot;none&quot;),
+    get_legend(b),
+    nrow = 1,
+    rel_widths = c(4,4,1)
+)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/QC.Rmd/plotBias-1.png" alt="*Comparison of bias introduced by incomplete rRNA removal. Regression lines are shown along with standard error bands for each comparison.*" width="672" />
+<p class="caption">
+<em>Comparison of bias introduced by incomplete rRNA removal. Regression lines are shown along with standard error bands for each comparison.</em>
+</p>
+</div>
+</div>
+<div id="pca" class="section level2">
+<h2>PCA</h2>
+<pre class="r"><code>transDGE &lt;- kallisto$counts %&gt;%
+    set_colnames(basename(colnames(.))) %&gt;%
+    divide_by(kallisto$annotation$Overdispersion) %&gt;%
+    .[rowSums(.) &gt; 4,] %&gt;%
+    DGEList(
+        samples = tibble(
+            sampleName = colnames(.)
+        ) %&gt;%
+            left_join(samples) %&gt;%
+            dplyr::select(sampleName, sample = sampleID, genotype) %&gt;%
+            distinct(sampleName, .keep_all = TRUE)
+    ) </code></pre>
+<pre class="r"><code>pca &lt;- cpm(transDGE, log = TRUE) %&gt;%
+    t() %&gt;%
+    prcomp()</code></pre>
+<pre class="r"><code>pca$x %&gt;%
+    as.data.frame() %&gt;%
+    rownames_to_column(&quot;sampleName&quot;) %&gt;%
+    left_join(gcSummary) %&gt;%
+    as_tibble() %&gt;% 
+    left_join(
+        dplyr::filter(rawGC, reads == &quot;R1&quot;)
+        ) %&gt;% 
+    dplyr::select(
+        PC1, PC2, PC3, 
+        Mean_GC = mn_gc, 
+        Mean_Length = mn_logLen, 
+        Initial_GC70 = Freq,
+        genotype
+    ) %&gt;% 
+    mutate(genotype = as.numeric(as.factor(genotype))) %&gt;%
+    cor() %&gt;% 
+    corrplot(
+        type = &quot;lower&quot;, 
+        diag = FALSE, 
+        addCoef.col = 1, addCoefasPercent = TRUE
+    )</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/QC.Rmd/pcaCorrs-1.png" alt="*Correlations between the first three principal components and measured variables. Genotypes were converted to an ordered categorical variable for the purposes of visualisation*" width="672" />
+<p class="caption">
+<em>Correlations between the first three principal components and measured variables. Genotypes were converted to an ordered categorical variable for the purposes of visualisation</em>
+</p>
+</div>
+<pre class="r"><code>a &lt;- pca$x %&gt;%
+    as.data.frame() %&gt;%
+    rownames_to_column(&quot;sampleName&quot;) %&gt;%
+    left_join(
+        dplyr::filter(rawGC, reads == &quot;R1&quot;)
+    ) %&gt;%
+    as_tibble() %&gt;%
+    ggplot(aes(PC1, PC2, colour = genotype, size = Freq)) +
+    geom_point() +
+    labs(
+        x = paste0(&quot;PC1 (&quot;, percent(summary(pca)$importance[&quot;Proportion of Variance&quot;,&quot;PC1&quot;]),&quot;)&quot;),
+        y = paste0(&quot;PC2 (&quot;, percent(summary(pca)$importance[&quot;Proportion of Variance&quot;,&quot;PC2&quot;]),&quot;)&quot;),
+        size = &quot;Raw GC &gt; 70%&quot;,
+        colour = &quot;Genotype&quot;
+    )
+b &lt;- pca$x %&gt;%
+    as.data.frame() %&gt;%
+    rownames_to_column(&quot;sampleName&quot;) %&gt;%
+    left_join(gcSummary) %&gt;%
+    left_join(
+        dplyr::filter(rawGC, reads == &quot;R1&quot;)
+    ) %&gt;%
+    as_tibble() %&gt;%
+    ggplot(aes(PC1, mn_gc)) +
+    geom_point(aes(colour = genotype,  size = Freq)) +
+    geom_smooth(method = &quot;lm&quot;) +
+    scale_y_continuous(labels = percent) +
+    labs(
+        x = paste0(&quot;PC1 (&quot;, percent(summary(pca)$importance[&quot;Proportion of Variance&quot;,&quot;PC1&quot;]),&quot;)&quot;),
+        y = &quot;Mean GC&quot;,
+        size = &quot;Raw GC &gt; 70%&quot;,
+        colour = &quot;Genotype&quot;
+    )
+plot_grid(
+    plot_grid(
+        a + theme(legend.position = &quot;none&quot;), 
+        b + theme(legend.position = &quot;none&quot;)
+    ),
+    get_legend(b + theme(legend.position = &quot;bottom&quot;)),
+    nrow = 2, 
+    rel_heights = c(4,1)
+)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/QC.Rmd/plotPCA-1.png" alt="*PCA plot showing genotype, initial GC content &gt; 70% and mean GC content after summarisation to transcript-level.*" width="672" />
+<p class="caption">
+<em>PCA plot showing genotype, initial GC content &gt; 70% and mean GC content after summarisation to transcript-level.</em>
+</p>
+</div>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>devtools::session_info()</code></pre>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────
+ setting  value                       
+ version  R version 3.6.2 (2019-12-12)
+ os       Ubuntu 18.04.3 LTS          
+ system   x86_64, linux-gnu           
+ ui       X11                         
+ language en_AU:en                    
+ collate  en_AU.UTF-8                 
+ ctype    en_AU.UTF-8                 
+ tz       Australia/Adelaide          
+ date     2020-01-20                  
+
+─ Packages ───────────────────────────────────────────────────────────────────
+ package                * version   date       lib source        
+ AnnotationDbi          * 1.48.0    2019-10-29 [2] Bioconductor  
+ AnnotationFilter       * 1.10.0    2019-10-29 [2] Bioconductor  
+ AnnotationHub          * 2.18.0    2019-10-29 [2] Bioconductor  
+ askpass                  1.1       2019-01-13 [2] CRAN (R 3.6.0)
+ assertthat               0.2.1     2019-03-21 [2] CRAN (R 3.6.0)
+ backports                1.1.5     2019-10-02 [2] CRAN (R 3.6.1)
+ Biobase                * 2.46.0    2019-10-29 [2] Bioconductor  
+ BiocFileCache          * 1.10.2    2019-11-08 [2] Bioconductor  
+ BiocGenerics           * 0.32.0    2019-10-29 [2] Bioconductor  
+ BiocManager              1.30.10   2019-11-16 [2] CRAN (R 3.6.1)
+ BiocParallel             1.20.1    2019-12-21 [2] Bioconductor  
+ BiocVersion              3.10.1    2019-06-06 [2] Bioconductor  
+ biomaRt                  2.42.0    2019-10-29 [2] Bioconductor  
+ Biostrings               2.54.0    2019-10-29 [2] Bioconductor  
+ bit                      1.1-15.1  2020-01-14 [2] CRAN (R 3.6.2)
+ bit64                    0.9-7     2017-05-08 [2] CRAN (R 3.6.0)
+ bitops                   1.0-6     2013-08-17 [2] CRAN (R 3.6.0)
+ blob                     1.2.0     2019-07-09 [2] CRAN (R 3.6.1)
+ broom                    0.5.3     2019-12-14 [2] CRAN (R 3.6.2)
+ callr                    3.4.0     2019-12-09 [2] CRAN (R 3.6.2)
+ cellranger               1.1.0     2016-07-27 [2] CRAN (R 3.6.0)
+ cli                      2.0.1     2020-01-08 [2] CRAN (R 3.6.2)
+ cluster                  2.1.0     2019-06-19 [2] CRAN (R 3.6.1)
+ colorspace               1.4-1     2019-03-18 [2] CRAN (R 3.6.0)
+ corrplot               * 0.84      2017-10-16 [2] CRAN (R 3.6.0)
+ cowplot                * 1.0.0     2019-07-11 [2] CRAN (R 3.6.1)
+ crayon                   1.3.4     2017-09-16 [2] CRAN (R 3.6.0)
+ curl                     4.3       2019-12-02 [2] CRAN (R 3.6.2)
+ data.table               1.12.8    2019-12-09 [2] CRAN (R 3.6.2)
+ DBI                      1.1.0     2019-12-15 [2] CRAN (R 3.6.2)
+ dbplyr                 * 1.4.2     2019-06-17 [2] CRAN (R 3.6.0)
+ DelayedArray             0.12.2    2020-01-06 [2] Bioconductor  
+ desc                     1.2.0     2018-05-01 [2] CRAN (R 3.6.0)
+ devtools                 2.2.1     2019-09-24 [2] CRAN (R 3.6.1)
+ digest                   0.6.23    2019-11-23 [2] CRAN (R 3.6.1)
+ dplyr                  * 0.8.3     2019-07-04 [2] CRAN (R 3.6.1)
+ edgeR                  * 3.28.0    2019-10-29 [2] Bioconductor  
+ ellipsis                 0.3.0     2019-09-20 [2] CRAN (R 3.6.1)
+ ensembldb              * 2.10.2    2019-11-20 [2] Bioconductor  
+ evaluate                 0.14      2019-05-28 [2] CRAN (R 3.6.0)
+ FactoMineR               2.1       2020-01-17 [2] CRAN (R 3.6.2)
+ fansi                    0.4.1     2020-01-08 [2] CRAN (R 3.6.2)
+ farver                   2.0.3     2020-01-16 [2] CRAN (R 3.6.2)
+ fastmap                  1.0.1     2019-10-08 [2] CRAN (R 3.6.1)
+ flashClust               1.01-2    2012-08-21 [2] CRAN (R 3.6.1)
+ forcats                * 0.4.0     2019-02-17 [2] CRAN (R 3.6.0)
+ fs                       1.3.1     2019-05-06 [2] CRAN (R 3.6.0)
+ generics                 0.0.2     2018-11-29 [2] CRAN (R 3.6.0)
+ GenomeInfoDb           * 1.22.0    2019-10-29 [2] Bioconductor  
+ GenomeInfoDbData         1.2.2     2019-11-21 [2] Bioconductor  
+ GenomicAlignments        1.22.1    2019-11-12 [2] Bioconductor  
+ GenomicFeatures        * 1.38.0    2019-10-29 [2] Bioconductor  
+ GenomicRanges          * 1.38.0    2019-10-29 [2] Bioconductor  
+ ggdendro                 0.1-20    2016-04-27 [2] CRAN (R 3.6.0)
+ ggplot2                * 3.2.1     2019-08-10 [2] CRAN (R 3.6.1)
+ ggrepel                  0.8.1     2019-05-07 [2] CRAN (R 3.6.0)
+ git2r                    0.26.1    2019-06-29 [2] CRAN (R 3.6.1)
+ glue                     1.3.1     2019-03-12 [2] CRAN (R 3.6.0)
+ gtable                   0.3.0     2019-03-25 [2] CRAN (R 3.6.0)
+ haven                    2.2.0     2019-11-08 [2] CRAN (R 3.6.1)
+ highr                    0.8       2019-03-20 [2] CRAN (R 3.6.0)
+ hms                      0.5.3     2020-01-08 [2] CRAN (R 3.6.2)
+ htmltools                0.4.0     2019-10-04 [2] CRAN (R 3.6.1)
+ htmlwidgets              1.5.1     2019-10-08 [2] CRAN (R 3.6.1)
+ httpuv                   1.5.2     2019-09-11 [2] CRAN (R 3.6.1)
+ httr                     1.4.1     2019-08-05 [2] CRAN (R 3.6.1)
+ hwriter                  1.3.2     2014-09-10 [2] CRAN (R 3.6.0)
+ interactiveDisplayBase   1.24.0    2019-10-29 [2] Bioconductor  
+ IRanges                * 2.20.2    2020-01-13 [2] Bioconductor  
+ jpeg                     0.1-8.1   2019-10-24 [2] CRAN (R 3.6.1)
+ jsonlite                 1.6       2018-12-07 [2] CRAN (R 3.6.0)
+ kableExtra               1.1.0     2019-03-16 [2] CRAN (R 3.6.1)
+ knitr                    1.27      2020-01-16 [2] CRAN (R 3.6.2)
+ labeling                 0.3       2014-08-23 [2] CRAN (R 3.6.0)
+ later                    1.0.0     2019-10-04 [2] CRAN (R 3.6.1)
+ lattice                  0.20-38   2018-11-04 [4] CRAN (R 3.6.0)
+ latticeExtra             0.6-29    2019-12-19 [2] CRAN (R 3.6.2)
+ lazyeval                 0.2.2     2019-03-15 [2] CRAN (R 3.6.0)
+ leaps                    3.1       2020-01-16 [2] CRAN (R 3.6.2)
+ lifecycle                0.1.0     2019-08-01 [2] CRAN (R 3.6.1)
+ limma                  * 3.42.0    2019-10-29 [2] Bioconductor  
+ locfit                   1.5-9.1   2013-04-20 [2] CRAN (R 3.6.0)
+ lubridate                1.7.4     2018-04-11 [2] CRAN (R 3.6.0)
+ magrittr               * 1.5       2014-11-22 [2] CRAN (R 3.6.0)
+ MASS                     7.3-51.5  2019-12-20 [4] CRAN (R 3.6.2)
+ Matrix                   1.2-18    2019-11-27 [2] CRAN (R 3.6.1)
+ matrixStats              0.55.0    2019-09-07 [2] CRAN (R 3.6.1)
+ memoise                  1.1.0     2017-04-21 [2] CRAN (R 3.6.0)
+ mime                     0.8       2019-12-19 [2] CRAN (R 3.6.2)
+ modelr                   0.1.5     2019-08-08 [2] CRAN (R 3.6.1)
+ munsell                  0.5.0     2018-06-12 [2] CRAN (R 3.6.0)
+ ngsReports             * 1.1.2     2019-10-16 [1] Bioconductor  
+ nlme                     3.1-143   2019-12-10 [4] CRAN (R 3.6.2)
+ openssl                  1.4.1     2019-07-18 [2] CRAN (R 3.6.1)
+ pander                 * 0.6.3     2018-11-06 [2] CRAN (R 3.6.0)
+ pillar                   1.4.3     2019-12-20 [2] CRAN (R 3.6.2)
+ pkgbuild                 1.0.6     2019-10-09 [2] CRAN (R 3.6.1)
+ pkgconfig                2.0.3     2019-09-22 [2] CRAN (R 3.6.1)
+ pkgload                  1.0.2     2018-10-29 [2] CRAN (R 3.6.0)
+ plotly                   4.9.1     2019-11-07 [2] CRAN (R 3.6.1)
+ plyr                     1.8.5     2019-12-10 [2] CRAN (R 3.6.2)
+ png                      0.1-7     2013-12-03 [2] CRAN (R 3.6.0)
+ prettyunits              1.1.0     2020-01-09 [2] CRAN (R 3.6.2)
+ processx                 3.4.1     2019-07-18 [2] CRAN (R 3.6.1)
+ progress                 1.2.2     2019-05-16 [2] CRAN (R 3.6.0)
+ promises                 1.1.0     2019-10-04 [2] CRAN (R 3.6.1)
+ ProtGenerics             1.18.0    2019-10-29 [2] Bioconductor  
+ ps                       1.3.0     2018-12-21 [2] CRAN (R 3.6.0)
+ purrr                  * 0.3.3     2019-10-18 [2] CRAN (R 3.6.1)
+ R6                       2.4.1     2019-11-12 [2] CRAN (R 3.6.1)
+ rappdirs                 0.3.1     2016-03-28 [2] CRAN (R 3.6.0)
+ RColorBrewer             1.1-2     2014-12-07 [2] CRAN (R 3.6.0)
+ Rcpp                     1.0.3     2019-11-08 [2] CRAN (R 3.6.1)
+ RCurl                    1.95-4.13 2020-01-16 [2] CRAN (R 3.6.2)
+ readr                  * 1.3.1     2018-12-21 [2] CRAN (R 3.6.0)
+ readxl                   1.3.1     2019-03-13 [2] CRAN (R 3.6.0)
+ remotes                  2.1.0     2019-06-24 [2] CRAN (R 3.6.0)
+ reprex                   0.3.0     2019-05-16 [2] CRAN (R 3.6.0)
+ reshape2                 1.4.3     2017-12-11 [2] CRAN (R 3.6.0)
+ rhdf5                    2.30.1    2019-11-26 [2] Bioconductor  
+ Rhdf5lib                 1.8.0     2019-10-29 [2] Bioconductor  
+ rlang                    0.4.2     2019-11-23 [2] CRAN (R 3.6.1)
+ rmarkdown                2.0       2019-12-12 [2] CRAN (R 3.6.2)
+ rprojroot                1.3-2     2018-01-03 [2] CRAN (R 3.6.0)
+ Rsamtools                2.2.1     2019-11-06 [2] Bioconductor  
+ RSQLite                  2.2.0     2020-01-07 [2] CRAN (R 3.6.2)
+ rstudioapi               0.10      2019-03-19 [2] CRAN (R 3.6.0)
+ rtracklayer              1.46.0    2019-10-29 [2] Bioconductor  
+ rvest                    0.3.5     2019-11-08 [2] CRAN (R 3.6.1)
+ S4Vectors              * 0.24.2    2020-01-13 [2] Bioconductor  
+ scales                 * 1.1.0     2019-11-18 [2] CRAN (R 3.6.1)
+ scatterplot3d            0.3-41    2018-03-14 [2] CRAN (R 3.6.1)
+ sessioninfo              1.1.1     2018-11-05 [2] CRAN (R 3.6.0)
+ shiny                    1.4.0     2019-10-10 [2] CRAN (R 3.6.1)
+ ShortRead                1.44.1    2019-12-19 [2] Bioconductor  
+ stringi                  1.4.5     2020-01-11 [2] CRAN (R 3.6.2)
+ stringr                * 1.4.0     2019-02-10 [2] CRAN (R 3.6.0)
+ SummarizedExperiment     1.16.1    2019-12-19 [2] Bioconductor  
+ testthat                 2.3.1     2019-12-01 [2] CRAN (R 3.6.1)
+ tibble                 * 2.1.3     2019-06-06 [2] CRAN (R 3.6.0)
+ tidyr                  * 1.0.0     2019-09-11 [2] CRAN (R 3.6.1)
+ tidyselect               0.2.5     2018-10-11 [2] CRAN (R 3.6.0)
+ tidyverse              * 1.3.0     2019-11-21 [2] CRAN (R 3.6.1)
+ truncnorm                1.0-8     2018-02-27 [2] CRAN (R 3.6.0)
+ usethis                  1.5.1     2019-07-04 [2] CRAN (R 3.6.1)
+ vctrs                    0.2.1     2019-12-17 [2] CRAN (R 3.6.2)
+ viridisLite              0.3.0     2018-02-01 [2] CRAN (R 3.6.0)
+ webshot                  0.5.2     2019-11-22 [2] CRAN (R 3.6.1)
+ whisker                  0.4       2019-08-28 [2] CRAN (R 3.6.1)
+ withr                    2.1.2     2018-03-15 [2] CRAN (R 3.6.0)
+ workflowr              * 1.6.0     2019-12-19 [2] CRAN (R 3.6.2)
+ xfun                     0.12      2020-01-13 [2] CRAN (R 3.6.2)
+ XML                      3.99-0.2  2020-01-18 [2] CRAN (R 3.6.2)
+ xml2                     1.2.2     2019-08-09 [2] CRAN (R 3.6.1)
+ xtable                   1.8-4     2019-04-21 [2] CRAN (R 3.6.0)
+ XVector                  0.26.0    2019-10-29 [2] Bioconductor  
+ yaml                     2.2.0     2018-07-25 [2] CRAN (R 3.6.0)
+ zeallot                  0.1.0     2018-01-28 [2] CRAN (R 3.6.0)
+ zlibbioc                 1.32.0    2019-10-29 [2] Bioconductor  
+ zoo                      1.8-7     2020-01-10 [2] CRAN (R 3.6.2)
+
+[1] /home/steveped/R/x86_64-pc-linux-gnu-library/3.6
+[2] /usr/local/lib/R/site-library
+[3] /usr/lib/R/site-library
+[4] /usr/lib/R/library</code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

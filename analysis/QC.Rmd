@@ -1,31 +1,46 @@
 ---
-title: "QC of Pse2S4Ter Zebrafish"
+title: "QC of Psen2S4Ter Zebrafish"
 author: "Steve Pederson"
-date: "15/01/2020"
-output: html_document
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document: 
+    code_folding: hide
+    fig_caption: yes
+    number_sections: yes
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
+    autodep = TRUE,
 	echo = TRUE,
 	warning = FALSE,
 	message = FALSE
 )
 ```
 
-```{r}
+# Setup
+
+```{r loadPackages}
 library(ngsReports)
 library(tidyverse)
 library(magrittr)
 library(edgeR)
 library(limma)
 library(AnnotationHub)
-library(multcomp)
+library(ensembldb)
+library(scales)
+library(pander)
+library(cowplot)
+library(corrplot)
 ```
 
-```{r}
-if (interactive()) setwd(here::here("R"))
+```{r setOptions}
+if (interactive()) setwd(here::here())
 theme_set(theme_bw())
+panderOptions("big.mark", ",")
+panderOptions("table.split.table", Inf)
+panderOptions("table.style", "rmarkdown")
+twoCols <- c(rgb(0.8, 0.1, 0.1), rgb(0.2, 0.2, 0.8))
 ```
 
 
@@ -40,39 +55,193 @@ trLengths <- exonsBy(ensDb, "tx") %>%
 	width() %>%
 	vapply(sum, integer(1))
 mcols(grTrans)$length <- trLengths[names(grTrans)]
+rRnaTrans <- grTrans %>%
+    subset(grepl("rRNA", tx_biotype)) %>%
+    mcols() %>%
+    .[["tx_id_version"]]
+```
+
+In order to perform adequate QC, an `EnsDb` object was obtained for Ensembl release `r ensemblVersion(ensDb)` using the  `AnnotationHub` package.
+This provided the GC content and length for each of the `r comma(length(grTrans))` transcripts contained in that release.
+
+```{r samplesAndLabels}
+samples <- read_csv("data/samples.csv") %>%
+    mutate(reads = str_extract(fqName, "R[12]")) %>%
+    dplyr::rename(Filename = fqName)
+labels <- structure(
+    samples$sampleID,
+    names = samples$Filename
+)
+```
+
+Metadata for each fastq file was also loaded.
+Reads were provided as paired-end reads, with $n=4$ samples for each genotype.
+
+# Raw Data
+
+## Library Sizes
+
+```{r rawFqc}
+rawFqc <- list.files(
+    path = "data/0_rawData/FastQC/",
+    pattern = "zip",
+    full.names = TRUE
+    ) %>%
+    FastqcDataList()
+```
+
+Library Sizes for the raw, unprocessed dataset ranged between `r pander(comma(range(readTotals(rawFqc)$Total_Sequences)))` reads.
+
+```{r plotLibSizes, fig.cap = "*Library Sizes for each sample before any processing was undertaken.*"}
+r1 <- grepl("R1", fqName(rawFqc))
+plotReadTotals(rawFqc[r1], labels = labels[r1], barCols = twoCols)
+```
+
+## GC Content
+
+As this was a total RNA dataset, GC content will provide a clear marker of the success of rRNA depletion.
+This was plotted, with all R2 reads showing a far greater spike in GC content at 81%, which is likely due to incomplete rRNA depletion.
+In particular, the mutant samples appeared most significantly affected raising possibility that overall GC content may be affected in these samples.
+
+
+```{r gcPlots, fig.cap="*GC content for R1 and R2 reads. Notably, the R2 reads had clearer spikes in GC content above 70%*"}
+gcPlots <- list(
+    r1 = plotGcContent(
+        x = rawFqc[r1], 
+        labels = labels[r1],
+        plotType = "line",
+        gcType = "Transcriptome",
+        species = "Drerio"
+    ),
+    r2 = plotGcContent(
+        x = rawFqc[!r1], 
+        labels = labels[!r1],
+        plotType = "line",
+        gcType = "Transcriptome",
+        species = "Drerio"
+    )
+)
+lg <- get_legend(gcPlots$r2) 
+plot_grid(
+    plotlist = list(
+        r1 = gcPlots$r1 + 
+            ggtitle("R1: GC Distribution", subtitle = c()) +
+            theme(legend.position = "none"),
+        r2 = gcPlots$r2 + 
+            ggtitle("R2: GC Distribution", subtitle = c()) +
+            theme(legend.position = "none"),
+        lg = lg),
+    nrow = 1,
+    rel_widths = c(1,1,1)
+)
 ```
 
 
+```{r gcPerc, fig.cap=paste("*Percentages of each library which contain >70% GC. Using the known theoretical distribution, this should be", percent_format(0.01)(sum(dplyr::filter(getGC(gcTheoretical, "Drerio", type = "Trans"), GC_Content > 70)$Drerio)), "of the total library.*"), fig.width=8}
+rawGC <- getModule(rawFqc, "Per_sequence_GC") %>% 
+    group_by(Filename) %>% 
+    mutate(Freq = Count / sum(Count)) %>%
+    dplyr::filter(GC_Content > 70) %>% 
+    summarise(Freq = sum(Freq)) %>% 
+    arrange(desc(Freq)) %>%
+    left_join(samples) 
+rawGC %>%
+    ggplot(aes(sampleID, Freq, fill = reads)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    facet_wrap(~genotype, scales = "free_x") +
+    scale_y_continuous(labels = percent) +
+    scale_fill_manual(values = twoCols) +
+    labs(x = "Sample", y = "Percent of Total")
+```
+
+## Over-represented Sequences
+
+The top [30 Overrepresented sequences](../output/top30Overrepresented.fa) were analysed using `blastn` and most were found to be [mitochondrial rRNA sequences](../output/top30Overrepresented_BlastResults.txt).
+
 ```{r}
-kallisto <- list.dirs("../3_kallisto/") %>%
-	setdiff("../3_kallisto/") %>%
+getModule(rawFqc, "Overrep") %>% 
+    group_by(Sequence, Possible_Source) %>% 
+    summarise(`Found In` = n(), `Highest Percentage` = max(Percentage)) %>% 
+    arrange(desc(`Highest Percentage`), desc(`Found In`)) %>% 
+    ungroup() %>% 
+    dplyr::slice(1:30) %>%
+    mutate(`Highest Percentage` = percent_format(0.01)(`Highest Percentage`/100)) %>%
+    pander(
+        justify = "llrr",
+        caption = paste(
+            "*Top", nrow(.),"Overrepresented sequences.",
+            "The number of samples they were found in is shown,",
+            "along with the percentage of the most 'contaminated' sample.*"
+            )
+    )
+```
+
+## Trimming
+
+```{r trimStats}
+trimFqc <- list.files(
+    path = "data/1_trimmedData/FastQC/", 
+    pattern = "zip", 
+    full.names = TRUE
+) %>%
+    FastqcDataList()
+trimStats <- readTotals(rawFqc) %>%
+    dplyr::rename(Raw = Total_Sequences) %>%
+    left_join(readTotals(trimFqc), by = "Filename") %>%
+    dplyr::rename(Trimmed = Total_Sequences) %>%
+    dplyr::filter(grepl("R1", Filename)) %>%
+    mutate(
+        Discarded = 1 - Trimmed/Raw,
+        Retained = Trimmed / Raw
+    )
+```
+
+After adapter trimming between `r pander(range(percent_format(0.01)(trimStats$Discarded)))` of reads were discarded.
+No other improvement was noted.
+
+# Aligned Data
+
+
+Trimmed reads were:
+
+1. aligned to the reference genome using `STAR 2.7.0d` and summarised to each gene using `featureCounts`. These counts were to be used for all gene-level analysis
+2. aligned using kallisto to a modified transcriptome which contained the *psen2^S4Ter^* sequence as an 'alternative' transcript of *psen2*. This data was used for genotype checking, and assessing any GC bias in the data. Whilst transcript-level information is included for rRNA genes in the `EnsDb` object, these transcripts are **excluded** by default from the reference transcriptome provided by Ensembl.
+
+```{r catchKallisto, include=FALSE}
+kallisto <- list.dirs("data/3_kallisto/") %>%
+	setdiff("data/3_kallisto/") %>%
 	catchKallisto()
 ```
 
+## Genotype Checking
 
-```{r checkGenotype, fig.cap = "CPM obtained for both WT and the S4Ter mutant transcript of psen2"}
+```{r checkGenotype, fig.cap = "*CPM obtained for both WT and S4Ter mutant transcripts of psen2*", fig.width=8}
 cpm(kallisto$counts) %>%
 	.[c("ENSDART00000006381.8", "psen2S4Ter"),] %>%
 	as.data.frame() %>%
-	rownames_to_column("ID") %>%
+	rownames_to_column("psen2") %>%
 	pivot_longer(cols = contains("kall"), names_to = "Sample", values_to = "CPM") %>%
 	mutate(
 		Sample = basename(Sample),
-		ID = case_when(
-			ID == "psen2S4Ter" ~ "psen2S4Ter",
-			ID != "psen2S4Ter" ~ "psen2wt"
-		),
-		Genotype = str_extract(Sample, "(Heter|Hom|WT)"),
-		Sample = str_replace(Sample, "Ps2Ex3M1_(Heter|Hom|WT)_.+(F3_[0-9]+)_.+", "\\1_\\2")
+		psen2 = case_when(
+			psen2 == "psen2S4Ter" ~ "S4Ter",
+			psen2 != "psen2S4Ter" ~ "WT"
+		)
 	) %>%
-	ggplot(aes(Sample, logCPM, fill = ID)) +
+    left_join(samples, by = c("Sample" = "sampleName")) %>%
+	ggplot(aes(sampleID, CPM, fill = psen2)) +
 	geom_bar(stat = "identity") +
-	facet_wrap(~Genotype, nrow = 1, scales = "free_x")
+    scale_fill_manual(values = twoCols) +
+	facet_wrap(~genotype, nrow = 1, scales = "free_x")
 ```
 
-```{r}
-gcSamples <- kallisto$counts %>%
-	cpm(log = TRUE) %>%
+As all samples demonstrated the expected expression patterns, no mislabelling was detected in this dataset.
+
+## GC Content
+
+
+```{r gcInfo}
+gcInfo <- kallisto$counts %>%
 	as.data.frame() %>%
 	rownames_to_column("tx_id") %>%
 	dplyr::filter(
@@ -81,16 +250,14 @@ gcSamples <- kallisto$counts %>%
 	as_tibble() %>%
 	pivot_longer(
 		cols = contains("kall"), 
-		names_to = "Sample", 
-		values_to = "logCPM"
+		names_to = "sampleName", 
+		values_to = "counts"
 	) %>%
 	dplyr::filter(
-		logCPM > 0
+		counts > 0
 	) %>%
-	mutate(
-		Genotype = str_extract(Sample, "(Heter|Hom|WT)"),
-		Sample = basename(Sample),
-		Sample = str_replace(Sample, "Ps2Ex3M1_(Heter|Hom|WT)_.+(F3_[0-9]+)_.+", "\\1_\\2"),
+    mutate(
+		sampleName = basename(sampleName),
 		tx_id_version = tx_id,
 		tx_id = str_replace(tx_id, "(ENSDART[0-9]+).[0-9]+", "\\1")
 	) %>%
@@ -98,113 +265,184 @@ gcSamples <- kallisto$counts %>%
 		mcols(grTrans) %>% as.data.frame()
 	) %>%
 	dplyr::select(
-		ends_with("id"), Sample, Genotype, logCPM, gc_content, length
+		ends_with("id"), sampleName, counts, gc_content, length
 	) %>%
-	mutate(
-		Sample = as.factor(Sample),
-		Genotype = as.factor(Genotype),
-		length = log10(length)
-	) %>%
-	with(
-		lm(gc_content ~ Sample, weights = logCPM)
-	) %>%
-	glht(
-		linfct = mcp("Sample" = "Tukey")
-	) %>%
-	summary(
-		test = adjusted("none")
-	)
-bind_rows(
-	gcSamples$test %>%
-		.[c("coefficients", "sigma", "tstat", "pvalues")] %>%
-		as.data.frame() %>%
-		rownames_to_column("Comparison") %>%
-		as_tibble() %>%
-		separate(Comparison, c("Sample1", "Sample2"), sep = " - "),
-	gcSamples$test %>%
-		.[c("coefficients", "sigma", "tstat", "pvalues")] %>%
-		as.data.frame() %>%
-		rownames_to_column("Comparison") %>%
-		as_tibble() %>%
-		separate(Comparison, c("Sample2", "Sample1"), sep = " - ") %>%
-		mutate(coefficients = -coefficients),
-) %>%
-	mutate(
-		Genotype2 = str_extract(Sample2, "(Het|Hom|WT)"),
-		Genotype1 = str_extract(Sample1, "(Het|Hom|WT)")
-	) %>%
-	ggplot(aes(Sample2, Sample1, colour = coefficients)) +
-	geom_point(aes(size = -log10(pvalues))) +
-	scale_colour_gradient2(
-		low = rgb(0.2, 0.2, 0.8),
-		mid = "white",
-		high = rgb(0.8, 0.2, 0.2), 
-		midpoint = 0
-	) +
-	scale_size_continuous() +
-	labs(
-		colour = expression(paste(Delta, bar(GC))),
-		size = expression(paste(-log[10], "(p)"))
-	) +
-	facet_grid(Genotype1~Genotype2, scales = "free") +
-	theme(
-		axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
-		axis.title = element_blank()
-	)
+    split(f = .$sampleName) %>%
+    lapply(function(x){
+        DataFrame(
+            gc = Rle(x$gc_content/100, x$counts),
+            logLen = Rle(log10(x$length), x$counts)
+        )
+    }
+    ) 
+gcSummary <- gcInfo %>%
+    vapply(function(x){
+        c(mean(x$gc), sd(x$gc), mean(x$logLen), sd(x$logLen))
+        }, numeric(4)
+        ) %>%
+    t() %>%
+    set_colnames(
+        c("mn_gc", "sd_gc", "mn_logLen", "sd_logLen")
+    ) %>%
+    as.data.frame() %>%
+    rownames_to_column("sampleName") %>%
+    as_tibble() %>%
+    left_join(dplyr::filter(samples, reads == "R1")) %>%
+    dplyr::select(starts_with("sample"), genotype, contains("_"))
 ```
 
-```{r}
-gcMeans <-kallisto$counts %>%
-	cpm() %>%
-	as.data.frame() %>%
-	rownames_to_column("tx_id") %>%
-	dplyr::filter(
-		tx_id != "psen2S4Ter"
-	) %>%
-	as_tibble() %>%
-	pivot_longer(
-		cols = contains("kall"), 
-		names_to = "Sample", 
-		values_to = "CPM"
-	) %>%
-	dplyr::filter(
-		CPM > 0
-	) %>%
-	mutate(
-		Genotype = str_extract(Sample, "(Heter|Hom|WT)"),
-		Sample = basename(Sample),
-		Sample = str_replace(Sample, "Ps2Ex3M1_(Heter|Hom|WT)_.+(F3_[0-9]+)_.+", "\\1_\\2"),
-		tx_id_version = tx_id,
-		tx_id = str_replace(tx_id, "(ENSDART[0-9]+).[0-9]+", "\\1")
-	) %>%
-	left_join(
-		mcols(grTrans) %>% as.data.frame()
-	) %>%
-	dplyr::select(
-		ends_with("id"), Sample, Genotype, CPM, gc_content, length
-	) %>%
-	mutate(
-		Sample = as.factor(Sample),
-		Genotype = as.factor(Genotype),
-		logLength = log10(length)
-	) %>%
-	group_by(Genotype) %>%
-	summarise(
-		meanGC = weighted.mean(0.01*gc_content, CPM),
-		sd = sum(CPM * (0.01*gc_content - meanGC)^2) / (sum(CPM) - 1),
-		n = n()
-	)
+```{r gcCors}
+gcCors <- rawGC %>%
+    dplyr::filter(reads == "R1") %>%
+    dplyr::select(starts_with("sample"), genotype, Freq, reads) %>%
+    left_join(gcSummary) %>%
+    dplyr::select(Freq, mn_gc, mn_logLen) %>%
+    cor()
 ```
 
-```{r}
-testMeans <- function(df){
-	stopifnot(nrow(df) == 2)
-	z <- diff(df$meanGC) / sqrt(sum(df$sd^2) / 2)
-	tibble(
-		z = z,
-		p  = pnorm(abs(z), lower.tail = FALSE)*2
-	)
-}
-testMeans(gcMeans[1:2,])
+
+The initial QC steps identified an unusually large proportion of reads with >70% GC content.
+As such an exploration of any residual impacts this may have on the remainder of the library was performed.
+
+A *run length encoded* (RLE) vector was formed for each sample taking the number of reads for each transcript as the run lengths, and both the GC content and length of each transcript as the values.
+Transcript lengths were transformed to the log~10~ scale due to the wide variety of lengths contained in the transcriptome.
+
+From these RLEs, the mean GC and mean length was calculated for each sample, and these values were compared to the proportion of raw reads with > 70% GC, taking these values from the R1 libraries only.
+
+- **A correlation of `r percent(gcCors["Freq", "mn_gc"])` was found between the mean GC content after summarisation to transcript-level counts and the proportion of the original sequence libraries with >70% GC.** This makes intuitive sense and suggests that the amount of high-GC reads in the initial libraries, as representative of incomplete rRNA removal, negatively biases the GC composition of the non-ribosomal RNA component of the library.
+- **A correlation of `r percent(gcCors["Freq", "mn_logLen"])` was found was found between the mean transcript length of the libraries after summarisation to transcript-level counts and the proportion of the original sequence libraries with >70% GC.** This is far less obvious mechanistically, but suggests that **incomplete rRNA removal also biases the fragmentation or length selection process**.
+
+Given the more successful rRNA-removal in the wild-type samples, this dataset is likely to contain significant GC and Length bias which is non-biological in origin.
+
+```{r plotBias, fig.cap = "*Comparison of bias introduced by incomplete rRNA removal. Regression lines are shown along with standard error bands for each comparison.*"}
+a <- gcSummary %>%
+    left_join(rawGC) %>%
+    dplyr::filter(reads == "R1") %>%
+    ggplot(aes(Freq, mn_logLen)) +
+    geom_point(aes(colour = genotype), size = 3) +
+    geom_smooth(method = "lm") +
+    scale_shape_manual(values = c(19, 1)) +
+    labs(
+        x = "Proportion of initial library with > 70% GC",
+        y = "Mean log(length)",
+        colour = "Genotype"
+    ) 
+b <- gcSummary %>%
+    left_join(rawGC) %>%
+        dplyr::filter(reads == "R1") %>%
+    ggplot(aes(Freq, mn_gc)) +
+    geom_point(aes(colour = genotype), size = 3) +
+    geom_smooth(method = "lm") +
+    scale_shape_manual(values = c(19, 1)) +
+    scale_y_continuous(labels = percent) +
+    labs(
+        x = "Proportion of initial library with > 70% GC",
+        y = "Mean GC Content",
+        colour = "Genotype"
+    ) 
+plot_grid(
+    a + theme(legend.position = "none"),
+    b + theme(legend.position = "none"),
+    get_legend(b),
+    nrow = 1,
+    rel_widths = c(4,4,1)
+)
 ```
+
+## PCA
+
+```{r transDGE}
+transDGE <- kallisto$counts %>%
+    set_colnames(basename(colnames(.))) %>%
+    divide_by(kallisto$annotation$Overdispersion) %>%
+    .[rowSums(.) > 4,] %>%
+    DGEList(
+        samples = tibble(
+            sampleName = colnames(.)
+        ) %>%
+            left_join(samples) %>%
+            dplyr::select(sampleName, sample = sampleID, genotype) %>%
+            distinct(sampleName, .keep_all = TRUE)
+    ) 
+```
+
+```{r pca}
+pca <- cpm(transDGE, log = TRUE) %>%
+    t() %>%
+    prcomp()
+```
+
+```{r pcaCorrs, fig.cap="*Correlations between the first three principal components and measured variables. Genotypes were converted to an ordered categorical variable for the purposes of visualisation*"}
+pca$x %>%
+    as.data.frame() %>%
+    rownames_to_column("sampleName") %>%
+    left_join(gcSummary) %>%
+    as_tibble() %>% 
+    left_join(
+        dplyr::filter(rawGC, reads == "R1")
+        ) %>% 
+    dplyr::select(
+        PC1, PC2, PC3, 
+        Mean_GC = mn_gc, 
+        Mean_Length = mn_logLen, 
+        Initial_GC70 = Freq,
+        genotype
+    ) %>% 
+    mutate(genotype = as.numeric(as.factor(genotype))) %>%
+    cor() %>% 
+    corrplot(
+        type = "lower", 
+        diag = FALSE, 
+        addCoef.col = 1, addCoefasPercent = TRUE
+    )
+```
+
+```{r plotPCA, fig.cap = "*PCA plot showing genotype, initial GC content > 70% and mean GC content after summarisation to transcript-level.*"}
+a <- pca$x %>%
+    as.data.frame() %>%
+    rownames_to_column("sampleName") %>%
+    left_join(
+        dplyr::filter(rawGC, reads == "R1")
+    ) %>%
+    as_tibble() %>%
+    ggplot(aes(PC1, PC2, colour = genotype, size = Freq)) +
+    geom_point() +
+    labs(
+        x = paste0("PC1 (", percent(summary(pca)$importance["Proportion of Variance","PC1"]),")"),
+        y = paste0("PC2 (", percent(summary(pca)$importance["Proportion of Variance","PC2"]),")"),
+        size = "Raw GC > 70%",
+        colour = "Genotype"
+    )
+b <- pca$x %>%
+    as.data.frame() %>%
+    rownames_to_column("sampleName") %>%
+    left_join(gcSummary) %>%
+    left_join(
+        dplyr::filter(rawGC, reads == "R1")
+    ) %>%
+    as_tibble() %>%
+    ggplot(aes(PC1, mn_gc)) +
+    geom_point(aes(colour = genotype,  size = Freq)) +
+    geom_smooth(method = "lm") +
+    scale_y_continuous(labels = percent) +
+    labs(
+        x = paste0("PC1 (", percent(summary(pca)$importance["Proportion of Variance","PC1"]),")"),
+        y = "Mean GC",
+        size = "Raw GC > 70%",
+        colour = "Genotype"
+    )
+plot_grid(
+    plot_grid(
+        a + theme(legend.position = "none"), 
+        b + theme(legend.position = "none")
+    ),
+    get_legend(b + theme(legend.position = "bottom")),
+    nrow = 2, 
+    rel_heights = c(4,1)
+)
+```
+
+
+
+
 

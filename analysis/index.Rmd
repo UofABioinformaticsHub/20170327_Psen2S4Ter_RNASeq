@@ -8,4 +8,11 @@ editor_options:
   chunk_output_type: console
 ---
 
-Welcome to my research website.
+Analysis of RNASeq data from the 3way comparison of WT zebrafish samples with Heterozygous mutants for *psen2^S4Ter^* and Homozygous mutants for *psen2^S4Ter^*.
+This mutant is expected to be a premature termination of the *psen2* gene, but instead an alternate downstream start site resulted in a near full-length transcript with significant similarity to a conventional Early Onset Familial Alzhemier's Disease mutation.
+
+RNAseq was performed on total RNA with $n=4$ samples in each group.
+Sequencing was performed by the sequencing facility at the Centre for Cancer Biology in Adelaide, using a NextSeq.
+Reads were provided in as paired-end, 150bp reads.
+
+1. [Quality Assesment](QC.html)

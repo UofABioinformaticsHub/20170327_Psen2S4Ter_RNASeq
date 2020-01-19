@@ -2,9 +2,9 @@
 title: "About"
 output:
   workflowr::wflow_html:
-    toc: false
+    toc: true
 editor_options:
   chunk_output_type: console
 ---
 
-Describe your project.
+Analysis performed by Dr Stephen Pederson, from the Bioinformatics Hub, University of Adelaide.
