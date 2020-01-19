@@ -18,7 +18,7 @@ REFS=/data/biorefs/reference_genomes/ensembl-release-98/danio_rerio/
 IDX=/${REFS}/kallisto/Danio_rerio.GRCz11.cdna.primary_assembly.psen2S4Ter.idx
 
 ## Directories
-PROJROOT=/data/biohub/20170327_Psen2S4Ter_RNASeq
+PROJROOT=/data/biohub/20170327_Psen2S4Ter_RNASeq/data
 
 ## Setup for kallisto output
 ALIGNDIR=${PROJROOT}/3_kallisto

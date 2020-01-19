@@ -42,7 +42,7 @@ checkAndMake () {
 }
 
 ## Directories
-PROJROOT=/data/biohub/20170327_Psen2S4Ter_RNASeq
+PROJROOT=/data/biohub/20170327_Psen2S4Ter_RNASeq/data
 REFS=/data/biorefs/reference_genomes/ensembl-release-98/danio_rerio/
 if [[ ! -d ${REFS} ]]
 then
