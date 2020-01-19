@@ -436,7 +436,7 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 </div>
 <div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>The R Markdown file has staged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -503,10 +503,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree39d0381583a1687f9a94ec455f1d3969ae2460a1targetblank39d0381a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/39d0381583a1687f9a94ec455f1d3969ae2460a1" target="_blank">39d0381</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtreef65bf664e6b273af1c2c82a8823bcbe7ca0e7ecatargetblankf65bf66a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/f65bf664e6b273af1c2c82a8823bcbe7ca0e7eca" target="_blank">f65bf66</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree39d0381583a1687f9a94ec455f1d3969ae2460a1targetblank39d0381a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtreef65bf664e6b273af1c2c82a8823bcbe7ca0e7ecatargetblankf65bf66a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -516,9 +516,8 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
 
-Unstaged changes:
+Staged changes:
     Modified:   analysis/QC.Rmd
-    Modified:   analysis/_site.yml
 
 </code></pre>
 <p>
@@ -557,6 +556,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/f65bf664e6b273af1c2c82a8823bcbe7ca0e7eca/analysis/QC.Rmd" target="_blank">f65bf66</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-20
+</td>
+<td>
+Removed License &amp; updated text for PCA
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/f65bf664e6b273af1c2c82a8823bcbe7ca0e7eca/docs/QC.html" target="_blank">f65bf66</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-20
+</td>
+<td>
+Removed License &amp; updated text for PCA
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -621,7 +654,6 @@ Moved files to workflowr structure
 library(tidyverse)
 library(magrittr)
 library(edgeR)
-library(limma)
 library(AnnotationHub)
 library(ensembldb)
 library(scales)
@@ -734,18 +766,19 @@ Steve Ped
         species = &quot;Drerio&quot;
     )
 )
-lg &lt;- get_legend(gcPlots$r2) 
+lg &lt;- get_legend(gcPlots$r2 + theme(legend.position = &quot;bottom&quot;)) 
 plot_grid(
-    plotlist = list(
+    plot_grid(
         r1 = gcPlots$r1 + 
             ggtitle(&quot;R1: GC Distribution&quot;, subtitle = c()) +
             theme(legend.position = &quot;none&quot;),
         r2 = gcPlots$r2 + 
             ggtitle(&quot;R2: GC Distribution&quot;, subtitle = c()) +
-            theme(legend.position = &quot;none&quot;),
-        lg = lg),
-    nrow = 1,
-    rel_widths = c(1,1,1)
+            theme(legend.position = &quot;none&quot;)
+    ),
+    lg = lg,
+    nrow = 2,
+    rel_heights = c(5,2)
 )</code></pre>
 <div class="figure" style="text-align: center">
 <img src="figure/QC.Rmd/gcPlots-1.png" alt="*GC content for R1 and R2 reads. Notably, the R2 reads had clearer spikes in GC content above 70%*" width="672" />
@@ -1362,6 +1395,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/f65bf664e6b273af1c2c82a8823bcbe7ca0e7eca/docs/figure/QC.Rmd/pcaCorrs-1.png" target="_blank">f65bf66</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/39d0381583a1687f9a94ec455f1d3969ae2460a1/docs/figure/QC.Rmd/pcaCorrs-1.png" target="_blank">39d0381</a>
 </td>
 <td>
@@ -1445,6 +1489,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/f65bf664e6b273af1c2c82a8823bcbe7ca0e7eca/docs/figure/QC.Rmd/plotPCA-1.png" target="_blank">f65bf66</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/39d0381583a1687f9a94ec455f1d3969ae2460a1/docs/figure/QC.Rmd/plotPCA-1.png" target="_blank">39d0381</a>

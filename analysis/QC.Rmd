@@ -25,7 +25,6 @@ library(ngsReports)
 library(tidyverse)
 library(magrittr)
 library(edgeR)
-library(limma)
 library(AnnotationHub)
 library(ensembldb)
 library(scales)
@@ -104,7 +103,7 @@ This was plotted, with all R2 reads showing a far greater spike in GC content at
 In particular, the mutant samples appeared most significantly affected raising possibility that overall GC content may be affected in these samples.
 
 
-```{r gcPlots, fig.cap="*GC content for R1 and R2 reads. Notably, the R2 reads had clearer spikes in GC content above 70%*"}
+```{r gcPlots, fig.cap="*GC content for R1 and R2 reads. Notably, the R2 reads had clearer spikes in GC content above 70%*", fig.height=7}
 gcPlots <- list(
     r1 = plotGcContent(
         x = rawFqc[r1], 
@@ -121,18 +120,19 @@ gcPlots <- list(
         species = "Drerio"
     )
 )
-lg <- get_legend(gcPlots$r2) 
+lg <- get_legend(gcPlots$r2 + theme(legend.position = "bottom")) 
 plot_grid(
-    plotlist = list(
+    plot_grid(
         r1 = gcPlots$r1 + 
             ggtitle("R1: GC Distribution", subtitle = c()) +
             theme(legend.position = "none"),
         r2 = gcPlots$r2 + 
             ggtitle("R2: GC Distribution", subtitle = c()) +
-            theme(legend.position = "none"),
-        lg = lg),
-    nrow = 1,
-    rel_widths = c(1,1,1)
+            theme(legend.position = "none")
+    ),
+    lg = lg,
+    nrow = 2,
+    rel_heights = c(5,2)
 )
 ```
 
