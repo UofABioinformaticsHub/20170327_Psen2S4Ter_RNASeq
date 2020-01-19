@@ -358,9 +358,6 @@ div.tocify {
 <li>
   <a href="about.html">About</a>
 </li>
-<li>
-  <a href="license.html">License</a>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -439,7 +436,7 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 </div>
 <div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has staged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -506,10 +503,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree3f0a8ccf475af3b48b5e7369f9b33e185ff89586targetblank3f0a8cca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/3f0a8ccf475af3b48b5e7369f9b33e185ff89586" target="_blank">3f0a8cc</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree39d0381583a1687f9a94ec455f1d3969ae2460a1targetblank39d0381a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/39d0381583a1687f9a94ec455f1d3969ae2460a1" target="_blank">39d0381</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree3f0a8ccf475af3b48b5e7369f9b33e185ff89586targetblank3f0a8cca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree39d0381583a1687f9a94ec455f1d3969ae2460a1targetblank39d0381a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -521,17 +518,7 @@ Ignored files:
 
 Unstaged changes:
     Modified:   analysis/QC.Rmd
-
-Staged changes:
-    Modified:   _workflowr.yml
-    Modified:   analysis/QC.Rmd
     Modified:   analysis/_site.yml
-    Modified:   analysis/about.Rmd
-    Modified:   analysis/index.Rmd
-    Deleted:    analysis/license.Rmd
-    Modified:   data/samples.csv
-    New:        output/top30Overrepresented.fa
-    New:        output/top30Overrepresented_BlastResults.txt
 
 </code></pre>
 <p>
@@ -570,6 +557,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/39d0381583a1687f9a94ec455f1d3969ae2460a1/analysis/QC.Rmd" target="_blank">39d0381</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-20
+</td>
+<td>
+Finished QC
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/39d0381583a1687f9a94ec455f1d3969ae2460a1/docs/QC.html" target="_blank">39d0381</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-20
+</td>
+<td>
+Finished QC
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -656,6 +677,43 @@ plotReadTotals(rawFqc[r1], labels = labels[r1], barCols = twoCols)</code></pre>
 <em>Library Sizes for each sample before any processing was undertaken.</em>
 </p>
 </div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plotLibSizes-1">
+Past versions of plotLibSizes-1.png
+</button>
+</p>
+<div id="fig-plotLibSizes-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/39d0381583a1687f9a94ec455f1d3969ae2460a1/docs/figure/QC.Rmd/plotLibSizes-1.png" target="_blank">39d0381</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="gc-content" class="section level2">
 <h2>GC Content</h2>
@@ -695,6 +753,43 @@ plot_grid(
 <em>GC content for R1 and R2 reads. Notably, the R2 reads had clearer spikes in GC content above 70%</em>
 </p>
 </div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-gcPlots-1">
+Past versions of gcPlots-1.png
+</button>
+</p>
+<div id="fig-gcPlots-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/39d0381583a1687f9a94ec455f1d3969ae2460a1/docs/figure/QC.Rmd/gcPlots-1.png" target="_blank">39d0381</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>rawGC &lt;- getModule(rawFqc, &quot;Per_sequence_GC&quot;) %&gt;% 
     group_by(Filename) %&gt;% 
     mutate(Freq = Count / sum(Count)) %&gt;%
@@ -715,10 +810,47 @@ rawGC %&gt;%
 <em>Percentages of each library which contain &gt;70% GC. Using the known theoretical distribution, this should be 0.19% of the total library.</em>
 </p>
 </div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-gcPerc-1">
+Past versions of gcPerc-1.png
+</button>
+</p>
+<div id="fig-gcPerc-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/39d0381583a1687f9a94ec455f1d3969ae2460a1/docs/figure/QC.Rmd/gcPerc-1.png" target="_blank">39d0381</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="over-represented-sequences" class="section level2">
 <h2>Over-represented Sequences</h2>
-<p>The top <a href="../output/top30Overrepresented.fa">30 Overrepresented sequences</a> were analysed using <code>blastn</code> and most were found to be <a href="../output/top30Overrepresented_BlastResults.txt">mitochondrial rRNA sequences</a>.</p>
+<p>The top 30 Overrepresented sequences were analysed using <code>blastn</code> and most were found to be mitochondrial rRNA sequences.</p>
 <pre class="r"><code>getModule(rawFqc, &quot;Overrep&quot;) %&gt;% 
     group_by(Sequence, Possible_Source) %&gt;% 
     summarise(`Found In` = n(), `Highest Percentage` = max(Percentage)) %&gt;% 
@@ -980,6 +1112,43 @@ trimStats &lt;- readTotals(rawFqc) %&gt;%
 <em>CPM obtained for both WT and S4Ter mutant transcripts of psen2</em>
 </p>
 </div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkGenotype-1">
+Past versions of checkGenotype-1.png
+</button>
+</p>
+<div id="fig-checkGenotype-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/39d0381583a1687f9a94ec455f1d3969ae2460a1/docs/figure/QC.Rmd/checkGenotype-1.png" target="_blank">39d0381</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>As all samples demonstrated the expected expression patterns, no mislabelling was detected in this dataset.</p>
 </div>
 <div id="gc-content-1" class="section level2">
@@ -1084,13 +1253,52 @@ plot_grid(
 <em>Comparison of bias introduced by incomplete rRNA removal. Regression lines are shown along with standard error bands for each comparison.</em>
 </p>
 </div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plotBias-1">
+Past versions of plotBias-1.png
+</button>
+</p>
+<div id="fig-plotBias-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/39d0381583a1687f9a94ec455f1d3969ae2460a1/docs/figure/QC.Rmd/plotBias-1.png" target="_blank">39d0381</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="pca" class="section level2">
 <h2>PCA</h2>
+<p>An initial PCA was performed using transcript-level counts to assess general patterns in the data. Transcripts were included if &gt;12 reads over all libraries were allocated to that identifiers. Correlations were checked between the first three components and mean GC content (as described above), mean log<sub>10</sub> transcript length, genotype and the proportion of the initial libraries with GC content &gt; 70%.</p>
+<p>The confounding of genotype and GC variability may need careful handling in this dataset.</p>
 <pre class="r"><code>transDGE &lt;- kallisto$counts %&gt;%
     set_colnames(basename(colnames(.))) %&gt;%
     divide_by(kallisto$annotation$Overdispersion) %&gt;%
-    .[rowSums(.) &gt; 4,] %&gt;%
+    .[rowSums(.) &gt; 12,] %&gt;%
     DGEList(
         samples = tibble(
             sampleName = colnames(.)
@@ -1129,6 +1337,43 @@ plot_grid(
 <p class="caption">
 <em>Correlations between the first three principal components and measured variables. Genotypes were converted to an ordered categorical variable for the purposes of visualisation</em>
 </p>
+</div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-pcaCorrs-1">
+Past versions of pcaCorrs-1.png
+</button>
+</p>
+<div id="fig-pcaCorrs-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/39d0381583a1687f9a94ec455f1d3969ae2460a1/docs/figure/QC.Rmd/pcaCorrs-1.png" target="_blank">39d0381</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <pre class="r"><code>a &lt;- pca$x %&gt;%
     as.data.frame() %&gt;%
@@ -1177,6 +1422,43 @@ plot_grid(
 <p class="caption">
 <em>PCA plot showing genotype, initial GC content &gt; 70% and mean GC content after summarisation to transcript-level.</em>
 </p>
+</div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plotPCA-1">
+Past versions of plotPCA-1.png
+</button>
+</p>
+<div id="fig-plotPCA-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/39d0381583a1687f9a94ec455f1d3969ae2460a1/docs/figure/QC.Rmd/plotPCA-1.png" target="_blank">39d0381</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <br>
 <p>

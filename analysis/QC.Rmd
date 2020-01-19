@@ -156,7 +156,7 @@ rawGC %>%
 
 ## Over-represented Sequences
 
-The top [30 Overrepresented sequences](../output/top30Overrepresented.fa) were analysed using `blastn` and most were found to be [mitochondrial rRNA sequences](../output/top30Overrepresented_BlastResults.txt).
+The top 30 Overrepresented sequences were analysed using `blastn` and most were found to be mitochondrial rRNA sequences.
 
 ```{r}
 getModule(rawFqc, "Overrep") %>% 
@@ -351,11 +351,17 @@ plot_grid(
 
 ## PCA
 
+An initial PCA was performed using transcript-level counts to assess general patterns in the data.
+Transcripts were included if >12 reads over all libraries were allocated to that identifiers.
+Correlations were checked between the first three components and mean GC content (as described above), mean log~10~ transcript length, genotype and the proportion of the initial libraries with GC content > 70%.
+
+The confounding of genotype and GC variability may need careful handling in this dataset.
+
 ```{r transDGE}
 transDGE <- kallisto$counts %>%
     set_colnames(basename(colnames(.))) %>%
     divide_by(kallisto$annotation$Overdispersion) %>%
-    .[rowSums(.) > 4,] %>%
+    .[rowSums(.) > 12,] %>%
     DGEList(
         samples = tibble(
             sampleName = colnames(.)
