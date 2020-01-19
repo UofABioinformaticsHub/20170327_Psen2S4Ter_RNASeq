@@ -103,7 +103,7 @@ This was plotted, with all R2 reads showing a far greater spike in GC content at
 In particular, the mutant samples appeared most significantly affected raising possibility that overall GC content may be affected in these samples.
 
 
-```{r gcPlots, fig.cap="*GC content for R1 and R2 reads. Notably, the R2 reads had clearer spikes in GC content above 70%*", fig.height=7}
+```{r gcPlots, fig.cap="*GC content for R1 and R2 reads. Notably, the R2 reads had clearer spikes in GC content above 70%*", fig.height=5}
 gcPlots <- list(
     r1 = plotGcContent(
         x = rawFqc[r1], 
@@ -314,7 +314,7 @@ From these RLEs, the mean GC and mean length was calculated for each sample, and
 
 Given the more successful rRNA-removal in the wild-type samples, this dataset is likely to contain significant GC and Length bias which is non-biological in origin.
 
-```{r plotBias, fig.cap = "*Comparison of bias introduced by incomplete rRNA removal. Regression lines are shown along with standard error bands for each comparison.*"}
+```{r plotBias, fig.cap = "*Comparison of bias introduced by incomplete rRNA removal. Regression lines are shown along with standard error bands for each comparison.*", fig.width=8, fig.height=4}
 a <- gcSummary %>%
     left_join(rawGC) %>%
     dplyr::filter(reads == "R1") %>%
