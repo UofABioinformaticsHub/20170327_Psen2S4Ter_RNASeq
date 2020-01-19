@@ -1,0 +1,17 @@
+name: "20170327_Psen2S4Ter_RNASeq"
+output_dir: ../docs
+navbar:
+  title: "20170327_Psen2S4Ter_RNASeq"
+  left:
+  - text: Home
+    href: index.html
+  - text: About
+    href: about.html
+  - text: License
+    href: license.html
+output:
+  workflowr::wflow_html:
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+    highlight: textmate
