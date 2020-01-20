@@ -47,16 +47,11 @@ ah <- AnnotationHub() %>%
 	subset(species == "Danio rerio") %>%
 	subset(rdataclass == "EnsDb")
 ensDb <- ah[["AH74989"]]
-grGenes <- genes(ensDb)
 grTrans <- transcripts(ensDb)
 trLengths <- exonsBy(ensDb, "tx") %>%
 	width() %>%
 	vapply(sum, integer(1))
 mcols(grTrans)$length <- trLengths[names(grTrans)]
-rRnaTrans <- grTrans %>%
-    subset(grepl("rRNA", tx_biotype)) %>%
-    mcols() %>%
-    .[["tx_id_version"]]
 ```
 
 

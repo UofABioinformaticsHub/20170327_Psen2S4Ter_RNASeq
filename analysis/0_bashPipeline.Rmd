@@ -1,6 +1,6 @@
 ---
 title: "Description of bash pipeline"
-author: "Steve Ped"
+author: "Steve Pederson"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: workflowr::wflow_html
 editor_options:

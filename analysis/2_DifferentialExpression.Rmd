@@ -1,0 +1,201 @@
+---
+title: "DifferentialExpression"
+author: "Steve Pederson"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+    autodep = TRUE,
+	echo = TRUE,
+	warning = FALSE,
+	message = FALSE
+)
+```
+
+# Setup
+
+```{r loadPackages}
+library(ngsReports)
+library(tidyverse)
+library(magrittr)
+library(edgeR)
+library(AnnotationHub)
+library(ensembldb)
+library(scales)
+library(pander)
+library(cowplot)
+library(cqn)
+```
+
+```{r setOptions}
+if (interactive()) setwd(here::here())
+theme_set(theme_bw())
+panderOptions("big.mark", ",")
+panderOptions("table.split.table", Inf)
+panderOptions("table.style", "rmarkdown")
+twoCols <- c(rgb(0.8, 0.1, 0.1), rgb(0.2, 0.2, 0.8))
+```
+
+## Annotation
+
+```{r annotationSetup}
+ah <- AnnotationHub() %>%
+	subset(species == "Danio rerio") %>%
+	subset(rdataclass == "EnsDb")
+ensDb <- ah[["AH74989"]]
+grTrans <- transcripts(ensDb)
+trLengths <- exonsBy(ensDb, "tx") %>%
+	width() %>%
+	vapply(sum, integer(1))
+mcols(grTrans)$length <- trLengths[names(grTrans)]
+```
+
+
+```{r}
+gcGene <- grTrans %>%
+    mcols() %>%
+    as.data.frame() %>%
+    dplyr::select(gene_id, tx_id, gc_content, length) %>%
+    as_tibble() %>%
+    group_by(gene_id) %>%
+    summarise(
+        gc_content = sum(gc_content*length) / sum(length),
+        length = ceiling(median(length))
+    )
+```
+
+```{r}
+grGenes <- genes(ensDb)
+mcols(grGenes) %<>%
+    as.data.frame() %>%
+    left_join(gcGene) %>%
+    as.data.frame() %>%
+    DataFrame()
+```
+
+Similarly to the Quality Assessment steps, `GRanges` objects were formed at the gene and transcript levels, to enable estimation of GC content and length for each transcript and gene.
+GC content and transcript length are available for each transcript, and for gene-level estimates, GC content was taken as the sum of all GC bases divided by the sum of all transcript lengths.
+Gene length was defined as the median transcript length.
+
+
+```{r samplesAndLabels}
+samples <- read_csv("data/samples.csv") %>%
+    distinct(sampleName, .keep_all = TRUE) %>%
+    dplyr::select(sample = sampleName, sampleID, genotype) %>%
+    mutate(genotype = factor(genotype, levels = c("WT", "Het", "Hom")))
+```
+
+Sample metadata was also loaded, with only the sampleID and genotype being retained. 
+All other fields were considered irrelevant.
+
+### Additional Functions
+
+```{r}
+contLabeller <- as_labeller(
+	c(
+		HetVsWT = "S4Ter/+ Vs +/+",
+		HomVsWT = "S4Ter/S4Ter Vs +/+",
+		HomVsHet = "S4Ter/S4Ter Vs S4Ter/+",
+		Hom = "S4Ter/S4Ter",
+		Het = "S4Ter/+",
+		WT = "+/+"
+	)
+)
+geneLabeller <- structure(grGenes$gene_name, names = grGenes$gene_id) %>%
+	as_labeller()
+```
+
+Labeller functions were additionally defined for plotting using `ggplot2`.
+
+## DGE List
+
+```{r}
+minCPM <- 1
+minSamples <- 4
+dgeList <- file.path("data", "2_alignedData", "featureCounts", "genes.out") %>%
+	read_delim(delim = "\t") %>%
+	set_names(basename(names(.))) %>%
+	as.data.frame() %>%
+	column_to_rownames("Geneid") %>%
+	as.matrix() %>% 
+	set_colnames(str_remove(colnames(.), "Aligned.sortedByCoord.out.bam")) %>%
+	.[rowSums(cpm(.) >= minCPM) >= minCPM,] %>%
+    DGEList(
+        samples = tibble(sample = colnames(.)) %>%
+            left_join(samples),
+        genes = grGenes[rownames(.)] %>%
+            as.data.frame() %>%
+            dplyr::select(
+                chromosome = seqnames, start, end, 
+                gene_id, gene_name, gene_biotype, description, 
+                entrezid, gc_content, length
+                )
+    ) %>%
+    .[!grepl("rRNA", .$genes$gene_biotype),] %>%
+    calcNormFactors()
+```
+
+Gene-level count data as output by `featureCounts`, was loaded and formed into a `DGEList` object.
+During this process, genes were removed if:
+
+- They were not considered as detectable (CPM < `r minCPM` in > `r ncol(dgeList) - minSamples` samples)
+- The `gene_biotype` was any type of `rRNA`.
+
+This returned gene-level counts for `r comma(nrow(dgeList))` genes, with total library sizes between `r pander(comma(range(dgeList$samples$lib.size)))` reads assigned to genes.
+
+### Model Description
+
+```{r}
+d <- model.matrix(~ genotype, data = dgeList$samples) %>%
+    set_colnames(str_remove_all(colnames(.), "genotype"))
+cont <- makeContrasts(
+    HetVsWt = Het,
+    HomVsWt = Hom,
+    HomVsHet = Hom - Het,
+    levels = d
+)
+```
+
+
+### Normalisation
+
+As GC content and length was noted as being of concern for this dataset, *conditional-quantile normalisation* was performed using the `cqn` package.
+This adds a gene and sample-level offset for each count which takes into account any systemic bias, such as that identified previously as an artefact of variable rRNA removal.
+
+```{r}
+dgeCqn <- cqn(
+    counts = dgeList$counts,
+    x = dgeList$genes$gc_content,
+    lengths = dgeList$genes$length
+)
+```
+
+```{r}
+dgeList$offset <- dgeCqn$glm.offset
+dgeList %<>% estimateDisp(design = d)
+```
+
+# Model Fitting
+
+```{r}
+fit <- glmFit(dgeList)
+topTables <- apply(cont, MARGIN = 2, function(x){glmLRT(fit, contrast = x)}) %>% 
+    lapply(topTags, n = Inf) %>% 
+    lapply(extract2, "table") %>% 
+    lapply(as_tibble) %>%
+    lapply(dplyr::select, gene_id, gene_name, logFC, logCPM, PValue, FDR, everything())
+```
+
+```{r}
+topTables$HomVsHet %>%
+    arrange(gc_content) %>%
+    ggplot(aes(logCPM, logFC, colour = gc_content)) +
+    geom_point(alpha = 0.5) +
+    geom_smooth(se = FALSE) +
+    scale_colour_viridis_c()
+```
+
