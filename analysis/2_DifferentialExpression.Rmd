@@ -12,7 +12,8 @@ knitr::opts_chunk$set(
     autodep = TRUE,
 	echo = TRUE,
 	warning = FALSE,
-	message = FALSE
+	message = FALSE,
+    fig.align = "center"
 )
 ```
 
@@ -29,6 +30,9 @@ library(scales)
 library(pander)
 library(cowplot)
 library(cqn)
+library(ggrepel)
+library(tidygraph)
+library(ggraph)
 ```
 
 ```{r setOptions}
@@ -40,13 +44,16 @@ panderOptions("table.style", "rmarkdown")
 twoCols <- c(rgb(0.8, 0.1, 0.1), rgb(0.2, 0.2, 0.8))
 ```
 
-## Annotation
+## Annotations
 
 ```{r annotationSetup}
 ah <- AnnotationHub() %>%
 	subset(species == "Danio rerio") %>%
 	subset(rdataclass == "EnsDb")
 ensDb <- ah[["AH74989"]]
+```
+
+```{r transAnnotation}
 grTrans <- transcripts(ensDb)
 trLengths <- exonsBy(ensDb, "tx") %>%
 	width() %>%
@@ -55,7 +62,7 @@ mcols(grTrans)$length <- trLengths[names(grTrans)]
 ```
 
 
-```{r}
+```{r geneAnnotation}
 gcGene <- grTrans %>%
     mcols() %>%
     as.data.frame() %>%
@@ -66,9 +73,6 @@ gcGene <- grTrans %>%
         gc_content = sum(gc_content*length) / sum(length),
         length = ceiling(median(length))
     )
-```
-
-```{r}
 grGenes <- genes(ensDb)
 mcols(grGenes) %<>%
     as.data.frame() %>%
@@ -78,7 +82,7 @@ mcols(grGenes) %<>%
 ```
 
 Similarly to the Quality Assessment steps, `GRanges` objects were formed at the gene and transcript levels, to enable estimation of GC content and length for each transcript and gene.
-GC content and transcript length are available for each transcript, and for gene-level estimates, GC content was taken as the sum of all GC bases divided by the sum of all transcript lengths.
+GC content and transcript length are available for each transcript, and for gene-level estimates, GC content was taken as the sum of all GC bases divided by the sum of all transcript lengths, effectively averaging across all transcripts.
 Gene length was defined as the median transcript length.
 
 
@@ -92,29 +96,10 @@ samples <- read_csv("data/samples.csv") %>%
 Sample metadata was also loaded, with only the sampleID and genotype being retained. 
 All other fields were considered irrelevant.
 
-### Additional Functions
+## Count Data
 
-```{r}
-contLabeller <- as_labeller(
-	c(
-		HetVsWT = "S4Ter/+ Vs +/+",
-		HomVsWT = "S4Ter/S4Ter Vs +/+",
-		HomVsHet = "S4Ter/S4Ter Vs S4Ter/+",
-		Hom = "S4Ter/S4Ter",
-		Het = "S4Ter/+",
-		WT = "+/+"
-	)
-)
-geneLabeller <- structure(grGenes$gene_name, names = grGenes$gene_id) %>%
-	as_labeller()
-```
-
-Labeller functions were additionally defined for plotting using `ggplot2`.
-
-## DGE List
-
-```{r}
-minCPM <- 1
+```{r dgeList}
+minCPM <- 1.5
 minSamples <- 4
 dgeList <- file.path("data", "2_alignedData", "featureCounts", "genes.out") %>%
 	read_delim(delim = "\t") %>%
@@ -142,19 +127,136 @@ dgeList <- file.path("data", "2_alignedData", "featureCounts", "genes.out") %>%
 Gene-level count data as output by `featureCounts`, was loaded and formed into a `DGEList` object.
 During this process, genes were removed if:
 
-- They were not considered as detectable (CPM < `r minCPM` in > `r ncol(dgeList) - minSamples` samples)
+- They were not considered as detectable (CPM < `r minCPM` in > `r ncol(dgeList) - minSamples` samples). This translates to > `r ceiling(min(minCPM * dgeList$samples$lib.size/1e6))` reads assigned a gene in all samples from one or more of the genotype groups
 - The `gene_biotype` was any type of `rRNA`.
 
-This returned gene-level counts for `r comma(nrow(dgeList))` genes, with total library sizes between `r pander(comma(range(dgeList$samples$lib.size)))` reads assigned to genes.
+These filtering steps returned gene-level counts for `r comma(nrow(dgeList))` genes, with total library sizes between `r pander(comma(range(dgeList$samples$lib.size)))` reads assigned to genes.
+It was noted that these library sizes were about 1.5-fold larger than the transcript-level counts used for the QA steps.
 
-### Model Description
+```{r plotDensities, fig.width=5, fig.cap="*Expression density plots for all samples after filtering, showing logCPM values.*"}
+cpm(dgeList, log = TRUE) %>%
+    as.data.frame() %>%
+    pivot_longer(
+        cols = everything(),
+        names_to = "sample",
+        values_to = "logCPM"
+    ) %>%
+    split(f = .$sample) %>%
+    lapply(function(x){
+        d <- density(x$logCPM)
+        tibble(
+            sample = unique(x$sample),
+            x = d$x,
+            y = d$y
+        )
+    }) %>%
+    bind_rows() %>%
+    left_join(samples) %>%
+    ggplot(aes(x, y, colour = genotype, group = sample)) +
+    geom_line() +
+    labs(
+        x = "logCPM",
+        y = "Density",
+        colour = "Genotype"
+    )
+```
 
-```{r}
-d <- model.matrix(~ genotype, data = dgeList$samples) %>%
+### Additional Functions
+
+```{r labellers}
+contLabeller <- as_labeller(
+	c(
+		HetVsWT = "S4Ter/+ Vs +/+",
+		HomVsWT = "S4Ter/S4Ter Vs +/+",
+		HomVsHet = "S4Ter/S4Ter Vs S4Ter/+",
+		Hom = "S4Ter/S4Ter",
+		Het = "S4Ter/+",
+		WT = "+/+"
+	)
+)
+geneLabeller <- structure(grGenes$gene_name, names = grGenes$gene_id) %>%
+	as_labeller()
+```
+
+Labeller functions for genotypes, contrasts and gene names were additionally defined for simpler plotting using `ggplot2`.
+
+# Analysis
+
+## PCA
+
+```{r pca}
+pca <- dgeList %>%
+    cpm(log = TRUE) %>%
+    t() %>%
+    prcomp() 
+pcaVars <- percent_format(0.1)(summary(pca)$importance["Proportion of Variance",])
+```
+
+
+```{r plotPCA, fig.width=5, fig.cap="*PCA of gene-level counts.*"}
+pca$x %>%
+    as.data.frame() %>%
+    rownames_to_column("sample") %>%
+    left_join(samples) %>%
+    as_tibble() %>%
+    ggplot(aes(PC1, PC2, colour = genotype, fill = genotype)) +
+    geom_point() +
+    geom_text_repel(aes(label = sampleID), show.legend = FALSE) +
+    stat_ellipse(geom = "polygon", alpha = 0.05, show.legend = FALSE) +
+    guides(fill = FALSE) +
+    labs(
+        x = paste0("PC1 (", pcaVars[["PC1"]], ")"),
+        y = paste0("PC2 (", pcaVars[["PC2"]], ")"),
+        colour = "Genotype"
+    )
+```
+
+A Principal Component Analysis (PCA) was also performed using logCPM values from each sample.
+Both mutant genotypes appear to cluster together, however it has previously been noted that GC content appears to track closely with PC1, as a result of varable rRNA removal.
+
+## Model Description
+
+Model and contrast matrices were defined setting each genotype separately, and comparing between each pair of genotypes.
+
+```{r plotLayout, fig.width=4, fig.height=4}
+create_ring(3) %>% 
+    mutate(
+        name = factor(levels(samples$genotype), levels = levels(samples$genotype))
+        ) %>% 
+    activate(edges) %>%
+    mutate(comparison = c("Het Vs WT", "Hom Vs Het", "Hom Vs WT")) %>% 
+    ggraph(layout = "kk") + 
+    geom_edge_link2(
+        aes(label = comparison),
+        angle_calc = "along",
+        label_dodge = unit(0.02, "npc"),
+        start_cap = circle(0.04, "npc"),
+        end_cap = circle(0.04, "npc"),
+        label_size = 5,
+        arrow = arrow(
+            length = unit(0.06, "npc"),
+            ends = "both", 
+            type = "closed"
+        )
+    ) +
+    geom_node_label(
+        aes(label = name, colour = name),
+        size = 5,
+        fill = rgb(1,1,1,0.7)
+    ) + 
+    theme_void() +
+    theme(
+        legend.position = "none"
+    ) 
+```
+
+
+```{r setModelMatrix}
+d <- model.matrix(~ 0 + genotype, data = dgeList$samples) %>%
     set_colnames(str_remove_all(colnames(.), "genotype"))
 cont <- makeContrasts(
-    HetVsWt = Het,
-    HomVsWt = Hom,
+    HetVsWT = Het - WT,
+    HomVsWT = Hom - WT,
     HomVsHet = Hom - Het,
     levels = d
 )
@@ -163,39 +265,82 @@ cont <- makeContrasts(
 
 ### Normalisation
 
-As GC content and length was noted as being of concern for this dataset, *conditional-quantile normalisation* was performed using the `cqn` package.
-This adds a gene and sample-level offset for each count which takes into account any systemic bias, such as that identified previously as an artefact of variable rRNA removal.
 
-```{r}
-dgeCqn <- cqn(
+```{r gcCqn}
+gcCqn <- cqn(
     counts = dgeList$counts,
     x = dgeList$genes$gc_content,
-    lengths = dgeList$genes$length
+    lengths = dgeList$genes$length,
+    sizeFactors = dgeList$samples$lib.size
 )
 ```
 
-```{r}
-dgeList$offset <- dgeCqn$glm.offset
+
+```{r plotCQN, fig.cap ="*Model fits for GC content and gene length under the CQN model. Genotype-specific effects are clearly visible.*"}
+par(mfrow = c(1, 2))
+cols <- as.integer(dgeList$samples$genotype)
+cqnplot(gcCqn, n = 1, xlab = "GC Content", col = cols)
+cqnplot(gcCqn, n = 2, xlab = "Length", col = cols)
+legend("bottomright", legend = levels(samples$genotype), col = seq_along(levels(samples$genotype)), lty = 1)
+par(mfrow = c(1, 1))
+```
+
+
+```{r addOffset}
+dgeList$offset <- gcCqn$glm.offset 
 dgeList %<>% estimateDisp(design = d)
 ```
 
-# Model Fitting
+As GC content and length was noted as being of concern for this dataset, *conditional-quantile normalisation* was performed using the `cqn` package.
+This adds a gene and sample-level offset for each count which takes into account any systemic bias, such as that identified previously as an artefact of variable rRNA removal.
+The resultant `glm.offset` values were added to the original `DGEList` object.
 
-```{r}
+## Model Fitting
+
+```{r fitModel}
 fit <- glmFit(dgeList)
-topTables <- apply(cont, MARGIN = 2, function(x){glmLRT(fit, contrast = x)}) %>% 
-    lapply(topTags, n = Inf) %>% 
-    lapply(extract2, "table") %>% 
-    lapply(as_tibble) %>%
-    lapply(dplyr::select, gene_id, gene_name, logFC, logCPM, PValue, FDR, everything())
+topTables <- colnames(cont) %>%
+    sapply(function(x){
+        glmLRT(fit, contrast = cont[,x]) %>%
+            topTags(n = Inf) %>%
+            .[["table"]] %>%
+            as_tibble() %>%
+            dplyr::select(
+                gene_id, gene_name, logFC, logCPM, PValue, FDR, everything()  
+            ) %>%
+            mutate(
+                comparison = x,
+                DE = FDR < 0.05 & abs(logFC) > 1
+            )
+        },
+        simplify = FALSE) 
 ```
 
-```{r}
-topTables$HomVsHet %>%
-    arrange(gc_content) %>%
-    ggplot(aes(logCPM, logFC, colour = gc_content)) +
-    geom_point(alpha = 0.5) +
+Models were fit using the negative-binomial approaches of `glmFit()`.
+Top Tables were then obtained using pairwise likelihood-ratio tests in `glmLRT()`.
+These test the standard $H_0$ that there is no difference in gene expression estimates between genotypes, the gene expression estimates are obtained under the negative binomial model.
+
+```{r maPlots, fig.height=10, fig.cap="*MA plots checking for any logFC bias across the range of expression values.*"}
+topTables %>%
+    bind_rows() %>%
+    ggplot(aes(logCPM, logFC)) +
+    geom_point(aes(colour = DE), alpha = 0.4) +
     geom_smooth(se = FALSE) +
-    scale_colour_viridis_c()
+    facet_wrap(~comparison, ncol = 1, labeller = contLabeller) +
+    scale_colour_manual(values = c("grey50", "red")) +
+    theme(legend.position = "none")
 ```
+
+
+```{r volcanoPlots, fig.height=5, fig.width=10, fig.cap="*Volcano Plots showing DE genes against logFC.*"}
+topTables %>%
+    bind_rows() %>%
+    ggplot(aes(logFC, -log10(PValue))) +
+    geom_point(aes(colour = DE), alpha = 0.4) +
+    facet_wrap(~comparison, nrow = 1, labeller = contLabeller) +
+    scale_colour_manual(values = c("grey50", "red")) +
+    theme(legend.position = "none")
+```
+
+
 
