@@ -15,4 +15,5 @@ RNAseq was performed on total RNA with $n=4$ samples in each group.
 Sequencing was performed by the sequencing facility at the Centre for Cancer Biology in Adelaide, using a NextSeq.
 Reads were provided in as paired-end, 150bp reads.
 
-1. [Quality Assesment](QC.html)
+1. [Bash Pipeline]()
+2. [Quality Assesment](1_QC.html)

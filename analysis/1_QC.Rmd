@@ -4,7 +4,6 @@ author: "Steve Pederson"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
   html_document: 
-    code_folding: hide
     fig_caption: yes
     number_sections: yes
 ---
@@ -60,8 +59,6 @@ rRnaTrans <- grTrans %>%
     .[["tx_id_version"]]
 ```
 
-In order to perform adequate QC, an `EnsDb` object was obtained for Ensembl release `r ensemblVersion(ensDb)` using the  `AnnotationHub` package.
-This provided the GC content and length for each of the `r comma(length(grTrans))` transcripts contained in that release.
 
 ```{r samplesAndLabels}
 samples <- read_csv("data/samples.csv") %>%
@@ -72,6 +69,9 @@ labels <- structure(
     names = samples$Filename
 )
 ```
+
+In order to perform adequate QC, an `EnsDb` object was obtained for Ensembl release `r ensemblVersion(ensDb)` using the  `AnnotationHub` package.
+This provided the GC content and length for each of the `r comma(length(grTrans))` transcripts contained in that release.
 
 Metadata for each fastq file was also loaded.
 Reads were provided as paired-end reads, with $n=4$ samples for each genotype.

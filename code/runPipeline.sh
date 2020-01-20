@@ -16,10 +16,10 @@
 CORES=12
 
 ## Modules
-# module load FastQC/0.11.7
-# module load STAR/2.7.0d-foss-2016b
-# module load SAMtools/1.3.1-GCC-5.3.0-binutils-2.25
-# module load cutadapt/1.14-foss-2016b-Python-2.7.13
+module load FastQC/0.11.7
+module load STAR/2.7.0d-foss-2016b
+module load SAMtools/1.3.1-GCC-5.3.0-binutils-2.25
+module load cutadapt/1.14-foss-2016b-Python-2.7.13
 module load Subread/1.5.2-foss-2016b
 
 ## Function for checking directories
