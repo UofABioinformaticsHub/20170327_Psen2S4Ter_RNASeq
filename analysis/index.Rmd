@@ -8,11 +8,75 @@ editor_options:
   chunk_output_type: console
 ---
 
-Analysis of RNASeq data from the 3way comparison of WT zebrafish samples with Heterozygous mutants for *psen2^S4Ter^* and Homozygous mutants for *psen2^S4Ter^*.
-This mutant is expected to be a premature termination of the *psen2* gene, but instead an alternate downstream start site resulted in a near full-length transcript with significant similarity to a conventional Early Onset Familial Alzhemier's Disease mutation.
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+    autodep = TRUE,
+	echo = TRUE,
+	warning = FALSE,
+	message = FALSE
+)
+```
 
-RNAseq was performed on total RNA with $n=4$ samples in each group.
-Sequencing was performed by the sequencing facility at the Centre for Cancer Biology in Adelaide, using a NextSeq.
+```{r}
+library(tidyverse)
+library(tidygraph)
+library(ggraph)
+```
+
+```{r}
+samples <- read_csv("data/samples.csv") %>%
+    distinct(sampleName, .keep_all = TRUE) %>%
+    dplyr::select(sample = sampleName, sampleID, genotype) %>%
+    mutate(genotype = factor(genotype, levels = c("WT", "Het", "Hom")))
+```
+
+This dataset is an analysis of RNASeq data from a 3-way comparison of WT zebrafish with Heterozygous mutants (*psen2^S4Ter/+^*) and Homozygous mutants *psen2^S4Ter/S4Ter^*.
+The *psen2^S4Ter^* mutant allele is expected to be a premature termination of the *psen2* gene, but instead an alternate downstream start site resulted in a near full-length transcript with significant similarity to a conventional Early Onset Familial Alzhemier's Disease mutation.
+
+The expected comparisons are shown below:
+
+```{r plotLayout, fig.width=4, fig.height=4}
+create_ring(3) %>% 
+  mutate(
+    name = paste0(levels(samples$genotype), "\n(n = 4)"),
+    name = factor(name, levels = name)
+  ) %>% 
+  activate(edges) %>%
+  mutate(comparison = c("Het Vs WT", "Hom Vs Het", "Hom Vs WT")) %>% 
+  ggraph(layout = "kk") + 
+  geom_edge_link2(
+    aes(label = comparison),
+    angle_calc = "along",
+    label_dodge = unit(0.02, "npc"),
+    start_cap = circle(0.09, "npc"),
+    end_cap = circle(0.09, "npc"),
+    label_size = 5,
+    arrow = arrow(
+      length = unit(0.06, "npc"),
+      ends = "both", 
+      type = "closed"
+    )
+  ) +
+  geom_node_label(
+    aes(label = name, colour = name),
+    size = 5,
+    fill = rgb(1,1,1,0.7),
+    label.padding = unit(0.4, "lines")
+  ) + 
+  scale_y_continuous(expand = expand_scale(0.1)) +
+  scale_x_continuous(expand = expand_scale(0.1)) +
+  theme_void() +
+  theme(
+    legend.position = "none"
+  ) 
+```
+
+All samples were female, 6 months old and raised in the same tank as a family, to minimise variability.
+This age represents sexual maturity and is expected to model a pre-symptomatic brain.
+Fish were all killed and genotyped by tail-clipping on 07-07-2016.
+
+RNAseq was performed on total RNA (i.e. ribo-reduced) from whole brain tissue, with $n=4$ samples in each group.
+Sequencing was performed by the sequencing facility at the Centre for Cancer Biology in Adelaide, using an Illimuna NextSeq.
 Reads were provided in as paired-end, 150bp reads.
 
 1. [Bash Pipeline](0_bashPipeline.html)

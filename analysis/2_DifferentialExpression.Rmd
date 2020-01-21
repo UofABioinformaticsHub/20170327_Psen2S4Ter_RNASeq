@@ -31,8 +31,6 @@ library(pander)
 library(cowplot)
 library(cqn)
 library(ggrepel)
-library(tidygraph)
-library(ggraph)
 ```
 
 ```{r setOptions}
@@ -219,35 +217,7 @@ Both mutant genotypes appear to cluster together, however it has previously been
 Model and contrast matrices were defined setting each genotype separately, and comparing between each pair of genotypes.
 
 ```{r plotLayout, fig.width=4, fig.height=4}
-create_ring(3) %>% 
-    mutate(
-        name = factor(levels(samples$genotype), levels = levels(samples$genotype))
-    ) %>% 
-    activate(edges) %>%
-    mutate(comparison = c("Het Vs WT", "Hom Vs Het", "Hom Vs WT")) %>% 
-    ggraph(layout = "kk") + 
-    geom_edge_link2(
-        aes(label = comparison),
-        angle_calc = "along",
-        label_dodge = unit(0.02, "npc"),
-        start_cap = circle(0.04, "npc"),
-        end_cap = circle(0.04, "npc"),
-        label_size = 5,
-        arrow = arrow(
-            length = unit(0.06, "npc"),
-            ends = "both", 
-            type = "closed"
-        )
-    ) +
-    geom_node_label(
-        aes(label = name, colour = name),
-        size = 5,
-        fill = rgb(1,1,1,0.7)
-    ) + 
-    theme_void() +
-    theme(
-        legend.position = "none"
-    ) 
+knitr::include_graphics("docs/figure/index.Rmd/plotLayout-1.png")
 ```
 
 
@@ -324,7 +294,7 @@ These test the standard $H_0$ that there is no difference in gene expression est
 For initial enrichment testing, genes were considered to be DE using an estimated logFC outside of the range $\pm \log_2(`r 2^minLfc`)$ and an FDR-adjusted p-value < 0.05.
 Using these criteria, the following initial DE genesets were defined:
 
-```{r}
+```{r, eval=FALSE}
 pander(topTables %>% lapply(filter, DE) %>% vapply(nrow, integer(1)))
 ```
 
