@@ -10,9 +10,9 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
     autodep = TRUE,
-	echo = TRUE,
-	warning = FALSE,
-	message = FALSE,
+    echo = TRUE,
+    warning = FALSE,
+    message = FALSE,
     fig.align = "center"
 )
 ```
@@ -48,16 +48,16 @@ twoCols <- c(rgb(0.8, 0.1, 0.1), rgb(0.2, 0.2, 0.8))
 
 ```{r annotationSetup}
 ah <- AnnotationHub() %>%
-	subset(species == "Danio rerio") %>%
-	subset(rdataclass == "EnsDb")
+    subset(species == "Danio rerio") %>%
+    subset(rdataclass == "EnsDb")
 ensDb <- ah[["AH74989"]]
 ```
 
 ```{r transAnnotation}
 grTrans <- transcripts(ensDb)
 trLengths <- exonsBy(ensDb, "tx") %>%
-	width() %>%
-	vapply(sum, integer(1))
+    width() %>%
+    vapply(sum, integer(1))
 mcols(grTrans)$length <- trLengths[names(grTrans)]
 ```
 
@@ -102,13 +102,13 @@ All other fields were considered irrelevant.
 minCPM <- 1.5
 minSamples <- 4
 dgeList <- file.path("data", "2_alignedData", "featureCounts", "genes.out") %>%
-	read_delim(delim = "\t") %>%
-	set_names(basename(names(.))) %>%
-	as.data.frame() %>%
-	column_to_rownames("Geneid") %>%
-	as.matrix() %>% 
-	set_colnames(str_remove(colnames(.), "Aligned.sortedByCoord.out.bam")) %>%
-	.[rowSums(cpm(.) >= minCPM) >= minCPM,] %>%
+    read_delim(delim = "\t") %>%
+    set_names(basename(names(.))) %>%
+    as.data.frame() %>%
+    column_to_rownames("Geneid") %>%
+    as.matrix() %>% 
+    set_colnames(str_remove(colnames(.), "Aligned.sortedByCoord.out.bam")) %>%
+    .[rowSums(cpm(.) >= minCPM) >= minCPM,] %>%
     DGEList(
         samples = tibble(sample = colnames(.)) %>%
             left_join(samples),
@@ -118,7 +118,7 @@ dgeList <- file.path("data", "2_alignedData", "featureCounts", "genes.out") %>%
                 chromosome = seqnames, start, end, 
                 gene_id, gene_name, gene_biotype, description, 
                 entrezid, gc_content, length
-                )
+            )
     ) %>%
     .[!grepl("rRNA", .$genes$gene_biotype),] %>%
     calcNormFactors()
@@ -165,17 +165,17 @@ cpm(dgeList, log = TRUE) %>%
 
 ```{r labellers}
 contLabeller <- as_labeller(
-	c(
-		HetVsWT = "S4Ter/+ Vs +/+",
-		HomVsWT = "S4Ter/S4Ter Vs +/+",
-		HomVsHet = "S4Ter/S4Ter Vs S4Ter/+",
-		Hom = "S4Ter/S4Ter",
-		Het = "S4Ter/+",
-		WT = "+/+"
-	)
+    c(
+        HetVsWT = "S4Ter/+ Vs +/+",
+        HomVsWT = "S4Ter/S4Ter Vs +/+",
+        HomVsHet = "S4Ter/S4Ter Vs S4Ter/+",
+        Hom = "S4Ter/S4Ter",
+        Het = "S4Ter/+",
+        WT = "+/+"
+    )
 )
 geneLabeller <- structure(grGenes$gene_name, names = grGenes$gene_id) %>%
-	as_labeller()
+    as_labeller()
 ```
 
 Labeller functions for genotypes, contrasts and gene names were additionally defined for simpler plotting using `ggplot2`.
@@ -222,7 +222,7 @@ Model and contrast matrices were defined setting each genotype separately, and c
 create_ring(3) %>% 
     mutate(
         name = factor(levels(samples$genotype), levels = levels(samples$genotype))
-        ) %>% 
+    ) %>% 
     activate(edges) %>%
     mutate(comparison = c("Het Vs WT", "Hom Vs Het", "Hom Vs WT")) %>% 
     ggraph(layout = "kk") + 
@@ -313,8 +313,8 @@ topTables <- colnames(cont) %>%
                 comparison = x,
                 DE = FDR < 0.05 & abs(logFC) > minLfc
             )
-        },
-        simplify = FALSE) 
+    },
+    simplify = FALSE) 
 ```
 
 Models were fit using the negative-binomial approaches of `glmFit()`.
@@ -363,7 +363,7 @@ topTables %>%
     labs(
         x = "GC content (%)",
         y = "Ranking Statistic"
-    )
+    ) +
     coord_cartesian(ylim = c(-10, 10)) +
     scale_colour_manual(values = c("grey50", "red")) +
     theme(legend.position = "none")
