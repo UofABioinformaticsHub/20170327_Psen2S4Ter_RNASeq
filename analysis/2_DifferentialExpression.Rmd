@@ -298,6 +298,7 @@ The resultant `glm.offset` values were added to the original `DGEList` object.
 ## Model Fitting
 
 ```{r fitModel}
+minLfc <- log2(1.5)
 fit <- glmFit(dgeList)
 topTables <- colnames(cont) %>%
     sapply(function(x){
@@ -310,7 +311,7 @@ topTables <- colnames(cont) %>%
             ) %>%
             mutate(
                 comparison = x,
-                DE = FDR < 0.05 & abs(logFC) > 1
+                DE = FDR < 0.05 & abs(logFC) > minLfc
             )
         },
         simplify = FALSE) 
@@ -320,26 +321,93 @@ Models were fit using the negative-binomial approaches of `glmFit()`.
 Top Tables were then obtained using pairwise likelihood-ratio tests in `glmLRT()`.
 These test the standard $H_0$ that there is no difference in gene expression estimates between genotypes, the gene expression estimates are obtained under the negative binomial model.
 
-```{r maPlots, fig.height=10, fig.cap="*MA plots checking for any logFC bias across the range of expression values.*"}
+For initial enrichment testing, genes were considered to be DE using an estimated logFC outside of the range $\pm \log_2(`r 2^minLfc`)$ and an FDR-adjusted p-value < 0.05.
+Using these criteria, the following initial DE genesets were defined:
+
+```{r}
+pander(topTables %>% lapply(filter, DE) %>% vapply(nrow, integer(1)))
+```
+
+
+## Model Checking
+
+```{r maPlots, fig.height=8, fig.cap="*MA plots checking for any logFC bias across the range of expression values. The small curve in the average at the low end of expression values was considered to be an artefact of the sparse points at this end. Initial DE genes are shown in red, with select points labelled.*"}
 topTables %>%
     bind_rows() %>%
     ggplot(aes(logCPM, logFC)) +
     geom_point(aes(colour = DE), alpha = 0.4) +
+    geom_text_repel(
+        aes(label = gene_name, colour = DE),
+        data = . %>% dplyr::filter(DE & abs(logFC) > 2.8)
+    ) +
+    geom_text_repel(
+        aes(label = gene_name, colour = DE),
+        data = . %>% dplyr::filter(FDR < 0.05 & comparison == "HomVsHet")
+    ) +
     geom_smooth(se = FALSE) +
     facet_wrap(~comparison, ncol = 1, labeller = contLabeller) +
+    scale_y_continuous(breaks = seq(-8, 8, by = 2)) +
     scale_colour_manual(values = c("grey50", "red")) +
     theme(legend.position = "none")
 ```
 
 
+```{r checkGCBias, fig.height=5, fig.width=10, fig.cap="*Checks for GC bias in differential expression. GC content is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change.*"}
+topTables %>%
+    bind_rows() %>%
+    mutate(stat = -sign(logFC)*log10(PValue)) %>%
+    ggplot(aes(gc_content, stat)) +
+    geom_point(aes(colour = DE)) +
+    geom_smooth(se = FALSE) +
+    facet_wrap(~comparison, labeller = contLabeller)  +
+    labs(
+        x = "GC content (%)",
+        y = "Ranking Statistic"
+    )
+    coord_cartesian(ylim = c(-10, 10)) +
+    scale_colour_manual(values = c("grey50", "red")) +
+    theme(legend.position = "none")
+```
+
+```{r checkLengthBias, fig.height=5, fig.width=10, fig.cap="*Checks for length bias in differential expression. Gene length is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change.*"}
+topTables %>%
+    bind_rows() %>%
+    mutate(stat = -sign(logFC)*log10(PValue)) %>%
+    ggplot(aes(length, stat)) +
+    geom_point(aes(colour = DE)) +
+    geom_smooth(se = FALSE) +
+    facet_wrap(~comparison, labeller = contLabeller)  +
+    labs(
+        x = "Gene Length (bp)",
+        y = "Ranking Statistic"
+    ) +
+    coord_cartesian(ylim = c(-10, 10)) +
+    scale_x_log10(labels = comma) +
+    scale_colour_manual(values = c("grey50", "red")) +
+    theme(legend.position = "none")
+```
+
+Checks for both GC and length bias on differnetial expression showed that a small bias remained evident, despite using conditional-quantile normalisation.
+
+# Results
+
 ```{r volcanoPlots, fig.height=5, fig.width=10, fig.cap="*Volcano Plots showing DE genes against logFC.*"}
 topTables %>%
     bind_rows() %>%
-    ggplot(aes(logFC, -log10(PValue))) +
-    geom_point(aes(colour = DE), alpha = 0.4) +
+    ggplot(aes(logFC, -log10(PValue), colour = DE)) +
+    geom_point(alpha = 0.4) +
+    geom_text_repel(
+        aes(label = gene_name),
+        data = . %>% dplyr::filter(PValue < 0.2e-12 | logFC > 4)
+    ) +
+    geom_text_repel(
+        aes(label = gene_name),
+        data = . %>% dplyr::filter(FDR < 0.05 & comparison == "HomVsHet")
+    ) +
     facet_wrap(~comparison, nrow = 1, labeller = contLabeller) +
     scale_colour_manual(values = c("grey50", "red")) +
-    theme(legend.position = "none")
+    scale_x_continuous(breaks = seq(-8, 8, by = 2)) +
+    theme(legend.position = "none") 
 ```
 
 
