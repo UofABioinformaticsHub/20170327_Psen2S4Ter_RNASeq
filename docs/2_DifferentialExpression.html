@@ -503,10 +503,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtreeaabb5708d27867bd0815852e026fa2849d9336d2targetblankaabb570a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/aabb5708d27867bd0815852e026fa2849d9336d2" target="_blank">aabb570</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree10a285b55e3d5e8c883f78710a0a9f9dd3a6e75atargetblank10a285ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/10a285b55e3d5e8c883f78710a0a9f9dd3a6e75a" target="_blank">10a285b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtreeaabb5708d27867bd0815852e026fa2849d9336d2targetblankaabb570a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree10a285b55e3d5e8c883f78710a0a9f9dd3a6e75atargetblank10a285ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -516,12 +516,8 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
 
-Untracked files:
-    Untracked:  analysis/figure/
-
 Unstaged changes:
     Modified:   analysis/2_DifferentialExpression.Rmd
-    Modified:   analysis/index.Rmd
 
 </code></pre>
 <p>
@@ -560,6 +556,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/10a285b55e3d5e8c883f78710a0a9f9dd3a6e75a/analysis/2_DifferentialExpression.Rmd" target="_blank">10a285b</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-22
+</td>
+<td>
+Expanded description in index and tried reusing an image
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/10a285b55e3d5e8c883f78710a0a9f9dd3a6e75a/docs/2_DifferentialExpression.html" target="_blank">10a285b</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-22
+</td>
+<td>
+Expanded description in index and tried reusing an image
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -698,7 +728,8 @@ library(scales)
 library(pander)
 library(cowplot)
 library(cqn)
-library(ggrepel)</code></pre>
+library(ggrepel)
+library(UpSetR)</code></pre>
 <pre class="r"><code>if (interactive()) setwd(here::here())
 theme_set(theme_bw())
 panderOptions(&quot;big.mark&quot;, &quot;,&quot;)
@@ -928,8 +959,44 @@ Steve Ped
 <div id="model-description" class="section level2">
 <h2>Model Description</h2>
 <p>Model and contrast matrices were defined setting each genotype separately, and comparing between each pair of genotypes.</p>
-<pre class="r"><code>knitr::include_graphics(&quot;docs/figure/index.Rmd/plotLayout-1.png&quot;)</code></pre>
-<p><img src="docs/figure/index.Rmd/plotLayout-1.png" style="display: block; margin: auto;" /></p>
+<p><img src="figure/index.Rmd/plotLayout-1.png" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plotLayout-1">
+Past versions of plotLayout-1.png
+</button>
+</p>
+<div id="fig-plotLayout-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/10a285b55e3d5e8c883f78710a0a9f9dd3a6e75a/docs/figure/index.Rmd/plotLayout-1.png" target="_blank">10a285b</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-22
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>d &lt;- model.matrix(~ 0 + genotype, data = dgeList$samples) %&gt;%
     set_colnames(str_remove_all(colnames(.), &quot;genotype&quot;))
 cont &lt;- makeContrasts(
@@ -940,6 +1007,7 @@ cont &lt;- makeContrasts(
 )</code></pre>
 <div id="normalisation" class="section level3">
 <h3>Normalisation</h3>
+<p>As GC content and length was noted as being of concern for this dataset, <em>conditional-quantile normalisation</em> was performed using the <code>cqn</code> package. This adds a gene and sample-level offset for each count which takes into account any systemic bias, such as that identified previously as an artefact of variable rRNA removal. The resultant <code>glm.offset</code> values were added to the original <code>DGEList</code> object.</p>
 <pre class="r"><code>gcCqn &lt;- cqn(
     counts = dgeList$counts,
     x = dgeList$genes$gc_content,
@@ -997,12 +1065,12 @@ Steve Ped
 <pre class="r"><code>par(mfrow = c(1, 1))</code></pre>
 <pre class="r"><code>dgeList$offset &lt;- gcCqn$glm.offset 
 dgeList %&lt;&gt;% estimateDisp(design = d)</code></pre>
-<p>As GC content and length was noted as being of concern for this dataset, <em>conditional-quantile normalisation</em> was performed using the <code>cqn</code> package. This adds a gene and sample-level offset for each count which takes into account any systemic bias, such as that identified previously as an artefact of variable rRNA removal. The resultant <code>glm.offset</code> values were added to the original <code>DGEList</code> object.</p>
 </div>
 </div>
 <div id="model-fitting" class="section level2">
 <h2>Model Fitting</h2>
 <pre class="r"><code>minLfc &lt;- log2(1.5)
+alpha &lt;- 0.01
 fit &lt;- glmFit(dgeList)
 topTables &lt;- colnames(cont) %&gt;%
     sapply(function(x){
@@ -1015,35 +1083,51 @@ topTables &lt;- colnames(cont) %&gt;%
             ) %&gt;%
             mutate(
                 comparison = x,
-                DE = FDR &lt; 0.05 &amp; abs(logFC) &gt; minLfc
+                DE = FDR &lt; alpha &amp; abs(logFC) &gt; minLfc
             )
     },
     simplify = FALSE) </code></pre>
 <p>Models were fit using the negative-binomial approaches of <code>glmFit()</code>. Top Tables were then obtained using pairwise likelihood-ratio tests in <code>glmLRT()</code>. These test the standard <span class="math inline">\(H_0\)</span> that there is no difference in gene expression estimates between genotypes, the gene expression estimates are obtained under the negative binomial model.</p>
-<p>For initial enrichment testing, genes were considered to be DE using an estimated logFC outside of the range <span class="math inline">\(\pm \log_2(1.5)\)</span> and an FDR-adjusted p-value &lt; 0.05. Using these criteria, the following initial DE genesets were defined:</p>
-<pre class="r"><code>pander(topTables %&gt;% lapply(filter, DE) %&gt;% vapply(nrow, integer(1)))</code></pre>
+<pre class="r"><code>alpha2 &lt;- 0.05
+topTables %&lt;&gt;% 
+  bind_rows() %&gt;% 
+  split(f = .$gene_id) %&gt;% 
+  lapply(function(x){mutate(x, DE = any(DE) &amp; FDR &lt; alpha2)}) %&gt;%
+  bind_rows() %&gt;%
+  split(f = .$comparison)</code></pre>
+<p>For enrichment testing, genes were initially considered to be DE using an estimated logFC outside of the range <span class="math inline">\(\pm \log_2(1.5)\)</span> and an FDR-adjusted p-value &lt; 0.01. For genes in any of these initial lists, the logFC filter was subsequently removed from subsequent comparisons in order to minimise issues introduced by the use of a hard cutoff. Similarly the FDR threshold was raised to 0.05 in secondary comparisons for genes which passed the initial round of selection.</p>
+<p>Using these criteria, the following initial DE genesets were defined:</p>
+<pre class="r"><code>topTables %&gt;%
+  lapply(dplyr::filter, DE) %&gt;% 
+  vapply(nrow, integer(1)) %&gt;%
+  pander()</code></pre>
 </div>
 <div id="model-checking" class="section level2">
 <h2>Model Checking</h2>
 <pre class="r"><code>topTables %&gt;%
-    bind_rows() %&gt;%
-    ggplot(aes(logCPM, logFC)) +
-    geom_point(aes(colour = DE), alpha = 0.4) +
-    geom_text_repel(
-        aes(label = gene_name, colour = DE),
-        data = . %&gt;% dplyr::filter(DE &amp; abs(logFC) &gt; 2.8)
-    ) +
-    geom_text_repel(
-        aes(label = gene_name, colour = DE),
-        data = . %&gt;% dplyr::filter(FDR &lt; 0.05 &amp; comparison == &quot;HomVsHet&quot;)
-    ) +
-    geom_smooth(se = FALSE) +
-    facet_wrap(~comparison, ncol = 1, labeller = contLabeller) +
-    scale_y_continuous(breaks = seq(-8, 8, by = 2)) +
-    scale_colour_manual(values = c(&quot;grey50&quot;, &quot;red&quot;)) +
-    theme(legend.position = &quot;none&quot;)</code></pre>
+  bind_rows() %&gt;%
+  ggplot(aes(logCPM, logFC)) +
+  geom_point(aes(colour = DE), alpha = 0.4) +
+  geom_text_repel(
+    aes(label = gene_name, colour = DE),
+    data = . %&gt;% dplyr::filter(DE &amp; abs(logFC) &gt; 3)
+  ) +
+  geom_text_repel(
+    aes(label = gene_name, colour = DE),
+    data = . %&gt;% dplyr::filter(FDR &lt; 0.05 &amp; comparison == &quot;HomVsHet&quot;)
+  ) +
+  geom_smooth(se = FALSE) +
+  geom_hline(
+    yintercept = c(-1, 1)*minLfc,
+    linetype = 2,
+    colour = &quot;red&quot;
+  ) +
+  facet_wrap(~comparison, nrow = 1, labeller = contLabeller) +
+  scale_y_continuous(breaks = seq(-8, 8, by = 2)) +
+  scale_colour_manual(values = c(&quot;grey50&quot;, &quot;red&quot;)) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
 <div class="figure" style="text-align: center">
-<img src="figure/2_DifferentialExpression.Rmd/maPlots-1.png" alt="*MA plots checking for any logFC bias across the range of expression values. The small curve in the average at the low end of expression values was considered to be an artefact of the sparse points at this end. Initial DE genes are shown in red, with select points labelled.*" width="672" />
+<img src="figure/2_DifferentialExpression.Rmd/maPlots-1.png" alt="*MA plots checking for any logFC bias across the range of expression values. The small curve in the average at the low end of expression values was considered to be an artefact of the sparse points at this end. Initial DE genes are shown in red, with select points labelled.*" width="960" />
 <p class="caption">
 <em>MA plots checking for any logFC bias across the range of expression values. The small curve in the average at the low end of expression values was considered to be an artefact of the sparse points at this end. Initial DE genes are shown in red, with select points labelled.</em>
 </p>
@@ -1100,7 +1184,7 @@ Steve Ped
     bind_rows() %&gt;%
     mutate(stat = -sign(logFC)*log10(PValue)) %&gt;%
     ggplot(aes(gc_content, stat)) +
-    geom_point(aes(colour = DE)) +
+    geom_point(aes(colour = DE), alpha = 0.4) +
     geom_smooth(se = FALSE) +
     facet_wrap(~comparison, labeller = contLabeller)  +
     labs(
@@ -1111,9 +1195,9 @@ Steve Ped
     scale_colour_manual(values = c(&quot;grey50&quot;, &quot;red&quot;)) +
     theme(legend.position = &quot;none&quot;)</code></pre>
 <div class="figure" style="text-align: center">
-<img src="figure/2_DifferentialExpression.Rmd/checkGCBias-1.png" alt="*Checks for GC bias in differential expression. GC content is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change.*" width="960" />
+<img src="figure/2_DifferentialExpression.Rmd/checkGCBias-1.png" alt="*Checks for GC bias in differential expression. GC content is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change. A small amount of bias was noted particularly in the comparison between homozygous mutants and wild-type.*" width="960" />
 <p class="caption">
-<em>Checks for GC bias in differential expression. GC content is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change.</em>
+<em>Checks for GC bias in differential expression. GC content is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change. A small amount of bias was noted particularly in the comparison between homozygous mutants and wild-type.</em>
 </p>
 </div>
 <p>
@@ -1157,7 +1241,7 @@ Steve Ped
     bind_rows() %&gt;%
     mutate(stat = -sign(logFC)*log10(PValue)) %&gt;%
     ggplot(aes(length, stat)) +
-    geom_point(aes(colour = DE)) +
+    geom_point(aes(colour = DE), alpha = 0.4) +
     geom_smooth(se = FALSE) +
     facet_wrap(~comparison, labeller = contLabeller)  +
     labs(
@@ -1169,9 +1253,9 @@ Steve Ped
     scale_colour_manual(values = c(&quot;grey50&quot;, &quot;red&quot;)) +
     theme(legend.position = &quot;none&quot;)</code></pre>
 <div class="figure" style="text-align: center">
-<img src="figure/2_DifferentialExpression.Rmd/checkLengthBias-1.png" alt="*Checks for length bias in differential expression. Gene length is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change.*" width="960" />
+<img src="figure/2_DifferentialExpression.Rmd/checkLengthBias-1.png" alt="*Checks for length bias in differential expression. Gene length is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change. Again, a small amount of bias was noted particularly in the comparison between homozygous mutants and wild-type.*" width="960" />
 <p class="caption">
-<em>Checks for length bias in differential expression. Gene length is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change.</em>
+<em>Checks for length bias in differential expression. Gene length is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change. Again, a small amount of bias was noted particularly in the comparison between homozygous mutants and wild-type.</em>
 </p>
 </div>
 <p>
@@ -1211,7 +1295,7 @@ Steve Ped
 </table>
 </div>
 </div>
-<p>Checks for both GC and length bias on differnetial expression showed that a small bias remained evident, despite using conditional-quantile normalisation.</p>
+<p>Checks for both GC and length bias on differential expression showed that a small bias remained evident, despite using conditional-quantile normalisation. However, manual checking against the same dataset <strong>excluding the CQN steps</strong> revealed vastly different and exaggerated bias (<em>not shown</em>). As such, the impact of CQN normalisation was considered to be appropriate.</p>
 </div>
 </div>
 <div id="results" class="section level1">
@@ -1228,10 +1312,15 @@ Steve Ped
         aes(label = gene_name),
         data = . %&gt;% dplyr::filter(FDR &lt; 0.05 &amp; comparison == &quot;HomVsHet&quot;)
     ) +
-    facet_wrap(~comparison, nrow = 1, labeller = contLabeller) +
-    scale_colour_manual(values = c(&quot;grey50&quot;, &quot;red&quot;)) +
-    scale_x_continuous(breaks = seq(-8, 8, by = 2)) +
-    theme(legend.position = &quot;none&quot;) </code></pre>
+  geom_vline(
+    xintercept = c(-1, 1)*minLfc,
+    linetype = 2,
+    colour = &quot;red&quot;
+  ) +
+  facet_wrap(~comparison, nrow = 1, labeller = contLabeller) +
+  scale_colour_manual(values = c(&quot;grey50&quot;, &quot;red&quot;)) +
+  scale_x_continuous(breaks = seq(-8, 8, by = 2)) +
+  theme(legend.position = &quot;none&quot;) </code></pre>
 <div class="figure" style="text-align: center">
 <img src="figure/2_DifferentialExpression.Rmd/volcanoPlots-1.png" alt="*Volcano Plots showing DE genes against logFC.*" width="960" />
 <p class="caption">
@@ -1286,6 +1375,128 @@ Steve Ped
 </table>
 </div>
 </div>
+<pre class="r"><code>deGenes &lt;- topTables %&gt;%
+  lapply(dplyr::filter, DE) %&gt;%
+  lapply(magrittr::extract2, &quot;gene_id&quot;) </code></pre>
+<pre class="r"><code>upSet &lt;- deGenes %&gt;%
+  fromList() %&gt;%
+  upset(order.by = &quot;freq&quot;)
+upSet</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/2_DifferentialExpression.Rmd/upSetPlot-1.png" alt="UpSet plot showing the common genes from each comparison. A strong overlap was seen between both Mutant Vs WT comparisons." width="672" />
+<p class="caption">
+UpSet plot showing the common genes from each comparison. A strong overlap was seen between both Mutant Vs WT comparisons.
+</p>
+</div>
+<pre class="r"><code>grps &lt;- deGenes %&gt;%
+  with(
+    list(
+      common = intersect(HetVsWT, HomVsWT),
+      onlyHet = intersect(HetVsWT, HomVsHet),
+      onlyHom = intersect(HomVsWT, HomVsHet)
+    )
+  )</code></pre>
+<div id="common-genes" class="section level2">
+<h2>Common Genes</h2>
+<p>A set of 1,484 genes was identified as commonly DE for both Mutant Vs WT comparisons. Given that no difference was detected between mutants for this group, this was considered to be the common signature.</p>
+<pre class="r"><code>topTables %&gt;% 
+  bind_rows() %&gt;% 
+  dplyr::filter(grepl(&quot;WT&quot;, comparison)) %&gt;%
+  dplyr::select(starts_with(&quot;gene&quot;), logFC, logCPM, comparison) %&gt;%
+  pivot_wider(names_from = comparison, values_from = logFC) %&gt;%
+  mutate(group = case_when(
+    gene_id %in% grps$common ~ &quot;Common&quot;,
+    gene_id %in% grps$onlyHet ~ &quot;Het Only&quot;,
+    gene_id %in% grps$onlyHom ~ &quot;Hom Only&quot;,
+    !gene_id %in% unlist(grps) ~ &quot;No Group&quot;
+  )) %&gt;%
+  dplyr::filter(logCPM &gt; 0) %&gt;%
+  arrange(desc(group)) %&gt;%
+  ggplot(aes(HetVsWT, HomVsWT)) + 
+  geom_point(aes(colour = group, alpha = logCPM)) + 
+  geom_text_repel(
+    aes(label = gene_name, colour = group, alpha = logCPM),
+    data = . %&gt;% 
+      dplyr::filter(
+        group == &quot;Common&quot;,
+        HomVsWT &lt; -2.2 | HomVsWT &gt; 2 | HetVsWT &gt; 1.9
+      ),
+    show.legend = FALSE
+  ) +
+  geom_text_repel(
+    aes(label = gene_name, colour = group, alpha = logCPM),
+    data = . %&gt;% 
+      dplyr::filter(
+        grepl(&quot;Only&quot;, group)
+      ),
+    show.legend = FALSE
+  ) +
+  geom_smooth(se = FALSE, method = &quot;lm&quot;) +
+  geom_hline(
+    yintercept = c(-1, 1)*minLfc,
+    linetype = 2,
+    colour = &quot;grey50&quot;
+  ) +
+  geom_vline(
+    xintercept = c(-1, 1)*minLfc,
+    linetype = 2,
+    colour = &quot;grey50&quot;
+  ) +
+  scale_colour_manual(
+    values = c(
+      rgb(0.2, 0.8, 0.2), &quot;blue&quot;, &quot;red&quot;, rgb(0.5, 0.5, 0.5, 0.5)
+    )
+  ) +
+  scale_x_continuous(breaks = seq(-8, 8, by = 2)) +
+  scale_alpha_continuous(trans = &quot;sqrt&quot;)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/2_DifferentialExpression.Rmd/plotLfcComparisons-1.png" alt="*Comparison of logFC estimates for both Mutant Vs WT comparisons.*" width="480" />
+<p class="caption">
+<em>Comparison of logFC estimates for both Mutant Vs WT comparisons.</em>
+</p>
+</div>
+<pre class="r"><code>dgeList %&gt;%
+  cpm(log = TRUE) %&gt;%
+  .[grps$common,] %&gt;%
+  pheatmap::pheatmap(
+    scale = &quot;none&quot;, 
+    color = viridis_pal()(100),
+    labels_col = colnames(.) %&gt;%
+      str_replace_all(&quot;.+(Het|Hom|WT).+F3(_[0-9]{2}).+&quot;, &quot;\\1\\2&quot;),
+    show_rownames = FALSE,
+    annotation_col = samples %&gt;%
+      dplyr::select(sample, Genotype = genotype) %&gt;%
+      as.data.frame() %&gt;%
+      column_to_rownames(&quot;sample&quot;)
+  )</code></pre>
+<p><img src="figure/2_DifferentialExpression.Rmd/commonSummaryHeatmap-1.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>dgeList %&gt;%
+  cpm(log = TRUE) %&gt;% 
+  extract(
+    topTables %&gt;%
+      .[c(&quot;HetVsWT&quot;, &quot;HomVsWT&quot;)] %&gt;%
+      bind_rows() %&gt;%
+      dplyr::filter(gene_id %in% grps$common) %&gt;%
+      group_by(gene_id) %&gt;%
+      mutate(minLfc = min(abs(logFC)), minFDR = min(FDR)) %&gt;%
+      ungroup() %&gt;%
+      dplyr::arrange(minFDR, desc(minLfc)) %&gt;%
+      distinct(gene_id) %&gt;%
+      dplyr::slice(1:20) %&gt;%
+      unlist(),
+  ) %&gt;%
+  as.data.frame() %&gt;%
+  rownames_to_column(&quot;gene_id&quot;) %&gt;%
+  pivot_longer(
+    cols = starts_with(&quot;PS2Ex&quot;),
+    names_to = &quot;sample&quot;,
+    values_to = &quot;CPM&quot;
+  ) %&gt;%
+  left_join(samples) %&gt;%
+  ggplot(aes(genotype, CPM, fill = genotype)) +
+  geom_boxplot() +
+  facet_wrap(~gene_id, scales = &quot;free_y&quot;, labeller = geneLabeller)</code></pre>
+<p><img src="figure/2_DifferentialExpression.Rmd/plotTopCommon-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1366,6 +1577,7 @@ Steve Ped
  ggrepel                * 0.8.1     2019-05-07 [2] CRAN (R 3.6.0)
  git2r                    0.26.1    2019-06-29 [2] CRAN (R 3.6.1)
  glue                     1.3.1     2019-03-12 [2] CRAN (R 3.6.0)
+ gridExtra                2.3       2017-09-09 [2] CRAN (R 3.6.0)
  gtable                   0.3.0     2019-03-25 [2] CRAN (R 3.6.0)
  haven                    2.2.0     2019-11-08 [2] CRAN (R 3.6.1)
  highr                    0.8       2019-03-20 [2] CRAN (R 3.6.0)
@@ -1407,6 +1619,7 @@ Steve Ped
  nor1mix                * 1.3-0     2019-06-13 [2] CRAN (R 3.6.1)
  openssl                  1.4.1     2019-07-18 [2] CRAN (R 3.6.1)
  pander                 * 0.6.3     2018-11-06 [2] CRAN (R 3.6.0)
+ pheatmap                 1.0.12    2019-01-04 [2] CRAN (R 3.6.0)
  pillar                   1.4.3     2019-12-20 [2] CRAN (R 3.6.2)
  pkgbuild                 1.0.6     2019-10-09 [2] CRAN (R 3.6.1)
  pkgconfig                2.0.3     2019-09-22 [2] CRAN (R 3.6.1)
@@ -1457,6 +1670,7 @@ Steve Ped
  tidyselect               0.2.5     2018-10-11 [2] CRAN (R 3.6.0)
  tidyverse              * 1.3.0     2019-11-21 [2] CRAN (R 3.6.1)
  truncnorm                1.0-8     2018-02-27 [2] CRAN (R 3.6.0)
+ UpSetR                 * 1.4.0     2019-05-22 [2] CRAN (R 3.6.0)
  usethis                  1.5.1     2019-07-04 [2] CRAN (R 3.6.1)
  vctrs                    0.2.1     2019-12-17 [2] CRAN (R 3.6.2)
  viridisLite              0.3.0     2018-02-01 [2] CRAN (R 3.6.0)
@@ -1478,6 +1692,7 @@ Steve Ped
 [2] /usr/local/lib/R/site-library
 [3] /usr/lib/R/site-library
 [4] /usr/lib/R/library</code></pre>
+</div>
 </div>
 </div>
 
