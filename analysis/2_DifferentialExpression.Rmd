@@ -1,5 +1,5 @@
 ---
-title: "DifferentialExpression"
+title: "Differential Expression"
 author: "Steve Pederson"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: workflowr::wflow_html
@@ -184,7 +184,7 @@ contLabeller <- as_labeller(
         Hom = "S4Ter/S4Ter",
         Het = "S4Ter/+",
         WT = "+/+",
-        mutant = "Mutant Vs Wildtype",
+        mutant = "Mutant Vs Wild-type",
         homozygous = "Difference between mutants"
     )
 )
@@ -229,7 +229,7 @@ pca$x %>%
 ```
 
 A Principal Component Analysis (PCA) was also performed using logCPM values from each sample.
-Both mutant genotypes appear to cluster together, however it has previously been noted that GC content appears to track closely with PC1, as a result of varable rRNA removal.
+Both mutant genotypes appear to cluster together, however it has previously been noted that GC content appears to track closely with PC1, as a result of variable rRNA removal.
 
 ## Model Description
 
@@ -328,17 +328,17 @@ b. the difference in heterozygous and heterozygous mutants
 For enrichment testing, genes were initially considered to be DE using:
 
 a. An Bonferroni-adjusted p-value < `r alpha`
-b. An FDR-adjusted p-value < `r alpha` along ith an estimated logFC outside of the range $\pm \log_2(`r 2^minLfc`)$.
+b. An FDR-adjusted p-value < `r alpha` along with an estimated logFC outside of the range $\pm \log_2(`r 2^minLfc`)$.
 
 As fewer genes were detected in the comparisons between mutants, a simple FDR of 0.05 was subsequently chosen.
 
-```{r}
+```{r changeMutantDE}
 topTables$homozygous %<>%
   mutate(DE = FDR < 0.05)
 ```
 
 
-Using these criteria, the following initial DE genesets were defined:
+Using these criteria, the following initial DE gene-sets were defined:
 
 ```{r printInitialDE, results='asis'}
 topTables %>%
@@ -406,7 +406,7 @@ As such, the impact of CQN normalisation was considered to be appropriate.
 
 ## Checks for rRNA impacts
 
-```{r}
+```{r rawFqc}
 rawFqc <- list.files(
   path = "data/0_rawData/FastQC/",
   pattern = "zip",
@@ -426,7 +426,7 @@ rawGC <- getModule(rawFqc, "Per_sequence_GC") %>%
 riboVec <- structure(rawGC$Freq, names = rawGC$sample)
 ```
 
-```{r}
+```{r riboCors}
 riboCors <- cpm(dgeList, log = TRUE)%>%
   apply(1, function(x){
     cor(x, riboVec[names(x)])
@@ -437,7 +437,7 @@ Given the previously identified concerns about variable rRNA removal, correlatio
 Those with the strongest correlation, and which the FDR is < `r alpha` are shown below. 
 
 
-```{r}
+```{r riboCorsTable}
 topTables$mutant %>%
   mutate(riboCors = riboCors[gene_id]) %>%
   dplyr::filter(
@@ -467,7 +467,7 @@ topTables$mutant %>%
 
 ### Other Artefacts
 
-```{r maPlots, fig.height=5, fig.width=8, fig.cap="*MA plots checking for any logFC bias across the range of expression values. The small curve in the average at the low end of expression values was considered to be an artefact of the sparse points at this end. Initial DE genes are shown in red, with select points labelled.*"}
+```{r maPlots, fig.height=8, fig.width=8, fig.cap="*MA plots checking for any logFC bias across the range of expression values. The small curve in the average at the low end of expression values was considered to be an artefact of the sparse points at this end. Initial DE genes are shown in red, with select points labelled.*"}
 topTables %>%
   bind_rows() %>%
   arrange(DE) %>%
@@ -493,7 +493,7 @@ topTables %>%
   theme(legend.position = "none")
 ```
 
-```{r pHist, fig.height=5, fig.width=8, fig.cap="*Histograms of p-values for both sets of coefficients. Values for the difference betwene mutants follow the expected distribution for when there are very few differences, whilst values for the presence of a mutant allele show the expected distribution for when there are many differences. In particular the spike near zero indicates many genes which are differentially expressed.*"}
+```{r pHist, fig.height=4, fig.width=8, fig.cap="*Histograms of p-values for both sets of coefficients. Values for the difference betwene mutants follow the expected distribution for when there are very few differences, whilst values for the presence of a mutant allele show the expected distribution for when there are many differences. In particular the spike near zero indicates many genes which are differentially expressed.*"}
 topTables %>%
   bind_rows() %>%
   ggplot(aes(PValue)) +
@@ -540,16 +540,16 @@ deGenes <- topTables %>%
 
 ## Genes Tracking with *psen2^S4Ter^*
 
-```{r}
+```{r n}
 n <- 40
 ```
 
 
-A set of `r comma(length(deGenes$mutant))` genes was identified as DE inthe presence of the mutant *psen2^S4Ter^* transcript.
+A set of `r comma(length(deGenes$mutant))` genes was identified as DE in the presence of the mutant *psen2^S4Ter^* transcript.
 The most highly ranked `r n` genes are shown in the following heatmap.
 
 
-```{r commonSummaryHeatmap, fig.height=8, fig.width=8, fig.cap = paste("*The", n, "most highly-ranked genes by FDR which are commonly considered DE between mutants and WT samples*"}
+```{r commonSummaryHeatmap, fig.height=8, fig.width=8, fig.cap = paste("*The", n, "most highly-ranked genes by FDR which are commonly considered DE between mutants and WT samples*")}
 genoCols <- RColorBrewer::brewer.pal(3, "Set1") %>%
   setNames(levels(dgeList$samples$genotype))
 dgeList %>%
@@ -574,9 +574,9 @@ dgeList %>%
 
 ## Genes showing differences between mutants
 
-When inspecting the genes showing differences between mutants, it was noted that the WT and Homozygous mutant samples clustered together, implying that there was a unique effect on these genes whcih was specific to the heterozygous condition. 
+When inspecting the genes showing differences between mutants, it was noted that the WT and Homozygous mutant samples clustered together, implying that there was a unique effect on these genes which was specific to the heterozygous condition. 
 
-```{r homozygousHeatmap, fig.height=4, fig.width=7, fig.cap = paste("*The", length(deGenes$homozygous), "most highly-ranked genes by FDR which are DE between between mutants*"}
+```{r homozygousHeatmap, fig.height=4, fig.width=7, fig.cap = paste("*The", length(deGenes$homozygous), "most highly-ranked genes by FDR which are DE between between mutants*")}
 dgeList %>%
   cpm(log = TRUE) %>% 
   extract(deGenes$homozygous,) %>%
