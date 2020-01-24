@@ -493,7 +493,7 @@ topTables %>%
   theme(legend.position = "none")
 ```
 
-```{r pHist, fig.height=4, fig.width=8, fig.cap="*Histograms of p-values for both sets of coefficients. Values for the difference betwene mutants follow the expected distribution for when there are very few differences, whilst values for the presence of a mutant allele show the expected distribution for when there are many differences. In particular the spike near zero indicates many genes which are differentially expressed.*"}
+```{r pHist, fig.height=4, fig.width=8, fig.cap="*Histograms of p-values for both sets of coefficients. Values for the difference between mutants follow the expected distribution for when there are very few differences, whilst values for the presence of a mutant allele show the expected distribution for when there are many differences. In particular the spike near zero indicates many genes which are differentially expressed.*"}
 topTables %>%
   bind_rows() %>%
   ggplot(aes(PValue)) +

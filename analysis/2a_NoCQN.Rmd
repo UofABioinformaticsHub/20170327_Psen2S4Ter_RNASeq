@@ -1,6 +1,6 @@
 ---
-title: "2a_NoCQN"
-author: "Steve Ped"
+title: "Analysis Without Using CQN"
+author: "Steve Pederson"
 date: "2020-01-24"
 output: workflowr::wflow_html
 editor_options:
@@ -19,8 +19,8 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-This workflow is an exact replication of the differential gene expression analysis, however *conditional quantile normalisation* was not used.
-This allows for a checking of the impact this method has had on the dataset.
+This workflow is an alternative differential gene expression analysis, however *conditional quantile normalisation* was not used.
+This was written up specifically to allow for a checking of the impact this method has had on the dataset.
 
 
 ```{r loadPackages}
@@ -238,7 +238,7 @@ topTables <- colnames(cont) %>%
 ```
 
 Models were fit using the negative-binomial approaches of `glmFit()`.
-Top Tables were then obtained using pairwise likelihood-ratio tests in `glmLRT()`.
+Top Tables were then obtained using pair-wise likelihood-ratio tests in `glmLRT()`.
 These test the standard $H_0$ that there is no difference in gene expression estimates between genotypes, the gene expression estimates are obtained under the negative binomial model.
 
 ```{r expandDeLists}
@@ -257,7 +257,7 @@ For enrichment testing, genes were initially considered to be DE using an estima
 For genes in any of these initial lists, the logFC filter was subsequently removed from subsequent comparisons in order to minimise issues introduced by the use of a hard cutoff.
 Similarly the FDR threshold was raised to `r alpha2` in secondary comparisons for genes which passed the initial round of selection.
 
-Using these criteria, the following initial DE genesets were defined. These were slightly higher than previously
+Using these criteria, the following initial DE gene-sets were defined. These were slightly higher than previously
 
 ```{r printInitialDE, results='asis'}
 topTables %>%
@@ -371,7 +371,7 @@ voomTables <- colnames(cont) %>%
     simplify = FALSE) 
 ```
 
-## MOdel Checking
+## Model Checking
 
 ```{r voomMaPlots, fig.height=5, fig.width=10, fig.cap="*MA plots checking for any logFC bias across the range of expression values. Both mutant comparisons against wild-type appear to show a biased relationship between logFC and expression level.. Initial DE genes are shown in red, with select points labelled.*"}
 voomTables %>%
@@ -434,4 +434,4 @@ voomTables %>%
 
 # Conclusion
 
-None of the results in this workflow were for analysis, but were simply to assess the impact of GC and lenght bias without accounting for it using CQN.
+None of the results in this workflow were for analysis, but were simply to assess the impact of GC and length bias without accounting for it using CQN.
