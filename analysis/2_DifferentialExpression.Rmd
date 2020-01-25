@@ -31,7 +31,6 @@ library(pander)
 library(cowplot)
 library(cqn)
 library(ggrepel)
-# library(UpSetR)
 library(pheatmap)
 library(RColorBrewer)
 ```
