@@ -29,6 +29,7 @@ library(pander)
 library(goseq)
 library(msigdbr)
 library(AnnotationDbi)
+library(RColorBrewer)
 ```
 
 ```{r setOpts}

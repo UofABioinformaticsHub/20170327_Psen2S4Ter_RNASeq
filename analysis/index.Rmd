@@ -82,3 +82,4 @@ Reads were provided in as paired-end, 150bp reads.
 1. [Bash Pipeline](0_bashPipeline.html)
 2. [Quality Assesment](1_QC.html)
 3. [Differential Expression Analysis](2_DifferentialExpression.html)
+4. [Enrichment Analysis](3_Enrichment.html)
