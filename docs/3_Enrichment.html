@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Steve Pederson" />
+
+
+<title>Enrichment Analysis</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">20170327_Psen2S4Ter_RNASeq</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Enrichment Analysis</h1>
+<h4 class="author">Steve Pederson</h4>
+<h4 class="date">26 January, 2020</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-01-26
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>20170327_Psen2S4Ter_RNASeq/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200119code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200119)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200119code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200119)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtreeba189be6c3080686d32850d6ccd41d7cc76e7a74targetblankba189bea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/ba189be6c3080686d32850d6ccd41d7cc76e7a74" target="_blank">ba189be</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtreeba189be6c3080686d32850d6ccd41d7cc76e7a74targetblankba189bea" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  analysis/figure/
+
+Unstaged changes:
+    Modified:   analysis/3_Enrichment.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/ba189be6c3080686d32850d6ccd41d7cc76e7a74/analysis/3_Enrichment.Rmd" target="_blank">ba189be</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-26
+</td>
+<td>
+Corrected packages
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/68033fe913ed283729bacbb9da5ca972af17c67b/analysis/3_Enrichment.Rmd" target="_blank">68033fe</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-26
+</td>
+<td>
+Corrected chunk labels after publishing DE analysis
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/25922d6c38bb1db05a8a82447495af075c761bf7/analysis/3_Enrichment.Rmd" target="_blank">25922d6</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-26
+</td>
+<td>
+Added first pass of enrichment
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="setup" class="section level1">
+<h1>Setup</h1>
+<pre class="r"><code>library(tidyverse)
+library(magrittr)
+library(edgeR)
+library(scales)
+library(pander)
+library(goseq)
+library(msigdbr)
+library(AnnotationDbi)
+library(RColorBrewer)</code></pre>
+<pre class="r"><code>theme_set(theme_bw())
+panderOptions(&quot;table.split.table&quot;, Inf)
+panderOptions(&quot;table.style&quot;, &quot;rmarkdown&quot;)
+panderOptions(&quot;big.mark&quot;, &quot;,&quot;)</code></pre>
+<pre class="r"><code>samples &lt;- read_csv(&quot;data/samples.csv&quot;) %&gt;%
+  distinct(sampleName, .keep_all = TRUE) %&gt;%
+  dplyr::select(sample = sampleName, sampleID, genotype) %&gt;%
+  mutate(
+    genotype = factor(genotype, levels = c(&quot;WT&quot;, &quot;Het&quot;, &quot;Hom&quot;)),
+    mutant = genotype %in% c(&quot;Het&quot;, &quot;Hom&quot;),
+    homozygous = genotype == &quot;Hom&quot;
+  )
+genoCols &lt;- samples$genotype %&gt;%
+  levels() %&gt;%
+  length() %&gt;%
+  brewer.pal(&quot;Set1&quot;) %&gt;%
+  setNames(levels(samples$genotype))</code></pre>
+<pre class="r"><code>dgeList &lt;- read_rds(&quot;data/dgeList.rds&quot;)
+fit &lt;- read_rds(&quot;data/fit.rds&quot;)
+entrezGenes &lt;- dgeList$genes %&gt;%
+  dplyr::filter(!is.na(entrezid)) %&gt;%
+  unnest(entrezid) %&gt;%
+  dplyr::rename(entrez_gene = entrezid)</code></pre>
+<pre class="r"><code>formatP &lt;- function(p, m = 0.0001){
+  out &lt;- rep(&quot;&quot;, length(p))
+  out[p &lt; m] &lt;- sprintf(&quot;%.2e&quot;, p[p&lt;m])
+  out[p &gt;= m] &lt;- sprintf(&quot;%.4f&quot;, p[p&gt;=m])
+  out
+}</code></pre>
+</div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Enrichment analysis for this datast present some challenges. Despite normalisation to account for gene length and GC bias, some appeared to still be present in the final results. In addition, the confounding of incomplete rRNA removal with genotype may lead to other distortions in both DE genes and ranking statistics.</p>
+<p>Two methods for enrichment analysis will be undertaken.</p>
+<ol style="list-style-type: decimal">
+<li>Testing for enrichment within discrete sets of DE genes as defined in the previous steps</li>
+<li>Testing for enrichment within ranked lists, regardless of DE status or statistical significance.</li>
+</ol>
+<p>Testing for enrichment <em>within discrete gene sets</em> will be performed using <code>goseq</code> as this allows for the incorporation of a single covariate as a predictor of differential expression. GC content, gene length and correlation with rRNA removal can all be supplied as separate covariates.</p>
+<p>Testing for enrichment <em>with ranked lists</em> will be performed using <code>fry</code> as this can take a dgeList directly. However, in order for testing to be robust in the context of bias, normalised counts after CQN will be used for generation of a new dgeList for testing.</p>
+</div>
+<div id="databases-used-for-testing" class="section level1">
+<h1>Databases used for testing</h1>
+<p>Data was sourced using the <code>msigdbr</code> package. The initial database used for testing was the Hallmark Gene Sets, with mappings from gene-set to EntrezGene IDs performed by the package authors.</p>
+</div>
+<div id="discrete-de-gene-sets" class="section level1">
+<h1>Discrete DE Gene Sets</h1>
+<pre class="r"><code>topTables &lt;- list.files(
+    path = &quot;output&quot;, pattern = &quot;Vs.+csv&quot;, full.names = TRUE
+) %&gt;%
+    sapply(read_csv, simplify = FALSE) %&gt;%
+    set_names(basename(names(.))) %&gt;%
+    set_names(str_remove(names(.), &quot;.csv&quot;)) %&gt;%
+    lapply(function(x){
+        x %&gt;%
+            mutate(
+                entrezid = dgeList$genes$entrezid[gene_id]
+            )
+    })</code></pre>
+<div id="effects-of-the-psen2s4ter-mutation" class="section level2">
+<h2>Effects of the *psen2<sup>S4Ter</sup> mutation</h2>
+<p>The first step of analysis using <code>goseq</code>, regardless of the geneset, is estimation of the probability weight function (PWF) which quantifies the probablity of a gene being considered as DE based on a single covariate. Two possible covariates (GC content &amp; Gene Length) were checked</p>
+<pre class="r"><code>pwf &lt;- c(&quot;gc_content&quot;, &quot;length&quot;) %&gt;% 
+    sapply(
+        function(x){
+            topTables$psen2VsWT %&gt;%
+                dplyr::select(gene_id, DE, covariate = one_of(x)) %&gt;%
+                distinct(gene_id, .keep_all = TRUE) %&gt;% 
+                with(
+                    nullp(
+                        DEgenes = structure(
+                            as.integer(DE), names = gene_id
+                        ), 
+                        genome = &quot;danRer10&quot;, 
+                        id = &quot;ensGene&quot;, 
+                        bias.data = covariate,
+                        plot.fit = FALSE
+                    )
+                )
+        },
+        simplify = FALSE
+    )</code></pre>
+<pre class="r"><code>par(mfrow = c(1, length(pwf)))
+names(pwf) %&gt;%
+    lapply(function(x){
+        plotPWF(pwf[[x]], main = x)
+    })</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/3_Enrichment.Rmd/checkBias-1.png" alt="*Bias data based on each of the possible covariates. Both appeared to impact the probability of a gene being DE to some extent, with gene length being selected as the covariate for usage inthe goseq model.*" width="768" />
+<p class="caption">
+<em>Bias data based on each of the possible covariates. Both appeared to impact the probability of a gene being DE to some extent, with gene length being selected as the covariate for usage inthe goseq model.</em>
+</p>
+</div>
+<pre><code>[[1]]
+NULL
+
+[[2]]
+NULL</code></pre>
+<pre class="r"><code>par(mfrow = c(1, 1))</code></pre>
+<div id="hallmark-gene-sets" class="section level3">
+<h3>Hallmark Gene Sets</h3>
+<pre class="r"><code>hm &lt;- msigdbr(&quot;Danio rerio&quot;, category = &quot;H&quot;)  %&gt;% 
+  left_join(entrezGenes) %&gt;%
+  dplyr::filter(!is.na(gene_id)) </code></pre>
+<pre class="r"><code>hmByGene &lt;- hm %&gt;%
+  split(f = .$gene_id) %&gt;%
+  lapply(extract2, &quot;gs_name&quot;)</code></pre>
+<p>Mappings are required from gene to pathway, and Ensembl identifiers were used to map from gene to pathway, based on the mappings in the previously used annotations (Ensembl Release 96). A total of 3459 Ensembl IDs were mapped to pathways from the hallmark gene sets. This contrasts with 3458 EntrezGene IDs.</p>
+<pre class="r"><code>hmGoseq &lt;- goseq(pwf$length, gene2cat = hmByGene) %&gt;%
+    as_tibble %&gt;%
+  dplyr::filter(numDEInCat &gt; 0) %&gt;%
+  mutate( 
+    adjP = p.adjust(over_represented_pvalue, method = &quot;bonf&quot;),
+    FDR = p.adjust(over_represented_pvalue, method = &quot;fdr&quot;)
+  ) %&gt;%
+  dplyr::select(-contains(&quot;under&quot;))</code></pre>
+<p>No hallmark genesets were considered to be enriched after adjusting for the observed length bias in the data.</p>
+</div>
+<div id="kegg-gene-sets" class="section level3">
+<h3>KEGG Gene Sets</h3>
+<p>The same mapping process was applied to KEGG gene sets.</p>
+<pre class="r"><code>kg &lt;- msigdbr(&quot;Danio rerio&quot;, category = &quot;C2&quot;, subcategory = &quot;CP:KEGG&quot;)  %&gt;% 
+  left_join(entrezGenes) %&gt;%
+  dplyr::filter(!is.na(gene_id)) </code></pre>
+<pre class="r"><code>kgByGene &lt;- kg  %&gt;%
+  split(f = .$gene_id) %&gt;%
+  lapply(extract2, &quot;gs_name&quot;)</code></pre>
+<p>A total of 3614 Ensembl IDs were mapped to pathways from the KEGG gene sets. This contrasts with 3603 EntrezGene IDs.</p>
+<pre class="r"><code>kgGoseq &lt;- goseq(pwf$length, gene2cat = kgByGene) %&gt;%
+  as_tibble %&gt;%
+  dplyr::filter(numDEInCat &gt; 0) %&gt;%
+  mutate( 
+    adjP = p.adjust(over_represented_pvalue, method = &quot;bonf&quot;),
+    FDR = p.adjust(over_represented_pvalue, method = &quot;fdr&quot;)
+  ) %&gt;%
+  dplyr::select(-contains(&quot;under&quot;))</code></pre>
+<pre class="r"><code>kgGoseq %&gt;%
+  dplyr::slice(1:5) %&gt;%
+  dplyr::rename(p = over_represented_pvalue) %&gt;%
+  mutate(
+    p = formatP(p),
+    adjP = formatP(adjP),
+    FDR = formatP(FDR)
+  ) %&gt;%
+  dplyr::select(
+    Category = category,
+    DE = numDEInCat,
+    `Set Size` = numInCat,
+    p,
+    `p~bonf~` = adjP,
+    `p~FDR~` = FDR
+  ) %&gt;%
+  pander(
+    justify = &quot;lrrrrr&quot;,
+    caption = paste(
+      &quot;The&quot;, nrow(.), &quot;most highly-ranked KEGG pathways.&quot;,
+      &quot;Bonferroni-adjusted p-values are the most stringent and give high&quot;,
+      &quot;confidence when below 0.05.&quot;
+    )
+  )</code></pre>
+<table>
+<caption>The 5 most highly-ranked KEGG pathways. Bonferroni-adjusted p-values are the most stringent and give high confidence when below 0.05.</caption>
+<thead>
+<tr class="header">
+<th align="left">Category</th>
+<th align="right">DE</th>
+<th align="right">Set Size</th>
+<th align="right">p</th>
+<th align="right">p<sub>bonf</sub></th>
+<th align="right">p<sub>FDR</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">KEGG_RIBOSOME</td>
+<td align="right">26</td>
+<td align="right">80</td>
+<td align="right">4.65e-12</td>
+<td align="right">5.20e-10</td>
+<td align="right">5.20e-10</td>
+</tr>
+<tr class="even">
+<td align="left">KEGG_OXIDATIVE_PHOSPHORYLATION</td>
+<td align="right">14</td>
+<td align="right">119</td>
+<td align="right">0.0070</td>
+<td align="right">0.7892</td>
+<td align="right">0.3086</td>
+</tr>
+<tr class="odd">
+<td align="left">KEGG_CYSTEINE_AND_METHIONINE_METABOLISM</td>
+<td align="right">4</td>
+<td align="right">26</td>
+<td align="right">0.0101</td>
+<td align="right">1.0000</td>
+<td align="right">0.3086</td>
+</tr>
+<tr class="even">
+<td align="left">KEGG_PARKINSONS_DISEASE</td>
+<td align="right">13</td>
+<td align="right">112</td>
+<td align="right">0.0118</td>
+<td align="right">1.0000</td>
+<td align="right">0.3086</td>
+</tr>
+<tr class="odd">
+<td align="left">KEGG_HUNTINGTONS_DISEASE</td>
+<td align="right">15</td>
+<td align="right">159</td>
+<td align="right">0.0138</td>
+<td align="right">1.0000</td>
+<td align="right">0.3086</td>
+</tr>
+</tbody>
+</table>
+<p>Notably, the KEGG gene-set for Ribosomal genes was detected as enriched. This is likely to be due to the previosuly discussed contaminant.</p>
+</div>
+<div id="go-gene-sets" class="section level3">
+<h3>GO Gene Sets</h3>
+<p>The same mapping process was applied to GO gene sets.</p>
+<pre class="r"><code>goSummaries &lt;- url(&quot;https://uofabioinformaticshub.github.io/summaries2GO/data/goSummaries.RDS&quot;) %&gt;%
+  readRDS() %&gt;%
+  mutate(
+    Term = Term(id),
+    gs_name = Term %&gt;% str_to_upper() %&gt;% str_replace_all(&quot;[ -]&quot;, &quot;_&quot;),
+    gs_name = paste0(&quot;GO_&quot;, gs_name)
+    )</code></pre>
+<pre class="r"><code>go &lt;- msigdbr(&quot;Danio rerio&quot;, category = &quot;C5&quot;) %&gt;% 
+  left_join(entrezGenes) %&gt;%
+  dplyr::filter(!is.na(gene_id)) </code></pre>
+<pre class="r"><code>minPath &lt;- 3
+goByGene &lt;- go %&gt;%
+  left_join(goSummaries) %&gt;% 
+  dplyr::filter(shortest_path &gt;= minPath) %&gt;%
+  split(f = .$gene_id) %&gt;%
+  lapply(extract2, &quot;gs_name&quot;)</code></pre>
+<p>A total of 11245 Ensembl IDs were mapped to pathways from the GO gene sets. This contrasts with 11359 EntrezGene IDs. In addition GO genesets were restricted to those with 3 or more steps back to each ontology root.</p>
+<pre class="r"><code>goGoseq &lt;- goseq(pwf$length, gene2cat = goByGene) %&gt;%
+  as_tibble %&gt;%
+  dplyr::filter(numDEInCat &gt; 0) %&gt;%
+  mutate( 
+    adjP = p.adjust(over_represented_pvalue, method = &quot;bonf&quot;),
+    FDR = p.adjust(over_represented_pvalue, method = &quot;fdr&quot;)
+  ) %&gt;%
+  dplyr::select(-contains(&quot;under&quot;))</code></pre>
+<pre class="r"><code>goGoseq %&gt;%
+  dplyr::filter(adjP &lt; 0.05) %&gt;%
+  dplyr::rename(p = over_represented_pvalue) %&gt;%
+  mutate(
+    p = formatP(p),
+    adjP = formatP(adjP),
+    FDR = formatP(FDR)
+  ) %&gt;%
+  dplyr::select(
+    Category = category,
+    DE = numDEInCat,
+    `Set Size` = numInCat,
+    p,
+    `p~bonf~` = adjP,
+    `p~FDR~` = FDR
+  ) %&gt;%
+  pander(
+    justify = &quot;lrrrrr&quot;,
+    caption = paste(
+      &quot;The&quot;, nrow(.), &quot;most highly-ranked GO terms.&quot;,
+      &quot;Bonferroni-adjusted p-values are the most stringent and give high&quot;,
+      &quot;confidence when below 0.05, and all terms reached this threshold.&quot;,
+      &quot;However, most terms indicate the presence of rRNA once again.&quot;
+    )
+  )</code></pre>
+<table style="width:100%;">
+<caption>The 18 most highly-ranked GO terms. Bonferroni-adjusted p-values are the most stringent and give high confidence when below 0.05, and all terms reached this threshold. However, most terms indicate the presence of rRNA once again.</caption>
+<colgroup>
+<col width="60%" />
+<col width="3%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Category</th>
+<th align="right">DE</th>
+<th align="right">Set Size</th>
+<th align="right">p</th>
+<th align="right">p<sub>bonf</sub></th>
+<th align="right">p<sub>FDR</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">GO_COTRANSLATIONAL_PROTEIN_TARGETING_TO_MEMBRANE</td>
+<td align="right">28</td>
+<td align="right">93</td>
+<td align="right">2.42e-13</td>
+<td align="right">9.33e-10</td>
+<td align="right">9.33e-10</td>
+</tr>
+<tr class="even">
+<td align="left">GO_CYTOSOLIC_RIBOSOME</td>
+<td align="right">27</td>
+<td align="right">97</td>
+<td align="right">3.74e-12</td>
+<td align="right">1.44e-08</td>
+<td align="right">7.19e-09</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_ESTABLISHMENT_OF_PROTEIN_LOCALIZATION_TO_ENDOPLASMIC_RETICULUM</td>
+<td align="right">27</td>
+<td align="right">105</td>
+<td align="right">1.17e-11</td>
+<td align="right">4.50e-08</td>
+<td align="right">1.50e-08</td>
+</tr>
+<tr class="even">
+<td align="left">GO_PROTEIN_TARGETING_TO_MEMBRANE</td>
+<td align="right">30</td>
+<td align="right">171</td>
+<td align="right">1.67e-10</td>
+<td align="right">6.43e-07</td>
+<td align="right">1.55e-07</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_PROTEIN_LOCALIZATION_TO_ENDOPLASMIC_RETICULUM</td>
+<td align="right">27</td>
+<td align="right">128</td>
+<td align="right">2.01e-10</td>
+<td align="right">7.74e-07</td>
+<td align="right">1.55e-07</td>
+</tr>
+<tr class="even">
+<td align="left">GO_NUCLEAR_TRANSCRIBED_MRNA_CATABOLIC_PROCESS</td>
+<td align="right">30</td>
+<td align="right">183</td>
+<td align="right">1.03e-09</td>
+<td align="right">3.97e-06</td>
+<td align="right">6.62e-07</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_VIRAL_GENE_EXPRESSION</td>
+<td align="right">29</td>
+<td align="right">172</td>
+<td align="right">1.59e-09</td>
+<td align="right">6.12e-06</td>
+<td align="right">8.74e-07</td>
+</tr>
+<tr class="even">
+<td align="left">GO_TRANSLATIONAL_INITIATION</td>
+<td align="right">29</td>
+<td align="right">177</td>
+<td align="right">4.88e-09</td>
+<td align="right">1.88e-05</td>
+<td align="right">2.35e-06</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_CYTOSOLIC_PART</td>
+<td align="right">30</td>
+<td align="right">206</td>
+<td align="right">8.07e-09</td>
+<td align="right">3.10e-05</td>
+<td align="right">3.45e-06</td>
+</tr>
+<tr class="even">
+<td align="left">GO_RNA_BINDING</td>
+<td align="right">88</td>
+<td align="right">1,408</td>
+<td align="right">4.79e-08</td>
+<td align="right">0.0002</td>
+<td align="right">1.84e-05</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_CYTOSOLIC_LARGE_RIBOSOMAL_SUBUNIT</td>
+<td align="right">15</td>
+<td align="right">51</td>
+<td align="right">1.26e-07</td>
+<td align="right">0.0005</td>
+<td align="right">4.40e-05</td>
+</tr>
+<tr class="even">
+<td align="left">GO_RIBOSOMAL_SUBUNIT</td>
+<td align="right">28</td>
+<td align="right">175</td>
+<td align="right">3.31e-07</td>
+<td align="right">0.0013</td>
+<td align="right">0.0001</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_RIBOSOME</td>
+<td align="right">30</td>
+<td align="right">210</td>
+<td align="right">3.83e-07</td>
+<td align="right">0.0015</td>
+<td align="right">0.0001</td>
+</tr>
+<tr class="even">
+<td align="left">GO_RNA_CATABOLIC_PROCESS</td>
+<td align="right">34</td>
+<td align="right">337</td>
+<td align="right">7.18e-07</td>
+<td align="right">0.0028</td>
+<td align="right">0.0002</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_ESTABLISHMENT_OF_PROTEIN_LOCALIZATION_TO_MEMBRANE</td>
+<td align="right">30</td>
+<td align="right">287</td>
+<td align="right">1.69e-06</td>
+<td align="right">0.0065</td>
+<td align="right">0.0004</td>
+</tr>
+<tr class="even">
+<td align="left">GO_ORGANIC_CYCLIC_COMPOUND_CATABOLIC_PROCESS</td>
+<td align="right">40</td>
+<td align="right">474</td>
+<td align="right">1.82e-06</td>
+<td align="right">0.0070</td>
+<td align="right">0.0004</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_PROTEIN_TARGETING</td>
+<td align="right">34</td>
+<td align="right">379</td>
+<td align="right">7.10e-06</td>
+<td align="right">0.0273</td>
+<td align="right">0.0016</td>
+</tr>
+<tr class="even">
+<td align="left">GO_ESTABLISHMENT_OF_PROTEIN_LOCALIZATION_TO_ORGANELLE</td>
+<td align="right">38</td>
+<td align="right">484</td>
+<td align="right">9.76e-06</td>
+<td align="right">0.0376</td>
+<td align="right">0.0021</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="effects-of-homozygous-vs-heterozygous-mutants" class="section level2">
+<h2>Effects of Homozygous Vs Heterozygous mutants</h2>
+<p>As only a small number of genes were detected as being classified as DE for this comparison, no testing was performed on this as a discrete set of DE genes.</p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>devtools::session_info()</code></pre>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────
+ setting  value                       
+ version  R version 3.6.2 (2019-12-12)
+ os       Ubuntu 18.04.3 LTS          
+ system   x86_64, linux-gnu           
+ ui       X11                         
+ language en_AU:en                    
+ collate  en_AU.UTF-8                 
+ ctype    en_AU.UTF-8                 
+ tz       Australia/Adelaide          
+ date     2020-01-26                  
+
+─ Packages ───────────────────────────────────────────────────────────────────
+ package              * version  date       lib source        
+ AnnotationDbi        * 1.48.0   2019-10-29 [2] Bioconductor  
+ askpass                1.1      2019-01-13 [2] CRAN (R 3.6.0)
+ assertthat             0.2.1    2019-03-21 [2] CRAN (R 3.6.0)
+ backports              1.1.5    2019-10-02 [2] CRAN (R 3.6.1)
+ BiasedUrn            * 1.07     2015-12-28 [2] CRAN (R 3.6.1)
+ Biobase              * 2.46.0   2019-10-29 [2] Bioconductor  
+ BiocFileCache          1.10.2   2019-11-08 [2] Bioconductor  
+ BiocGenerics         * 0.32.0   2019-10-29 [2] Bioconductor  
+ BiocParallel           1.20.1   2019-12-21 [2] Bioconductor  
+ biomaRt                2.42.0   2019-10-29 [2] Bioconductor  
+ Biostrings             2.54.0   2019-10-29 [2] Bioconductor  
+ bit                    1.1-15.1 2020-01-14 [2] CRAN (R 3.6.2)
+ bit64                  0.9-7    2017-05-08 [2] CRAN (R 3.6.0)
+ bitops                 1.0-6    2013-08-17 [2] CRAN (R 3.6.0)
+ blob                   1.2.1    2020-01-20 [2] CRAN (R 3.6.2)
+ broom                  0.5.3    2019-12-14 [2] CRAN (R 3.6.2)
+ callr                  3.4.0    2019-12-09 [2] CRAN (R 3.6.2)
+ cellranger             1.1.0    2016-07-27 [2] CRAN (R 3.6.0)
+ cli                    2.0.1    2020-01-08 [2] CRAN (R 3.6.2)
+ colorspace             1.4-1    2019-03-18 [2] CRAN (R 3.6.0)
+ crayon                 1.3.4    2017-09-16 [2] CRAN (R 3.6.0)
+ curl                   4.3      2019-12-02 [2] CRAN (R 3.6.2)
+ DBI                    1.1.0    2019-12-15 [2] CRAN (R 3.6.2)
+ dbplyr                 1.4.2    2019-06-17 [2] CRAN (R 3.6.0)
+ DelayedArray           0.12.2   2020-01-06 [2] Bioconductor  
+ desc                   1.2.0    2018-05-01 [2] CRAN (R 3.6.0)
+ devtools               2.2.1    2019-09-24 [2] CRAN (R 3.6.1)
+ digest                 0.6.23   2019-11-23 [2] CRAN (R 3.6.1)
+ dplyr                * 0.8.3    2019-07-04 [2] CRAN (R 3.6.1)
+ edgeR                * 3.28.0   2019-10-29 [2] Bioconductor  
+ ellipsis               0.3.0    2019-09-20 [2] CRAN (R 3.6.1)
+ evaluate               0.14     2019-05-28 [2] CRAN (R 3.6.0)
+ fansi                  0.4.1    2020-01-08 [2] CRAN (R 3.6.2)
+ forcats              * 0.4.0    2019-02-17 [2] CRAN (R 3.6.0)
+ fs                     1.3.1    2019-05-06 [2] CRAN (R 3.6.0)
+ geneLenDataBase      * 1.22.0   2019-11-05 [2] Bioconductor  
+ generics               0.0.2    2018-11-29 [2] CRAN (R 3.6.0)
+ GenomeInfoDb           1.22.0   2019-10-29 [2] Bioconductor  
+ GenomeInfoDbData       1.2.2    2019-11-21 [2] Bioconductor  
+ GenomicAlignments      1.22.1   2019-11-12 [2] Bioconductor  
+ GenomicFeatures        1.38.1   2020-01-22 [2] Bioconductor  
+ GenomicRanges          1.38.0   2019-10-29 [2] Bioconductor  
+ ggplot2              * 3.2.1    2019-08-10 [2] CRAN (R 3.6.1)
+ git2r                  0.26.1   2019-06-29 [2] CRAN (R 3.6.1)
+ glue                   1.3.1    2019-03-12 [2] CRAN (R 3.6.0)
+ GO.db                  3.10.0   2019-11-21 [2] Bioconductor  
+ goseq                * 1.38.0   2019-10-29 [2] Bioconductor  
+ gtable                 0.3.0    2019-03-25 [2] CRAN (R 3.6.0)
+ haven                  2.2.0    2019-11-08 [2] CRAN (R 3.6.1)
+ highr                  0.8      2019-03-20 [2] CRAN (R 3.6.0)
+ hms                    0.5.3    2020-01-08 [2] CRAN (R 3.6.2)
+ htmltools              0.4.0    2019-10-04 [2] CRAN (R 3.6.1)
+ httpuv                 1.5.2    2019-09-11 [2] CRAN (R 3.6.1)
+ httr                   1.4.1    2019-08-05 [2] CRAN (R 3.6.1)
+ IRanges              * 2.20.2   2020-01-13 [2] Bioconductor  
+ jsonlite               1.6      2018-12-07 [2] CRAN (R 3.6.0)
+ knitr                  1.27     2020-01-16 [2] CRAN (R 3.6.2)
+ later                  1.0.0    2019-10-04 [2] CRAN (R 3.6.1)
+ lattice                0.20-38  2018-11-04 [4] CRAN (R 3.6.0)
+ lazyeval               0.2.2    2019-03-15 [2] CRAN (R 3.6.0)
+ lifecycle              0.1.0    2019-08-01 [2] CRAN (R 3.6.1)
+ limma                * 3.42.0   2019-10-29 [2] Bioconductor  
+ locfit                 1.5-9.1  2013-04-20 [2] CRAN (R 3.6.0)
+ lubridate              1.7.4    2018-04-11 [2] CRAN (R 3.6.0)
+ magrittr             * 1.5      2014-11-22 [2] CRAN (R 3.6.0)
+ Matrix                 1.2-18   2019-11-27 [2] CRAN (R 3.6.1)
+ matrixStats            0.55.0   2019-09-07 [2] CRAN (R 3.6.1)
+ memoise                1.1.0    2017-04-21 [2] CRAN (R 3.6.0)
+ mgcv                   1.8-31   2019-11-09 [4] CRAN (R 3.6.1)
+ modelr                 0.1.5    2019-08-08 [2] CRAN (R 3.6.1)
+ msigdbr              * 7.0.1    2019-09-04 [2] CRAN (R 3.6.2)
+ munsell                0.5.0    2018-06-12 [2] CRAN (R 3.6.0)
+ nlme                   3.1-143  2019-12-10 [4] CRAN (R 3.6.2)
+ openssl                1.4.1    2019-07-18 [2] CRAN (R 3.6.1)
+ pander               * 0.6.3    2018-11-06 [2] CRAN (R 3.6.0)
+ pillar                 1.4.3    2019-12-20 [2] CRAN (R 3.6.2)
+ pkgbuild               1.0.6    2019-10-09 [2] CRAN (R 3.6.1)
+ pkgconfig              2.0.3    2019-09-22 [2] CRAN (R 3.6.1)
+ pkgload                1.0.2    2018-10-29 [2] CRAN (R 3.6.0)
+ prettyunits            1.1.1    2020-01-24 [2] CRAN (R 3.6.2)
+ processx               3.4.1    2019-07-18 [2] CRAN (R 3.6.1)
+ progress               1.2.2    2019-05-16 [2] CRAN (R 3.6.0)
+ promises               1.1.0    2019-10-04 [2] CRAN (R 3.6.1)
+ ps                     1.3.0    2018-12-21 [2] CRAN (R 3.6.0)
+ purrr                * 0.3.3    2019-10-18 [2] CRAN (R 3.6.1)
+ R6                     2.4.1    2019-11-12 [2] CRAN (R 3.6.1)
+ rappdirs               0.3.1    2016-03-28 [2] CRAN (R 3.6.0)
+ RColorBrewer         * 1.1-2    2014-12-07 [2] CRAN (R 3.6.0)
+ Rcpp                   1.0.3    2019-11-08 [2] CRAN (R 3.6.1)
+ RCurl                  1.98-1.1 2020-01-19 [2] CRAN (R 3.6.2)
+ readr                * 1.3.1    2018-12-21 [2] CRAN (R 3.6.0)
+ readxl                 1.3.1    2019-03-13 [2] CRAN (R 3.6.0)
+ remotes                2.1.0    2019-06-24 [2] CRAN (R 3.6.0)
+ reprex                 0.3.0    2019-05-16 [2] CRAN (R 3.6.0)
+ rlang                  0.4.2    2019-11-23 [2] CRAN (R 3.6.1)
+ rmarkdown              2.1      2020-01-20 [2] CRAN (R 3.6.2)
+ rprojroot              1.3-2    2018-01-03 [2] CRAN (R 3.6.0)
+ Rsamtools              2.2.1    2019-11-06 [2] Bioconductor  
+ RSQLite                2.2.0    2020-01-07 [2] CRAN (R 3.6.2)
+ rstudioapi             0.10     2019-03-19 [2] CRAN (R 3.6.0)
+ rtracklayer            1.46.0   2019-10-29 [2] Bioconductor  
+ rvest                  0.3.5    2019-11-08 [2] CRAN (R 3.6.1)
+ S4Vectors            * 0.24.3   2020-01-18 [2] Bioconductor  
+ scales               * 1.1.0    2019-11-18 [2] CRAN (R 3.6.1)
+ sessioninfo            1.1.1    2018-11-05 [2] CRAN (R 3.6.0)
+ stringi                1.4.5    2020-01-11 [2] CRAN (R 3.6.2)
+ stringr              * 1.4.0    2019-02-10 [2] CRAN (R 3.6.0)
+ SummarizedExperiment   1.16.1   2019-12-19 [2] Bioconductor  
+ testthat               2.3.1    2019-12-01 [2] CRAN (R 3.6.1)
+ tibble               * 2.1.3    2019-06-06 [2] CRAN (R 3.6.0)
+ tidyr                * 1.0.0    2019-09-11 [2] CRAN (R 3.6.1)
+ tidyselect             0.2.5    2018-10-11 [2] CRAN (R 3.6.0)
+ tidyverse            * 1.3.0    2019-11-21 [2] CRAN (R 3.6.1)
+ usethis                1.5.1    2019-07-04 [2] CRAN (R 3.6.1)
+ vctrs                  0.2.1    2019-12-17 [2] CRAN (R 3.6.2)
+ whisker                0.4      2019-08-28 [2] CRAN (R 3.6.1)
+ withr                  2.1.2    2018-03-15 [2] CRAN (R 3.6.0)
+ workflowr            * 1.6.0    2019-12-19 [2] CRAN (R 3.6.2)
+ xfun                   0.12     2020-01-13 [2] CRAN (R 3.6.2)
+ XML                    3.99-0.3 2020-01-20 [2] CRAN (R 3.6.2)
+ xml2                   1.2.2    2019-08-09 [2] CRAN (R 3.6.1)
+ XVector                0.26.0   2019-10-29 [2] Bioconductor  
+ yaml                   2.2.0    2018-07-25 [2] CRAN (R 3.6.0)
+ zeallot                0.1.0    2018-01-28 [2] CRAN (R 3.6.0)
+ zlibbioc               1.32.0   2019-10-29 [2] Bioconductor  
+
+[1] /home/steveped/R/x86_64-pc-linux-gnu-library/3.6
+[2] /usr/local/lib/R/site-library
+[3] /usr/lib/R/site-library
+[4] /usr/lib/R/library</code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
