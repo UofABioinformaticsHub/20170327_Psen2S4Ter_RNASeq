@@ -184,8 +184,8 @@ contLabeller <- as_labeller(
         Hom = "S4Ter/S4Ter",
         Het = "S4Ter/+",
         WT = "+/+",
-        mutant = "Mutant Vs Wild-type",
-        homozygous = "Difference between mutants"
+        mutant = "S4Ter Vs WT",
+        homozygous = "S4Ter/S4Ter Vs S4Ter/+"
     )
 )
 geneLabeller <- structure(grGenes$gene_name, names = grGenes$gene_id) %>%
@@ -238,7 +238,9 @@ Both mutant genotypes appear to cluster together, however it has previously been
 knitr::include_graphics("figure/index.Rmd/plotLayout-1.png")
 ```
 
-Given that there was a strong similarity between mutants, the model matrix was defined as containing an intercept, with additional columns defining presence of any mutant alleles, and the final column capturing the difference between mutants.
+The initial expectation was to perform three pairwise comparisons as described in the above figure.
+However, given there was a strong similarity between mutants, the model matrix was defined as containing an intercept (i.e. baseline expression in wild-type), with additional columns defining presence of any mutant alleles, and the final column capturing the difference between mutants.
+This avoids any issues with the use of hard cutoffs when combing lists, such as would occur when comparing separate results from both mutant genotypes against wild-type samples.
 
 ```{r setModelMatrix}
 d <- model.matrix(~mutant + homozygous, data = dgeList$samples) %>%
@@ -330,7 +332,7 @@ For enrichment testing, genes were initially considered to be DE using:
 a. An Bonferroni-adjusted p-value < `r alpha`
 b. An FDR-adjusted p-value < `r alpha` along with an estimated logFC outside of the range $\pm \log_2(`r 2^minLfc`)$.
 
-As fewer genes were detected in the comparisons between mutants, a simple FDR of 0.05 was subsequently chosen.
+As fewer genes were detected in the comparisons between homozygous and heterozygous mutants, a simple FDR of 0.05 was subsequently chosen for this comparison.
 
 ```{r changeMutantDE}
 topTables$homozygous %<>%
@@ -365,7 +367,7 @@ deCols <- c(
 
 ### GC and Length Bias
 
-```{r checkGCBias, fig.height=5, fig.width=8, fig.cap="*Checks for GC bias in differential expression. GC content is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change. A small amount of bias was noted particularly in the comparison between homozygous mutants and wild-type.*"}
+```{r checkGCBias, fig.height=5, fig.width=8, fig.cap="*Checks for GC bias in differential expression. GC content is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change. A small amount of bias was noted particularly in the comparison between mutants and wild-type.*"}
 topTables %>%
     bind_rows() %>%
     mutate(stat = -sign(logFC)*log10(PValue)) %>%
@@ -382,7 +384,7 @@ topTables %>%
     theme(legend.position = "none")
 ```
 
-```{r checkLengthBias, fig.height=5, fig.width=8, fig.cap="*Checks for length bias in differential expression. Gene length is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change. Again, a small amount of bias was noted particularly in the comparison between homozygous mutants and wild-type.*"}
+```{r checkLengthBias, fig.height=5, fig.width=8, fig.cap="*Checks for length bias in differential expression. Gene length is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change. Again, a small amount of bias was noted particularly in the comparison between mutants and wild-type.*"}
 topTables %>%
     bind_rows() %>%
     mutate(stat = -sign(logFC)*log10(PValue)) %>%
@@ -434,7 +436,10 @@ riboCors <- cpm(dgeList, log = TRUE)%>%
 ```
 
 Given the previously identified concerns about variable rRNA removal, correlations were calculated between each gene's expression values and the proportion of the raw libraries with > 70% GC.
-Those with the strongest correlation, and which the FDR is < `r alpha` are shown below. 
+Those with the strongest correlation, and for which the FDR is < `r alpha` are shown below. 
+
+Most notably, the most correlated RNA with these rRNA proportions was `eif1b` which is the initiation factor for translation.
+As this is a protein coding gene with the *protein product* interacting with the ribosome, the reason for this correlation *at the RNA level* raises difficult questions which cannot be answered here.
 
 
 ```{r riboCorsTable}
@@ -458,8 +463,12 @@ topTables$mutant %>%
       "The", nrow(.), "genes most correlated with the original high GC content.",
       "Many failed the selection criteria for differential expression,",
       "primarily due to the stringent logFC filter.",
-      "However the unusually high number of ribosomal protein coding genes",
-      "is currently inexplicable, but notable."
+      "However, the unusually high number of ribosomal protein coding genes",
+      "is currently difficult to explain, but notable.",
+      "Two possibilities are these RNAs are somehow translated with physical",
+      "linkage to the ribosomal complex, or that there is genuinely a global",
+      "shift in the level of ribosomal activity.",
+      "Neither explanation is initially satisfying."
     )
   )
 ```
@@ -547,6 +556,10 @@ n <- 40
 
 A set of `r comma(length(deGenes$mutant))` genes was identified as DE in the presence of the mutant *psen2^S4Ter^* transcript.
 The most highly ranked `r n` genes are shown in the following heatmap.
+The presence of `SNORNA70` in this list is of some concern as this is an ncRNA which is known to interact with ribosomes.
+In particular the expression pattern follows very closely the patterns previosuly identified for rRNA depletion using the percentage of libraries with GC > 70.
+For example, WT_86 was the sample with most complete rRNA depletion whilst, Het_84 showed the largest proportion of the library as being derived from rRNA.
+These represent the samples with lowest and highest expression of SNORNA70 respectively.
 
 
 ```{r commonSummaryHeatmap, fig.height=8, fig.width=8, fig.cap = paste("*The", n, "most highly-ranked genes by FDR which are commonly considered DE between mutants and WT samples*")}
@@ -568,7 +581,7 @@ dgeList %>%
     annotation_names_col = FALSE,
     annotation_colors = list(Genotype = genoCols),
     cutree_cols = 2,
-    cutree_rows = 6
+    cutree_rows = 1#6
   )
 ```
 
@@ -592,7 +605,8 @@ dgeList %>%
       dplyr::select(Genotype = genotype),
     annotation_names_col = FALSE,
     annotation_colors = list(Genotype = genoCols),
-    cutree_cols = 2
+    cutree_cols = 2,
+    cutree_rows = 3
   )
 ```
 
