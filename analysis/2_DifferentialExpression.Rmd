@@ -192,6 +192,43 @@ geneLabeller <- structure(grGenes$gene_name, names = grGenes$gene_id) %>%
 
 Labeller functions for genotypes, contrasts and gene names were additionally defined for simpler plotting using `ggplot2`.
 
+## Correlations with rRNA contaminants
+
+In order to asses the impact of the potential rRNA contaminant, correlations between the initial estimate of contamination and each gene's expression pattern were also investigated.
+Conceptually, genes which are highly correlated with rRNA may be physically associated with these complexes.
+Similary, genes with high negative correlations may be actively selected against in the presence of rRNA complexes.
+
+```{r rawFqc}
+rawFqc <- list.files(
+  path = "data/0_rawData/FastQC/",
+  pattern = "zip",
+  full.names = TRUE
+) %>%
+  FastqcDataList()
+gc <- getModule(rawFqc, "Per_sequence_GC") %>%
+  group_by(Filename) %>% 
+  mutate(Freq = Count / sum(Count)) %>%
+  ungroup()
+rawGC <- gc %>%
+  dplyr::filter(GC_Content > 70) %>% 
+  group_by(Filename) %>%
+  summarise(Freq = sum(Freq)) %>% 
+  arrange(desc(Freq)) %>%
+  mutate(sample = str_remove(Filename, "_R[12].fastq.gz")) %>%
+  group_by(sample) %>%
+  summarise(Freq = mean(Freq)) %>%
+  left_join(samples) 
+```
+
+
+```{r riboCors}
+riboVec <- structure(rawGC$Freq, names = rawGC$sample)
+riboCors <- cpm(dgeList, log = TRUE) %>%
+  apply(1, function(x){
+    cor(x, riboVec[names(x)])
+  })
+```
+
 # Analysis
 
 ## PCA
@@ -327,7 +364,7 @@ b. the difference in heterozygous and heterozygous mutants
 
 For enrichment testing, genes were initially considered to be DE using:
 
-a. An Bonferroni-adjusted p-value < `r alpha`
+a. A Bonferroni-adjusted p-value < `r alpha`
 b. An FDR-adjusted p-value < `r alpha` along with an estimated logFC outside of the range $\pm \log_2(`r 2^minLfc`)$.
 
 As fewer genes were detected in the comparisons between homozygous and heterozygous mutants, a simple FDR of 0.05 was subsequently chosen for this comparison.
@@ -362,6 +399,72 @@ deCols <- c(
 
 
 ## Model Checking
+
+## Checks for rRNA impacts
+
+Given the previously identified concerns about variable rRNA removal, correlations were calculated between each gene's expression values and the proportion of the raw libraries with > 70% GC.
+Those with the strongest +^ve^ correlation, and for which the FDR is < `r alpha` are shown below. 
+
+Most notably, the most correlated RNA with these rRNA proportions was `eif1b` which is the initiation factor for translation.
+As this is a protein coding gene with the *protein product* interacting with the ribosome, the reason for this correlation *at the RNA level* raises difficult questions which cannot be answered here.
+
+
+```{r riboCorsTable}
+topTables$mutant %>%
+  mutate(riboCors = riboCors[gene_id]) %>%
+  dplyr::filter(
+    FDR < alpha
+  ) %>%
+  dplyr::select(gene_id, gene_name, logFC, logCPM, FDR, riboCors, DE) %>%
+  arrange(desc(riboCors)) %>%
+  mutate(FDR = case_when(
+    FDR >= 0.0001 ~ sprintf("%.4f", FDR),
+    FDR < 0.0001 ~ sprintf("%.2e", FDR)
+    )
+  ) %>%
+  dplyr::slice(1:40) %>%
+  pander(
+    justify = "llrrrrl",
+    style = "rmarkdown",
+    caption = paste(
+      "The", nrow(.), "genes most correlated with the original high GC content.",
+      "Many failed the selection criteria for differential expression,",
+      "primarily due to the stringent logFC filter.",
+      "However, the unusually high number of ribosomal protein coding genes",
+      "is currently difficult to explain, but notable.",
+      "Two possibilities are these RNAs are somehow translated with physical",
+      "linkage to the ribosomal complex, or that there is genuinely a global",
+      "shift in the level of ribosomal activity.",
+      "Neither explanation is initially satisfying."
+    )
+  )
+```
+
+```{r riboNegativeCorsTable}
+topTables$mutant %>%
+  mutate(riboCors = riboCors[gene_id]) %>%
+  dplyr::filter(
+    FDR < alpha
+  ) %>%
+  dplyr::select(gene_id, gene_name, logFC, logCPM, FDR, riboCors, DE) %>%
+  arrange(riboCors) %>%
+  mutate(FDR = case_when(
+    FDR >= 0.0001 ~ sprintf("%.4f", FDR),
+    FDR < 0.0001 ~ sprintf("%.2e", FDR)
+    )
+  ) %>%
+  dplyr::slice(1:20) %>%
+  pander(
+    justify = "llrrrrl",
+    style = "rmarkdown",
+    caption = paste(
+      "The", nrow(.), "genes most negatively correlated with the original high GC content.",
+      "Most failed the selection criteria for differential expression,",
+      "primarily due to the stringent logFC filter.",
+      "These genes may be being selected against in the presence of rRNA."
+    )
+  )
+```
 
 ### GC and Length Bias
 
@@ -404,75 +507,8 @@ Checks for both GC and length bias on differential expression showed that a smal
 However, [an alternative analysis on the same dataset **excluding the CQN steps**](2a_NoCQN.html) revealed vastly different and exaggerated bias.
 As such, the impact of CQN normalisation was considered to be appropriate.
 
-## Checks for rRNA impacts
 
-```{r rawFqc}
-rawFqc <- list.files(
-  path = "data/0_rawData/FastQC/",
-  pattern = "zip",
-  full.names = TRUE
-) %>%
-  FastqcDataList()
-rawGC <- getModule(rawFqc, "Per_sequence_GC") %>%
-  group_by(Filename) %>% 
-  mutate(Freq = Count / sum(Count)) %>%
-  dplyr::filter(GC_Content > 70) %>% 
-  summarise(Freq = sum(Freq)) %>% 
-  arrange(desc(Freq)) %>%
-  mutate(sample = str_remove(Filename, "_R[12].fastq.gz")) %>%
-  group_by(sample) %>%
-  summarise(Freq = mean(Freq)) %>%
-  left_join(samples) 
-riboVec <- structure(rawGC$Freq, names = rawGC$sample)
-```
-
-```{r riboCors}
-riboCors <- cpm(dgeList, log = TRUE)%>%
-  apply(1, function(x){
-    cor(x, riboVec[names(x)])
-  })
-```
-
-Given the previously identified concerns about variable rRNA removal, correlations were calculated between each gene's expression values and the proportion of the raw libraries with > 70% GC.
-Those with the strongest correlation, and for which the FDR is < `r alpha` are shown below. 
-
-Most notably, the most correlated RNA with these rRNA proportions was `eif1b` which is the initiation factor for translation.
-As this is a protein coding gene with the *protein product* interacting with the ribosome, the reason for this correlation *at the RNA level* raises difficult questions which cannot be answered here.
-
-
-```{r riboCorsTable}
-topTables$mutant %>%
-  mutate(riboCors = riboCors[gene_id]) %>%
-  dplyr::filter(
-    FDR < alpha
-  ) %>%
-  dplyr::select(gene_id, gene_name, logFC, logCPM, FDR, riboCors, DE) %>%
-  arrange(desc(riboCors)) %>%
-  mutate(FDR = case_when(
-    FDR >= 0.0001 ~ sprintf("%.4f", FDR),
-    FDR < 0.0001 ~ sprintf("%.2e", FDR)
-    )
-  ) %>%
-  dplyr::slice(1:40) %>%
-  pander(
-    justify = "llrrrrl",
-    style = "rmarkdown",
-    caption = paste(
-      "The", nrow(.), "genes most correlated with the original high GC content.",
-      "Many failed the selection criteria for differential expression,",
-      "primarily due to the stringent logFC filter.",
-      "However, the unusually high number of ribosomal protein coding genes",
-      "is currently difficult to explain, but notable.",
-      "Two possibilities are these RNAs are somehow translated with physical",
-      "linkage to the ribosomal complex, or that there is genuinely a global",
-      "shift in the level of ribosomal activity.",
-      "Neither explanation is initially satisfying."
-    )
-  )
-```
-
-
-### Other Artefacts
+## Other Artefacts
 
 ```{r maPlots, fig.height=8, fig.width=8, fig.cap="*MA plots checking for any logFC bias across the range of expression values. The small curve in the average at the low end of expression values was considered to be an artefact of the sparse points at this end. Initial DE genes are shown in red, with select points labelled.*"}
 topTables %>%
@@ -482,7 +518,7 @@ topTables %>%
   geom_point(aes(colour = DE)) +
   geom_text_repel(
     aes(label = gene_name, colour = DE),
-    data = . %>% dplyr::filter(DE & abs(logFC) > 2.9)
+    data = . %>% dplyr::filter(DE & abs(logFC) > 3)
   ) +
   geom_text_repel(
     aes(label = gene_name, colour = DE),
@@ -521,7 +557,7 @@ topTables %>%
     geom_point(alpha = 0.4) +
     geom_text_repel(
         aes(label = gene_name),
-        data = . %>% dplyr::filter(PValue < 1e-12 | abs(logFC) > 4)
+        data = . %>% dplyr::filter(PValue < 1e-13 | abs(logFC) > 4)
     ) +
     geom_text_repel(
         aes(label = gene_name),
@@ -560,10 +596,10 @@ For example, WT_86 was the sample with most complete rRNA depletion whilst, Het_
 These represent the samples with lowest and highest expression of SNORNA70 respectively.
 
 
-```{r commonSummaryHeatmap, fig.height=8, fig.width=8, fig.cap = paste("*The", n, "most highly-ranked genes by FDR which are commonly considered DE between mutants and WT samples*")}
+```{r commonSummaryHeatmap, fig.height=8, fig.width=8, fig.cap = paste("*The", n, "most highly-ranked genes by FDR which are commonly considered DE between mutants and WT samples. Plotted values are logCPM based on normalised counts.*")}
 genoCols <- RColorBrewer::brewer.pal(3, "Set1") %>%
   setNames(levels(dgeList$samples$genotype))
-dgeList %>%
+fit$fitted.values %>%
   cpm(log = TRUE) %>% 
   extract(deGenes$mutant[seq_len(n)],) %>%
   as.data.frame() %>%
@@ -579,7 +615,7 @@ dgeList %>%
     annotation_names_col = FALSE,
     annotation_colors = list(Genotype = genoCols),
     cutree_cols = 2,
-    cutree_rows = 1#6
+    cutree_rows = 6
   )
 ```
 
@@ -587,8 +623,8 @@ dgeList %>%
 
 When inspecting the genes showing differences between mutants, it was noted that the WT and Homozygous mutant samples clustered together, implying that there was a unique effect on these genes which was specific to the heterozygous condition. 
 
-```{r homozygousHeatmap, fig.height=4, fig.width=7, fig.cap = paste("*The", length(deGenes$homozygous), "most highly-ranked genes by FDR which are DE between between mutants*")}
-dgeList %>%
+```{r homozygousHeatmap, fig.height=4, fig.width=7, fig.cap = paste("*The", length(deGenes$homozygous), "most highly-ranked genes by FDR which are DE between between mutants. Plotted values are logCPM based on normalised counts.*")}
+fit$fitted.values %>%
   cpm(log = TRUE) %>% 
   extract(deGenes$homozygous,) %>%
   as.data.frame() %>%
