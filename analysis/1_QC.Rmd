@@ -133,7 +133,8 @@ plot_grid(
 
 
 ```{r gcPerc, fig.cap=paste("*Percentages of each library which contain >70% GC. Using the known theoretical distribution, this should be", percent_format(0.01)(sum(dplyr::filter(getGC(gcTheoretical, "Drerio", type = "Trans"), GC_Content > 70)$Drerio)), "of the total library.*"), fig.width=8}
-rawGC <- getModule(rawFqc, "Per_sequence_GC") %>% 
+gc <- getModule(rawFqc, "Per_sequence_GC") 
+rawGC <- gc %>% 
     group_by(Filename) %>% 
     mutate(Freq = Count / sum(Count)) %>%
     dplyr::filter(GC_Content > 70) %>% 
@@ -148,6 +149,35 @@ rawGC %>%
     scale_fill_manual(values = twoCols) +
     labs(x = "Sample", y = "Percent of Total")
 ```
+
+As an alternative viewpoint, the standard deviation of observed GC frequencies from the expected GC frequencies, as obtained from the known transcriptome, were calculated.
+This may be a less subjective approach, which is more applicable to other datasets.
+Very similar patterns were seen as to those using GC% > 70.
+
+```{r gcDev}
+gcDev <- gc %>%
+    left_join(samples) %>%
+    group_by(sampleName, sampleID) %>%
+    mutate(Freq = Count / sum(Count)) %>%
+    left_join(
+        getGC(gcTheoretical, "Drerio", "Trans")
+    ) %>%
+    dplyr::rename(actual = Drerio) %>%
+    mutate(res = Freq - actual) %>%
+    summarise(ss = sum(res^2), n = n()) %>%
+    ungroup() %>%
+    mutate(sd = sqrt(ss / (n - 1)))
+```
+
+```{r, fig.cap = "*Standard deviations of observed GC frequency Vs Expected GC frequency using the theoretical GC across both sets of reads.*"}
+gcDev %>%
+    left_join(samples) %>%
+    ggplot(aes(sampleID, sd)) +
+    geom_bar(stat= "identity", position ="dodge") +
+    facet_wrap(~genotype, scales = "free_x") +
+    scale_fill_manual()
+```
+
 
 ## Over-represented Sequences
 
@@ -291,12 +321,13 @@ gcCors <- rawGC %>%
     dplyr::filter(reads == "R1") %>%
     dplyr::select(starts_with("sample"), genotype, Freq, reads) %>%
     left_join(gcSummary) %>%
-    dplyr::select(Freq, mn_gc, mn_logLen) %>%
+    left_join(gcDev) %>%
+    dplyr::select(Freq, mn_gc, mn_logLen, sd) %>%
     cor()
 ```
 
 
-The initial QC steps identified an unusually large proportion of reads with >70% GC content.
+The initial QC steps identified an unusually large proportion of reads with >70% GC content, and noticeable deviations from the expected GC content.
 As such an exploration of any residual impacts this may have on the remainder of the library was performed.
 
 A *run length encoded* (RLE) vector was formed for each sample taking the number of reads for each transcript as the run lengths, and both the GC content and length of each transcript as the values.
@@ -306,6 +337,7 @@ From these RLEs, the mean GC and mean length was calculated for each sample, and
 
 - **A correlation of `r percent(gcCors["Freq", "mn_gc"])` was found between the mean GC content after summarisation to transcript-level counts and the proportion of the original sequence libraries with >70% GC.** This makes intuitive sense and suggests that the amount of high-GC reads in the initial libraries, as representative of incomplete rRNA removal, negatively biases the GC composition of the non-ribosomal RNA component of the library.
 - **A correlation of `r percent(gcCors["Freq", "mn_logLen"])` was found was found between the mean transcript length of the libraries after summarisation to transcript-level counts and the proportion of the original sequence libraries with >70% GC.** This is far less obvious mechanistically, but suggests that **incomplete rRNA removal also biases the fragmentation or length selection process**.
+- **Similar patterns were seen when using the standard deviations** as compared to the expected values.
 
 Given the more successful rRNA-removal in the wild-type samples, this dataset is likely to contain significant GC and Length bias which is non-biological in origin.
 
@@ -343,6 +375,42 @@ plot_grid(
     rel_widths = c(4,4,1)
 )
 ```
+
+
+```{r plotGcSD, fig.cap = "*Comparison of bias introduced by incomplete rRNA removal, measured by the standard deviation of observed GC Vs expected GC. Regression lines are shown along with standard error bands for each comparison.*", fig.width=8, fig.height=4}
+a <- gcSummary %>%
+    left_join(gcDev) %>%
+    ggplot(aes(sd, mn_logLen)) +
+    geom_point(aes(colour = genotype), size = 3) +
+    geom_smooth(method = "lm") +
+    scale_shape_manual(values = c(19, 1)) +
+    labs(
+        x = "Standard Deviation\n(Observed Vs Expected)",
+        y = "Mean log(length)",
+        colour = "Genotype"
+    ) 
+b <- gcSummary %>%
+    left_join(gcDev) %>%
+    ggplot(aes(sd, mn_gc)) +
+    geom_point(aes(colour = genotype), size = 3) +
+    geom_smooth(method = "lm") +
+    scale_shape_manual(values = c(19, 1)) +
+    scale_y_continuous(labels = percent) +
+    labs(
+        x = "Standard Deviation\n(Observed Vs Expected)",
+        y = "Mean GC Content",
+        colour = "Genotype"
+    ) 
+plot_grid(
+    a + theme(legend.position = "none"),
+    b + theme(legend.position = "none"),
+    get_legend(b),
+    nrow = 1,
+    rel_widths = c(4,4,1)
+)
+```
+
+
 
 ## PCA
 
@@ -382,11 +450,13 @@ pca$x %>%
     left_join(
         dplyr::filter(rawGC, reads == "R1")
         ) %>% 
+    left_join(gcDev) %>%
     dplyr::select(
         PC1, PC2, PC3, 
         Mean_GC = mn_gc, 
         Mean_Length = mn_logLen, 
         Initial_GC70 = Freq,
+        SD = sd,
         genotype
     ) %>% 
     mutate(genotype = as.numeric(as.factor(genotype))) %>%
@@ -398,7 +468,7 @@ pca$x %>%
     )
 ```
 
-```{r plotPCA, fig.cap = "*PCA plot showing genotype, initial GC content > 70% and mean GC content after summarisation to transcript-level.*"}
+```{r plotPCA, fig.width=10, fig.cap = "*PCA plot showing genotype, initial GC content > 70%, deviation from theoretical and mean GC content after summarisation to transcript-level.*"}
 a <- pca$x %>%
     as.data.frame() %>%
     rownames_to_column("sampleName") %>%
@@ -432,10 +502,28 @@ b <- pca$x %>%
         size = "Raw GC > 70%",
         colour = "Genotype"
     )
+c <- pca$x %>%
+    as.data.frame() %>%
+    rownames_to_column("sampleName") %>%
+    left_join(gcDev) %>%
+     left_join(
+         rawGC %>% dplyr::filter(reads == "R1")
+     ) %>%
+     ggplot(aes(PC1, sd)) +
+    geom_point(aes(colour = genotype, size = Freq)) +
+    geom_smooth(method = "lm") +
+    labs(
+        x = paste0("PC1 (", percent(summary(pca)$importance["Proportion of Variance","PC1"]),")"),
+        y = "Standard Deviation",
+        size = "Raw GC > 70%",
+        colour = "Genotype"
+    )
 plot_grid(
     plot_grid(
         a + theme(legend.position = "none"), 
-        b + theme(legend.position = "none")
+        b + theme(legend.position = "none"),
+        c + theme(legend.position = "none"),
+        nrow = 1
     ),
     get_legend(b + theme(legend.position = "bottom")),
     nrow = 2, 
