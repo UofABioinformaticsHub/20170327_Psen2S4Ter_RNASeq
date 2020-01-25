@@ -615,11 +615,8 @@ Final gene lists were exported as separate csv files, along with  fit and dgeLis
 ```{r writeResults}
 write_csv(topTables$mutant, "output/psen2VsWT.csv")
 write_csv(topTables$homozygous, "output/psen2HomVsHet.csv")
-```
-
-```{r writeObjects}
-write_rds(fit, "data/fit.rds")
-write_rds(dgeList, "data/dgeList.rds")
+write_rds(fit, "data/fit.rds", compress = "gz")
+write_rds(dgeList, "data/dgeList.rds", compress = "gz")
 ```
 
 
