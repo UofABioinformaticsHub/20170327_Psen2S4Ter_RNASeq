@@ -265,14 +265,14 @@ goSummaries <- url("https://uofabioinformaticshub.github.io/summaries2GO/data/go
 ```
 
 
-```{r hm}
+```{r go}
 go <- msigdbr("Danio rerio", category = "C5") %>% 
   left_join(entrezGenes) %>%
   dplyr::filter(!is.na(gene_id)) 
 ```
 
 
-```{r}
+```{r goByGene}
 minPath <- 3
 goByGene <- go %>%
   left_join(goSummaries) %>% 
@@ -286,7 +286,7 @@ A total of `r length(goByGene)` Ensembl IDs were mapped to pathways from the GO 
 This contrasts with `r length(unique(go$entrez_gene))` EntrezGene IDs. 
 In addition GO genesets were restricted to those with `r minPath` or more steps back to each ontology root.
 
-```{r}
+```{r goGoseq}
 goGoseq <- goseq(pwf$length, gene2cat = goByGene) %>%
   as_tibble %>%
   dplyr::filter(numDEInCat > 0) %>%
@@ -297,7 +297,7 @@ goGoseq <- goseq(pwf$length, gene2cat = goByGene) %>%
   dplyr::select(-contains("under"))
 ```
 
-```{r}
+```{r goGoseqTable}
 goGoseq %>%
   dplyr::filter(adjP < 0.05) %>%
   dplyr::rename(p = over_represented_pvalue) %>%
@@ -319,8 +319,8 @@ goGoseq %>%
     caption = paste(
       "The", nrow(.), "most highly-ranked GO terms.",
       "Bonferroni-adjusted p-values are the most stringent and give high",
-      "confidence when below 0.05.",
-      "Most terms indicate the presence of rRNA once again."
+      "confidence when below 0.05, and all terms reached this threshold.",
+      "However, most terms indicate the presence of rRNA once again."
     )
   )
 ```

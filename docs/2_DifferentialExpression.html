@@ -387,14 +387,14 @@ div.section {
 
 <h1 class="title toc-ignore">Differential Expression</h1>
 <h4 class="author">Steve Pederson</h4>
-<h4 class="date">25 January, 2020</h4>
+<h4 class="date">26 January, 2020</h4>
 
 </div>
 
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -403,7 +403,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -412,10 +412,10 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-01-25
+<strong>Last updated:</strong> 2020-01-26
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>20170327_Psen2S4Ter_RNASeq/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -431,12 +431,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has staged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -503,10 +503,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree07a6053b4c3f733eccd3a7d7a76419fb3c255b2atargetblank07a6053a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/07a6053b4c3f733eccd3a7d7a76419fb3c255b2a" target="_blank">07a6053</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree2df18e4cd92213b2546fd28b0a786f7f94a4f47ctargetblank2df18e4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/2df18e4cd92213b2546fd28b0a786f7f94a4f47c" target="_blank">2df18e4</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree07a6053b4c3f733eccd3a7d7a76419fb3c255b2atargetblank07a6053a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree2df18e4cd92213b2546fd28b0a786f7f94a4f47ctargetblank2df18e4a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -518,7 +518,15 @@ Ignored files:
 
 Untracked files:
     Untracked:  analysis/3_Enrichment.Rmd
-    Untracked:  analysis/figure/
+
+Unstaged changes:
+    Modified:   data/dgeList.rds
+    Modified:   data/fit.rds
+    Modified:   output/psen2HomVsHet.csv
+    Modified:   output/psen2VsWT.csv
+
+Staged changes:
+    Modified:   analysis/2_DifferentialExpression.Rmd
 
 </code></pre>
 <p>
@@ -557,6 +565,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/96d8cc7f67d6c50bf5f8f02407771476db931dda/analysis/2_DifferentialExpression.Rmd" target="_blank">96d8cc7</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-25
+</td>
+<td>
+Compiled after data export &amp; added compression to output
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/96d8cc7f67d6c50bf5f8f02407771476db931dda/docs/2_DifferentialExpression.html" target="_blank">96d8cc7</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-25
+</td>
+<td>
+Compiled after data export &amp; added compression to output
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1143,6 +1185,34 @@ geneLabeller &lt;- structure(grGenes$gene_name, names = grGenes$gene_id) %&gt;%
 <p>Labeller functions for genotypes, contrasts and gene names were additionally defined for simpler plotting using <code>ggplot2</code>.</p>
 </div>
 </div>
+<div id="correlations-with-rrna-contaminants" class="section level2">
+<h2>Correlations with rRNA contaminants</h2>
+<p>In order to asses the impact of the potential rRNA contaminant, correlations between the initial estimate of contamination and each gene’s expression pattern were also investigated. Conceptually, genes which are highly correlated with rRNA may be physically associated with these complexes. Similary, genes with high negative correlations may be actively selected against in the presence of rRNA complexes.</p>
+<pre class="r"><code>rawFqc &lt;- list.files(
+  path = &quot;data/0_rawData/FastQC/&quot;,
+  pattern = &quot;zip&quot;,
+  full.names = TRUE
+) %&gt;%
+  FastqcDataList()
+gc &lt;- getModule(rawFqc, &quot;Per_sequence_GC&quot;) %&gt;%
+  group_by(Filename) %&gt;% 
+  mutate(Freq = Count / sum(Count)) %&gt;%
+  ungroup()
+rawGC &lt;- gc %&gt;%
+  dplyr::filter(GC_Content &gt; 70) %&gt;% 
+  group_by(Filename) %&gt;%
+  summarise(Freq = sum(Freq)) %&gt;% 
+  arrange(desc(Freq)) %&gt;%
+  mutate(sample = str_remove(Filename, &quot;_R[12].fastq.gz&quot;)) %&gt;%
+  group_by(sample) %&gt;%
+  summarise(Freq = mean(Freq)) %&gt;%
+  left_join(samples) </code></pre>
+<pre class="r"><code>riboVec &lt;- structure(rawGC$Freq, names = rawGC$sample)
+riboCors &lt;- cpm(dgeList, log = TRUE) %&gt;%
+  apply(1, function(x){
+    cor(x, riboVec[names(x)])
+  })</code></pre>
+</div>
 </div>
 <div id="analysis" class="section level1">
 <h1>Analysis</h1>
@@ -1437,7 +1507,7 @@ topTables &lt;- colnames(d)[2:3] %&gt;%
 </ol>
 <p>For enrichment testing, genes were initially considered to be DE using:</p>
 <ol style="list-style-type: lower-alpha">
-<li>An Bonferroni-adjusted p-value &lt; 0.01</li>
+<li>A Bonferroni-adjusted p-value &lt; 0.01</li>
 <li>An FDR-adjusted p-value &lt; 0.01 along with an estimated logFC outside of the range <span class="math inline">\(\pm \log_2(2)\)</span>.</li>
 </ol>
 <p>As fewer genes were detected in the comparisons between homozygous and heterozygous mutants, a simple FDR of 0.05 was subsequently chosen for this comparison.</p>
@@ -1475,216 +1545,10 @@ topTables &lt;- colnames(d)[2:3] %&gt;%
 </div>
 <div id="model-checking" class="section level2">
 <h2>Model Checking</h2>
-<div id="gc-and-length-bias" class="section level3">
-<h3>GC and Length Bias</h3>
-<pre class="r"><code>topTables %&gt;%
-    bind_rows() %&gt;%
-    mutate(stat = -sign(logFC)*log10(PValue)) %&gt;%
-    ggplot(aes(gc_content, stat)) +
-    geom_point(aes(colour = DE), alpha = 0.4) +
-    geom_smooth(se = FALSE) +
-    facet_wrap(~coef, labeller = contLabeller)  +
-    labs(
-        x = &quot;GC content (%)&quot;,
-        y = &quot;Ranking Statistic&quot;
-    ) +
-    coord_cartesian(ylim = c(-10, 10)) +
-    scale_colour_manual(values = deCols) +
-    theme(legend.position = &quot;none&quot;)</code></pre>
-<div class="figure" style="text-align: center">
-<img src="figure/2_DifferentialExpression.Rmd/checkGCBias-1.png" alt="*Checks for GC bias in differential expression. GC content is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change. A small amount of bias was noted particularly in the comparison between mutants and wild-type.*" width="768" />
-<p class="caption">
-<em>Checks for GC bias in differential expression. GC content is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change. A small amount of bias was noted particularly in the comparison between mutants and wild-type.</em>
-</p>
-</div>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkGCBias-1">
-Past versions of checkGCBias-1.png
-</button>
-</p>
-<div id="fig-checkGCBias-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/be95a600302098eba9391210983d011dcff1ee3a/docs/figure/2_DifferentialExpression.Rmd/checkGCBias-1.png" target="_blank">be95a60</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-01-25
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/7251bd286b8818222ba7aa1dcfaf73e53c84eab7/docs/figure/2_DifferentialExpression.Rmd/checkGCBias-1.png" target="_blank">7251bd2</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-01-25
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/1858f49ccbba24537a206cf64f350795ef8f8870/docs/figure/2_DifferentialExpression.Rmd/checkGCBias-1.png" target="_blank">1858f49</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-01-22
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/71b8832323504c21b9da26d8bc819b8cc116ea97/docs/figure/2_DifferentialExpression.Rmd/checkGCBias-1.png" target="_blank">71b8832</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-01-21
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>topTables %&gt;%
-    bind_rows() %&gt;%
-    mutate(stat = -sign(logFC)*log10(PValue)) %&gt;%
-    ggplot(aes(length, stat)) +
-    geom_point(aes(colour = DE), alpha = 0.4) +
-    geom_smooth(se = FALSE) +
-    facet_wrap(~coef, labeller = contLabeller)  +
-    labs(
-        x = &quot;Gene Length (bp)&quot;,
-        y = &quot;Ranking Statistic&quot;
-    ) +
-    coord_cartesian(ylim = c(-10, 10)) +
-    scale_x_log10(labels = comma) +
-    scale_colour_manual(values = deCols) +
-    theme(legend.position = &quot;none&quot;)</code></pre>
-<div class="figure" style="text-align: center">
-<img src="figure/2_DifferentialExpression.Rmd/checkLengthBias-1.png" alt="*Checks for length bias in differential expression. Gene length is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change. Again, a small amount of bias was noted particularly in the comparison between mutants and wild-type.*" width="768" />
-<p class="caption">
-<em>Checks for length bias in differential expression. Gene length is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change. Again, a small amount of bias was noted particularly in the comparison between mutants and wild-type.</em>
-</p>
-</div>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkLengthBias-1">
-Past versions of checkLengthBias-1.png
-</button>
-</p>
-<div id="fig-checkLengthBias-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/be95a600302098eba9391210983d011dcff1ee3a/docs/figure/2_DifferentialExpression.Rmd/checkLengthBias-1.png" target="_blank">be95a60</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-01-25
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/7251bd286b8818222ba7aa1dcfaf73e53c84eab7/docs/figure/2_DifferentialExpression.Rmd/checkLengthBias-1.png" target="_blank">7251bd2</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-01-25
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/1858f49ccbba24537a206cf64f350795ef8f8870/docs/figure/2_DifferentialExpression.Rmd/checkLengthBias-1.png" target="_blank">1858f49</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-01-22
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/71b8832323504c21b9da26d8bc819b8cc116ea97/docs/figure/2_DifferentialExpression.Rmd/checkLengthBias-1.png" target="_blank">71b8832</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-01-21
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Checks for both GC and length bias on differential expression showed that a small bias remained evident, despite using conditional-quantile normalisation. However, <a href="2a_NoCQN.html">an alternative analysis on the same dataset <strong>excluding the CQN steps</strong></a> revealed vastly different and exaggerated bias. As such, the impact of CQN normalisation was considered to be appropriate.</p>
-</div>
 </div>
 <div id="checks-for-rrna-impacts" class="section level2">
 <h2>Checks for rRNA impacts</h2>
-<pre class="r"><code>rawFqc &lt;- list.files(
-  path = &quot;data/0_rawData/FastQC/&quot;,
-  pattern = &quot;zip&quot;,
-  full.names = TRUE
-) %&gt;%
-  FastqcDataList()
-rawGC &lt;- getModule(rawFqc, &quot;Per_sequence_GC&quot;) %&gt;%
-  group_by(Filename) %&gt;% 
-  mutate(Freq = Count / sum(Count)) %&gt;%
-  dplyr::filter(GC_Content &gt; 70) %&gt;% 
-  summarise(Freq = sum(Freq)) %&gt;% 
-  arrange(desc(Freq)) %&gt;%
-  mutate(sample = str_remove(Filename, &quot;_R[12].fastq.gz&quot;)) %&gt;%
-  group_by(sample) %&gt;%
-  summarise(Freq = mean(Freq)) %&gt;%
-  left_join(samples) 
-riboVec &lt;- structure(rawGC$Freq, names = rawGC$sample)</code></pre>
-<pre class="r"><code>riboCors &lt;- cpm(dgeList, log = TRUE)%&gt;%
-  apply(1, function(x){
-    cor(x, riboVec[names(x)])
-  })</code></pre>
-<p>Given the previously identified concerns about variable rRNA removal, correlations were calculated between each gene’s expression values and the proportion of the raw libraries with &gt; 70% GC. Those with the strongest correlation, and for which the FDR is &lt; 0.01 are shown below.</p>
+<p>Given the previously identified concerns about variable rRNA removal, correlations were calculated between each gene’s expression values and the proportion of the raw libraries with &gt; 70% GC. Those with the strongest +<sup>ve</sup> correlation, and for which the FDR is &lt; 0.01 are shown below.</p>
 <p>Most notably, the most correlated RNA with these rRNA proportions was <code>eif1b</code> which is the initiation factor for translation. As this is a protein coding gene with the <em>protein product</em> interacting with the ribosome, the reason for this correlation <em>at the RNA level</em> raises difficult questions which cannot be answered here.</p>
 <pre class="r"><code>topTables$mutant %&gt;%
   mutate(riboCors = riboCors[gene_id]) %&gt;%
@@ -2090,8 +1954,435 @@ riboVec &lt;- structure(rawGC$Freq, names = rawGC$sample)</code></pre>
 </tr>
 </tbody>
 </table>
-<div id="other-artefacts" class="section level3">
-<h3>Other Artefacts</h3>
+<pre class="r"><code>topTables$mutant %&gt;%
+  mutate(riboCors = riboCors[gene_id]) %&gt;%
+  dplyr::filter(
+    FDR &lt; alpha
+  ) %&gt;%
+  dplyr::select(gene_id, gene_name, logFC, logCPM, FDR, riboCors, DE) %&gt;%
+  arrange(riboCors) %&gt;%
+  mutate(FDR = case_when(
+    FDR &gt;= 0.0001 ~ sprintf(&quot;%.4f&quot;, FDR),
+    FDR &lt; 0.0001 ~ sprintf(&quot;%.2e&quot;, FDR)
+    )
+  ) %&gt;%
+  dplyr::slice(1:20) %&gt;%
+  pander(
+    justify = &quot;llrrrrl&quot;,
+    style = &quot;rmarkdown&quot;,
+    caption = paste(
+      &quot;The&quot;, nrow(.), &quot;genes most negatively correlated with the original high GC content.&quot;,
+      &quot;Most failed the selection criteria for differential expression,&quot;,
+      &quot;primarily due to the stringent logFC filter.&quot;,
+      &quot;These genes may be being selected against in the presence of rRNA.&quot;
+    )
+  )</code></pre>
+<table>
+<caption>The 20 genes most negatively correlated with the original high GC content. Most failed the selection criteria for differential expression, primarily due to the stringent logFC filter. These genes may be being selected against in the presence of rRNA.</caption>
+<thead>
+<tr class="header">
+<th align="left">gene_id</th>
+<th align="left">gene_name</th>
+<th align="right">logFC</th>
+<th align="right">logCPM</th>
+<th align="right">FDR</th>
+<th align="right">riboCors</th>
+<th align="left">DE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ENSDARG00000001829</td>
+<td align="left">zgc:112982</td>
+<td align="right">-0.8984</td>
+<td align="right">6.26</td>
+<td align="right">0.0010</td>
+<td align="right">-0.9826</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">ENSDARG00000100915</td>
+<td align="left">si:ch211-255f4.7</td>
+<td align="right">-0.6696</td>
+<td align="right">3.31</td>
+<td align="right">0.0015</td>
+<td align="right">-0.9652</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">ENSDARG00000033889</td>
+<td align="left">spty2d1</td>
+<td align="right">-0.8317</td>
+<td align="right">5.462</td>
+<td align="right">0.0004</td>
+<td align="right">-0.9611</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">ENSDARG00000019223</td>
+<td align="left">arglu1a</td>
+<td align="right">-0.8874</td>
+<td align="right">7.854</td>
+<td align="right">0.0028</td>
+<td align="right">-0.9602</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">ENSDARG00000059097</td>
+<td align="left">nktr</td>
+<td align="right">-1.657</td>
+<td align="right">6.727</td>
+<td align="right">0.0002</td>
+<td align="right">-0.9581</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">ENSDARG00000059768</td>
+<td align="left">gpatch8</td>
+<td align="right">-0.9409</td>
+<td align="right">7.864</td>
+<td align="right">0.0011</td>
+<td align="right">-0.9526</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">ENSDARG00000075380</td>
+<td align="left">kri1</td>
+<td align="right">-0.778</td>
+<td align="right">4.336</td>
+<td align="right">0.0006</td>
+<td align="right">-0.9496</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">ENSDARG00000001162</td>
+<td align="left">matr3l1.1</td>
+<td align="right">-0.6702</td>
+<td align="right">6.855</td>
+<td align="right">0.0003</td>
+<td align="right">-0.9495</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">ENSDARG00000014825</td>
+<td align="left">si:dkeyp-69b9.6</td>
+<td align="right">-0.4038</td>
+<td align="right">6.53</td>
+<td align="right">0.0061</td>
+<td align="right">-0.9441</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">ENSDARG00000077060</td>
+<td align="left">rbm6</td>
+<td align="right">-0.5108</td>
+<td align="right">5.891</td>
+<td align="right">0.0037</td>
+<td align="right">-0.9438</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">ENSDARG00000104840</td>
+<td align="left">si:dkey-28a3.2</td>
+<td align="right">-0.472</td>
+<td align="right">4.533</td>
+<td align="right">0.0019</td>
+<td align="right">-0.9435</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">ENSDARG00000069855</td>
+<td align="left">pnisr</td>
+<td align="right">-0.7195</td>
+<td align="right">7.192</td>
+<td align="right">0.0056</td>
+<td align="right">-0.9434</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">ENSDARG00000007444</td>
+<td align="left">ift81</td>
+<td align="right">-0.6065</td>
+<td align="right">3.6</td>
+<td align="right">0.0009</td>
+<td align="right">-0.9396</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">ENSDARG00000097086</td>
+<td align="left">si:dkey-172k15.4</td>
+<td align="right">-0.7701</td>
+<td align="right">3.038</td>
+<td align="right">0.0028</td>
+<td align="right">-0.9391</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">ENSDARG00000012763</td>
+<td align="left">arl13b</td>
+<td align="right">-0.8101</td>
+<td align="right">4.787</td>
+<td align="right">2.80e-05</td>
+<td align="right">-0.9383</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">ENSDARG00000061490</td>
+<td align="left">u2surp</td>
+<td align="right">-1.191</td>
+<td align="right">6.981</td>
+<td align="right">4.01e-06</td>
+<td align="right">-0.933</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="odd">
+<td align="left">ENSDARG00000044625</td>
+<td align="left">pcf11</td>
+<td align="right">-0.879</td>
+<td align="right">7.04</td>
+<td align="right">3.29e-05</td>
+<td align="right">-0.9312</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">ENSDARG00000060361</td>
+<td align="left">cep104</td>
+<td align="right">-0.6092</td>
+<td align="right">4.35</td>
+<td align="right">0.0026</td>
+<td align="right">-0.9281</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">ENSDARG00000051953</td>
+<td align="left">ythdc1</td>
+<td align="right">-0.7477</td>
+<td align="right">7.073</td>
+<td align="right">0.0007</td>
+<td align="right">-0.9263</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">ENSDARG00000104682</td>
+<td align="left">tpm2</td>
+<td align="right">-0.4561</td>
+<td align="right">5.335</td>
+<td align="right">0.0028</td>
+<td align="right">-0.9237</td>
+<td align="left">FALSE</td>
+</tr>
+</tbody>
+</table>
+<div id="gc-and-length-bias" class="section level3">
+<h3>GC and Length Bias</h3>
+<pre class="r"><code>topTables %&gt;%
+    bind_rows() %&gt;%
+    mutate(stat = -sign(logFC)*log10(PValue)) %&gt;%
+    ggplot(aes(gc_content, stat)) +
+    geom_point(aes(colour = DE), alpha = 0.4) +
+    geom_smooth(se = FALSE) +
+    facet_wrap(~coef, labeller = contLabeller)  +
+    labs(
+        x = &quot;GC content (%)&quot;,
+        y = &quot;Ranking Statistic&quot;
+    ) +
+    coord_cartesian(ylim = c(-10, 10)) +
+    scale_colour_manual(values = deCols) +
+    theme(legend.position = &quot;none&quot;)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/2_DifferentialExpression.Rmd/checkGCBias-1.png" alt="*Checks for GC bias in differential expression. GC content is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change. A small amount of bias was noted particularly in the comparison between mutants and wild-type.*" width="768" />
+<p class="caption">
+<em>Checks for GC bias in differential expression. GC content is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change. A small amount of bias was noted particularly in the comparison between mutants and wild-type.</em>
+</p>
+</div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkGCBias-1">
+Past versions of checkGCBias-1.png
+</button>
+</p>
+<div id="fig-checkGCBias-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/96d8cc7f67d6c50bf5f8f02407771476db931dda/docs/figure/2_DifferentialExpression.Rmd/checkGCBias-1.png" target="_blank">96d8cc7</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/be95a600302098eba9391210983d011dcff1ee3a/docs/figure/2_DifferentialExpression.Rmd/checkGCBias-1.png" target="_blank">be95a60</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/7251bd286b8818222ba7aa1dcfaf73e53c84eab7/docs/figure/2_DifferentialExpression.Rmd/checkGCBias-1.png" target="_blank">7251bd2</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/1858f49ccbba24537a206cf64f350795ef8f8870/docs/figure/2_DifferentialExpression.Rmd/checkGCBias-1.png" target="_blank">1858f49</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-22
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/71b8832323504c21b9da26d8bc819b8cc116ea97/docs/figure/2_DifferentialExpression.Rmd/checkGCBias-1.png" target="_blank">71b8832</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>topTables %&gt;%
+    bind_rows() %&gt;%
+    mutate(stat = -sign(logFC)*log10(PValue)) %&gt;%
+    ggplot(aes(length, stat)) +
+    geom_point(aes(colour = DE), alpha = 0.4) +
+    geom_smooth(se = FALSE) +
+    facet_wrap(~coef, labeller = contLabeller)  +
+    labs(
+        x = &quot;Gene Length (bp)&quot;,
+        y = &quot;Ranking Statistic&quot;
+    ) +
+    coord_cartesian(ylim = c(-10, 10)) +
+    scale_x_log10(labels = comma) +
+    scale_colour_manual(values = deCols) +
+    theme(legend.position = &quot;none&quot;)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/2_DifferentialExpression.Rmd/checkLengthBias-1.png" alt="*Checks for length bias in differential expression. Gene length is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change. Again, a small amount of bias was noted particularly in the comparison between mutants and wild-type.*" width="768" />
+<p class="caption">
+<em>Checks for length bias in differential expression. Gene length is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change. Again, a small amount of bias was noted particularly in the comparison between mutants and wild-type.</em>
+</p>
+</div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkLengthBias-1">
+Past versions of checkLengthBias-1.png
+</button>
+</p>
+<div id="fig-checkLengthBias-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/96d8cc7f67d6c50bf5f8f02407771476db931dda/docs/figure/2_DifferentialExpression.Rmd/checkLengthBias-1.png" target="_blank">96d8cc7</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/be95a600302098eba9391210983d011dcff1ee3a/docs/figure/2_DifferentialExpression.Rmd/checkLengthBias-1.png" target="_blank">be95a60</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/7251bd286b8818222ba7aa1dcfaf73e53c84eab7/docs/figure/2_DifferentialExpression.Rmd/checkLengthBias-1.png" target="_blank">7251bd2</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/1858f49ccbba24537a206cf64f350795ef8f8870/docs/figure/2_DifferentialExpression.Rmd/checkLengthBias-1.png" target="_blank">1858f49</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-22
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/71b8832323504c21b9da26d8bc819b8cc116ea97/docs/figure/2_DifferentialExpression.Rmd/checkLengthBias-1.png" target="_blank">71b8832</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Checks for both GC and length bias on differential expression showed that a small bias remained evident, despite using conditional-quantile normalisation. However, <a href="2a_NoCQN.html">an alternative analysis on the same dataset <strong>excluding the CQN steps</strong></a> revealed vastly different and exaggerated bias. As such, the impact of CQN normalisation was considered to be appropriate.</p>
+</div>
+</div>
+<div id="other-artefacts" class="section level2">
+<h2>Other Artefacts</h2>
 <pre class="r"><code>topTables %&gt;%
   bind_rows() %&gt;%
   arrange(DE) %&gt;%
@@ -2099,7 +2390,7 @@ riboVec &lt;- structure(rawGC$Freq, names = rawGC$sample)</code></pre>
   geom_point(aes(colour = DE)) +
   geom_text_repel(
     aes(label = gene_name, colour = DE),
-    data = . %&gt;% dplyr::filter(DE &amp; abs(logFC) &gt; 2.9)
+    data = . %&gt;% dplyr::filter(DE &amp; abs(logFC) &gt; 3)
   ) +
   geom_text_repel(
     aes(label = gene_name, colour = DE),
@@ -2143,6 +2434,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/96d8cc7f67d6c50bf5f8f02407771476db931dda/docs/figure/2_DifferentialExpression.Rmd/maPlots-1.png" target="_blank">96d8cc7</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-25
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/be95a600302098eba9391210983d011dcff1ee3a/docs/figure/2_DifferentialExpression.Rmd/maPlots-1.png" target="_blank">be95a60</a>
@@ -2240,6 +2542,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/96d8cc7f67d6c50bf5f8f02407771476db931dda/docs/figure/2_DifferentialExpression.Rmd/pHist-1.png" target="_blank">96d8cc7</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-25
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/be95a600302098eba9391210983d011dcff1ee3a/docs/figure/2_DifferentialExpression.Rmd/pHist-1.png" target="_blank">be95a60</a>
 </td>
 <td>
@@ -2266,7 +2579,6 @@ Steve Ped
 </div>
 </div>
 </div>
-</div>
 <div id="results" class="section level1">
 <h1>Results</h1>
 <pre class="r"><code>topTables %&gt;%
@@ -2275,7 +2587,7 @@ Steve Ped
     geom_point(alpha = 0.4) +
     geom_text_repel(
         aes(label = gene_name),
-        data = . %&gt;% dplyr::filter(PValue &lt; 1e-12 | abs(logFC) &gt; 4)
+        data = . %&gt;% dplyr::filter(PValue &lt; 1e-13 | abs(logFC) &gt; 4)
     ) +
     geom_text_repel(
         aes(label = gene_name),
@@ -2318,6 +2630,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/96d8cc7f67d6c50bf5f8f02407771476db931dda/docs/figure/2_DifferentialExpression.Rmd/volcanoPlots-1.png" target="_blank">96d8cc7</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-25
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/be95a600302098eba9391210983d011dcff1ee3a/docs/figure/2_DifferentialExpression.Rmd/volcanoPlots-1.png" target="_blank">be95a60</a>
@@ -2386,7 +2709,7 @@ Steve Ped
 <p>A set of 615 genes was identified as DE in the presence of the mutant <em>psen2<sup>S4Ter</sup></em> transcript. The most highly ranked 40 genes are shown in the following heatmap. The presence of <code>SNORNA70</code> in this list is of some concern as this is an ncRNA which is known to interact with ribosomes. In particular the expression pattern follows very closely the patterns previosuly identified for rRNA depletion using the percentage of libraries with GC &gt; 70. For example, WT_86 was the sample with most complete rRNA depletion whilst, Het_84 showed the largest proportion of the library as being derived from rRNA. These represent the samples with lowest and highest expression of SNORNA70 respectively.</p>
 <pre class="r"><code>genoCols &lt;- RColorBrewer::brewer.pal(3, &quot;Set1&quot;) %&gt;%
   setNames(levels(dgeList$samples$genotype))
-dgeList %&gt;%
+fit$fitted.values %&gt;%
   cpm(log = TRUE) %&gt;% 
   extract(deGenes$mutant[seq_len(n)],) %&gt;%
   as.data.frame() %&gt;%
@@ -2402,12 +2725,12 @@ dgeList %&gt;%
     annotation_names_col = FALSE,
     annotation_colors = list(Genotype = genoCols),
     cutree_cols = 2,
-    cutree_rows = 1#6
+    cutree_rows = 6
   )</code></pre>
 <div class="figure" style="text-align: center">
-<img src="figure/2_DifferentialExpression.Rmd/commonSummaryHeatmap-1.png" alt="*The 40 most highly-ranked genes by FDR which are commonly considered DE between mutants and WT samples*" width="768" />
+<img src="figure/2_DifferentialExpression.Rmd/commonSummaryHeatmap-1.png" alt="*The 40 most highly-ranked genes by FDR which are commonly considered DE between mutants and WT samples. Plotted values are logCPM based on normalised counts.*" width="768" />
 <p class="caption">
-<em>The 40 most highly-ranked genes by FDR which are commonly considered DE between mutants and WT samples</em>
+<em>The 40 most highly-ranked genes by FDR which are commonly considered DE between mutants and WT samples. Plotted values are logCPM based on normalised counts.</em>
 </p>
 </div>
 <p>
@@ -2432,6 +2755,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/96d8cc7f67d6c50bf5f8f02407771476db931dda/docs/figure/2_DifferentialExpression.Rmd/commonSummaryHeatmap-1.png" target="_blank">96d8cc7</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-25
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/7251bd286b8818222ba7aa1dcfaf73e53c84eab7/docs/figure/2_DifferentialExpression.Rmd/commonSummaryHeatmap-1.png" target="_blank">7251bd2</a>
@@ -2462,7 +2796,7 @@ Steve Ped
 <div id="genes-showing-differences-between-mutants" class="section level2">
 <h2>Genes showing differences between mutants</h2>
 <p>When inspecting the genes showing differences between mutants, it was noted that the WT and Homozygous mutant samples clustered together, implying that there was a unique effect on these genes which was specific to the heterozygous condition.</p>
-<pre class="r"><code>dgeList %&gt;%
+<pre class="r"><code>fit$fitted.values %&gt;%
   cpm(log = TRUE) %&gt;% 
   extract(deGenes$homozygous,) %&gt;%
   as.data.frame() %&gt;%
@@ -2481,9 +2815,9 @@ Steve Ped
     cutree_rows = 3
   )</code></pre>
 <div class="figure" style="text-align: center">
-<img src="figure/2_DifferentialExpression.Rmd/homozygousHeatmap-1.png" alt="*The 7 most highly-ranked genes by FDR which are DE between between mutants*" width="672" />
+<img src="figure/2_DifferentialExpression.Rmd/homozygousHeatmap-1.png" alt="*The 7 most highly-ranked genes by FDR which are DE between between mutants. Plotted values are logCPM based on normalised counts.*" width="672" />
 <p class="caption">
-<em>The 7 most highly-ranked genes by FDR which are DE between between mutants</em>
+<em>The 7 most highly-ranked genes by FDR which are DE between between mutants. Plotted values are logCPM based on normalised counts.</em>
 </p>
 </div>
 <p>
@@ -2510,6 +2844,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/96d8cc7f67d6c50bf5f8f02407771476db931dda/docs/figure/2_DifferentialExpression.Rmd/homozygousHeatmap-1.png" target="_blank">96d8cc7</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-25
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/7251bd286b8818222ba7aa1dcfaf73e53c84eab7/docs/figure/2_DifferentialExpression.Rmd/homozygousHeatmap-1.png" target="_blank">7251bd2</a>
 </td>
 <td>
@@ -2529,9 +2874,9 @@ Steve Ped
 <h1>Data Export</h1>
 <p>Final gene lists were exported as separate csv files, along with fit and dgeList objects.</p>
 <pre class="r"><code>write_csv(topTables$mutant, &quot;output/psen2VsWT.csv&quot;)
-write_csv(topTables$homozygous, &quot;output/psen2HomVsHet.csv&quot;)</code></pre>
-<pre class="r"><code>write_rds(fit, &quot;data/fit.rds&quot;)
-write_rds(dgeList, &quot;data/dgeList.rds&quot;)</code></pre>
+write_csv(topTables$homozygous, &quot;output/psen2HomVsHet.csv&quot;)
+write_rds(fit, &quot;data/fit.rds&quot;, compress = &quot;gz&quot;)
+write_rds(dgeList, &quot;data/dgeList.rds&quot;, compress = &quot;gz&quot;)</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -2550,7 +2895,7 @@ write_rds(dgeList, &quot;data/dgeList.rds&quot;)</code></pre>
  collate  en_AU.UTF-8                 
  ctype    en_AU.UTF-8                 
  tz       Australia/Adelaide          
- date     2020-01-25                  
+ date     2020-01-26                  
 
 ─ Packages ───────────────────────────────────────────────────────────────────
  package                * version  date       lib source        
