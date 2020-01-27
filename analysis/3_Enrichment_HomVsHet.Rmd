@@ -180,7 +180,16 @@ A total of `r length(goByGene)` Ensembl IDs were mapped to pathways from restric
 
 # Enrichment Testing on Ranked Lists
 
-```{r}
+```{r topTables}
+deTable <- file.path("output", "psen2VsWT.csv") %>% 
+  read_csv() %>%
+  mutate(
+    entrezid = dgeList$genes$entrezid[gene_id]
+  )
+```
+
+
+```{r rnk}
 rnk <- structure(
   -sign(deTable$logFC)*log10(deTable$PValue), 
   names = deTable$gene_id
