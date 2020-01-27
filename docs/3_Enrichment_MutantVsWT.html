@@ -387,7 +387,7 @@ div.section {
 
 <h1 class="title toc-ignore">Enrichment Analysis</h1>
 <h4 class="author">Steve Pederson</h4>
-<h4 class="date">26 January, 2020</h4>
+<h4 class="date">27 January, 2020</h4>
 
 </div>
 
@@ -412,7 +412,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-01-26
+<strong>Last updated:</strong> 2020-01-27
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -503,10 +503,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtreeba189be6c3080686d32850d6ccd41d7cc76e7a74targetblankba189bea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/ba189be6c3080686d32850d6ccd41d7cc76e7a74" target="_blank">ba189be</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree0605262bf770c867c59d2917106abe444c1988e9targetblank0605262a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/0605262bf770c867c59d2917106abe444c1988e9" target="_blank">0605262</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtreeba189be6c3080686d32850d6ccd41d7cc76e7a74targetblankba189bea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree0605262bf770c867c59d2917106abe444c1988e9targetblank0605262a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -515,9 +515,6 @@ Great! You are using Git for version control. Tracking code development and conn
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-
-Untracked files:
-    Untracked:  analysis/figure/
 
 Unstaged changes:
     Modified:   analysis/3_Enrichment.Rmd
@@ -559,6 +556,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/b086affa08326538432202bf80cb668c0b8bd4cd/analysis/3_Enrichment.Rmd" target="_blank">b086aff</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-26
+</td>
+<td>
+Added first step of enrichment analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/b086affa08326538432202bf80cb668c0b8bd4cd/docs/3_Enrichment.html" target="_blank">b086aff</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-26
+</td>
+<td>
+Added first step of enrichment analysis
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -627,7 +658,8 @@ library(pander)
 library(goseq)
 library(msigdbr)
 library(AnnotationDbi)
-library(RColorBrewer)</code></pre>
+library(RColorBrewer)
+library(ngsReports)</code></pre>
 <pre class="r"><code>theme_set(theme_bw())
 panderOptions(&quot;table.split.table&quot;, Inf)
 panderOptions(&quot;table.style&quot;, &quot;rmarkdown&quot;)
@@ -716,10 +748,47 @@ names(pwf) %&gt;%
         plotPWF(pwf[[x]], main = x)
     })</code></pre>
 <div class="figure" style="text-align: center">
-<img src="figure/3_Enrichment.Rmd/checkBias-1.png" alt="*Bias data based on each of the possible covariates. Both appeared to impact the probability of a gene being DE to some extent, with gene length being selected as the covariate for usage inthe goseq model.*" width="768" />
+<img src="figure/3_Enrichment.Rmd/checkBias-1.png" alt="*Bias data based on each of the possible covariates. Both appeared to impact the probability of a gene being DE to some extent, with gene length being selected as the initial covariate for usage in the goseq model.*" width="768" />
 <p class="caption">
-<em>Bias data based on each of the possible covariates. Both appeared to impact the probability of a gene being DE to some extent, with gene length being selected as the covariate for usage inthe goseq model.</em>
+<em>Bias data based on each of the possible covariates. Both appeared to impact the probability of a gene being DE to some extent, with gene length being selected as the initial covariate for usage in the goseq model.</em>
 </p>
+</div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-checkBias-1">
+Past versions of checkBias-1.png
+</button>
+</p>
+<div id="fig-checkBias-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/b086affa08326538432202bf80cb668c0b8bd4cd/docs/figure/3_Enrichment.Rmd/checkBias-1.png" target="_blank">b086aff</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-26
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <pre><code>[[1]]
 NULL
@@ -727,8 +796,8 @@ NULL
 [[2]]
 NULL</code></pre>
 <pre class="r"><code>par(mfrow = c(1, 1))</code></pre>
-<div id="hallmark-gene-sets" class="section level3">
-<h3>Hallmark Gene Sets</h3>
+<div id="length-bias-hallmark-gene-sets" class="section level3">
+<h3>Length Bias: Hallmark Gene Sets</h3>
 <pre class="r"><code>hm &lt;- msigdbr(&quot;Danio rerio&quot;, category = &quot;H&quot;)  %&gt;% 
   left_join(entrezGenes) %&gt;%
   dplyr::filter(!is.na(gene_id)) </code></pre>
@@ -746,8 +815,8 @@ NULL</code></pre>
   dplyr::select(-contains(&quot;under&quot;))</code></pre>
 <p>No hallmark genesets were considered to be enriched after adjusting for the observed length bias in the data.</p>
 </div>
-<div id="kegg-gene-sets" class="section level3">
-<h3>KEGG Gene Sets</h3>
+<div id="length-bias-kegg-gene-sets" class="section level3">
+<h3>Length Bias: KEGG Gene Sets</h3>
 <p>The same mapping process was applied to KEGG gene sets.</p>
 <pre class="r"><code>kg &lt;- msigdbr(&quot;Danio rerio&quot;, category = &quot;C2&quot;, subcategory = &quot;CP:KEGG&quot;)  %&gt;% 
   left_join(entrezGenes) %&gt;%
@@ -843,10 +912,10 @@ NULL</code></pre>
 </tr>
 </tbody>
 </table>
-<p>Notably, the KEGG gene-set for Ribosomal genes was detected as enriched. This is likely to be due to the previosuly discussed contaminant.</p>
+<p>Notably, the KEGG gene-set for Ribosomal genes was detected as enriched. This is likely to be due to the previously discussed contaminant.</p>
 </div>
-<div id="go-gene-sets" class="section level3">
-<h3>GO Gene Sets</h3>
+<div id="length-bias-go-gene-sets" class="section level3">
+<h3>Length Bias: GO Gene Sets</h3>
 <p>The same mapping process was applied to GO gene sets.</p>
 <pre class="r"><code>goSummaries &lt;- url(&quot;https://uofabioinformaticshub.github.io/summaries2GO/data/goSummaries.RDS&quot;) %&gt;%
   readRDS() %&gt;%
@@ -892,14 +961,14 @@ goByGene &lt;- go %&gt;%
   pander(
     justify = &quot;lrrrrr&quot;,
     caption = paste(
-      &quot;The&quot;, nrow(.), &quot;most highly-ranked GO terms.&quot;,
+      &quot;*The&quot;, nrow(.), &quot;most highly-ranked GO terms.&quot;,
       &quot;Bonferroni-adjusted p-values are the most stringent and give high&quot;,
       &quot;confidence when below 0.05, and all terms reached this threshold.&quot;,
-      &quot;However, most terms indicate the presence of rRNA once again.&quot;
+      &quot;However, most terms once again indicate the presence of rRNA.*&quot;
     )
   )</code></pre>
 <table style="width:100%;">
-<caption>The 18 most highly-ranked GO terms. Bonferroni-adjusted p-values are the most stringent and give high confidence when below 0.05, and all terms reached this threshold. However, most terms indicate the presence of rRNA once again.</caption>
+<caption><em>The 18 most highly-ranked GO terms. Bonferroni-adjusted p-values are the most stringent and give high confidence when below 0.05, and all terms reached this threshold. However, most terms once again indicate the presence of rRNA.</em></caption>
 <colgroup>
 <col width="60%" />
 <col width="3%" />
@@ -1066,6 +1135,342 @@ goByGene &lt;- go %&gt;%
 </tbody>
 </table>
 </div>
+<div id="rrna-correlation-bias-hallmark-gene-sets" class="section level3">
+<h3>rRNA Correlation Bias: Hallmark Gene Sets</h3>
+<p>Given the results above all pointing to DE genes being enriched for ribosomal related processes, an alternative approch was sought. Under this approach, each gene’s correlation with the estimates of rRNA proportions was used for bias correction. Values were calculated as per the previous steps, using the logCPM values for each gene, with the sample-level standard deviations from the theoretical GC distribution being used as measures of rRNA bias.</p>
+<pre class="r"><code>rawFqc &lt;- list.files(
+  path = &quot;data/0_rawData/FastQC/&quot;,
+  pattern = &quot;zip&quot;,
+  full.names = TRUE
+) %&gt;%
+  FastqcDataList()
+gc &lt;- getModule(rawFqc, &quot;Per_sequence_GC&quot;) %&gt;%
+  group_by(Filename) %&gt;% 
+  mutate(Freq = Count / sum(Count)) %&gt;%
+  ungroup()
+rawGC &lt;- gc %&gt;%
+  dplyr::filter(GC_Content &gt; 70) %&gt;% 
+  group_by(Filename) %&gt;%
+  summarise(Freq = sum(Freq)) %&gt;% 
+  arrange(desc(Freq)) %&gt;%
+  mutate(sample = str_remove(Filename, &quot;_R[12].fastq.gz&quot;)) %&gt;%
+  group_by(sample) %&gt;%
+  summarise(Freq = mean(Freq)) %&gt;%
+  left_join(samples) </code></pre>
+<pre class="r"><code>gcDev &lt;- gc %&gt;%
+  left_join(getGC(gcTheoretical, &quot;Drerio&quot;, &quot;Trans&quot;)) %&gt;%
+  mutate(
+    sample = str_remove(Filename, &quot;_R[12].fastq.gz&quot;),
+    resid = Freq - Drerio
+  ) %&gt;% 
+  left_join(samples) %&gt;%
+  group_by(sample) %&gt;%
+  summarise(
+    ss = sum(resid^2),
+    n = n(),
+    sd = sqrt(ss / (n - 1))
+  )</code></pre>
+<pre class="r"><code>riboVec &lt;- structure(gcDev$sd, names = gcDev$sample)
+riboCors &lt;- cpm(dgeList, log = TRUE) %&gt;%
+  apply(1, function(x){
+    cor(x, riboVec[names(x)])
+  })</code></pre>
+<p>For estimation of the probability weight function, squared correlations were used to place negative and positive correlations on the same scale. This accounts for genes which are both negatively &amp; positively biased by the presence of excessive rRNA. Clearly, the confounding of genotype with rRNA means that some genes driven by the genuine biology may be down-weighted under this approach.</p>
+<pre class="r"><code>riboPwf &lt;- topTables$psen2VsWT %&gt;%
+  mutate(riboCors = riboCors[gene_id]^2) %&gt;%
+  dplyr::select(gene_id, DE, riboCors) %&gt;%
+  distinct(gene_id, .keep_all = TRUE) %&gt;% 
+  with(
+    nullp(
+      DEgenes = structure(
+        as.integer(DE), names = gene_id
+      ), 
+      genome = &quot;danRer10&quot;, 
+      id = &quot;ensGene&quot;, 
+      bias.data = riboCors,
+      plot.fit = FALSE
+    )
+  )
+plotPWF(riboPwf, main = &quot;Bias from rRNA proportions&quot;)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/3_Enrichment.Rmd/riboPwf-1.png" alt="*Using this approach, it was clear that correlation with rRNA proportions significantly biased the probability of a gene being considered as DE.*" width="384" />
+<p class="caption">
+<em>Using this approach, it was clear that correlation with rRNA proportions significantly biased the probability of a gene being considered as DE.</em>
+</p>
+</div>
+<p>The hallmark gene-sets were then tested using this alterntive PWF.</p>
+<pre class="r"><code>hmRiboGoseq &lt;- goseq(riboPwf, gene2cat = hmByGene) %&gt;%
+  as_tibble %&gt;%
+  dplyr::filter(numDEInCat &gt; 0) %&gt;%
+  mutate( 
+    adjP = p.adjust(over_represented_pvalue, method = &quot;bonf&quot;),
+    FDR = p.adjust(over_represented_pvalue, method = &quot;fdr&quot;)
+  ) %&gt;%
+  dplyr::select(-contains(&quot;under&quot;))</code></pre>
+<p>Once again, no genesets acheived significance with the lower FDR being 41%</p>
+</div>
+<div id="rrna-correlation-bias-kegg-gene-sets" class="section level3">
+<h3>rRNA Correlation Bias: KEGG Gene Sets</h3>
+<pre class="r"><code>kgRiboGoseq &lt;- goseq(riboPwf, gene2cat = kgByGene) %&gt;%
+  as_tibble %&gt;%
+  dplyr::filter(numDEInCat &gt; 0) %&gt;%
+  mutate( 
+    adjP = p.adjust(over_represented_pvalue, method = &quot;bonf&quot;),
+    FDR = p.adjust(over_represented_pvalue, method = &quot;fdr&quot;)
+  ) %&gt;%
+  dplyr::select(-contains(&quot;under&quot;))</code></pre>
+<pre class="r"><code>kgRiboGoseq %&gt;%
+  dplyr::slice(1:5) %&gt;%
+  dplyr::rename(p = over_represented_pvalue) %&gt;%
+  mutate(
+    p = formatP(p),
+    adjP = formatP(adjP),
+    FDR = formatP(FDR)
+  ) %&gt;%
+  dplyr::select(
+    Category = category,
+    DE = numDEInCat,
+    `Set Size` = numInCat,
+    p,
+    `p~bonf~` = adjP,
+    `p~FDR~` = FDR
+  ) %&gt;%
+  pander(
+    justify = &quot;lrrrrr&quot;,
+    caption = paste(
+      &quot;The&quot;, nrow(.), &quot;most highly-ranked KEGG pathways.&quot;,
+      &quot;Bonferroni-adjusted p-values are the most stringent and give high&quot;,
+      &quot;confidence when below 0.05.&quot;
+    )
+  )</code></pre>
+<table>
+<caption>The 5 most highly-ranked KEGG pathways. Bonferroni-adjusted p-values are the most stringent and give high confidence when below 0.05.</caption>
+<thead>
+<tr class="header">
+<th align="left">Category</th>
+<th align="right">DE</th>
+<th align="right">Set Size</th>
+<th align="right">p</th>
+<th align="right">p<sub>bonf</sub></th>
+<th align="right">p<sub>FDR</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">KEGG_RIBOSOME</td>
+<td align="right">26</td>
+<td align="right">80</td>
+<td align="right">4.75e-09</td>
+<td align="right">5.32e-07</td>
+<td align="right">5.32e-07</td>
+</tr>
+<tr class="even">
+<td align="left">KEGG_PRIMARY_IMMUNODEFICIENCY</td>
+<td align="right">2</td>
+<td align="right">15</td>
+<td align="right">0.0164</td>
+<td align="right">1.0000</td>
+<td align="right">0.7173</td>
+</tr>
+<tr class="odd">
+<td align="left">KEGG_CYSTEINE_AND_METHIONINE_METABOLISM</td>
+<td align="right">4</td>
+<td align="right">26</td>
+<td align="right">0.0296</td>
+<td align="right">1.0000</td>
+<td align="right">0.7173</td>
+</tr>
+<tr class="even">
+<td align="left">KEGG_ASTHMA</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">0.0409</td>
+<td align="right">1.0000</td>
+<td align="right">0.7173</td>
+</tr>
+<tr class="odd">
+<td align="left">KEGG_RETINOL_METABOLISM</td>
+<td align="right">3</td>
+<td align="right">25</td>
+<td align="right">0.0512</td>
+<td align="right">1.0000</td>
+<td align="right">0.7173</td>
+</tr>
+</tbody>
+</table>
+<p>Notably, the KEGG gene-set for Ribosomal genes was once again detected as enriched with no other KEGG gene-sets being considered sigificant.</p>
+</div>
+<div id="rrna-correlation-bias-go-gene-sets" class="section level3">
+<h3>rRNA Correlation Bias: GO Gene Sets</h3>
+<pre class="r"><code>goRiboGoseq &lt;- goseq(riboPwf, gene2cat = goByGene) %&gt;%
+  as_tibble %&gt;%
+  dplyr::filter(numDEInCat &gt; 0) %&gt;%
+  mutate( 
+    adjP = p.adjust(over_represented_pvalue, method = &quot;bonf&quot;),
+    FDR = p.adjust(over_represented_pvalue, method = &quot;fdr&quot;)
+  ) %&gt;%
+  dplyr::select(-contains(&quot;under&quot;))</code></pre>
+<pre class="r"><code>goRiboGoseq %&gt;%
+  dplyr::filter(adjP &lt; 0.05) %&gt;%
+  dplyr::rename(p = over_represented_pvalue) %&gt;%
+  mutate(
+    p = formatP(p),
+    adjP = formatP(adjP),
+    FDR = formatP(FDR)
+  ) %&gt;%
+  dplyr::select(
+    Category = category,
+    DE = numDEInCat,
+    `Set Size` = numInCat,
+    p,
+    `p~bonf~` = adjP,
+    `p~FDR~` = FDR
+  ) %&gt;%
+  pander(
+    justify = &quot;lrrrrr&quot;,
+    caption = paste(
+      &quot;*The&quot;, nrow(.), &quot;most highly-ranked GO terms.&quot;,
+      &quot;Bonferroni-adjusted p-values are the most stringent and give high&quot;,
+      &quot;confidence when below 0.05, and all terms reached this threshold.&quot;,
+      &quot;However, most terms once again indicate the presence of rRNA.*&quot;
+    )
+  )</code></pre>
+<table style="width:100%;">
+<caption><em>The 14 most highly-ranked GO terms. Bonferroni-adjusted p-values are the most stringent and give high confidence when below 0.05, and all terms reached this threshold. However, most terms once again indicate the presence of rRNA.</em></caption>
+<colgroup>
+<col width="60%" />
+<col width="3%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Category</th>
+<th align="right">DE</th>
+<th align="right">Set Size</th>
+<th align="right">p</th>
+<th align="right">p<sub>bonf</sub></th>
+<th align="right">p<sub>FDR</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">GO_COTRANSLATIONAL_PROTEIN_TARGETING_TO_MEMBRANE</td>
+<td align="right">28</td>
+<td align="right">93</td>
+<td align="right">7.36e-10</td>
+<td align="right">2.83e-06</td>
+<td align="right">2.03e-06</td>
+</tr>
+<tr class="even">
+<td align="left">GO_CYTOSOLIC_RIBOSOME</td>
+<td align="right">27</td>
+<td align="right">97</td>
+<td align="right">1.06e-09</td>
+<td align="right">4.06e-06</td>
+<td align="right">2.03e-06</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_ESTABLISHMENT_OF_PROTEIN_LOCALIZATION_TO_ENDOPLASMIC_RETICULUM</td>
+<td align="right">27</td>
+<td align="right">105</td>
+<td align="right">1.60e-08</td>
+<td align="right">6.16e-05</td>
+<td align="right">2.05e-05</td>
+</tr>
+<tr class="even">
+<td align="left">GO_TRANSLATIONAL_INITIATION</td>
+<td align="right">29</td>
+<td align="right">177</td>
+<td align="right">2.18e-07</td>
+<td align="right">0.0008</td>
+<td align="right">0.0002</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_PROTEIN_TARGETING_TO_MEMBRANE</td>
+<td align="right">30</td>
+<td align="right">171</td>
+<td align="right">2.53e-07</td>
+<td align="right">0.0010</td>
+<td align="right">0.0002</td>
+</tr>
+<tr class="even">
+<td align="left">GO_PROTEIN_LOCALIZATION_TO_ENDOPLASMIC_RETICULUM</td>
+<td align="right">27</td>
+<td align="right">128</td>
+<td align="right">3.85e-07</td>
+<td align="right">0.0015</td>
+<td align="right">0.0002</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_CYTOSOLIC_PART</td>
+<td align="right">30</td>
+<td align="right">206</td>
+<td align="right">4.42e-07</td>
+<td align="right">0.0017</td>
+<td align="right">0.0002</td>
+</tr>
+<tr class="even">
+<td align="left">GO_VIRAL_GENE_EXPRESSION</td>
+<td align="right">29</td>
+<td align="right">172</td>
+<td align="right">6.94e-07</td>
+<td align="right">0.0027</td>
+<td align="right">0.0003</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_NUCLEAR_TRANSCRIBED_MRNA_CATABOLIC_PROCESS</td>
+<td align="right">30</td>
+<td align="right">183</td>
+<td align="right">7.91e-07</td>
+<td align="right">0.0030</td>
+<td align="right">0.0003</td>
+</tr>
+<tr class="even">
+<td align="left">GO_RIBOSOMAL_SUBUNIT</td>
+<td align="right">28</td>
+<td align="right">175</td>
+<td align="right">1.99e-06</td>
+<td align="right">0.0077</td>
+<td align="right">0.0008</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_RIBOSOME</td>
+<td align="right">30</td>
+<td align="right">210</td>
+<td align="right">2.66e-06</td>
+<td align="right">0.0102</td>
+<td align="right">0.0009</td>
+</tr>
+<tr class="even">
+<td align="left">GO_CYTOSOLIC_LARGE_RIBOSOMAL_SUBUNIT</td>
+<td align="right">15</td>
+<td align="right">51</td>
+<td align="right">2.83e-06</td>
+<td align="right">0.0109</td>
+<td align="right">0.0009</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_SYMPORTER_ACTIVITY</td>
+<td align="right">10</td>
+<td align="right">94</td>
+<td align="right">7.57e-06</td>
+<td align="right">0.0291</td>
+<td align="right">0.0022</td>
+</tr>
+<tr class="even">
+<td align="left">GO_ANION_TRANSMEMBRANE_TRANSPORTER_ACTIVITY</td>
+<td align="right">17</td>
+<td align="right">228</td>
+<td align="right">1.23e-05</td>
+<td align="right">0.0473</td>
+<td align="right">0.0034</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="effects-of-homozygous-vs-heterozygous-mutants" class="section level2">
 <h2>Effects of Homozygous Vs Heterozygous mutants</h2>
@@ -1088,7 +1493,7 @@ goByGene &lt;- go %&gt;%
  collate  en_AU.UTF-8                 
  ctype    en_AU.UTF-8                 
  tz       Australia/Adelaide          
- date     2020-01-26                  
+ date     2020-01-27                  
 
 ─ Packages ───────────────────────────────────────────────────────────────────
  package              * version  date       lib source        
@@ -1108,12 +1513,14 @@ goByGene &lt;- go %&gt;%
  bitops                 1.0-6    2013-08-17 [2] CRAN (R 3.6.0)
  blob                   1.2.1    2020-01-20 [2] CRAN (R 3.6.2)
  broom                  0.5.3    2019-12-14 [2] CRAN (R 3.6.2)
- callr                  3.4.0    2019-12-09 [2] CRAN (R 3.6.2)
+ callr                  3.4.1    2020-01-24 [2] CRAN (R 3.6.2)
  cellranger             1.1.0    2016-07-27 [2] CRAN (R 3.6.0)
  cli                    2.0.1    2020-01-08 [2] CRAN (R 3.6.2)
+ cluster                2.1.0    2019-06-19 [2] CRAN (R 3.6.1)
  colorspace             1.4-1    2019-03-18 [2] CRAN (R 3.6.0)
  crayon                 1.3.4    2017-09-16 [2] CRAN (R 3.6.0)
  curl                   4.3      2019-12-02 [2] CRAN (R 3.6.2)
+ data.table             1.12.8   2019-12-09 [2] CRAN (R 3.6.2)
  DBI                    1.1.0    2019-12-15 [2] CRAN (R 3.6.2)
  dbplyr                 1.4.2    2019-06-17 [2] CRAN (R 3.6.0)
  DelayedArray           0.12.2   2020-01-06 [2] Bioconductor  
@@ -1124,7 +1531,9 @@ goByGene &lt;- go %&gt;%
  edgeR                * 3.28.0   2019-10-29 [2] Bioconductor  
  ellipsis               0.3.0    2019-09-20 [2] CRAN (R 3.6.1)
  evaluate               0.14     2019-05-28 [2] CRAN (R 3.6.0)
+ FactoMineR             2.1      2020-01-17 [2] CRAN (R 3.6.2)
  fansi                  0.4.1    2020-01-08 [2] CRAN (R 3.6.2)
+ flashClust             1.01-2   2012-08-21 [2] CRAN (R 3.6.1)
  forcats              * 0.4.0    2019-02-17 [2] CRAN (R 3.6.0)
  fs                     1.3.1    2019-05-06 [2] CRAN (R 3.6.0)
  geneLenDataBase      * 1.22.0   2019-11-05 [2] Bioconductor  
@@ -1134,7 +1543,9 @@ goByGene &lt;- go %&gt;%
  GenomicAlignments      1.22.1   2019-11-12 [2] Bioconductor  
  GenomicFeatures        1.38.1   2020-01-22 [2] Bioconductor  
  GenomicRanges          1.38.0   2019-10-29 [2] Bioconductor  
+ ggdendro               0.1-20   2016-04-27 [2] CRAN (R 3.6.0)
  ggplot2              * 3.2.1    2019-08-10 [2] CRAN (R 3.6.1)
+ ggrepel                0.8.1    2019-05-07 [2] CRAN (R 3.6.0)
  git2r                  0.26.1   2019-06-29 [2] CRAN (R 3.6.1)
  glue                   1.3.1    2019-03-12 [2] CRAN (R 3.6.0)
  GO.db                  3.10.0   2019-11-21 [2] Bioconductor  
@@ -1144,19 +1555,26 @@ goByGene &lt;- go %&gt;%
  highr                  0.8      2019-03-20 [2] CRAN (R 3.6.0)
  hms                    0.5.3    2020-01-08 [2] CRAN (R 3.6.2)
  htmltools              0.4.0    2019-10-04 [2] CRAN (R 3.6.1)
+ htmlwidgets            1.5.1    2019-10-08 [2] CRAN (R 3.6.1)
  httpuv                 1.5.2    2019-09-11 [2] CRAN (R 3.6.1)
  httr                   1.4.1    2019-08-05 [2] CRAN (R 3.6.1)
+ hwriter                1.3.2    2014-09-10 [2] CRAN (R 3.6.0)
  IRanges              * 2.20.2   2020-01-13 [2] Bioconductor  
+ jpeg                   0.1-8.1  2019-10-24 [2] CRAN (R 3.6.1)
  jsonlite               1.6      2018-12-07 [2] CRAN (R 3.6.0)
+ kableExtra             1.1.0    2019-03-16 [2] CRAN (R 3.6.1)
  knitr                  1.27     2020-01-16 [2] CRAN (R 3.6.2)
  later                  1.0.0    2019-10-04 [2] CRAN (R 3.6.1)
  lattice                0.20-38  2018-11-04 [4] CRAN (R 3.6.0)
+ latticeExtra           0.6-29   2019-12-19 [2] CRAN (R 3.6.2)
  lazyeval               0.2.2    2019-03-15 [2] CRAN (R 3.6.0)
+ leaps                  3.1      2020-01-16 [2] CRAN (R 3.6.2)
  lifecycle              0.1.0    2019-08-01 [2] CRAN (R 3.6.1)
  limma                * 3.42.0   2019-10-29 [2] Bioconductor  
  locfit                 1.5-9.1  2013-04-20 [2] CRAN (R 3.6.0)
  lubridate              1.7.4    2018-04-11 [2] CRAN (R 3.6.0)
  magrittr             * 1.5      2014-11-22 [2] CRAN (R 3.6.0)
+ MASS                   7.3-51.5 2019-12-20 [4] CRAN (R 3.6.2)
  Matrix                 1.2-18   2019-11-27 [2] CRAN (R 3.6.1)
  matrixStats            0.55.0   2019-09-07 [2] CRAN (R 3.6.1)
  memoise                1.1.0    2017-04-21 [2] CRAN (R 3.6.0)
@@ -1164,6 +1582,7 @@ goByGene &lt;- go %&gt;%
  modelr                 0.1.5    2019-08-08 [2] CRAN (R 3.6.1)
  msigdbr              * 7.0.1    2019-09-04 [2] CRAN (R 3.6.2)
  munsell                0.5.0    2018-06-12 [2] CRAN (R 3.6.0)
+ ngsReports           * 1.1.2    2019-10-16 [1] Bioconductor  
  nlme                   3.1-143  2019-12-10 [4] CRAN (R 3.6.2)
  openssl                1.4.1    2019-07-18 [2] CRAN (R 3.6.1)
  pander               * 0.6.3    2018-11-06 [2] CRAN (R 3.6.0)
@@ -1171,6 +1590,9 @@ goByGene &lt;- go %&gt;%
  pkgbuild               1.0.6    2019-10-09 [2] CRAN (R 3.6.1)
  pkgconfig              2.0.3    2019-09-22 [2] CRAN (R 3.6.1)
  pkgload                1.0.2    2018-10-29 [2] CRAN (R 3.6.0)
+ plotly                 4.9.1    2019-11-07 [2] CRAN (R 3.6.1)
+ plyr                   1.8.5    2019-12-10 [2] CRAN (R 3.6.2)
+ png                    0.1-7    2013-12-03 [2] CRAN (R 3.6.0)
  prettyunits            1.1.1    2020-01-24 [2] CRAN (R 3.6.2)
  processx               3.4.1    2019-07-18 [2] CRAN (R 3.6.1)
  progress               1.2.2    2019-05-16 [2] CRAN (R 3.6.0)
@@ -1186,7 +1608,8 @@ goByGene &lt;- go %&gt;%
  readxl                 1.3.1    2019-03-13 [2] CRAN (R 3.6.0)
  remotes                2.1.0    2019-06-24 [2] CRAN (R 3.6.0)
  reprex                 0.3.0    2019-05-16 [2] CRAN (R 3.6.0)
- rlang                  0.4.2    2019-11-23 [2] CRAN (R 3.6.1)
+ reshape2               1.4.3    2017-12-11 [2] CRAN (R 3.6.0)
+ rlang                  0.4.3    2020-01-24 [2] CRAN (R 3.6.2)
  rmarkdown              2.1      2020-01-20 [2] CRAN (R 3.6.2)
  rprojroot              1.3-2    2018-01-03 [2] CRAN (R 3.6.0)
  Rsamtools              2.2.1    2019-11-06 [2] Bioconductor  
@@ -1196,17 +1619,22 @@ goByGene &lt;- go %&gt;%
  rvest                  0.3.5    2019-11-08 [2] CRAN (R 3.6.1)
  S4Vectors            * 0.24.3   2020-01-18 [2] Bioconductor  
  scales               * 1.1.0    2019-11-18 [2] CRAN (R 3.6.1)
+ scatterplot3d          0.3-41   2018-03-14 [2] CRAN (R 3.6.1)
  sessioninfo            1.1.1    2018-11-05 [2] CRAN (R 3.6.0)
+ ShortRead              1.44.1   2019-12-19 [2] Bioconductor  
  stringi                1.4.5    2020-01-11 [2] CRAN (R 3.6.2)
  stringr              * 1.4.0    2019-02-10 [2] CRAN (R 3.6.0)
  SummarizedExperiment   1.16.1   2019-12-19 [2] Bioconductor  
  testthat               2.3.1    2019-12-01 [2] CRAN (R 3.6.1)
  tibble               * 2.1.3    2019-06-06 [2] CRAN (R 3.6.0)
- tidyr                * 1.0.0    2019-09-11 [2] CRAN (R 3.6.1)
+ tidyr                * 1.0.2    2020-01-24 [2] CRAN (R 3.6.2)
  tidyselect             0.2.5    2018-10-11 [2] CRAN (R 3.6.0)
  tidyverse            * 1.3.0    2019-11-21 [2] CRAN (R 3.6.1)
+ truncnorm              1.0-8    2018-02-27 [2] CRAN (R 3.6.0)
  usethis                1.5.1    2019-07-04 [2] CRAN (R 3.6.1)
- vctrs                  0.2.1    2019-12-17 [2] CRAN (R 3.6.2)
+ vctrs                  0.2.2    2020-01-24 [2] CRAN (R 3.6.2)
+ viridisLite            0.3.0    2018-02-01 [2] CRAN (R 3.6.0)
+ webshot                0.5.2    2019-11-22 [2] CRAN (R 3.6.1)
  whisker                0.4      2019-08-28 [2] CRAN (R 3.6.1)
  withr                  2.1.2    2018-03-15 [2] CRAN (R 3.6.0)
  workflowr            * 1.6.0    2019-12-19 [2] CRAN (R 3.6.2)
@@ -1215,8 +1643,8 @@ goByGene &lt;- go %&gt;%
  xml2                   1.2.2    2019-08-09 [2] CRAN (R 3.6.1)
  XVector                0.26.0   2019-10-29 [2] Bioconductor  
  yaml                   2.2.0    2018-07-25 [2] CRAN (R 3.6.0)
- zeallot                0.1.0    2018-01-28 [2] CRAN (R 3.6.0)
  zlibbioc               1.32.0   2019-10-29 [2] Bioconductor  
+ zoo                    1.8-7    2020-01-10 [2] CRAN (R 3.6.2)
 
 [1] /home/steveped/R/x86_64-pc-linux-gnu-library/3.6
 [2] /usr/local/lib/R/site-library

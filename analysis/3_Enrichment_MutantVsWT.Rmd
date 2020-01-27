@@ -1,0 +1,631 @@
+---
+title: "Enrichment Analysis: Mutant Vs Wild-Type"
+author: "Steve Pederson"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+    autodep = TRUE,
+    echo = TRUE,
+    warning = FALSE,
+    message = FALSE,
+    fig.align = "center"
+)
+```
+
+
+# Setup
+
+```{r loadPackages}
+library(tidyverse)
+library(magrittr)
+library(edgeR)
+library(scales)
+library(pander)
+library(goseq)
+library(msigdbr)
+library(AnnotationDbi)
+library(RColorBrewer)
+library(ngsReports)
+library(fgsea)
+library(metap)
+```
+
+```{r setOpts}
+theme_set(theme_bw())
+panderOptions("table.split.table", Inf)
+panderOptions("table.style", "rmarkdown")
+panderOptions("big.mark", ",")
+```
+
+
+
+```{r samplesAndLabels}
+samples <- read_csv("data/samples.csv") %>%
+  distinct(sampleName, .keep_all = TRUE) %>%
+  dplyr::select(sample = sampleName, sampleID, genotype) %>%
+  mutate(
+    genotype = factor(genotype, levels = c("WT", "Het", "Hom")),
+    mutant = genotype %in% c("Het", "Hom"),
+    homozygous = genotype == "Hom"
+  )
+genoCols <- samples$genotype %>%
+  levels() %>%
+  length() %>%
+  brewer.pal("Set1") %>%
+  setNames(levels(samples$genotype))
+```
+
+
+```{r loadFits}
+dgeList <- read_rds("data/dgeList.rds")
+fit <- read_rds("data/fit.rds")
+entrezGenes <- dgeList$genes %>%
+  dplyr::filter(!is.na(entrezid)) %>%
+  unnest(entrezid) %>%
+  dplyr::rename(entrez_gene = entrezid)
+```
+
+```{r formatP}
+formatP <- function(p, m = 0.0001){
+  out <- rep("", length(p))
+  out[p < m] <- sprintf("%.2e", p[p<m])
+  out[p >= m] <- sprintf("%.4f", p[p>=m])
+  out
+}
+```
+
+
+# Introduction
+
+Enrichment analysis for this dataset present some challenges.
+Despite normalisation to account for gene length and GC bias, some appeared to still be present in the final results.
+In addition, the confounding of incomplete rRNA removal with genotype may lead to other distortions in both DE genes and ranking statistics.
+
+Two steps for enrichment analysis will be undertaken.
+
+1. Testing for enrichment within *discrete sets of DE genes* as defined in the previous steps
+2. Testing for enrichment within *ranked lists*, regardless of DE status or statistical significance, before integration of all enrichment analyses using Fisher's method for combining p-values.
+
+Testing for enrichment *within discrete gene sets* will be performed using `goseq` as this allows for the incorporation of a single covariate as a predictor of differential expression.
+GC content, gene length and correlation with rRNA removal can all be supplied as separate covariates.
+
+Testing for enrichment *with ranked lists* will be performed using:
+
+1. `fry` as this can take into account inter-gene correlations. Values supplied will be fitted values for each gene/sample as these have been corrected for GC and length biases.
+2. `camera`, which also accommodates inter-gene correlations. Values supplied will be fitted values for each gene/sample as these have been corrected for GC and length biases.
+3. `fgsea` which is an R implementation of GSEA. This approach simply takes a ranked list and doesn't directly account for correlations. However, the ranked list will be derived from analysis using CQN-normalisation so will be robust to these technical artefacts.
+
+In the case of `camera`, inter-gene correlations will be calculated for each gene-set prior to analysis to ensure more conservative p-values are obtained.
+
+# Databases used for testing
+
+Data was sourced using the `msigdbr` package.
+The initial database used for testing was the Hallmark Gene Sets, with mappings from gene-set to EntrezGene IDs performed by the package authors. 
+
+## Hallmark Gene Sets
+
+```{r hm}
+hm <- msigdbr("Danio rerio", category = "H")  %>% 
+  left_join(entrezGenes) %>%
+  dplyr::filter(!is.na(gene_id)) 
+hmByGene <- hm %>%
+  split(f = .$gene_id) %>%
+  lapply(extract2, "gs_name")
+hmByID <- hm %>%
+  split(f = .$gs_name) %>%
+  lapply(extract2, "gene_id")
+```
+
+Mappings are required from gene to pathway, and Ensembl identifiers were used to map from gene to pathway, based on the mappings in the previously used annotations (Ensembl Release 96).
+A total of `r length(hmByGene)` Ensembl IDs were mapped to pathways from the hallmark gene sets.
+
+## KEGG Gene Sets
+
+
+```{r kg}
+kg <- msigdbr("Danio rerio", category = "C2", subcategory = "CP:KEGG")  %>% 
+  left_join(entrezGenes) %>%
+  dplyr::filter(!is.na(gene_id)) 
+kgByGene <- kg  %>%
+  split(f = .$gene_id) %>%
+  lapply(extract2, "gs_name")
+kgByID <- kg  %>%
+  split(f = .$gs_name) %>%
+  lapply(extract2, "gene_id")
+```
+
+The same mapping process was applied to KEGG gene sets.
+A total of `r length(kgByGene)` Ensembl IDs were mapped to pathways from the KEGG gene sets.
+
+## Gene Ontology Gene Sets
+
+```{r goSummaries}
+goSummaries <- url("https://uofabioinformaticshub.github.io/summaries2GO/data/goSummaries.RDS") %>%
+  readRDS() %>%
+  mutate(
+    Term = Term(id),
+    gs_name = Term %>% str_to_upper() %>% str_replace_all("[ -]", "_"),
+    gs_name = paste0("GO_", gs_name)
+    )
+minPath <- 3
+```
+
+
+```{r go}
+go <- msigdbr("Danio rerio", category = "C5") %>% 
+  left_join(entrezGenes) %>%
+  dplyr::filter(!is.na(gene_id)) %>%
+  left_join(goSummaries) %>% 
+  dplyr::filter(shortest_path >= minPath) 
+goByGene <- go %>%
+  split(f = .$gene_id) %>%
+  lapply(extract2, "gs_name")
+goByID <- go %>%
+  split(f = .$gs_name) %>%
+  lapply(extract2, "gene_id")
+```
+
+
+For analysis of gene-sets from the GO database, gene-sets were restricted to those with `r minPath` or more steps back to the ontology root terms.
+A total of `r length(goByGene)` Ensembl IDs were mapped to pathways from restricted database of `r length(goByID)` GO gene sets.
+
+# Enrichment in the DE Gene Set
+
+```{r topTables}
+deTable <- file.path("output", "psen2VsWT.csv") %>% 
+  read_csv() %>%
+  mutate(
+    entrezid = dgeList$genes$entrezid[gene_id]
+  )
+```
+
+The first step of analysis using `goseq`, regardless of the gene-set, is estimation of the probability weight function (PWF) which quantifies the probability of a gene being considered as DE based on a single covariate.
+As GC content and length should have been accounted for during conditional-quantile normalisation, these were not required for any bias.
+However, the *gene-level correlations with rRNA contamination* were instead used a predictor of bias in selection of a gene as being DE.
+
+
+```{r rawFqc}
+rawFqc <- list.files(
+  path = "data/0_rawData/FastQC/",
+  pattern = "zip",
+  full.names = TRUE
+) %>%
+  FastqcDataList()
+gc <- getModule(rawFqc, "Per_sequence_GC") %>%
+  group_by(Filename) %>% 
+  mutate(Freq = Count / sum(Count)) %>%
+  ungroup()
+gcDev <- gc %>%
+  left_join(getGC(gcTheoretical, "Drerio", "Trans")) %>%
+  mutate(
+    sample = str_remove(Filename, "_R[12].fastq.gz"),
+    resid = Freq - Drerio
+  ) %>% 
+  left_join(samples) %>%
+  group_by(sample) %>%
+  summarise(
+    ss = sum(resid^2),
+    n = n(),
+    sd = sqrt(ss / (n - 1))
+  )
+```
+
+```{r riboCors}
+riboVec <- structure(gcDev$sd, names = gcDev$sample)
+riboCors <- cpm(dgeList, log = TRUE) %>%
+  apply(1, function(x){
+    cor(x, riboVec[names(x)])
+  })
+```
+
+Values were calculated as per the previous steps, using the logCPM values for each gene, with the sample-level standard deviations from the theoretical GC distribution being used as a measure of rRNA contamination.
+For estimation of the probability weight function, squared correlations were used to place negative and positive correlations on the same scale.
+This accounts for genes which are both negatively & positively biased by the presence of excessive rRNA.
+Clearly, the confounding of genotype with rRNA means that some genes driven by the genuine biology may be down-weighted under this approach.
+
+
+```{r riboPwf, fig.height=4, fig.width=4, fig.cap="*Using this approach, it was clear that correlation with rRNA proportions significantly biased the probability of a gene being considered as DE.*"}
+riboPwf <- deTable %>%
+  mutate(riboCors = riboCors[gene_id]^2) %>%
+  dplyr::select(gene_id, DE, riboCors) %>%
+  distinct(gene_id, .keep_all = TRUE) %>% 
+  with(
+    nullp(
+      DEgenes = structure(
+        as.integer(DE), names = gene_id
+      ), 
+      genome = "danRer10", 
+      id = "ensGene", 
+      bias.data = riboCors,
+      plot.fit = FALSE
+    )
+  )
+plotPWF(riboPwf, main = "Bias from rRNA proportions")
+```
+
+All gene-sets were then tested using this PWF.
+
+## Hallmark Gene Sets
+
+```{r hmRiboGoSeq}
+hmRiboGoseq <- goseq(riboPwf, gene2cat = hmByGene) %>%
+  as_tibble %>%
+  dplyr::filter(numDEInCat > 0) %>%
+  mutate( 
+    adjP = p.adjust(over_represented_pvalue, method = "bonf"),
+    FDR = p.adjust(over_represented_pvalue, method = "fdr")
+  ) %>%
+  dplyr::select(-contains("under")) %>%
+  dplyr::rename(
+    gs_name = category,
+    PValue = over_represented_pvalue
+  )
+```
+
+Once again, no gene-sets achieved significance with the lowest FDR being `r percent(min(hmRiboGoseq$FDR))`
+
+## KEGG Gene Sets
+
+
+```{r kgRiboGoseq}
+kgRiboGoseq <- goseq(riboPwf, gene2cat = kgByGene) %>%
+  as_tibble %>%
+  dplyr::filter(numDEInCat > 0) %>%
+  mutate( 
+    adjP = p.adjust(over_represented_pvalue, method = "bonf"),
+    FDR = p.adjust(over_represented_pvalue, method = "fdr")
+  ) %>%
+  dplyr::select(-contains("under"))  %>%
+  dplyr::rename(
+    gs_name = category,
+    PValue = over_represented_pvalue
+  )
+```
+
+```{r kgRiboGoseqTable}
+kgRiboGoseq %>%
+  dplyr::slice(1:5) %>%
+  mutate(
+    p = formatP(PValue),
+    adjP = formatP(adjP),
+    FDR = formatP(FDR)
+  ) %>%
+  dplyr::select(
+    `Gene Set` = gs_name,
+    DE = numDEInCat,
+    `Set Size` = numInCat,
+    PValue,
+    `p~bonf~` = adjP,
+    `p~FDR~` = FDR
+  ) %>%
+  pander(
+    justify = "lrrrrr",
+    caption = paste(
+      "The", nrow(.), "most highly-ranked KEGG pathways.",
+      "Bonferroni-adjusted p-values are the most stringent and give high",
+      "confidence when below 0.05."
+    )
+  )
+```
+
+Notably, the KEGG gene-set for Ribosomal genes was detected as enriched with no other KEGG gene-sets being considered significant.
+
+## GO Gene Sets
+
+```{r goRiboGoseq}
+goRiboGoseq <- goseq(riboPwf, gene2cat = goByGene) %>%
+  as_tibble %>%
+  dplyr::filter(numDEInCat > 0) %>%
+  mutate( 
+    adjP = p.adjust(over_represented_pvalue, method = "bonf"),
+    FDR = p.adjust(over_represented_pvalue, method = "fdr")
+  ) %>%
+  dplyr::select(-contains("under")) %>%
+  dplyr::rename(
+    gs_name = category,
+    PValue = over_represented_pvalue
+  )
+```
+
+```{r goRiboGoseqTable}
+goRiboGoseq %>%
+  dplyr::filter(adjP < 0.05) %>%
+  mutate(
+    p = formatP(PValue),
+    adjP = formatP(adjP),
+    FDR = formatP(FDR)
+  ) %>%
+  dplyr::select(
+    `Gene Set` = gs_name,
+    DE = numDEInCat,
+    `Set Size` = numInCat,
+    PValue,
+    `p~bonf~` = adjP,
+    `p~FDR~` = FDR
+  ) %>%
+  pander(
+    justify = "lrrrrr",
+    caption = paste(
+      "*The", nrow(.), "most highly-ranked GO terms.",
+      "Bonferroni-adjusted p-values are the most stringent and give high",
+      "confidence when below 0.05, with all terms here reaching this threshold.",
+      "However, most terms once again indicate the presence of rRNA.*"
+    )
+  )
+```
+
+# Enrichment Testing on Ranked Lists
+
+```{r}
+rnk <- structure(
+  -sign(deTable$logFC)*log10(deTable$PValue), 
+  names = deTable$gene_id
+) %>% sort()
+np <- 5e5
+```
+
+Genes were ranked by p-value alone for approaches which required a ranked list.
+Multiple approaches were first calculated individually, before being combined for the final integrated set of results.
+
+## Hallmark Gene Sets
+
+```{r hmFry}
+hmFry <- fit$fitted.values %>%
+  cpm(log = TRUE) %>%
+  fry(
+    index = hmByID,
+    design = fit$design,
+    contrast = "mutant",
+    sort = "directional"
+    ) %>%
+  rownames_to_column("gs_name") %>%
+  as_tibble()
+```
+
+For analysis under `camera` when inter-gene correlations were calculated for a more conservative result.
+
+```{r hmCamera}
+hmCamera <- fit$fitted.values %>%
+  cpm(log = TRUE) %>%
+  camera(
+    index = hmByID,
+    design = fit$design,
+    contrast = "mutant",
+    inter.gene.cor = NULL
+    ) %>%
+  rownames_to_column("gs_name") %>%
+  as_tibble()
+```
+
+For generation of the GSEA ranked list, `r np` permutations were conducted.
+
+```{r hmGsea}
+hmGsea <- fgsea(
+  pathways = hmByID, 
+  stats = rnk,
+  nperm = np
+) %>%
+  as_tibble() %>%
+  dplyr::rename(gs_name = pathway, PValue = pval) %>%
+  arrange(PValue)
+```
+
+Results for all analyses, including goseq were then combined using Wilkinson's method to combine p-values.
+For a conservative approach, under $m$ tests, the $m - 1$th smallest p-value was chosen.
+
+```{r hmMeta}
+hmMeta <- hmFry %>%
+  dplyr::select(gs_name, fry = PValue) %>%
+  left_join(
+    dplyr::select(hmCamera, gs_name, camera = PValue)
+  ) %>%
+  left_join(
+    dplyr::select(hmGsea, gs_name, gsea = PValue)
+  ) %>%
+  left_join(
+    dplyr::select(hmRiboGoseq, gs_name, goseq = PValue)
+  ) %>%
+  pivot_longer(
+    cols = one_of(c("fry", "camera", "gsea", "goseq")),
+    names_to = "method",
+    values_to = "p"
+  ) %>%
+  dplyr::filter(!is.na(p)) %>%
+  group_by(gs_name) %>%
+  summarise(
+    n = n(),
+    p = wilkinsonp(p, r = n - 1)$p
+  ) %>%
+  arrange(p) %>%
+  mutate(
+    FDR = p.adjust(p, "fdr"),
+    adjP = p.adjust(p, "bonf")
+  ) 
+```
+
+```{r}
+hmMeta %>%
+  dplyr::filter(FDR < 0.05) %>%
+  mutate_at(vars(one_of(c("p", "FDR", "adjP"))), formatP) %>%
+  pander(
+    caption = "Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.05.",
+    justify = "lrrrr"
+  )
+```
+
+## KEGG Gene Sets
+
+```{r kgFry}
+kgFry <- fit$fitted.values %>%
+  cpm(log = TRUE) %>%
+  fry(
+    index = kgByID,
+    design = fit$design,
+    contrast = "mutant",
+    sort = "directional"
+    ) %>%
+  rownames_to_column("gs_name") %>%
+  as_tibble()
+```
+
+For analysis under `camera` when inter-gene correlations were calculated for a more conservative result.
+
+```{r kgCamera}
+kgCamera <- fit$fitted.values %>%
+  cpm(log = TRUE) %>%
+  camera(
+    index = kgByID,
+    design = fit$design,
+    contrast = "mutant",
+    inter.gene.cor = NULL
+    ) %>%
+  rownames_to_column("gs_name") %>%
+  as_tibble()
+```
+
+For generation of the GSEA ranked list, `r np` permutations were conducted.
+
+```{r kgGsea}
+kgGsea <- fgsea(
+  pathways = kgByID, 
+  stats = rnk,
+  nperm = np
+) %>%
+  as_tibble() %>%
+  dplyr::rename(gs_name = pathway, PValue = pval) %>%
+  arrange(PValue)
+```
+
+Results for all analyses, including goseq were then combined using Wilkinson's method to combine p-values.
+For a conservative approach, under $m$ tests, the $m - 1$th smallest p-value was chosen.
+
+```{r kgMeta}
+kgMeta <- kgFry %>%
+  dplyr::select(gs_name, fry = PValue) %>%
+  left_join(
+    dplyr::select(kgCamera, gs_name, camera = PValue)
+  ) %>%
+  left_join(
+    dplyr::select(kgGsea, gs_name, gsea = PValue)
+  ) %>%
+  left_join(
+    dplyr::select(kgRiboGoseq, gs_name, goseq = PValue)
+  ) %>%
+  pivot_longer(
+    cols = one_of(c("fry", "camera", "gsea", "goseq")),
+    names_to = "method",
+    values_to = "p"
+  ) %>%
+  dplyr::filter(!is.na(p)) %>%
+  group_by(gs_name) %>%
+  summarise(
+    n = n(),
+    p = wilkinsonp(p, r = n - 1)$p
+  ) %>%
+  arrange(p) %>%
+  mutate(
+    FDR = p.adjust(p, "fdr"),
+    adjP = p.adjust(p, "bonf")
+  ) 
+```
+
+```{r}
+kgMeta %>%
+  dplyr::filter(FDR < 0.01) %>%
+  mutate_at(vars(one_of(c("p", "FDR", "adjP"))), formatP) %>%
+  pander(
+    caption = "Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.01.",
+    justify = "lrrrr"
+  )
+```
+
+## GO Gene Sets
+
+```{r goFry}
+goFry <- fit$fitted.values %>%
+  cpm(log = TRUE) %>%
+  fry(
+    index = goByID,
+    design = fit$design,
+    contrast = "mutant",
+    sort = "directional"
+    ) %>%
+  rownames_to_column("gs_name") %>%
+  as_tibble()
+```
+
+For analysis under `camera` when inter-gene correlations were calculated for a more conservative result.
+
+```{r goCamera}
+goCamera <- fit$fitted.values %>%
+  cpm(log = TRUE) %>%
+  camera(
+    index = goByID,
+    design = fit$design,
+    contrast = "mutant",
+    inter.gene.cor = NULL
+    ) %>%
+  rownames_to_column("gs_name") %>%
+  as_tibble()
+```
+
+For generation of the GSEA ranked list, `r np` permutations were conducted.
+
+```{r goGsea}
+goGsea <- fgsea(
+  pathways = goByID, 
+  stats = rnk,
+  nperm = np
+) %>%
+  as_tibble() %>%
+  dplyr::rename(gs_name = pathway, PValue = pval) %>%
+  arrange(PValue)
+```
+
+Results for all analyses, including goseq were then combined using Wilkinson's method to combine p-values.
+For a conservative approach, under $m$ tests, the $m - 1$th smallest p-value was chosen.
+
+```{r goMeta}
+goMeta <- goFry %>%
+  dplyr::select(gs_name, fry = PValue) %>%
+  left_join(
+    dplyr::select(goCamera, gs_name, camera = PValue)
+  ) %>%
+  left_join(
+    dplyr::select(goGsea, gs_name, gsea = PValue)
+  ) %>%
+  left_join(
+    dplyr::select(goRiboGoseq, gs_name, goseq = PValue)
+  ) %>%
+  pivot_longer(
+    cols = one_of(c("fry", "camera", "gsea", "goseq")),
+    names_to = "method",
+    values_to = "p"
+  ) %>%
+  dplyr::filter(!is.na(p)) %>%
+  group_by(gs_name) %>%
+  summarise(
+    n = n(),
+    p = wilkinsonp(p, r = n - 1)$p
+  ) %>%
+  arrange(p) %>%
+  mutate(
+    FDR = p.adjust(p, "fdr"),
+    adjP = p.adjust(p, "bonf")
+  ) 
+```
+
+```{r}
+goMeta %>%
+  dplyr::filter(adjP < 0.01) %>%
+  mutate_at(vars(one_of(c("p", "FDR", "adjP"))), formatP) %>%
+  pander(
+    caption = "Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant using a Bonferroni-adjusted p-value < 0.01.",
+    justify = "lrrrr"
+  )
+```
