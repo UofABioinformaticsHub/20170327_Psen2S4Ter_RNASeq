@@ -333,7 +333,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-01-26
+<strong>Last updated:</strong> 2020-01-28
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -424,10 +424,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtreeba189be6c3080686d32850d6ccd41d7cc76e7a74targetblankba189bea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/ba189be6c3080686d32850d6ccd41d7cc76e7a74" target="_blank">ba189be</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree3a9933c5330cee6a4957bdfdf7794251f9346dd2targetblank3a9933ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/3a9933c5330cee6a4957bdfdf7794251f9346dd2" target="_blank">3a9933c</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtreeba189be6c3080686d32850d6ccd41d7cc76e7a74targetblankba189bea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree3a9933c5330cee6a4957bdfdf7794251f9346dd2targetblank3a9933ca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -436,9 +436,6 @@ Great! You are using Git for version control. Tracking code development and conn
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-
-Unstaged changes:
-    Modified:   analysis/3_Enrichment.Rmd
 
 </code></pre>
 <p>
@@ -477,6 +474,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/3a9933c5330cee6a4957bdfdf7794251f9346dd2/analysis/index.Rmd" target="_blank">3a9933c</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-28
+</td>
+<td>
+Finished Enrichment analysis on MutVsWt
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/b086affa08326538432202bf80cb668c0b8bd4cd/docs/index.html" target="_blank">b086aff</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-26
+</td>
+<td>
+Added first step of enrichment analysis
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -825,7 +856,10 @@ Steve Ped
 <li><a href="0_bashPipeline.html">Bash Pipeline</a></li>
 <li><a href="1_QC.html">Quality Assesment</a></li>
 <li><a href="2_DifferentialExpression.html">Differential Expression Analysis</a></li>
-<li><a href="3_Enrichment.html">Enrichment Analysis</a></li>
+<li>Enrichment Analysis
+<ol style="list-style-type: lower-alpha">
+<li><a href="3_Enrichment_MutantVsWT.html">Mutant Vs Wild Type</a></li>
+</ol></li>
 </ol>
 <br>
 <p>
@@ -845,14 +879,14 @@ Steve Ped
  collate  en_AU.UTF-8                 
  ctype    en_AU.UTF-8                 
  tz       Australia/Adelaide          
- date     2020-01-26                  
+ date     2020-01-28                  
 
 ─ Packages ───────────────────────────────────────────────────────────────────
  package      * version  date       lib source        
  assertthat     0.2.1    2019-03-21 [2] CRAN (R 3.6.0)
  backports      1.1.5    2019-10-02 [2] CRAN (R 3.6.1)
  broom          0.5.3    2019-12-14 [2] CRAN (R 3.6.2)
- callr          3.4.0    2019-12-09 [2] CRAN (R 3.6.2)
+ callr          3.4.1    2020-01-24 [2] CRAN (R 3.6.2)
  cellranger     1.1.0    2016-07-27 [2] CRAN (R 3.6.0)
  cli            2.0.1    2020-01-08 [2] CRAN (R 3.6.2)
  colorspace     1.4-1    2019-03-18 [2] CRAN (R 3.6.0)
@@ -915,7 +949,7 @@ Steve Ped
  readxl         1.3.1    2019-03-13 [2] CRAN (R 3.6.0)
  remotes        2.1.0    2019-06-24 [2] CRAN (R 3.6.0)
  reprex         0.3.0    2019-05-16 [2] CRAN (R 3.6.0)
- rlang          0.4.2    2019-11-23 [2] CRAN (R 3.6.1)
+ rlang          0.4.3    2020-01-24 [2] CRAN (R 3.6.2)
  rmarkdown      2.1      2020-01-20 [2] CRAN (R 3.6.2)
  rprojroot      1.3-2    2018-01-03 [2] CRAN (R 3.6.0)
  rstudioapi     0.10     2019-03-19 [2] CRAN (R 3.6.0)
@@ -927,12 +961,12 @@ Steve Ped
  testthat       2.3.1    2019-12-01 [2] CRAN (R 3.6.1)
  tibble       * 2.1.3    2019-06-06 [2] CRAN (R 3.6.0)
  tidygraph    * 1.1.2    2019-02-18 [2] CRAN (R 3.6.0)
- tidyr        * 1.0.0    2019-09-11 [2] CRAN (R 3.6.1)
+ tidyr        * 1.0.2    2020-01-24 [2] CRAN (R 3.6.2)
  tidyselect     0.2.5    2018-10-11 [2] CRAN (R 3.6.0)
  tidyverse    * 1.3.0    2019-11-21 [2] CRAN (R 3.6.1)
  tweenr         1.0.1    2018-12-14 [2] CRAN (R 3.6.0)
  usethis        1.5.1    2019-07-04 [2] CRAN (R 3.6.1)
- vctrs          0.2.1    2019-12-17 [2] CRAN (R 3.6.2)
+ vctrs          0.2.2    2020-01-24 [2] CRAN (R 3.6.2)
  viridis        0.5.1    2018-03-29 [2] CRAN (R 3.6.0)
  viridisLite    0.3.0    2018-02-01 [2] CRAN (R 3.6.0)
  whisker        0.4      2019-08-28 [2] CRAN (R 3.6.1)
@@ -941,7 +975,6 @@ Steve Ped
  xfun           0.12     2020-01-13 [2] CRAN (R 3.6.2)
  xml2           1.2.2    2019-08-09 [2] CRAN (R 3.6.1)
  yaml           2.2.0    2018-07-25 [2] CRAN (R 3.6.0)
- zeallot        0.1.0    2018-01-28 [2] CRAN (R 3.6.0)
 
 [1] /home/steveped/R/x86_64-pc-linux-gnu-library/3.6
 [2] /usr/local/lib/R/site-library

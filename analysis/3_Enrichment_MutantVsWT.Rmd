@@ -366,7 +366,7 @@ rnk <- structure(
   -sign(deTable$logFC)*log10(deTable$PValue), 
   names = deTable$gene_id
 ) %>% sort()
-np <- 5e5
+np <- 1e5
 ```
 
 Genes were ranked by p-value alone for approaches which required a ranked list.
