@@ -84,3 +84,4 @@ Reads were provided in as paired-end, 150bp reads.
 3. [Differential Expression Analysis](2_DifferentialExpression.html)
 4. Enrichment Analysis
     a. [Mutant Vs Wild Type](3_Enrichment_MutantVsWT.html)
+    b. [Homozygous Vs Heterzygous Mutants](3_Enrichment_HomVsHet.html)
