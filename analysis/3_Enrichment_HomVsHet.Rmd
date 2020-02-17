@@ -71,6 +71,15 @@ entrezGenes <- dgeList$genes %>%
   dplyr::rename(entrez_gene = entrezid)
 ```
 
+```{r topTables}
+deTable <- file.path("output", "psen2HomVsHet.csv") %>% 
+  read_csv() %>%
+  mutate(
+    entrezid = dgeList$genes$entrezid[gene_id]
+  )
+```
+
+
 ```{r formatP}
 formatP <- function(p, m = 0.0001){
   out <- rep("", length(p))
@@ -83,20 +92,11 @@ formatP <- function(p, m = 0.0001){
 
 # Introduction
 
-**ALL INTRODUCTORY TEXT NEEDS CHANGING. RESULTS ARE OK**
-
 Enrichment analysis for this dataset present some challenges.
 Despite normalisation to account for gene length and GC bias, some appeared to still be present in the final results.
 In addition, the confounding of incomplete rRNA removal with genotype may lead to other distortions in both DE genes and ranking statistics.
 
-Two steps for enrichment analysis will be undertaken.
-
-1. Testing for enrichment within *discrete sets of DE genes* as defined in the previous steps
-2. Testing for enrichment within *ranked lists*, regardless of DE status or statistical significance, before integration of all enrichment analyses using Fisher's method for combining p-values.
-
-Testing for enrichment *within discrete gene sets* will be performed using `goseq` as this allows for the incorporation of a single covariate as a predictor of differential expression.
-GC content, gene length and correlation with rRNA removal can all be supplied as separate covariates.
-
+As the list of DE genes for this comparison was small ($n_{\text{DE}} = `r nrow(dplyr::filter(deTable, DE))`$), t enrichment esting was only performed using ranked-list approaches.
 Testing for enrichment *with ranked lists* will be performed using:
 
 1. `fry` as this can take into account inter-gene correlations. Values supplied will be fitted values for each gene/sample as these have been corrected for GC and length biases.
@@ -180,13 +180,6 @@ A total of `r length(goByGene)` Ensembl IDs were mapped to pathways from restric
 
 # Enrichment Testing on Ranked Lists
 
-```{r topTables}
-deTable <- file.path("output", "psen2VsWT.csv") %>% 
-  read_csv() %>%
-  mutate(
-    entrezid = dgeList$genes$entrezid[gene_id]
-  )
-```
 
 
 ```{r rnk}
@@ -232,7 +225,7 @@ hmCamera <- fit$fitted.values %>%
   as_tibble()
 ```
 
-For generation of the GSEA ranked list, `r np` permutations were conducted.
+For generation of the GSEA ranked list, `r comma(np)` permutations were conducted.
 
 ```{r hmGsea}
 hmGsea <- fgsea(
@@ -245,8 +238,8 @@ hmGsea <- fgsea(
   arrange(PValue)
 ```
 
-Results for all analyses, including goseq were then combined using Wilkinson's method to combine p-values.
-For a conservative approach, under $m$ tests, the $m - 1$th smallest p-value was chosen.
+Results for all analyses were then combined using Wilkinson's method to combine p-values.
+For a conservative approach, under $m$ tests, the $m - 1^{\text{th}}$ smallest p-value was chosen.
 
 ```{r hmMeta}
 hmMeta <- hmFry %>%
@@ -279,9 +272,10 @@ hmMeta <- hmFry %>%
 hmMeta %>%
   dplyr::filter(FDR < 0.1) %>%
   mutate_at(vars(one_of(c("p", "FDR", "adjP"))), formatP) %>%
+  dplyr::select(`Gene Set` = gs_name, p, `p~FDR~` = FDR, `p~bonf~` = adjP) %>%
   pander(
     caption = "Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.1.",
-    justify = "lrrrr"
+    justify = "lrrr"
   )
 ```
 
@@ -315,7 +309,7 @@ kgCamera <- fit$fitted.values %>%
   as_tibble()
 ```
 
-For generation of the GSEA ranked list, `r np` permutations were conducted.
+For generation of the GSEA ranked list, `r comma(np)` permutations were conducted.
 
 ```{r kgGsea}
 kgGsea <- fgsea(
@@ -328,8 +322,8 @@ kgGsea <- fgsea(
   arrange(PValue)
 ```
 
-Results for all analyses, including goseq were then combined using Wilkinson's method to combine p-values.
-For a conservative approach, under $m$ tests, the $m - 1$th smallest p-value was chosen.
+Results for all analyses were then combined using Wilkinson's method to combine p-values.
+For a conservative approach, under $m$ tests, the $m - 1^{\text{th}}$ smallest p-value was chosen.
 
 ```{r kgMeta}
 kgMeta <- kgFry %>%
@@ -362,9 +356,10 @@ kgMeta <- kgFry %>%
 kgMeta %>%
   dplyr::filter(FDR < 0.05) %>%
   mutate_at(vars(one_of(c("p", "FDR", "adjP"))), formatP) %>%
+  dplyr::select(`Gene Set` = gs_name, p, `p~FDR~` = FDR, `p~bonf~` = adjP) %>%  
   pander(
     caption = "Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.05.",
-    justify = "lrrrr"
+    justify = "lrrr"
   )
 ```
 
@@ -398,7 +393,7 @@ goCamera <- fit$fitted.values %>%
   as_tibble()
 ```
 
-For generation of the GSEA ranked list, `r np` permutations were conducted.
+For generation of the GSEA ranked list, `r comma(np)` permutations were conducted.
 
 ```{r goGsea}
 goGsea <- fgsea(
@@ -411,8 +406,8 @@ goGsea <- fgsea(
   arrange(PValue)
 ```
 
-Results for all analyses, including goseq were then combined using Wilkinson's method to combine p-values.
-For a conservative approach, under $m$ tests, the $m - 1$th smallest p-value was chosen.
+Results for all analyses were then combined using Wilkinson's method to combine p-values.
+For a conservative approach, under $m$ tests, the $m - 1^{\text{th}}$ smallest p-value was chosen.
 
 ```{r goMeta}
 goMeta <- goFry %>%
@@ -445,8 +440,9 @@ goMeta <- goFry %>%
 goMeta %>%
   dplyr::filter(adjP < 0.01) %>%
   mutate_at(vars(one_of(c("p", "FDR", "adjP"))), formatP) %>%
+  dplyr::select(`Gene Set` = gs_name, p, `p~FDR~` = FDR, `p~bonf~` = adjP) %>%  
   pander(
     caption = "Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant using a Bonferroni-adjusted p-value < 0.01.",
-    justify = "lrrrr"
+    justify = "lrrr"
   )
 ```
