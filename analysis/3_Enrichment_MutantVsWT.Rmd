@@ -267,7 +267,7 @@ hmRiboGoseq <- goseq(riboPwf, gene2cat = hmByGene) %>%
   )
 ```
 
-Once again, no gene-sets achieved significance with the lowest FDR being `r percent(min(hmRiboGoseq$FDR))`
+No gene-sets achieved significance in the DE genes with the lowest FDR being `r percent(min(hmRiboGoseq$FDR))`
 
 ## KEGG Gene Sets
 
@@ -313,7 +313,7 @@ kgRiboGoseq %>%
   )
 ```
 
-Notably, the KEGG gene-set for Ribosomal genes was detected as enriched with no other KEGG gene-sets being considered significant.
+Notably, the KEGG gene-set for Ribosomal genes was detected as enriched in the set of DE genes, with no other KEGG gene-sets being considered significant.
 
 ## GO Gene Sets
 
@@ -402,7 +402,7 @@ hmCamera <- fit$fitted.values %>%
   as_tibble()
 ```
 
-For generation of the GSEA ranked list, `r np` permutations were conducted.
+For generation of the GSEA ranked list, `r comma(np)` permutations were conducted.
 
 ```{r hmGsea}
 hmGsea <- fgsea(
@@ -416,7 +416,7 @@ hmGsea <- fgsea(
 ```
 
 Results for all analyses, including goseq were then combined using Wilkinson's method to combine p-values.
-For a conservative approach, under $m$ tests, the $m - 1$th smallest p-value was chosen.
+For a conservative approach, under $m$ tests, the $m - 1^{\text{th}}$ smallest p-value was chosen.
 
 ```{r hmMeta}
 hmMeta <- hmFry %>%
@@ -452,9 +452,10 @@ hmMeta <- hmFry %>%
 hmMeta %>%
   dplyr::filter(FDR < 0.05) %>%
   mutate_at(vars(one_of(c("p", "FDR", "adjP"))), formatP) %>%
+  dplyr::select(`Gene Set` = gs_name, p, `p~FDR~` = FDR, `p~bonf~` = adjP) %>%
   pander(
     caption = "Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.05.",
-    justify = "lrrrr"
+    justify = "lrrr"
   )
 ```
 
@@ -488,7 +489,7 @@ kgCamera <- fit$fitted.values %>%
   as_tibble()
 ```
 
-For generation of the GSEA ranked list, `r np` permutations were conducted.
+For generation of the GSEA ranked list, `r comma(np)` permutations were conducted.
 
 ```{r kgGsea}
 kgGsea <- fgsea(
@@ -502,7 +503,7 @@ kgGsea <- fgsea(
 ```
 
 Results for all analyses, including goseq were then combined using Wilkinson's method to combine p-values.
-For a conservative approach, under $m$ tests, the $m - 1$th smallest p-value was chosen.
+For a conservative approach, under $m$ tests, the $m - 1^{\text{th}}$ smallest p-value was chosen.
 
 ```{r kgMeta}
 kgMeta <- kgFry %>%
@@ -538,9 +539,10 @@ kgMeta <- kgFry %>%
 kgMeta %>%
   dplyr::filter(FDR < 0.01) %>%
   mutate_at(vars(one_of(c("p", "FDR", "adjP"))), formatP) %>%
+  dplyr::select(`Gene Set` = gs_name, p, `p~FDR~` = FDR, `p~bonf~` = adjP) %>%
   pander(
     caption = "Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.01.",
-    justify = "lrrrr"
+    justify = "lrrr"
   )
 ```
 
@@ -559,7 +561,7 @@ goFry <- fit$fitted.values %>%
   as_tibble()
 ```
 
-For analysis under `camera` when inter-gene correlations were calculated for a more conservative result.
+For analysis under `camera` inter-gene correlations were directly calculated for a more conservative result.
 
 ```{r goCamera}
 goCamera <- fit$fitted.values %>%
@@ -574,7 +576,7 @@ goCamera <- fit$fitted.values %>%
   as_tibble()
 ```
 
-For generation of the GSEA ranked list, `r np` permutations were conducted.
+For generation of the GSEA ranked list, `r comma(np)` permutations were conducted.
 
 ```{r goGsea}
 goGsea <- fgsea(
@@ -588,7 +590,7 @@ goGsea <- fgsea(
 ```
 
 Results for all analyses, including goseq were then combined using Wilkinson's method to combine p-values.
-For a conservative approach, under $m$ tests, the $m - 1$th smallest p-value was chosen.
+For a conservative approach, under $m$ tests, the $m - 1^{\text{th}}$ smallest p-value was chosen.
 
 ```{r goMeta}
 goMeta <- goFry %>%
@@ -624,8 +626,9 @@ goMeta <- goFry %>%
 goMeta %>%
   dplyr::filter(adjP < 0.01) %>%
   mutate_at(vars(one_of(c("p", "FDR", "adjP"))), formatP) %>%
+  dplyr::select(`Gene Set` = gs_name, p, `p~FDR~` = FDR, `p~bonf~` = adjP) %>%  
   pander(
     caption = "Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant using a Bonferroni-adjusted p-value < 0.01.",
-    justify = "lrrrr"
+    justify = "lrrr"
   )
 ```
