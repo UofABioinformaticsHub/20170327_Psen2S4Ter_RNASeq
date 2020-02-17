@@ -124,7 +124,7 @@ hmByID <- hm %>%
   lapply(extract2, "gene_id")
 ```
 
-Mappings are required from gene to pathway, and Ensembl identifiers were used to map from gene to pathway, based on the mappings in the previously used annotations (Ensembl Release 96).
+Mappings are required from gene to pathway, and Ensembl identifiers were used to map from gene to pathway, based on the mappings in the previously used annotations (Ensembl Release 98).
 A total of `r comma(length(hmByGene))` Ensembl IDs were mapped to pathways from the hallmark gene sets.
 
 ## KEGG Gene Sets
