@@ -125,7 +125,7 @@ hmByID <- hm %>%
 ```
 
 Mappings are required from gene to pathway, and Ensembl identifiers were used to map from gene to pathway, based on the mappings in the previously used annotations (Ensembl Release 96).
-A total of `r length(hmByGene)` Ensembl IDs were mapped to pathways from the hallmark gene sets.
+A total of `r comma(length(hmByGene))` Ensembl IDs were mapped to pathways from the hallmark gene sets.
 
 ## KEGG Gene Sets
 
@@ -143,7 +143,7 @@ kgByID <- kg  %>%
 ```
 
 The same mapping process was applied to KEGG gene sets.
-A total of `r length(kgByGene)` Ensembl IDs were mapped to pathways from the KEGG gene sets.
+A total of `r comma(length(kgByGene))` Ensembl IDs were mapped to pathways from the KEGG gene sets.
 
 ## Gene Ontology Gene Sets
 
@@ -175,7 +175,7 @@ goByID <- go %>%
 
 
 For analysis of gene-sets from the GO database, gene-sets were restricted to those with `r minPath` or more steps back to the ontology root terms.
-A total of `r length(goByGene)` Ensembl IDs were mapped to pathways from restricted database of `r length(goByID)` GO gene sets.
+A total of `r comma(length(goByGene))` Ensembl IDs were mapped to pathways from restricted database of `r comma(length(goByID))` GO gene sets.
 
 
 # Enrichment Testing on Ranked Lists
