@@ -387,7 +387,7 @@ div.section {
 
 <h1 class="title toc-ignore">Enrichment Analysis: Homozygous Vs Heterozygous Mutants</h1>
 <h4 class="author">Steve Pederson</h4>
-<h4 class="date">28 January, 2020</h4>
+<h4 class="date">17 February, 2020</h4>
 
 </div>
 
@@ -412,7 +412,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-01-28
+<strong>Last updated:</strong> 2020-02-17
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -503,10 +503,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree2cc69b5ec06fed15aef355f62727c025a5921dfatargetblank2cc69b5a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/2cc69b5ec06fed15aef355f62727c025a5921dfa" target="_blank">2cc69b5</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree53ed0e30b1eff5b43093d31a0de4443f96125be6targetblank53ed0e3a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/53ed0e30b1eff5b43093d31a0de4443f96125be6" target="_blank">53ed0e3</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree2cc69b5ec06fed15aef355f62727c025a5921dfatargetblank2cc69b5a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree53ed0e30b1eff5b43093d31a0de4443f96125be6targetblank53ed0e3a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -553,6 +553,74 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/53ed0e30b1eff5b43093d31a0de4443f96125be6/analysis/3_Enrichment_HomVsHet.Rmd" target="_blank">53ed0e3</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-17
+</td>
+<td>
+Corrected Ensembl Release
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/f55be858a66d2812a95303ad7146f952727953ba/analysis/3_Enrichment_HomVsHet.Rmd" target="_blank">f55be85</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-17
+</td>
+<td>
+Added commas
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/55143d4ac891a83b10e8f2fceb1d0299801030c3/analysis/3_Enrichment_HomVsHet.Rmd" target="_blank">55143d4</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-17
+</td>
+<td>
+Corrected gsea analyses
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/9104ecdc9ad8512ec277c6c131d36de86edcf845/docs/3_Enrichment_HomVsHet.html" target="_blank">9104ecd</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-01-28
+</td>
+<td>
+First draft of Hom Vs Het
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -631,6 +699,11 @@ entrezGenes &lt;- dgeList$genes %&gt;%
   dplyr::filter(!is.na(entrezid)) %&gt;%
   unnest(entrezid) %&gt;%
   dplyr::rename(entrez_gene = entrezid)</code></pre>
+<pre class="r"><code>deTable &lt;- file.path(&quot;output&quot;, &quot;psen2HomVsHet.csv&quot;) %&gt;% 
+  read_csv() %&gt;%
+  mutate(
+    entrezid = dgeList$genes$entrezid[gene_id]
+  )</code></pre>
 <pre class="r"><code>formatP &lt;- function(p, m = 0.0001){
   out &lt;- rep(&quot;&quot;, length(p))
   out[p &lt; m] &lt;- sprintf(&quot;%.2e&quot;, p[p&lt;m])
@@ -640,15 +713,8 @@ entrezGenes &lt;- dgeList$genes %&gt;%
 </div>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p><strong>ALL INTRODUCTORY TEXT NEEDS CHANGING. RESULTS ARE OK</strong></p>
 <p>Enrichment analysis for this dataset present some challenges. Despite normalisation to account for gene length and GC bias, some appeared to still be present in the final results. In addition, the confounding of incomplete rRNA removal with genotype may lead to other distortions in both DE genes and ranking statistics.</p>
-<p>Two steps for enrichment analysis will be undertaken.</p>
-<ol style="list-style-type: decimal">
-<li>Testing for enrichment within <em>discrete sets of DE genes</em> as defined in the previous steps</li>
-<li>Testing for enrichment within <em>ranked lists</em>, regardless of DE status or statistical significance, before integration of all enrichment analyses using Fisher’s method for combining p-values.</li>
-</ol>
-<p>Testing for enrichment <em>within discrete gene sets</em> will be performed using <code>goseq</code> as this allows for the incorporation of a single covariate as a predictor of differential expression. GC content, gene length and correlation with rRNA removal can all be supplied as separate covariates.</p>
-<p>Testing for enrichment <em>with ranked lists</em> will be performed using:</p>
+<p>As the list of DE genes for this comparison was small (<span class="math inline">\(n_{\text{DE}} = 7\)</span>), t enrichment esting was only performed using ranked-list approaches. Testing for enrichment <em>with ranked lists</em> will be performed using:</p>
 <ol style="list-style-type: decimal">
 <li><code>fry</code> as this can take into account inter-gene correlations. Values supplied will be fitted values for each gene/sample as these have been corrected for GC and length biases.</li>
 <li><code>camera</code>, which also accommodates inter-gene correlations. Values supplied will be fitted values for each gene/sample as these have been corrected for GC and length biases.</li>
@@ -670,7 +736,7 @@ hmByGene &lt;- hm %&gt;%
 hmByID &lt;- hm %&gt;%
   split(f = .$gs_name) %&gt;%
   lapply(extract2, &quot;gene_id&quot;)</code></pre>
-<p>Mappings are required from gene to pathway, and Ensembl identifiers were used to map from gene to pathway, based on the mappings in the previously used annotations (Ensembl Release 96). A total of 3459 Ensembl IDs were mapped to pathways from the hallmark gene sets.</p>
+<p>Mappings are required from gene to pathway, and Ensembl identifiers were used to map from gene to pathway, based on the mappings in the previously used annotations (Ensembl Release 98). A total of 3,459 Ensembl IDs were mapped to pathways from the hallmark gene sets.</p>
 </div>
 <div id="kegg-gene-sets" class="section level2">
 <h2>KEGG Gene Sets</h2>
@@ -683,7 +749,7 @@ kgByGene &lt;- kg  %&gt;%
 kgByID &lt;- kg  %&gt;%
   split(f = .$gs_name) %&gt;%
   lapply(extract2, &quot;gene_id&quot;)</code></pre>
-<p>The same mapping process was applied to KEGG gene sets. A total of 3614 Ensembl IDs were mapped to pathways from the KEGG gene sets.</p>
+<p>The same mapping process was applied to KEGG gene sets. A total of 3,614 Ensembl IDs were mapped to pathways from the KEGG gene sets.</p>
 </div>
 <div id="gene-ontology-gene-sets" class="section level2">
 <h2>Gene Ontology Gene Sets</h2>
@@ -706,16 +772,11 @@ goByGene &lt;- go %&gt;%
 goByID &lt;- go %&gt;%
   split(f = .$gs_name) %&gt;%
   lapply(extract2, &quot;gene_id&quot;)</code></pre>
-<p>For analysis of gene-sets from the GO database, gene-sets were restricted to those with 3 or more steps back to the ontology root terms. A total of 11245 Ensembl IDs were mapped to pathways from restricted database of 8834 GO gene sets.</p>
+<p>For analysis of gene-sets from the GO database, gene-sets were restricted to those with 3 or more steps back to the ontology root terms. A total of 11,245 Ensembl IDs were mapped to pathways from restricted database of 8,834 GO gene sets.</p>
 </div>
 </div>
 <div id="enrichment-testing-on-ranked-lists" class="section level1">
 <h1>Enrichment Testing on Ranked Lists</h1>
-<pre class="r"><code>deTable &lt;- file.path(&quot;output&quot;, &quot;psen2VsWT.csv&quot;) %&gt;% 
-  read_csv() %&gt;%
-  mutate(
-    entrezid = dgeList$genes$entrezid[gene_id]
-  )</code></pre>
 <pre class="r"><code>rnk &lt;- structure(
   -sign(deTable$logFC)*log10(deTable$PValue), 
   names = deTable$gene_id
@@ -745,7 +806,7 @@ np &lt;- 1e5</code></pre>
     ) %&gt;%
   rownames_to_column(&quot;gs_name&quot;) %&gt;%
   as_tibble()</code></pre>
-<p>For generation of the GSEA ranked list, 10^{5} permutations were conducted.</p>
+<p>For generation of the GSEA ranked list, 100,000 permutations were conducted.</p>
 <pre class="r"><code>hmGsea &lt;- fgsea(
   pathways = hmByID, 
   stats = rnk,
@@ -754,7 +815,7 @@ np &lt;- 1e5</code></pre>
   as_tibble() %&gt;%
   dplyr::rename(gs_name = pathway, PValue = pval) %&gt;%
   arrange(PValue)</code></pre>
-<p>Results for all analyses, including goseq were then combined using Wilkinson’s method to combine p-values. For a conservative approach, under <span class="math inline">\(m\)</span> tests, the <span class="math inline">\(m - 1\)</span>th smallest p-value was chosen.</p>
+<p>Results for all analyses were then combined using Wilkinson’s method to combine p-values. For a conservative approach, under <span class="math inline">\(m\)</span> tests, the <span class="math inline">\(m - 1^{\text{th}}\)</span> smallest p-value was chosen.</p>
 <pre class="r"><code>hmMeta &lt;- hmFry %&gt;%
   dplyr::select(gs_name, fry = PValue) %&gt;%
   left_join(
@@ -782,28 +843,57 @@ np &lt;- 1e5</code></pre>
 <pre class="r"><code>hmMeta %&gt;%
   dplyr::filter(FDR &lt; 0.1) %&gt;%
   mutate_at(vars(one_of(c(&quot;p&quot;, &quot;FDR&quot;, &quot;adjP&quot;))), formatP) %&gt;%
+  dplyr::select(`Gene Set` = gs_name, p, `p~FDR~` = FDR, `p~bonf~` = adjP) %&gt;%
   pander(
     caption = &quot;Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.1.&quot;,
-    justify = &quot;lrrrr&quot;
+    justify = &quot;lrrr&quot;
   )</code></pre>
 <table>
 <caption>Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.1.</caption>
 <thead>
 <tr class="header">
-<th align="left">gs_name</th>
-<th align="right">n</th>
+<th align="left">Gene Set</th>
 <th align="right">p</th>
-<th align="right">FDR</th>
-<th align="right">adjP</th>
+<th align="right">p<sub>FDR</sub></th>
+<th align="right">p<sub>bonf</sub></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">HALLMARK_OXIDATIVE_PHOSPHORYLATION</td>
-<td align="right">3</td>
 <td align="right">0.0011</td>
+<td align="right">0.0315</td>
 <td align="right">0.0537</td>
-<td align="right">0.0537</td>
+</tr>
+<tr class="even">
+<td align="left">HALLMARK_KRAS_SIGNALING_DN</td>
+<td align="right">0.0013</td>
+<td align="right">0.0315</td>
+<td align="right">0.0631</td>
+</tr>
+<tr class="odd">
+<td align="left">HALLMARK_INTERFERON_ALPHA_RESPONSE</td>
+<td align="right">0.0022</td>
+<td align="right">0.0375</td>
+<td align="right">0.1125</td>
+</tr>
+<tr class="even">
+<td align="left">HALLMARK_ESTROGEN_RESPONSE_EARLY</td>
+<td align="right">0.0044</td>
+<td align="right">0.0552</td>
+<td align="right">0.2206</td>
+</tr>
+<tr class="odd">
+<td align="left">HALLMARK_ALLOGRAFT_REJECTION</td>
+<td align="right">0.0075</td>
+<td align="right">0.0753</td>
+<td align="right">0.3763</td>
+</tr>
+<tr class="even">
+<td align="left">HALLMARK_MYOGENESIS</td>
+<td align="right">0.0097</td>
+<td align="right">0.0811</td>
+<td align="right">0.4864</td>
 </tr>
 </tbody>
 </table>
@@ -831,7 +921,7 @@ np &lt;- 1e5</code></pre>
     ) %&gt;%
   rownames_to_column(&quot;gs_name&quot;) %&gt;%
   as_tibble()</code></pre>
-<p>For generation of the GSEA ranked list, 10^{5} permutations were conducted.</p>
+<p>For generation of the GSEA ranked list, 100,000 permutations were conducted.</p>
 <pre class="r"><code>kgGsea &lt;- fgsea(
   pathways = kgByID, 
   stats = rnk,
@@ -840,7 +930,7 @@ np &lt;- 1e5</code></pre>
   as_tibble() %&gt;%
   dplyr::rename(gs_name = pathway, PValue = pval) %&gt;%
   arrange(PValue)</code></pre>
-<p>Results for all analyses, including goseq were then combined using Wilkinson’s method to combine p-values. For a conservative approach, under <span class="math inline">\(m\)</span> tests, the <span class="math inline">\(m - 1\)</span>th smallest p-value was chosen.</p>
+<p>Results for all analyses were then combined using Wilkinson’s method to combine p-values. For a conservative approach, under <span class="math inline">\(m\)</span> tests, the <span class="math inline">\(m - 1^{\text{th}}\)</span> smallest p-value was chosen.</p>
 <pre class="r"><code>kgMeta &lt;- kgFry %&gt;%
   dplyr::select(gs_name, fry = PValue) %&gt;%
   left_join(
@@ -868,105 +958,81 @@ np &lt;- 1e5</code></pre>
 <pre class="r"><code>kgMeta %&gt;%
   dplyr::filter(FDR &lt; 0.05) %&gt;%
   mutate_at(vars(one_of(c(&quot;p&quot;, &quot;FDR&quot;, &quot;adjP&quot;))), formatP) %&gt;%
+  dplyr::select(`Gene Set` = gs_name, p, `p~FDR~` = FDR, `p~bonf~` = adjP) %&gt;%  
   pander(
     caption = &quot;Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.05.&quot;,
-    justify = &quot;lrrrr&quot;
+    justify = &quot;lrrr&quot;
   )</code></pre>
 <table>
 <caption>Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.05.</caption>
 <thead>
 <tr class="header">
-<th align="left">gs_name</th>
-<th align="right">n</th>
+<th align="left">Gene Set</th>
 <th align="right">p</th>
-<th align="right">FDR</th>
-<th align="right">adjP</th>
+<th align="right">p<sub>FDR</sub></th>
+<th align="right">p<sub>bonf</sub></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">KEGG_RIBOSOME</td>
-<td align="right">3</td>
-<td align="right">1.65e-09</td>
-<td align="right">3.07e-07</td>
-<td align="right">3.07e-07</td>
+<td align="right">7.88e-10</td>
+<td align="right">1.47e-07</td>
+<td align="right">1.47e-07</td>
 </tr>
 <tr class="even">
 <td align="left">KEGG_OXIDATIVE_PHOSPHORYLATION</td>
-<td align="right">3</td>
 <td align="right">2.88e-08</td>
 <td align="right">2.68e-06</td>
 <td align="right">5.35e-06</td>
 </tr>
 <tr class="odd">
 <td align="left">KEGG_PARKINSONS_DISEASE</td>
-<td align="right">3</td>
 <td align="right">9.90e-08</td>
 <td align="right">6.14e-06</td>
 <td align="right">1.84e-05</td>
 </tr>
 <tr class="even">
 <td align="left">KEGG_SYSTEMIC_LUPUS_ERYTHEMATOSUS</td>
-<td align="right">3</td>
 <td align="right">2.24e-05</td>
 <td align="right">0.0010</td>
 <td align="right">0.0042</td>
 </tr>
 <tr class="odd">
 <td align="left">KEGG_HUNTINGTONS_DISEASE</td>
-<td align="right">3</td>
 <td align="right">0.0001</td>
 <td align="right">0.0053</td>
 <td align="right">0.0264</td>
 </tr>
 <tr class="even">
 <td align="left">KEGG_PROTEASOME</td>
-<td align="right">3</td>
 <td align="right">0.0003</td>
 <td align="right">0.0092</td>
 <td align="right">0.0550</td>
 </tr>
 <tr class="odd">
 <td align="left">KEGG_ALZHEIMERS_DISEASE</td>
-<td align="right">3</td>
 <td align="right">0.0004</td>
 <td align="right">0.0101</td>
 <td align="right">0.0742</td>
 </tr>
 <tr class="even">
 <td align="left">KEGG_PRIMARY_IMMUNODEFICIENCY</td>
-<td align="right">3</td>
 <td align="right">0.0004</td>
 <td align="right">0.0101</td>
 <td align="right">0.0811</td>
 </tr>
 <tr class="odd">
-<td align="left">KEGG_ASTHMA</td>
-<td align="right">3</td>
-<td align="right">0.0005</td>
-<td align="right">0.0104</td>
-<td align="right">0.0933</td>
+<td align="left">KEGG_NOD_LIKE_RECEPTOR_SIGNALING_PATHWAY</td>
+<td align="right">0.0011</td>
+<td align="right">0.0225</td>
+<td align="right">0.2028</td>
 </tr>
 <tr class="even">
-<td align="left">KEGG_AUTOIMMUNE_THYROID_DISEASE</td>
-<td align="right">3</td>
-<td align="right">0.0018</td>
-<td align="right">0.0330</td>
-<td align="right">0.3300</td>
-</tr>
-<tr class="odd">
-<td align="left">KEGG_ECM_RECEPTOR_INTERACTION</td>
-<td align="right">3</td>
-<td align="right">0.0021</td>
-<td align="right">0.0356</td>
-<td align="right">0.3919</td>
-</tr>
-<tr class="even">
-<td align="left">KEGG_OLFACTORY_TRANSDUCTION</td>
-<td align="right">3</td>
-<td align="right">0.0029</td>
-<td align="right">0.0450</td>
-<td align="right">0.5403</td>
+<td align="left">KEGG_LEISHMANIA_INFECTION</td>
+<td align="right">0.0017</td>
+<td align="right">0.0320</td>
+<td align="right">0.3205</td>
 </tr>
 </tbody>
 </table>
@@ -994,7 +1060,7 @@ np &lt;- 1e5</code></pre>
     ) %&gt;%
   rownames_to_column(&quot;gs_name&quot;) %&gt;%
   as_tibble()</code></pre>
-<p>For generation of the GSEA ranked list, 10^{5} permutations were conducted.</p>
+<p>For generation of the GSEA ranked list, 100,000 permutations were conducted.</p>
 <pre class="r"><code>goGsea &lt;- fgsea(
   pathways = goByID, 
   stats = rnk,
@@ -1003,7 +1069,7 @@ np &lt;- 1e5</code></pre>
   as_tibble() %&gt;%
   dplyr::rename(gs_name = pathway, PValue = pval) %&gt;%
   arrange(PValue)</code></pre>
-<p>Results for all analyses, including goseq were then combined using Wilkinson’s method to combine p-values. For a conservative approach, under <span class="math inline">\(m\)</span> tests, the <span class="math inline">\(m - 1\)</span>th smallest p-value was chosen.</p>
+<p>Results for all analyses were then combined using Wilkinson’s method to combine p-values. For a conservative approach, under <span class="math inline">\(m\)</span> tests, the <span class="math inline">\(m - 1^{\text{th}}\)</span> smallest p-value was chosen.</p>
 <pre class="r"><code>goMeta &lt;- goFry %&gt;%
   dplyr::select(gs_name, fry = PValue) %&gt;%
   left_join(
@@ -1031,188 +1097,272 @@ np &lt;- 1e5</code></pre>
 <pre class="r"><code>goMeta %&gt;%
   dplyr::filter(adjP &lt; 0.01) %&gt;%
   mutate_at(vars(one_of(c(&quot;p&quot;, &quot;FDR&quot;, &quot;adjP&quot;))), formatP) %&gt;%
+  dplyr::select(`Gene Set` = gs_name, p, `p~FDR~` = FDR, `p~bonf~` = adjP) %&gt;%  
   pander(
     caption = &quot;Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant using a Bonferroni-adjusted p-value &lt; 0.01.&quot;,
-    justify = &quot;lrrrr&quot;
+    justify = &quot;lrrr&quot;
   )</code></pre>
-<table>
+<table style="width:100%;">
 <caption>Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant using a Bonferroni-adjusted p-value &lt; 0.01.</caption>
 <colgroup>
-<col width="67%" />
-<col width="3%" />
+<col width="69%" />
 <col width="10%" />
 <col width="10%" />
 <col width="10%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">gs_name</th>
-<th align="right">n</th>
+<th align="left">Gene Set</th>
 <th align="right">p</th>
-<th align="right">FDR</th>
-<th align="right">adjP</th>
+<th align="right">p<sub>FDR</sub></th>
+<th align="right">p<sub>bonf</sub></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">GO_AEROBIC_ELECTRON_TRANSPORT_CHAIN</td>
-<td align="right">3</td>
-<td align="right">1.41e-09</td>
-<td align="right">1.78e-06</td>
-<td align="right">1.24e-05</td>
-</tr>
-<tr class="even">
-<td align="left">GO_PROTON_TRANSPORTING_ATP_SYNTHASE_COMPLEX</td>
-<td align="right">3</td>
-<td align="right">1.41e-09</td>
-<td align="right">1.78e-06</td>
-<td align="right">1.25e-05</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_POLYSOMAL_RIBOSOME</td>
-<td align="right">3</td>
-<td align="right">1.45e-09</td>
-<td align="right">1.78e-06</td>
-<td align="right">1.28e-05</td>
-</tr>
-<tr class="even">
-<td align="left">GO_CYTOSOLIC_SMALL_RIBOSOMAL_SUBUNIT</td>
-<td align="right">3</td>
-<td align="right">1.54e-09</td>
-<td align="right">1.78e-06</td>
-<td align="right">1.36e-05</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_CYTOSOLIC_LARGE_RIBOSOMAL_SUBUNIT</td>
-<td align="right">3</td>
-<td align="right">1.59e-09</td>
-<td align="right">1.78e-06</td>
-<td align="right">1.40e-05</td>
-</tr>
-<tr class="even">
-<td align="left">GO_COTRANSLATIONAL_PROTEIN_TARGETING_TO_MEMBRANE</td>
-<td align="right">3</td>
-<td align="right">1.71e-09</td>
-<td align="right">1.78e-06</td>
-<td align="right">1.51e-05</td>
-</tr>
-<tr class="odd">
 <td align="left">GO_ESTABLISHMENT_OF_PROTEIN_LOCALIZATION_TO_ENDOPLASMIC_RETICULUM</td>
-<td align="right">3</td>
-<td align="right">1.75e-09</td>
-<td align="right">1.78e-06</td>
-<td align="right">1.55e-05</td>
+<td align="right">7.46e-10</td>
+<td align="right">9.37e-07</td>
+<td align="right">6.59e-06</td>
 </tr>
 <tr class="even">
 <td align="left">GO_CYTOSOLIC_RIBOSOME</td>
-<td align="right">3</td>
-<td align="right">1.75e-09</td>
-<td align="right">1.78e-06</td>
-<td align="right">1.55e-05</td>
+<td align="right">7.47e-10</td>
+<td align="right">9.37e-07</td>
+<td align="right">6.60e-06</td>
 </tr>
 <tr class="odd">
+<td align="left">GO_COTRANSLATIONAL_PROTEIN_TARGETING_TO_MEMBRANE</td>
+<td align="right">7.61e-10</td>
+<td align="right">9.37e-07</td>
+<td align="right">6.72e-06</td>
+</tr>
+<tr class="even">
+<td align="left">GO_CYTOSOLIC_LARGE_RIBOSOMAL_SUBUNIT</td>
+<td align="right">8.26e-10</td>
+<td align="right">9.37e-07</td>
+<td align="right">7.30e-06</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_CYTOSOLIC_SMALL_RIBOSOMAL_SUBUNIT</td>
+<td align="right">8.55e-10</td>
+<td align="right">9.37e-07</td>
+<td align="right">7.55e-06</td>
+</tr>
+<tr class="even">
+<td align="left">GO_POLYSOMAL_RIBOSOME</td>
+<td align="right">9.12e-10</td>
+<td align="right">9.37e-07</td>
+<td align="right">8.06e-06</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_PROTON_TRANSPORTING_ATP_SYNTHASE_COMPLEX</td>
+<td align="right">9.37e-10</td>
+<td align="right">9.37e-07</td>
+<td align="right">8.28e-06</td>
+</tr>
+<tr class="even">
 <td align="left">GO_INNATE_IMMUNE_RESPONSE_IN_MUCOSA</td>
-<td align="right">3</td>
-<td align="right">1.81e-09</td>
-<td align="right">1.78e-06</td>
-<td align="right">1.60e-05</td>
+<td align="right">1.26e-09</td>
+<td align="right">9.37e-07</td>
+<td align="right">1.12e-05</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_MHC_CLASS_II_RECEPTOR_ACTIVITY</td>
+<td align="right">1.30e-09</td>
+<td align="right">9.37e-07</td>
+<td align="right">1.15e-05</td>
+</tr>
+<tr class="even">
+<td align="left">GO_INTERMEDIATE_FILAMENT_BUNDLE_ASSEMBLY</td>
+<td align="right">1.44e-09</td>
+<td align="right">9.37e-07</td>
+<td align="right">1.27e-05</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_KERATIN_FILAMENT_BINDING</td>
+<td align="right">1.45e-09</td>
+<td align="right">9.37e-07</td>
+<td align="right">1.28e-05</td>
+</tr>
+<tr class="even">
+<td align="left">GO_HEMIDESMOSOME_ASSEMBLY</td>
+<td align="right">1.49e-09</td>
+<td align="right">9.37e-07</td>
+<td align="right">1.32e-05</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_CORNIFIED_ENVELOPE</td>
+<td align="right">1.57e-09</td>
+<td align="right">9.37e-07</td>
+<td align="right">1.39e-05</td>
+</tr>
+<tr class="even">
+<td align="left">GO_INTERMEDIATE_FILAMENT_ORGANIZATION</td>
+<td align="right">1.58e-09</td>
+<td align="right">9.37e-07</td>
+<td align="right">1.39e-05</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_PEPTIDE_CROSS_LINKING</td>
+<td align="right">1.59e-09</td>
+<td align="right">9.37e-07</td>
+<td align="right">1.41e-05</td>
+</tr>
+<tr class="even">
+<td align="left">GO_KERATIN_FILAMENT</td>
+<td align="right">1.73e-09</td>
+<td align="right">9.56e-07</td>
+<td align="right">1.53e-05</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_CORNIFICATION</td>
+<td align="right">2.20e-09</td>
+<td align="right">1.14e-06</td>
+<td align="right">1.94e-05</td>
 </tr>
 <tr class="even">
 <td align="left">GO_PROTEIN_LOCALIZATION_TO_ENDOPLASMIC_RETICULUM</td>
-<td align="right">3</td>
 <td align="right">3.56e-09</td>
-<td align="right">3.15e-06</td>
+<td align="right">1.75e-06</td>
 <td align="right">3.15e-05</td>
 </tr>
 <tr class="odd">
 <td align="left">GO_ORGAN_OR_TISSUE_SPECIFIC_IMMUNE_RESPONSE</td>
-<td align="right">3</td>
 <td align="right">5.54e-09</td>
-<td align="right">4.45e-06</td>
+<td align="right">2.57e-06</td>
 <td align="right">4.89e-05</td>
 </tr>
 <tr class="even">
-<td align="left">GO_SMALL_RIBOSOMAL_SUBUNIT</td>
-<td align="right">3</td>
-<td align="right">8.64e-09</td>
-<td align="right">6.36e-06</td>
-<td align="right">7.63e-05</td>
+<td align="left">GO_INTERMEDIATE_FILAMENT_BINDING</td>
+<td align="right">6.09e-09</td>
+<td align="right">2.69e-06</td>
+<td align="right">5.38e-05</td>
 </tr>
 <tr class="odd">
+<td align="left">GO_SMALL_RIBOSOMAL_SUBUNIT</td>
+<td align="right">8.64e-09</td>
+<td align="right">3.63e-06</td>
+<td align="right">7.63e-05</td>
+</tr>
+<tr class="even">
 <td align="left">GO_RIBOSOMAL_SMALL_SUBUNIT_ASSEMBLY</td>
-<td align="right">3</td>
-<td align="right">1.26e-08</td>
-<td align="right">8.53e-06</td>
+<td align="right">1.06e-08</td>
+<td align="right">4.27e-06</td>
+<td align="right">9.40e-05</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_AEROBIC_ELECTRON_TRANSPORT_CHAIN</td>
+<td align="right">1.51e-08</td>
+<td align="right">5.80e-06</td>
 <td align="right">0.0001</td>
 </tr>
 <tr class="even">
+<td align="left">GO_PHOSPHOLIPASE_A2_INHIBITOR_ACTIVITY</td>
+<td align="right">4.69e-08</td>
+<td align="right">1.72e-05</td>
+<td align="right">0.0004</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_NUCLEAR_NUCLEOSOME</td>
+<td align="right">6.31e-08</td>
+<td align="right">2.23e-05</td>
+<td align="right">0.0006</td>
+</tr>
+<tr class="even">
 <td align="left">GO_MITOCHONDRIAL_RESPIRATORY_CHAIN_COMPLEX_I</td>
-<td align="right">3</td>
 <td align="right">7.01e-08</td>
-<td align="right">4.18e-05</td>
+<td align="right">2.32e-05</td>
 <td align="right">0.0006</td>
 </tr>
 <tr class="odd">
 <td align="left">GO_NADH_DEHYDROGENASE_ACTIVITY</td>
-<td align="right">3</td>
 <td align="right">7.09e-08</td>
-<td align="right">4.18e-05</td>
+<td align="right">2.32e-05</td>
 <td align="right">0.0006</td>
 </tr>
 <tr class="even">
-<td align="left">GO_RESPIRATORY_CHAIN_COMPLEX_IV</td>
-<td align="right">3</td>
-<td align="right">8.18e-08</td>
-<td align="right">4.52e-05</td>
-<td align="right">0.0007</td>
+<td align="left">GO_OXIDATIVE_PHOSPHORYLATION</td>
+<td align="right">1.13e-07</td>
+<td align="right">3.56e-05</td>
+<td align="right">0.0010</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_OXIDATIVE_PHOSPHORYLATION</td>
-<td align="right">3</td>
-<td align="right">1.13e-07</td>
-<td align="right">5.87e-05</td>
+<td align="left">GO_RESPIRATORY_CHAIN_COMPLEX_IV</td>
+<td align="right">1.17e-07</td>
+<td align="right">3.57e-05</td>
 <td align="right">0.0010</td>
 </tr>
 <tr class="even">
 <td align="left">GO_RIBOSOMAL_SUBUNIT</td>
-<td align="right">3</td>
 <td align="right">1.45e-07</td>
-<td align="right">6.86e-05</td>
+<td align="right">4.21e-05</td>
 <td align="right">0.0013</td>
 </tr>
 <tr class="odd">
 <td align="left">GO_ATP_SYNTHESIS_COUPLED_ELECTRON_TRANSPORT</td>
-<td align="right">3</td>
 <td align="right">1.48e-07</td>
-<td align="right">6.86e-05</td>
+<td align="right">4.21e-05</td>
 <td align="right">0.0013</td>
 </tr>
 <tr class="even">
 <td align="left">GO_RESPIRATORY_CHAIN_COMPLEX</td>
-<td align="right">3</td>
 <td align="right">1.84e-07</td>
-<td align="right">8.13e-05</td>
+<td align="right">5.07e-05</td>
 <td align="right">0.0016</td>
 </tr>
 <tr class="odd">
+<td align="left">GO_PHOTORECEPTOR_DISC_MEMBRANE</td>
+<td align="right">1.89e-07</td>
+<td align="right">5.07e-05</td>
+<td align="right">0.0017</td>
+</tr>
+<tr class="even">
+<td align="left">GO_STRAND_INVASION</td>
+<td align="right">2.60e-07</td>
+<td align="right">6.75e-05</td>
+<td align="right">0.0023</td>
+</tr>
+<tr class="odd">
 <td align="left">GO_CRISTAE_FORMATION</td>
-<td align="right">3</td>
 <td align="right">3.97e-07</td>
-<td align="right">0.0002</td>
+<td align="right">0.0001</td>
 <td align="right">0.0035</td>
 </tr>
 <tr class="even">
+<td align="left">GO_INTERLEUKIN_8_SECRETION</td>
+<td align="right">4.84e-07</td>
+<td align="right">0.0001</td>
+<td align="right">0.0043</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_INTERMEDIATE_FILAMENT_CYTOSKELETON</td>
+<td align="right">5.94e-07</td>
+<td align="right">0.0001</td>
+<td align="right">0.0052</td>
+</tr>
+<tr class="even">
+<td align="left">GO_CELL_SUBSTRATE_JUNCTION_ASSEMBLY</td>
+<td align="right">6.00e-07</td>
+<td align="right">0.0001</td>
+<td align="right">0.0053</td>
+</tr>
+<tr class="odd">
 <td align="left">GO_VIRAL_GENE_EXPRESSION</td>
-<td align="right">3</td>
 <td align="right">6.14e-07</td>
-<td align="right">0.0002</td>
+<td align="right">0.0001</td>
 <td align="right">0.0054</td>
+</tr>
+<tr class="even">
+<td align="left">GO_O_PALMITOYLTRANSFERASE_ACTIVITY</td>
+<td align="right">8.00e-07</td>
+<td align="right">0.0002</td>
+<td align="right">0.0071</td>
 </tr>
 <tr class="odd">
 <td align="left">GO_ANTIBACTERIAL_HUMORAL_RESPONSE</td>
-<td align="right">3</td>
 <td align="right">1.03e-06</td>
-<td align="right">0.0004</td>
+<td align="right">0.0002</td>
 <td align="right">0.0091</td>
 </tr>
 </tbody>
@@ -1228,14 +1378,14 @@ np &lt;- 1e5</code></pre>
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value                       
  version  R version 3.6.2 (2019-12-12)
- os       Ubuntu 18.04.3 LTS          
+ os       Ubuntu 18.04.4 LTS          
  system   x86_64, linux-gnu           
  ui       X11                         
  language en_AU:en                    
  collate  en_AU.UTF-8                 
  ctype    en_AU.UTF-8                 
  tz       Australia/Adelaide          
- date     2020-01-28                  
+ date     2020-02-17                  
 
 ─ Packages ───────────────────────────────────────────────────────────────────
  package              * version    date       lib source        
@@ -1255,7 +1405,7 @@ np &lt;- 1e5</code></pre>
  bit64                  0.9-7      2017-05-08 [2] CRAN (R 3.6.0)
  bitops                 1.0-6      2013-08-17 [2] CRAN (R 3.6.0)
  blob                   1.2.1      2020-01-20 [2] CRAN (R 3.6.2)
- broom                  0.5.3      2019-12-14 [2] CRAN (R 3.6.2)
+ broom                  0.5.4      2020-01-27 [2] CRAN (R 3.6.2)
  callr                  3.4.1      2020-01-24 [2] CRAN (R 3.6.2)
  cellranger             1.1.0      2016-07-27 [2] CRAN (R 3.6.0)
  cli                    2.0.1      2020-01-08 [2] CRAN (R 3.6.2)
@@ -1271,7 +1421,7 @@ np &lt;- 1e5</code></pre>
  desc                   1.2.0      2018-05-01 [2] CRAN (R 3.6.0)
  devtools               2.2.1      2019-09-24 [2] CRAN (R 3.6.1)
  digest                 0.6.23     2019-11-23 [2] CRAN (R 3.6.1)
- dplyr                * 0.8.3      2019-07-04 [2] CRAN (R 3.6.1)
+ dplyr                * 0.8.4      2020-01-31 [2] CRAN (R 3.6.2)
  edgeR                * 3.28.0     2019-10-29 [2] Bioconductor  
  ellipsis               0.3.0      2019-09-20 [2] CRAN (R 3.6.1)
  evaluate               0.14       2019-05-28 [2] CRAN (R 3.6.0)
@@ -1317,7 +1467,7 @@ np &lt;- 1e5</code></pre>
  lazyeval               0.2.2      2019-03-15 [2] CRAN (R 3.6.0)
  leaps                  3.1        2020-01-16 [2] CRAN (R 3.6.2)
  lifecycle              0.1.0      2019-08-01 [2] CRAN (R 3.6.1)
- limma                * 3.42.0     2019-10-29 [2] Bioconductor  
+ limma                * 3.42.1     2020-01-29 [2] Bioconductor  
  locfit                 1.5-9.1    2013-04-20 [2] CRAN (R 3.6.0)
  lubridate              1.7.4      2018-04-11 [2] CRAN (R 3.6.0)
  magrittr             * 1.5        2014-11-22 [2] CRAN (R 3.6.0)
@@ -1336,7 +1486,7 @@ np &lt;- 1e5</code></pre>
  mutoss                 0.1-12     2017-12-04 [2] CRAN (R 3.6.2)
  mvtnorm                1.0-12     2020-01-09 [2] CRAN (R 3.6.2)
  ngsReports           * 1.1.2      2019-10-16 [1] Bioconductor  
- nlme                   3.1-143    2019-12-10 [4] CRAN (R 3.6.2)
+ nlme                   3.1-144    2020-02-06 [4] CRAN (R 3.6.2)
  numDeriv               2016.8-1.1 2019-06-06 [2] CRAN (R 3.6.2)
  openssl                1.4.1      2019-07-18 [2] CRAN (R 3.6.1)
  pander               * 0.6.3      2018-11-06 [2] CRAN (R 3.6.0)
@@ -1365,7 +1515,7 @@ np &lt;- 1e5</code></pre>
  remotes                2.1.0      2019-06-24 [2] CRAN (R 3.6.0)
  reprex                 0.3.0      2019-05-16 [2] CRAN (R 3.6.0)
  reshape2               1.4.3      2017-12-11 [2] CRAN (R 3.6.0)
- rlang                  0.4.3      2020-01-24 [2] CRAN (R 3.6.2)
+ rlang                  0.4.4      2020-01-28 [2] CRAN (R 3.6.2)
  rmarkdown              2.1        2020-01-20 [2] CRAN (R 3.6.2)
  rprojroot              1.3-2      2018-01-03 [2] CRAN (R 3.6.0)
  Rsamtools              2.2.1      2019-11-06 [2] Bioconductor  
@@ -1379,7 +1529,7 @@ np &lt;- 1e5</code></pre>
  scatterplot3d          0.3-41     2018-03-14 [2] CRAN (R 3.6.1)
  sessioninfo            1.1.1      2018-11-05 [2] CRAN (R 3.6.0)
  ShortRead              1.44.1     2019-12-19 [2] Bioconductor  
- sn                     1.5-4      2019-05-14 [2] CRAN (R 3.6.2)
+ sn                     1.5-5      2020-01-30 [2] CRAN (R 3.6.2)
  statmod                1.4.33     2020-01-10 [2] CRAN (R 3.6.2)
  stringi                1.4.5      2020-01-11 [2] CRAN (R 3.6.2)
  stringr              * 1.4.0      2019-02-10 [2] CRAN (R 3.6.0)
@@ -1390,7 +1540,7 @@ np &lt;- 1e5</code></pre>
  TH.data                1.0-10     2019-01-21 [2] CRAN (R 3.6.1)
  tibble               * 2.1.3      2019-06-06 [2] CRAN (R 3.6.0)
  tidyr                * 1.0.2      2020-01-24 [2] CRAN (R 3.6.2)
- tidyselect             0.2.5      2018-10-11 [2] CRAN (R 3.6.0)
+ tidyselect             1.0.0      2020-01-27 [2] CRAN (R 3.6.2)
  tidyverse            * 1.3.0      2019-11-21 [2] CRAN (R 3.6.1)
  truncnorm              1.0-8      2018-02-27 [2] CRAN (R 3.6.0)
  usethis                1.5.1      2019-07-04 [2] CRAN (R 3.6.1)
@@ -1404,7 +1554,7 @@ np &lt;- 1e5</code></pre>
  XML                    3.99-0.3   2020-01-20 [2] CRAN (R 3.6.2)
  xml2                   1.2.2      2019-08-09 [2] CRAN (R 3.6.1)
  XVector                0.26.0     2019-10-29 [2] Bioconductor  
- yaml                   2.2.0      2018-07-25 [2] CRAN (R 3.6.0)
+ yaml                   2.2.1      2020-02-01 [2] CRAN (R 3.6.2)
  zlibbioc               1.32.0     2019-10-29 [2] Bioconductor  
  zoo                    1.8-7      2020-01-10 [2] CRAN (R 3.6.2)
 
