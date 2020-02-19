@@ -646,9 +646,34 @@ goMeta <- goFry %>%
 goMeta %>%
   dplyr::filter(FDR < 0.01, nDE > 0) %>%
   mutate_at(vars(one_of(c("wilkinson_p", "FDR", "adjP"))), formatP) %>%
+  mutate(gs_name = str_trunc(gs_name, 80)) %>%
   dplyr::select(`Gene Set` = gs_name, `Number DE` = nDE, `Set Size` = gs_size, `Wilkinson~p~` = wilkinson_p, `p~FDR~` = FDR, `p~bonf~` = adjP) %>%
   pander(
     caption = "Results from combining all above approaches for the GO Gene Sets. All terms are significant using an FDR < 0.01. Only Gene Sets with at least one DE gene are shown.",
     justify = "lrrrrr"
   )
 ```
+
+# Data Export
+
+All enriched gene sets terms with an FDR adjusted p-value < 0.05 were exported as a single csv file.
+
+```{r}
+bind_rows(
+  hmMeta,
+  kgMeta,
+  goMeta
+) %>%
+  dplyr::filter(FDR < 0.05) %>%
+  mutate(
+    DE = lapply(DE, function(x){dplyr::filter(deTable, gene_id %in% x)$gene_name}),
+    DE = lapply(DE, unique),
+    DE = vapply(DE, paste, character(1), collapse = ";")
+  ) %>%
+  arrange(wilkinson_p) %>%
+  dplyr::select(
+    gs_name, gs_size, nDE, wilkinson_p, FDR, fry, camera, gsea, goseq, DE
+  ) %>%
+  write_csv(here::here("output", "Enrichment_Mutant_V_WT.csv"))
+```
+

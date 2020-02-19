@@ -115,7 +115,8 @@ The initial database used for testing was the Hallmark Gene Sets, with mappings 
 ```{r hm}
 hm <- msigdbr("Danio rerio", category = "H")  %>% 
   left_join(entrezGenes) %>%
-  dplyr::filter(!is.na(gene_id)) 
+  dplyr::filter(!is.na(gene_id)) %>%
+  distinct(gs_name, gene_id, .keep_all = TRUE)
 hmByGene <- hm %>%
   split(f = .$gene_id) %>%
   lapply(extract2, "gs_name")
@@ -133,7 +134,8 @@ A total of `r comma(length(hmByGene))` Ensembl IDs were mapped to pathways from 
 ```{r kg}
 kg <- msigdbr("Danio rerio", category = "C2", subcategory = "CP:KEGG")  %>% 
   left_join(entrezGenes) %>%
-  dplyr::filter(!is.na(gene_id)) 
+  dplyr::filter(!is.na(gene_id)) %>%
+  distinct(gs_name, gene_id, .keep_all = TRUE)
 kgByGene <- kg  %>%
   split(f = .$gene_id) %>%
   lapply(extract2, "gs_name")
@@ -164,7 +166,8 @@ go <- msigdbr("Danio rerio", category = "C5") %>%
   left_join(entrezGenes) %>%
   dplyr::filter(!is.na(gene_id)) %>%
   left_join(goSummaries) %>% 
-  dplyr::filter(shortest_path >= minPath) 
+  dplyr::filter(shortest_path >= minPath) %>%
+  distinct(gs_name, gene_id, .keep_all = TRUE)
 goByGene <- go %>%
   split(f = .$gene_id) %>%
   lapply(extract2, "gs_name")
@@ -176,6 +179,13 @@ goByID <- go %>%
 
 For analysis of gene-sets from the GO database, gene-sets were restricted to those with `r minPath` or more steps back to the ontology root terms.
 A total of `r comma(length(goByGene))` Ensembl IDs were mapped to pathways from restricted database of `r comma(length(goByID))` GO gene sets.
+
+```{r gsSizes}
+gsSizes <- bind_rows(hm, kg, go) %>% 
+  dplyr::select(gs_name, gene_symbol, gene_id) %>% 
+  chop(c(gene_symbol, gene_id)) %>%
+  mutate(gs_size = vapply(gene_symbol, length, integer(1)))
+```
 
 
 # Enrichment Testing on Ranked Lists
@@ -250,32 +260,35 @@ hmMeta <- hmFry %>%
   left_join(
     dplyr::select(hmGsea, gs_name, gsea = PValue)
   ) %>%
-  pivot_longer(
-    cols = one_of(c("fry", "camera", "gsea")),
-    names_to = "method",
-    values_to = "p"
-  ) %>%
-  dplyr::filter(!is.na(p)) %>%
-  group_by(gs_name) %>%
-  summarise(
-    n = n(),
-    p = wilkinsonp(p, r = n - 1)$p
-  ) %>%
-  arrange(p) %>%
+  nest(p = one_of(c("fry", "camera", "gsea"))) %>%
   mutate(
-    FDR = p.adjust(p, "fdr"),
-    adjP = p.adjust(p, "bonf")
-  ) 
+    n_p = vapply(p, function(x){sum(!is.na(unlist(x)))}, integer(1)), 
+    wilkinson_p = vapply(p, function(x){
+      x <- unlist(x)
+      x <- x[!is.na(x)]
+      wilkinsonp(x, length(x) - 1)$p
+    }, numeric(1)),
+    FDR = p.adjust(wilkinson_p, "fdr"), 
+    adjP = p.adjust(wilkinson_p, "bonferroni")
+  ) %>% 
+  arrange(wilkinson_p) %>% 
+  unnest(p) %>%
+  left_join(gsSizes) %>%
+  mutate(
+    DE = lapply(gene_id, intersect, dplyr::filter(deTable, DE)$gene_id),
+    DE = lapply(DE, unique),
+    nDE = vapply(DE, length, integer(1))
+  )
 ```
 
 ```{r}
 hmMeta %>%
-  dplyr::filter(FDR < 0.1) %>%
-  mutate_at(vars(one_of(c("p", "FDR", "adjP"))), formatP) %>%
-  dplyr::select(`Gene Set` = gs_name, p, `p~FDR~` = FDR, `p~bonf~` = adjP) %>%
+  dplyr::filter(FDR < 0.05) %>%
+  mutate_at(vars(one_of(c("wilkinson_p", "FDR", "adjP"))), formatP) %>%
+  dplyr::select(`Gene Set` = gs_name, `Number DE` = nDE, `Set Size` = gs_size, `Wilkinson~p~` = wilkinson_p, `p~FDR~` = FDR, `p~bonf~` = adjP) %>%
   pander(
-    caption = "Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.1.",
-    justify = "lrrr"
+    caption = "Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.05.",
+    justify = "lrrrrr"
   )
 ```
 
@@ -333,33 +346,36 @@ kgMeta <- kgFry %>%
   ) %>%
   left_join(
     dplyr::select(kgGsea, gs_name, gsea = PValue)
-  ) %>%
-  pivot_longer(
-    cols = one_of(c("fry", "camera", "gsea")),
-    names_to = "method",
-    values_to = "p"
-  ) %>%
-  dplyr::filter(!is.na(p)) %>%
-  group_by(gs_name) %>%
-  summarise(
-    n = n(),
-    p = wilkinsonp(p, r = n - 1)$p
-  ) %>%
-  arrange(p) %>%
+  )  %>%
+  nest(p = one_of(c("fry", "camera", "gsea"))) %>%
   mutate(
-    FDR = p.adjust(p, "fdr"),
-    adjP = p.adjust(p, "bonf")
-  ) 
+    n_p = vapply(p, function(x){sum(!is.na(unlist(x)))}, integer(1)), 
+    wilkinson_p = vapply(p, function(x){
+      x <- unlist(x)
+      x <- x[!is.na(x)]
+      wilkinsonp(x, length(x) - 1)$p
+    }, numeric(1)),
+    FDR = p.adjust(wilkinson_p, "fdr"), 
+    adjP = p.adjust(wilkinson_p, "bonferroni")
+  ) %>% 
+  arrange(wilkinson_p) %>% 
+  unnest(p) %>%
+  left_join(gsSizes) %>%
+  mutate(
+    DE = lapply(gene_id, intersect, dplyr::filter(deTable, DE)$gene_id),
+    DE = lapply(DE, unique),
+    nDE = vapply(DE, length, integer(1))
+  )
 ```
 
 ```{r}
 kgMeta %>%
   dplyr::filter(FDR < 0.05) %>%
-  mutate_at(vars(one_of(c("p", "FDR", "adjP"))), formatP) %>%
-  dplyr::select(`Gene Set` = gs_name, p, `p~FDR~` = FDR, `p~bonf~` = adjP) %>%  
+  mutate_at(vars(one_of(c("wilkinson_p", "FDR", "adjP"))), formatP) %>%
+  dplyr::select(`Gene Set` = gs_name, `Number DE` = nDE, `Set Size` = gs_size, `Wilkinson~p~` = wilkinson_p, `p~FDR~` = FDR, `p~bonf~` = adjP) %>%
   pander(
-    caption = "Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.05.",
-    justify = "lrrr"
+    caption = "Results from combining all above approaches for the KEGG Gene Sets. All terms are significant to an FDR of 0.05.",
+    justify = "lrrrrr"
   )
 ```
 
@@ -417,32 +433,59 @@ goMeta <- goFry %>%
   ) %>%
   left_join(
     dplyr::select(goGsea, gs_name, gsea = PValue)
-  ) %>%
-  pivot_longer(
-    cols = one_of(c("fry", "camera", "gsea")),
-    names_to = "method",
-    values_to = "p"
-  ) %>%
-  dplyr::filter(!is.na(p)) %>%
-  group_by(gs_name) %>%
-  summarise(
-    n = n(),
-    p = wilkinsonp(p, r = n - 1)$p
-  ) %>%
-  arrange(p) %>%
+  )  %>%
+  nest(p = one_of(c("fry", "camera", "gsea"))) %>%
   mutate(
-    FDR = p.adjust(p, "fdr"),
-    adjP = p.adjust(p, "bonf")
-  ) 
+    n_p = vapply(p, function(x){sum(!is.na(unlist(x)))}, integer(1)), 
+    wilkinson_p = vapply(p, function(x){
+      x <- unlist(x)
+      x <- x[!is.na(x)]
+      wilkinsonp(x, length(x) - 1)$p
+    }, numeric(1)),
+    FDR = p.adjust(wilkinson_p, "fdr"), 
+    adjP = p.adjust(wilkinson_p, "bonferroni")
+  ) %>% 
+  arrange(wilkinson_p) %>% 
+  unnest(p) %>%
+  left_join(gsSizes) %>%
+  mutate(
+    DE = lapply(gene_id, intersect, dplyr::filter(deTable, DE)$gene_id),
+    DE = lapply(DE, unique),
+    nDE = vapply(DE, length, integer(1))
+  )
 ```
 
 ```{r}
 goMeta %>%
   dplyr::filter(adjP < 0.01) %>%
-  mutate_at(vars(one_of(c("p", "FDR", "adjP"))), formatP) %>%
-  dplyr::select(`Gene Set` = gs_name, p, `p~FDR~` = FDR, `p~bonf~` = adjP) %>%  
+  mutate_at(vars(one_of(c("wilkinson_p", "FDR", "adjP"))), formatP) %>%
+  dplyr::select(`Gene Set` = gs_name, `Number DE` = nDE, `Set Size` = gs_size, `Wilkinson~p~` = wilkinson_p, `p~FDR~` = FDR, `p~bonf~` = adjP) %>%
   pander(
-    caption = "Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant using a Bonferroni-adjusted p-value < 0.01.",
-    justify = "lrrr"
+    caption = "Results from combining all above approaches for the GO Gene Sets. All terms are significant to an FDR of 0.01.",
+    justify = "lrrrrr"
   )
 ```
+
+# Data Export
+
+All enriched gene sets terms with an FDR adjusted p-value < 0.05 were exported as a single csv file.
+
+```{r}
+bind_rows(
+  hmMeta,
+  kgMeta,
+  goMeta
+) %>%
+  dplyr::filter(FDR < 0.05) %>%
+  mutate(
+    DE = lapply(DE, function(x){dplyr::filter(deTable, gene_id %in% x)$gene_name}),
+    DE = lapply(DE, unique),
+    DE = vapply(DE, paste, character(1), collapse = ";")
+  ) %>%
+  arrange(wilkinson_p) %>%
+  dplyr::select(
+    gs_name, gs_size, nDE, wilkinson_p, FDR, fry, camera, gsea, DE
+  ) %>%
+  write_csv(here::here("output", "Enrichment_Hom_V_Het.csv"))
+```
+
