@@ -795,7 +795,7 @@ goMeta %>%
   )
 ```
 
-```{r goMetaUpset, fig.height=8, fig.width=10, fig.cap = "*UpSet plot indicating distribution of DE genes within significant terms from the GO gene sets. Gene sets were restricted to those with 25 or more DE genes and an FDR < 0.05. A group of 47 genes is widely spread across multiple terms, whilst a group of 25 genes is shared by a large group of terms, indicating that these genes largely drive the signal for these terms. These genes tend to indicate Ribosomal activity. However, a set of 20 genes seems to more uniquely indicate dsDNA binding, whilst another 15 indicate organo-nitrogen biosynthesis, and a further set of 22 DE genes are predominantly associated with the mitochondrial envelope.*"}
+```{r goMetaUpset, fig.height=6, fig.width=10, fig.cap = "*UpSet plot indicating distribution of DE genes within significant terms from the GO gene sets. Gene sets were restricted to those with 25 or more DE genes and an FDR < 0.05. A group of 47 genes is widely spread across multiple terms, whilst a group of 25 genes is shared by a large group of terms, indicating that these genes largely drive the signal for these terms. These genes tend to indicate Ribosomal activity. However, a set of 20 genes seems to more uniquely indicate dsDNA binding, whilst another 15 indicate organo-nitrogen biosynthesis, and a further set of 22 DE genes are predominantly associated with the mitochondrial envelope.*"}
 goMeta %>% 
   dplyr::filter(nDE >= 25, FDR < 0.05) %>%
   dplyr::select(gs_name, DE) %>%
@@ -816,7 +816,7 @@ goMeta %>%
 
 ### Genes Associated with dsDNA Binding
 
-```{r heatDsDNA, fig.height=5, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Double Stranded DNA Binding'.*"}
+```{r heatDsDNA, fig.height=5.5, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Double Stranded DNA Binding'.*"}
 go %>%
   dplyr::filter(
     gs_name == "GO_DOUBLE_STRANDED_DNA_BINDING",
@@ -896,7 +896,7 @@ go %>%
 
 ### Genes Associated with Organo-Nitrogen Compound Biosynthesis
 
-```{r heatOrganoNitro, fig.height=5, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Organo-Nitrogen Compound Biosynthetic Process',* **excluding those genes which are additionally annotated to the GO term 'Ribosome'.**"}
+```{r heatOrganoNitro, fig.height=6, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Organo-Nitrogen Compound Biosynthetic Process',* **excluding those genes which are additionally annotated to the GO term 'Ribosome'.**"}
 go %>%
   dplyr::filter(
     gs_name %in% c(
