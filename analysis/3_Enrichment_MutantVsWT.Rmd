@@ -654,6 +654,39 @@ goMeta %>%
   )
 ```
 
+# Oxidative Phosphorylation
+
+The set of genes which was considered to be DE, and which belonged to either of the KEGG or HALLMARK gene-sets definining Oxidative Phosphorylation were then plotted in order to clarify differential expression for this gene set.
+
+```{r, fig.cap = "DE genes belonging to either the KEGG or HALLMARK genesets definining Oxidative Phosphorylation."}
+bind_rows(hm, kg) %>% 
+  dplyr::filter(
+    grepl("OXIDATIVE_PHOS", gs_name),
+    gene_id %in% dplyr::filter(deTable, DE)$gene_id
+    ) %>%
+  distinct(gene_id) %>% 
+  left_join(
+    cpm(fit$fitted.values) %>% 
+      as.data.frame() %>% 
+      rownames_to_column("gene_id") %>%
+      as_tibble()
+    ) %>% 
+  pivot_longer(cols = starts_with("Ps"), names_to = "sample", values_to = "CPM") %>%
+  left_join(dgeList$samples) %>% 
+  left_join(dgeList$genes) %>% 
+  ggplot(aes(genotype, CPM, fill = genotype)) + 
+  geom_boxplot() +
+  facet_wrap(~gene_name, scales= "free_y") + 
+  labs(fill = "Genotype") +
+  scale_y_log10() +
+  theme(
+    legend.position = c(0.7, 0.1),
+    legend.direction = "horizontal"
+    )
+```
+
+
+
 # Data Export
 
 All enriched gene sets terms with an FDR adjusted p-value < 0.05 were exported as a single csv file.
