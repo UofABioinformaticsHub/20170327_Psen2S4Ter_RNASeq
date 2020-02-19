@@ -503,10 +503,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtreede9c4b30542683957dc03d9ed779638e162750c5targetblankde9c4b3a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/de9c4b30542683957dc03d9ed779638e162750c5" target="_blank">de9c4b3</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree4ede7527068c637893720c4e3e9511258b136320targetblank4ede752a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/4ede7527068c637893720c4e3e9511258b136320" target="_blank">4ede752</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtreede9c4b30542683957dc03d9ed779638e162750c5targetblankde9c4b3a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree4ede7527068c637893720c4e3e9511258b136320targetblank4ede752a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -553,6 +553,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/4ede7527068c637893720c4e3e9511258b136320/analysis/3_Enrichment_MutantVsWT.Rmd" target="_blank">4ede752</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-20
+</td>
+<td>
+Added headings
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/01688249b9535123903e827dfd11a894c24ce8d8/docs/3_Enrichment_MutantVsWT.html" target="_blank">0168824</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-20
+</td>
+<td>
+Rebult after resizing
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1522,6 +1556,8 @@ np &lt;- 1e5</code></pre>
 </tr>
 </tbody>
 </table>
+<div id="exploration-of-significant-hallmark-gene-sets" class="section level3">
+<h3>Exploration of significant Hallmark Gene Sets</h3>
 <pre class="r"><code>hmMeta %&gt;% 
   dplyr::filter(nDE &gt; 0, FDR &lt; 0.05) %&gt;%
   dplyr::select(gs_name, DE) %&gt;%
@@ -1535,12 +1571,13 @@ np &lt;- 1e5</code></pre>
   fromList() %&gt;% 
   upset(
     nsets = length(.), 
-    order.by = &quot;freq&quot;
+    order.by = &quot;freq&quot;, 
+    mb.ratio = c(0.6, 0.4)
     )</code></pre>
 <div class="figure" style="text-align: center">
-<img src="figure/3_Enrichment_MutantVsWT.Rmd/hmMetaUpset-1.png" alt="*UpSet plot indicating distribution of DE genes within all significant terms from the HALLMARK gene sets. Most terms seem relatively independent of each other.*" width="960" />
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/hmMetaUpset-1.png" alt="*UpSet plot indicating distribution of DE genes within all significant HALLMARK gene sets. Most gene sets seem relatively independent of each other.*" width="960" />
 <p class="caption">
-<em>UpSet plot indicating distribution of DE genes within all significant terms from the HALLMARK gene sets. Most terms seem relatively independent of each other.</em>
+<em>UpSet plot indicating distribution of DE genes within all significant HALLMARK gene sets. Most gene sets seem relatively independent of each other.</em>
 </p>
 </div>
 <p>
@@ -1630,9 +1667,9 @@ hmHeat %&gt;%
       )
   )</code></pre>
 <div class="figure" style="text-align: center">
-<img src="figure/3_Enrichment_MutantVsWT.Rmd/hmHeat-1.png" alt="*Gene expression patterns for all DE genes in HALLMARK genes sets, containing more than 5 DE genes.*" width="960" />
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/hmHeat-1.png" alt="*Gene expression patterns for all DE genes in HALLMARK gene sets, containing more than 5 DE genes.*" width="960" />
 <p class="caption">
-<em>Gene expression patterns for all DE genes in HALLMARK genes sets, containing more than 5 DE genes.</em>
+<em>Gene expression patterns for all DE genes in HALLMARK gene sets, containing more than 5 DE genes.</em>
 </p>
 </div>
 <p>
@@ -1670,6 +1707,7 @@ Steve Ped
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 </div>
 </div>
@@ -1879,6 +1917,8 @@ Steve Ped
 </tr>
 </tbody>
 </table>
+<div id="exploration-of-significant-kegg-gene-sets" class="section level3">
+<h3>Exploration of Significant KEGG Gene Sets</h3>
 <pre class="r"><code>kgMeta %&gt;% 
   dplyr::filter(nDE &gt; 0, FDR &lt; 0.05) %&gt;%
   dplyr::select(gs_name, DE) %&gt;%
@@ -1892,7 +1932,8 @@ Steve Ped
   fromList() %&gt;% 
   upset(
     nsets = length(.), 
-    order.by = &quot;freq&quot;
+    order.by = &quot;freq&quot;,
+    mb.ratio = c(0.6, 0.4)
     )</code></pre>
 <div class="figure" style="text-align: center">
 <img src="figure/3_Enrichment_MutantVsWT.Rmd/kgMetaUpset-1.png" alt="*UpSet plot indicating distribution of DE genes within all significant terms from the KEGG gene sets. There is considerable overlap between Oxidative Phosphorylation and both Parkinson's and Huntington's Disease, indicating that these terms essentially capture the same signal.*" width="960" />
@@ -1983,9 +2024,9 @@ riboOx %&gt;%
     cutree_rows = 5
   )</code></pre>
 <div class="figure" style="text-align: center">
-<img src="figure/3_Enrichment_MutantVsWT.Rmd/riboOxHeatmap-1.png" alt="*Given that the largest gene sets within the KEGG results were Oxidative Phosphorylation and Ribosomal gene sets, all DE genes associated with these KEGG terms are displayed below. All genes appear to show increased expression in mutant samples.*" width="768" />
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/riboOxHeatmap-1.png" alt="*Given that the largest gene sets within the KEGG results were Oxidative Phosphorylation and Ribosomal gene sets, all DE genes associated with these KEGG terms are displayed. All genes appear to show increased expression in mutant samples.*" width="768" />
 <p class="caption">
-<em>Given that the largest gene sets within the KEGG results were Oxidative Phosphorylation and Ribosomal gene sets, all DE genes associated with these KEGG terms are displayed below. All genes appear to show increased expression in mutant samples.</em>
+<em>Given that the largest gene sets within the KEGG results were Oxidative Phosphorylation and Ribosomal gene sets, all DE genes associated with these KEGG terms are displayed. All genes appear to show increased expression in mutant samples.</em>
 </p>
 </div>
 <p>
@@ -2023,6 +2064,7 @@ Steve Ped
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 </div>
 </div>
@@ -3017,6 +3059,8 @@ Steve Ped
 </tr>
 </tbody>
 </table>
+<div id="exploration-of-significant-go-gene-sets" class="section level3">
+<h3>Exploration of Significant GO Gene Sets</h3>
 <pre class="r"><code>goMeta %&gt;% 
   dplyr::filter(nDE &gt;= 25, FDR &lt; 0.05) %&gt;%
   dplyr::select(gs_name, DE) %&gt;%
@@ -3034,9 +3078,9 @@ Steve Ped
     mb.ratio = c(0.55, 0.45)
   )</code></pre>
 <div class="figure" style="text-align: center">
-<img src="figure/3_Enrichment_MutantVsWT.Rmd/goMetaUpset-1.png" alt="*UpSet plot indicating distribution of DE genes within significant terms from the GO gene sets. Gene sets were restricted to those with 25 or more DE genes and an FDR &lt; 0.05. A group of 47 genes is widely spread across multiple terms, whilst a group of 25 genes is shared by a large group of terms, indicating that these genes largely drive the signal for these terms. These genes tend to indicate Ribosomal activity. However, a set of 20 genes seems to more uniquely indicate dsDNA binding, whilst another 15 indicate organo-nitrogen biosynthesis, and a further set of 22 DE genes are predominantly associated with the mitochondrial envelope.*" width="960" />
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/goMetaUpset-1.png" alt="*UpSet plot indicating distribution of DE genes within significant terms from the GO gene sets. For this visualisation, GO terms were restricted to those with 25 or more DE genes and an FDR &lt; 0.05. A group of 47 genes is widely spread across multiple terms, whilst a group of 25 genes is shared by a large group of terms, indicating that these genes largely drive the signal for these terms. These genes tend to indicate Ribosomal activity. However, a set of 20 genes seems to more uniquely indicate dsDNA binding, whilst another 15 indicate organo-nitrogen biosynthesis, and a further set of 22 DE genes are predominantly associated with the mitochondrial envelope.*" width="960" />
 <p class="caption">
-<em>UpSet plot indicating distribution of DE genes within significant terms from the GO gene sets. Gene sets were restricted to those with 25 or more DE genes and an FDR &lt; 0.05. A group of 47 genes is widely spread across multiple terms, whilst a group of 25 genes is shared by a large group of terms, indicating that these genes largely drive the signal for these terms. These genes tend to indicate Ribosomal activity. However, a set of 20 genes seems to more uniquely indicate dsDNA binding, whilst another 15 indicate organo-nitrogen biosynthesis, and a further set of 22 DE genes are predominantly associated with the mitochondrial envelope.</em>
+<em>UpSet plot indicating distribution of DE genes within significant terms from the GO gene sets. For this visualisation, GO terms were restricted to those with 25 or more DE genes and an FDR &lt; 0.05. A group of 47 genes is widely spread across multiple terms, whilst a group of 25 genes is shared by a large group of terms, indicating that these genes largely drive the signal for these terms. These genes tend to indicate Ribosomal activity. However, a set of 20 genes seems to more uniquely indicate dsDNA binding, whilst another 15 indicate organo-nitrogen biosynthesis, and a further set of 22 DE genes are predominantly associated with the mitochondrial envelope.</em>
 </p>
 </div>
 <p>
@@ -3063,6 +3107,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/01688249b9535123903e827dfd11a894c24ce8d8/docs/figure/3_Enrichment_MutantVsWT.Rmd/goMetaUpset-1.png" target="_blank">0168824</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/figure/3_Enrichment_MutantVsWT.Rmd/goMetaUpset-1.png" target="_blank">86ffa07</a>
 </td>
 <td>
@@ -3074,6 +3129,7 @@ Steve Ped
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 </div>
 <div id="genes-associated-with-dsdna-binding" class="section level3">
@@ -3141,6 +3197,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/01688249b9535123903e827dfd11a894c24ce8d8/docs/figure/3_Enrichment_MutantVsWT.Rmd/heatDsDNA-1.png" target="_blank">0168824</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/figure/3_Enrichment_MutantVsWT.Rmd/heatDsDNA-1.png" target="_blank">86ffa07</a>
@@ -3309,6 +3376,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/01688249b9535123903e827dfd11a894c24ce8d8/docs/figure/3_Enrichment_MutantVsWT.Rmd/heatOrganoNitro-1.png" target="_blank">0168824</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/figure/3_Enrichment_MutantVsWT.Rmd/heatOrganoNitro-1.png" target="_blank">86ffa07</a>
