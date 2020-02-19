@@ -503,10 +503,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree66ba4e059abaaa0cb27a59cf949a530f31216bf7targetblank66ba4e0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/66ba4e059abaaa0cb27a59cf949a530f31216bf7" target="_blank">66ba4e0</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree4d2af23dbbdd8c6f32404a1df10f65fcf0dbb266targetblank4d2af23a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/4d2af23dbbdd8c6f32404a1df10f65fcf0dbb266" target="_blank">4d2af23</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree66ba4e059abaaa0cb27a59cf949a530f31216bf7targetblank66ba4e0a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree4d2af23dbbdd8c6f32404a1df10f65fcf0dbb266targetblank4d2af23a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -553,6 +553,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/4d2af23dbbdd8c6f32404a1df10f65fcf0dbb266/analysis/3_Enrichment_MutantVsWT.Rmd" target="_blank">4d2af23</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-19
+</td>
+<td>
+Modified heatmap sizes &amp; initial network layout
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/8fe35b027e18fc26afa1c9029b907a71c2a2e083/analysis/3_Enrichment_MutantVsWT.Rmd" target="_blank">8fe35b0</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-19
+</td>
+<td>
+Added multiple heatmaps &amp; UpSet plots
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/679b10d0c260303f8b87b439535ebf16aab302ac/docs/3_Enrichment_MutantVsWT.html" target="_blank">679b10d</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-19
+</td>
+<td>
+Rendered OXPHOS Plot
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -811,7 +862,9 @@ library(AnnotationDbi)
 library(RColorBrewer)
 library(ngsReports)
 library(fgsea)
-library(metap)</code></pre>
+library(metap)
+library(UpSetR)
+library(pheatmap)</code></pre>
 <pre class="r"><code>theme_set(theme_bw())
 panderOptions(&quot;table.split.table&quot;, Inf)
 panderOptions(&quot;table.style&quot;, &quot;rmarkdown&quot;)
@@ -1435,6 +1488,82 @@ np &lt;- 1e5</code></pre>
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>hmMeta %&gt;% 
+  dplyr::filter(nDE &gt; 0, FDR &lt; 0.05) %&gt;%
+  dplyr::select(gs_name, DE) %&gt;%
+  unnest(DE) %&gt;% 
+  mutate(
+    gs_name = str_remove(gs_name, &quot;HALLMARK_&quot;),
+    gs_name = fct_lump(gs_name, prop = 0.03)
+    ) %&gt;% 
+  split(f = .$gs_name) %&gt;% 
+  lapply(magrittr::extract2, &quot;DE&quot;) %&gt;% 
+  fromList() %&gt;% 
+  upset(
+    nsets = length(.), 
+    order.by = &quot;freq&quot;
+    )</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/hmMetaUpset-1.png" alt="*UpSet plot indicating distribution of DE genes within all significant terms from the HALLMARK gene sets. Most terms seem relatively independent of each other.*" width="960" />
+<p class="caption">
+<em>UpSet plot indicating distribution of DE genes within all significant terms from the HALLMARK gene sets. Most terms seem relatively independent of each other.</em>
+</p>
+</div>
+<pre class="r"><code>hmHeat &lt;- hmMeta %&gt;% 
+  dplyr::filter(nDE &gt; 5, FDR &lt; 0.05) %&gt;%
+  dplyr::select(gs_name, DE) %&gt;%
+  unnest(DE) %&gt;%
+  left_join(dgeList$genes, by = c(&quot;DE&quot; = &quot;gene_id&quot;)) %&gt;%
+  dplyr::select(gs_name, DE, gene_name) %&gt;%
+  mutate(belongs = TRUE) %&gt;%
+  pivot_wider(
+    id_cols = c(DE, gene_name),
+    names_from = gs_name,
+    values_from = belongs,
+    values_fill = list(belongs = FALSE)
+  ) %&gt;%
+  left_join(
+    cpm(fit$fitted.value, log = TRUE) %&gt;%
+      as.data.frame() %&gt;%
+      rownames_to_column(&quot;DE&quot;)
+  )
+hmHeat %&gt;%
+  dplyr::select(gene_name, starts_with(&quot;Ps&quot;)) %&gt;%
+  as.data.frame() %&gt;%
+  column_to_rownames(&quot;gene_name&quot;) %&gt;%
+  as.matrix() %&gt;%
+  pheatmap(
+    color = viridis_pal(option = &quot;magma&quot;)(100),
+    legend_breaks = c(seq(-2, 8, by = 2), max(.)),
+    legend_labels = c(seq(-2, 8, by = 2), &quot;logCPM\n&quot;),
+    labels_col = hmHeat %&gt;%
+      dplyr::select(starts_with(&quot;Ps&quot;)) %&gt;% 
+      colnames() %&gt;% 
+      enframe(name = NULL) %&gt;% 
+      dplyr::rename(sample = value) %&gt;%
+      left_join(dgeList$samples) %&gt;%
+      dplyr::select(sample, sampleID) %&gt;%
+      with(
+        structure(sampleID, names = sample)
+      ),
+    cutree_rows = 6,
+    cutree_cols = 3,
+    annotation_names_row = FALSE,
+    annotation_row = hmHeat %&gt;%
+      dplyr::select(gene_name, starts_with(&quot;HALLMARK_&quot;)) %&gt;%
+      mutate_at(vars(starts_with(&quot;HALL&quot;)), as.character) %&gt;%
+      as.data.frame() %&gt;%
+      column_to_rownames(&quot;gene_name&quot;) %&gt;%
+      set_colnames(
+        str_remove(colnames(.), &quot;HALLMARK_&quot;)
+      )
+  )</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/hmHeat-1.png" alt="*Gene expression patterns for all DE genes in HALLMARK genes sets, containing more than 5 DE genes.*" width="960" />
+<p class="caption">
+<em>Gene expression patterns for all DE genes in HALLMARK genes sets, containing more than 5 DE genes.</em>
+</p>
+</div>
 </div>
 <div id="kegg-gene-sets-2" class="section level2">
 <h2>KEGG Gene Sets</h2>
@@ -1642,6 +1771,78 @@ np &lt;- 1e5</code></pre>
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>kgMeta %&gt;% 
+  dplyr::filter(nDE &gt; 0, FDR &lt; 0.05) %&gt;%
+  dplyr::select(gs_name, DE) %&gt;%
+  unnest(DE) %&gt;% 
+  mutate(
+    gs_name = str_remove(gs_name, &quot;KEGG_&quot;),
+    gs_name = fct_lump(gs_name, n = 7)
+    ) %&gt;% 
+  split(f = .$gs_name) %&gt;% 
+  lapply(magrittr::extract2, &quot;DE&quot;) %&gt;% 
+  fromList() %&gt;% 
+  upset(
+    nsets = length(.), 
+    order.by = &quot;freq&quot;
+    )</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/kgMetaUpset-1.png" alt="*UpSet plot indicating distribution of DE genes within all significant terms from the KEGG gene sets. There is considerable overlap between Oxidative Phosphorylation and both Parkinson's and Huntington's Disease, indicating that these terms essentially capture the same signal.*" width="960" />
+<p class="caption">
+<em>UpSet plot indicating distribution of DE genes within all significant terms from the KEGG gene sets. There is considerable overlap between Oxidative Phosphorylation and both Parkinson’s and Huntington’s Disease, indicating that these terms essentially capture the same signal.</em>
+</p>
+</div>
+<pre class="r"><code>riboOx &lt;- kg %&gt;%
+  dplyr::filter(
+    grepl(&quot;OXIDATIVE_PHOS&quot;, gs_name) | grepl(&quot;RIBOSOME&quot;, gs_name),
+    gene_id %in% dplyr::filter(deTable, DE)$gene_id
+    ) %&gt;%
+  mutate(gs_name = str_remove(gs_name, &quot;(KEGG|HALLMARK)_&quot;)) %&gt;%
+  distinct(gs_name, gene_id) %&gt;%
+  left_join(
+    cpm(fit$fitted.values, log = TRUE) %&gt;% 
+      as.data.frame() %&gt;% 
+      rownames_to_column(&quot;gene_id&quot;) %&gt;%
+      as_tibble()
+    ) %&gt;%
+  pivot_longer(cols = starts_with(&quot;Ps&quot;), names_to = &quot;sample&quot;, values_to = &quot;CPM&quot;) %&gt;%
+  left_join(dgeList$samples) %&gt;% 
+  left_join(dgeList$genes) %&gt;%
+  dplyr::select(gs_name, gene_name, sampleID, genotype, CPM) %&gt;%
+  pivot_wider(
+    id_cols = c(gs_name, gene_name),
+    values_from = CPM,
+    names_from = sampleID
+  ) 
+riboOx %&gt;% 
+  dplyr::select(-gs_name) %&gt;%
+  as.data.frame() %&gt;%
+  column_to_rownames(&quot;gene_name&quot;) %&gt;%
+  as.matrix() %&gt;%
+  pheatmap(
+    annotation_row = data.frame(
+      GeneSet = riboOx$gs_name %&gt;% str_replace(&quot;OXI.+&quot;, &quot;OXPHOS&quot;), 
+      row.names = riboOx$gene_name
+      ),
+    # annotation_col = tibble(
+    #   sampleID = colnames(riboOx)[-c(1:2)]
+    # ) %&gt;%
+    #   left_join(dgeList$samples) %&gt;%
+    #   dplyr::select(sampleID, Genotype = genotype) %&gt;%
+    #   as.data.frame() %&gt;%
+    #   column_to_rownames(&quot;sampleID&quot;),
+    color = viridis_pal(option = &quot;magma&quot;)(100),
+    legend_breaks = c(seq(-2, 8, by = 2), max(.)),
+    legend_labels = c(seq(-2, 8, by = 2), &quot;logCPM\n&quot;),
+    annotation_names_row = FALSE,
+    cutree_rows = 5
+  )</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/riboOxHeatmap-1.png" alt="*Given that the largest gene sets within the KEGG results were Oxidative Phosphorylation and Ribosomal gene sets, all DE genes associated with these KEGG terms are displayed below. All genes appear to show increased expression in mutant samples.*" width="768" />
+<p class="caption">
+<em>Given that the largest gene sets within the KEGG results were Oxidative Phosphorylation and Ribosomal gene sets, all DE genes associated with these KEGG terms are displayed below. All genes appear to show increased expression in mutant samples.</em>
+</p>
+</div>
 </div>
 <div id="go-gene-sets-1" class="section level2">
 <h2>GO Gene Sets</h2>
@@ -1709,19 +1910,19 @@ np &lt;- 1e5</code></pre>
 <pre class="r"><code>goMeta %&gt;%
   dplyr::filter(FDR &lt; 0.01, nDE &gt; 0) %&gt;%
   mutate_at(vars(one_of(c(&quot;wilkinson_p&quot;, &quot;FDR&quot;, &quot;adjP&quot;))), formatP) %&gt;%
-  mutate(gs_name = str_trunc(gs_name, 80)) %&gt;%
+  mutate(gs_name = str_trunc(gs_name, 70)) %&gt;%
   dplyr::select(`Gene Set` = gs_name, `Number DE` = nDE, `Set Size` = gs_size, `Wilkinson~p~` = wilkinson_p, `p~FDR~` = FDR, `p~bonf~` = adjP) %&gt;%
   pander(
     caption = &quot;Results from combining all above approaches for the GO Gene Sets. All terms are significant using an FDR &lt; 0.01. Only Gene Sets with at least one DE gene are shown.&quot;,
     justify = &quot;lrrrrr&quot;
   )</code></pre>
-<table>
+<table style="width:100%;">
 <caption>Results from combining all above approaches for the GO Gene Sets. All terms are significant using an FDR &lt; 0.01. Only Gene Sets with at least one DE gene are shown.</caption>
 <colgroup>
-<col width="59%" />
+<col width="56%" />
 <col width="8%" />
 <col width="7%" />
-<col width="10%" />
+<col width="11%" />
 <col width="7%" />
 <col width="7%" />
 </colgroup>
@@ -1945,7 +2146,7 @@ np &lt;- 1e5</code></pre>
 <td align="right">0.0008</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_NEGATIVE_REGULATION_OF_INSULIN_SECRETION_INVOLVED_IN_CELLULAR_RESPONSE_TO_…</td>
+<td align="left">GO_NEGATIVE_REGULATION_OF_INSULIN_SECRETION_INVOLVED_IN_CELLULAR_RE…</td>
 <td align="right">3</td>
 <td align="right">9</td>
 <td align="right">1.55e-07</td>
@@ -2281,7 +2482,7 @@ np &lt;- 1e5</code></pre>
 <td align="right">0.2871</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_REGULATION_OF_INTRINSIC_APOPTOTIC_SIGNALING_PATHWAY_BY_P53_CLASS_MEDIATOR</td>
+<td align="left">GO_REGULATION_OF_INTRINSIC_APOPTOTIC_SIGNALING_PATHWAY_BY_P53_CLASS…</td>
 <td align="right">4</td>
 <td align="right">21</td>
 <td align="right">3.65e-05</td>
@@ -2345,7 +2546,7 @@ np &lt;- 1e5</code></pre>
 <td align="right">0.4508</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_REGULATION_OF_SYSTEMIC_ARTERIAL_BLOOD_PRESSURE_BY_CIRCULATORY_RENIN_ANGIOT…</td>
+<td align="left">GO_REGULATION_OF_SYSTEMIC_ARTERIAL_BLOOD_PRESSURE_BY_CIRCULATORY_RE…</td>
 <td align="right">2</td>
 <td align="right">8</td>
 <td align="right">5.24e-05</td>
@@ -2441,7 +2642,7 @@ np &lt;- 1e5</code></pre>
 <td align="right">0.7606</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_POSITIVE_REGULATION_OF_INTRINSIC_APOPTOTIC_SIGNALING_PATHWAY_BY_P53_CLASS_…</td>
+<td align="left">GO_POSITIVE_REGULATION_OF_INTRINSIC_APOPTOTIC_SIGNALING_PATHWAY_BY_…</td>
 <td align="right">2</td>
 <td align="right">4</td>
 <td align="right">9.01e-05</td>
@@ -2634,45 +2835,171 @@ np &lt;- 1e5</code></pre>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div id="oxidative-phosphorylation" class="section level1">
-<h1>Oxidative Phosphorylation</h1>
-<p>The set of genes which was considered to be DE, and which belonged to either of the KEGG or HALLMARK gene-sets definining Oxidative Phosphorylation were then plotted in order to clarify differential expression for this gene set.</p>
-<pre class="r"><code>bind_rows(hm, kg) %&gt;% 
-  dplyr::filter(
-    grepl(&quot;OXIDATIVE_PHOS&quot;, gs_name),
-    gene_id %in% dplyr::filter(deTable, DE)$gene_id
-    ) %&gt;%
-  distinct(gene_id) %&gt;% 
-  left_join(
-    cpm(fit$fitted.values) %&gt;% 
-      as.data.frame() %&gt;% 
-      rownames_to_column(&quot;gene_id&quot;) %&gt;%
-      as_tibble()
+<pre class="r"><code>goMeta %&gt;% 
+  dplyr::filter(nDE &gt;= 25, FDR &lt; 0.05) %&gt;%
+  dplyr::select(gs_name, DE) %&gt;%
+  unnest(DE) %&gt;% 
+  mutate(
+    gs_name = str_remove(gs_name, &quot;GO_&quot;),
+    gs_name = fct_lump(gs_name, n = 12)
     ) %&gt;% 
-  pivot_longer(cols = starts_with(&quot;Ps&quot;), names_to = &quot;sample&quot;, values_to = &quot;CPM&quot;) %&gt;%
-  left_join(dgeList$samples) %&gt;% 
-  left_join(dgeList$genes) %&gt;% 
-  ggplot(aes(genotype, CPM, fill = genotype)) + 
-  geom_boxplot() +
-  facet_wrap(~gene_name, scales= &quot;free_y&quot;) + 
-  labs(fill = &quot;Genotype&quot;) +
-  scale_y_log10() +
-  theme(
-    legend.position = c(0.7, 0.1),
-    legend.direction = &quot;horizontal&quot;
-    )</code></pre>
+  split(f = .$gs_name) %&gt;% 
+  lapply(magrittr::extract2, &quot;DE&quot;) %&gt;% 
+  fromList() %&gt;% 
+  upset(
+    nsets = length(.), 
+    order.by = &quot;freq&quot;, 
+    mb.ratio = c(0.55, 0.45)
+  )</code></pre>
 <div class="figure" style="text-align: center">
-<img src="figure/3_Enrichment_MutantVsWT.Rmd/unnamed-chunk-4-1.png" alt="DE genes belonging to either the KEGG or HALLMARK genesets definining Oxidative Phosphorylation." width="672" />
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/goMetaUpset-1.png" alt="*UpSet plot indicating distribution of DE genes within significant terms from the GO gene sets. Gene sets were restricted to those with 25 or more DE genes and an FDR &lt; 0.05. A group of 47 genes is widely spread across multiple terms, whilst a group of 25 genes is shared by a large group of terms, indicating that these genes largely drive the signal for these terms. These genes tend to indicate Ribosomal activity. However, a set of 20 genes seems to more uniquely indicate dsDNA binding, whilst another 15 indicate organo-nitrogen biosynthesis, and a further set of 22 DE genes are predominantly associated with the mitochondrial envelope.*" width="960" />
 <p class="caption">
-DE genes belonging to either the KEGG or HALLMARK genesets definining Oxidative Phosphorylation.
+<em>UpSet plot indicating distribution of DE genes within significant terms from the GO gene sets. Gene sets were restricted to those with 25 or more DE genes and an FDR &lt; 0.05. A group of 47 genes is widely spread across multiple terms, whilst a group of 25 genes is shared by a large group of terms, indicating that these genes largely drive the signal for these terms. These genes tend to indicate Ribosomal activity. However, a set of 20 genes seems to more uniquely indicate dsDNA binding, whilst another 15 indicate organo-nitrogen biosynthesis, and a further set of 22 DE genes are predominantly associated with the mitochondrial envelope.</em>
 </p>
+</div>
+<div id="genes-associated-with-dsdna-binding" class="section level3">
+<h3>Genes Associated with dsDNA Binding</h3>
+<pre class="r"><code>go %&gt;%
+  dplyr::filter(
+    gs_name == &quot;GO_DOUBLE_STRANDED_DNA_BINDING&quot;,
+    gene_id %in% dplyr::filter(deTable, DE)$gene_id
+  ) %&gt;%
+  dplyr::select(
+    gene_id, gene_name
+  ) %&gt;%
+  left_join(
+    fit$fitted.values %&gt;%
+      cpm(log = TRUE) %&gt;%
+      as.data.frame() %&gt;%
+      rownames_to_column(&quot;gene_id&quot;)
+  ) %&gt;%
+  dplyr::select(gene_name, starts_with(&quot;Ps&quot;)) %&gt;%
+  as.data.frame() %&gt;%
+  column_to_rownames(&quot;gene_name&quot;) %&gt;%
+  as.matrix() %&gt;%
+  pheatmap(
+    color = viridis_pal(option = &quot;magma&quot;)(100),
+    legend_breaks = c(seq(-2, 8, by = 2), max(.)),
+    legend_labels = c(seq(-2, 8, by = 2), &quot;logCPM\n&quot;),
+    labels_col = hmHeat %&gt;%
+      dplyr::select(starts_with(&quot;Ps&quot;)) %&gt;% 
+      colnames() %&gt;% 
+      enframe(name = NULL) %&gt;% 
+      dplyr::rename(sample = value) %&gt;%
+      left_join(dgeList$samples) %&gt;%
+      dplyr::select(sample, sampleID) %&gt;%
+      with(
+        structure(sampleID, names = sample)
+      ),
+    cutree_rows = 4,
+    cutree_cols = 3
+  )</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/heatDsDNA-1.png" alt="*All DE genes associated with the GO term 'Double Stranded DNA Binding'.*" width="768" />
+<p class="caption">
+<em>All DE genes associated with the GO term ‘Double Stranded DNA Binding’.</em>
+</p>
+</div>
+</div>
+<div id="genes-associated-with-the-mitochondrial-envelope" class="section level3">
+<h3>Genes Associated with the Mitochondrial Envelope</h3>
+<pre class="r"><code>go %&gt;%
+  dplyr::filter(
+    gs_name == &quot;GO_MITOCHONDRIAL_ENVELOPE&quot;,
+    gene_id %in% dplyr::filter(deTable, DE)$gene_id
+  ) %&gt;%
+  dplyr::select(
+    gene_id, gene_name
+  ) %&gt;%
+  left_join(
+    fit$fitted.values %&gt;%
+      cpm(log = TRUE) %&gt;%
+      as.data.frame() %&gt;%
+      rownames_to_column(&quot;gene_id&quot;)
+  ) %&gt;%
+  dplyr::select(gene_name, starts_with(&quot;Ps&quot;)) %&gt;%
+  as.data.frame() %&gt;%
+  column_to_rownames(&quot;gene_name&quot;) %&gt;%
+  as.matrix() %&gt;%
+  pheatmap(
+    color = viridis_pal(option = &quot;magma&quot;)(100),
+    legend_breaks = c(seq(-2, 8, by = 2), max(.)),
+    legend_labels = c(seq(-2, 8, by = 2), &quot;logCPM\n&quot;),
+    labels_col = hmHeat %&gt;%
+      dplyr::select(starts_with(&quot;Ps&quot;)) %&gt;% 
+      colnames() %&gt;% 
+      enframe(name = NULL) %&gt;% 
+      dplyr::rename(sample = value) %&gt;%
+      left_join(dgeList$samples) %&gt;%
+      dplyr::select(sample, sampleID) %&gt;%
+      with(
+        structure(sampleID, names = sample)
+      ),
+    cutree_rows = 4,
+    cutree_cols = 3
+  )</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/heatMitoEnvelope-1.png" alt="*All DE genes associated with the GO term 'Mitochondrial Envelope'.*" width="768" />
+<p class="caption">
+<em>All DE genes associated with the GO term ‘Mitochondrial Envelope’.</em>
+</p>
+</div>
+</div>
+<div id="genes-associated-with-organo-nitrogen-compound-biosynthesis" class="section level3">
+<h3>Genes Associated with Organo-Nitrogen Compound Biosynthesis</h3>
+<pre class="r"><code>go %&gt;%
+  dplyr::filter(
+    gs_name %in% c(
+      &quot;GO_ORGANONITROGEN_COMPOUND_BIOSYNTHETIC_PROCESS&quot;, &quot;GO_RIBOSOME&quot;
+    ),
+    gene_id %in% dplyr::filter(deTable, DE)$gene_id
+  ) %&gt;%
+  group_by(gene_id, gene_name) %&gt;%
+  tally() %&gt;%
+  ungroup() %&gt;%
+  dplyr::filter(n == 1) %&gt;%
+  dplyr::select(
+    gene_id, gene_name
+  ) %&gt;%
+  left_join(
+    fit$fitted.values %&gt;%
+      cpm(log = TRUE) %&gt;%
+      as.data.frame() %&gt;%
+      rownames_to_column(&quot;gene_id&quot;)
+  ) %&gt;%
+  dplyr::select(gene_name, starts_with(&quot;Ps&quot;)) %&gt;%
+  as.data.frame() %&gt;%
+  column_to_rownames(&quot;gene_name&quot;) %&gt;%
+  as.matrix() %&gt;%
+  pheatmap(
+    color = viridis_pal(option = &quot;magma&quot;)(100),
+    legend_breaks = c(seq(-2, 8, by = 2), max(.)),
+    legend_labels = c(seq(-2, 8, by = 2), &quot;logCPM\n&quot;),
+    labels_col = hmHeat %&gt;%
+      dplyr::select(starts_with(&quot;Ps&quot;)) %&gt;% 
+      colnames() %&gt;% 
+      enframe(name = NULL) %&gt;% 
+      dplyr::rename(sample = value) %&gt;%
+      left_join(dgeList$samples) %&gt;%
+      dplyr::select(sample, sampleID) %&gt;%
+      with(
+        structure(sampleID, names = sample)
+      ),
+    cutree_rows = 4,
+    cutree_cols = 3
+  )</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/heatOrganoNitro-1.png" alt="*All DE genes associated with the GO term 'Organo-Nitrogen Compound Biosynthetic Process',* **excluding those genes which are additionally annotated to the GO term 'Ribosome'.**" width="768" />
+<p class="caption">
+<em>All DE genes associated with the GO term ‘Organo-Nitrogen Compound Biosynthetic Process’,</em> <strong>excluding those genes which are additionally annotated to the GO term ‘Ribosome’.</strong>
+</p>
+</div>
+</div>
 </div>
 </div>
 <div id="data-export" class="section level1">
 <h1>Data Export</h1>
-<p>All enriched gene sets terms with an FDR adjusted p-value &lt; 0.05 were exported as a single csv file.</p>
+<p>All enriched gene sets with an FDR adjusted p-value &lt; 0.05 were exported as a single csv file.</p>
 <pre class="r"><code>bind_rows(
   hmMeta,
   kgMeta,
@@ -2707,7 +3034,7 @@ DE genes belonging to either the KEGG or HALLMARK genesets definining Oxidative 
  collate  en_AU.UTF-8                 
  ctype    en_AU.UTF-8                 
  tz       Australia/Adelaide          
- date     2020-02-19                  
+ date     2020-02-20                  
 
 ─ Packages ───────────────────────────────────────────────────────────────────
  package              * version    date       lib source        
@@ -2816,6 +3143,7 @@ DE genes belonging to either the KEGG or HALLMARK genesets definining Oxidative 
  numDeriv               2016.8-1.1 2019-06-06 [2] CRAN (R 3.6.2)
  openssl                1.4.1      2019-07-18 [2] CRAN (R 3.6.1)
  pander               * 0.6.3      2018-11-06 [2] CRAN (R 3.6.0)
+ pheatmap             * 1.0.12     2019-01-04 [2] CRAN (R 3.6.0)
  pillar                 1.4.3      2019-12-20 [2] CRAN (R 3.6.2)
  pkgbuild               1.0.6      2019-10-09 [2] CRAN (R 3.6.1)
  pkgconfig              2.0.3      2019-09-22 [2] CRAN (R 3.6.1)
@@ -2869,6 +3197,7 @@ DE genes belonging to either the KEGG or HALLMARK genesets definining Oxidative 
  tidyselect             1.0.0      2020-01-27 [2] CRAN (R 3.6.2)
  tidyverse            * 1.3.0      2019-11-21 [2] CRAN (R 3.6.1)
  truncnorm              1.0-8      2018-02-27 [2] CRAN (R 3.6.0)
+ UpSetR               * 1.4.0      2019-05-22 [2] CRAN (R 3.6.0)
  usethis                1.5.1      2019-07-04 [2] CRAN (R 3.6.1)
  vctrs                  0.2.2      2020-01-24 [2] CRAN (R 3.6.2)
  viridisLite            0.3.0      2018-02-01 [2] CRAN (R 3.6.0)
