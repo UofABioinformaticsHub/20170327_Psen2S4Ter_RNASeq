@@ -387,7 +387,7 @@ div.section {
 
 <h1 class="title toc-ignore">Enrichment Analysis: Mutant Vs Wild-Type</h1>
 <h4 class="author">Steve Pederson</h4>
-<h4 class="date">19 February, 2020</h4>
+<h4 class="date">20 February, 2020</h4>
 
 </div>
 
@@ -412,7 +412,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-02-19
+<strong>Last updated:</strong> 2020-02-20
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -503,10 +503,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree4d2af23dbbdd8c6f32404a1df10f65fcf0dbb266targetblank4d2af23a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/4d2af23dbbdd8c6f32404a1df10f65fcf0dbb266" target="_blank">4d2af23</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtreede9c4b30542683957dc03d9ed779638e162750c5targetblankde9c4b3a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/de9c4b30542683957dc03d9ed779638e162750c5" target="_blank">de9c4b3</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree4d2af23dbbdd8c6f32404a1df10f65fcf0dbb266targetblank4d2af23a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtreede9c4b30542683957dc03d9ed779638e162750c5targetblankde9c4b3a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -553,6 +553,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/de9c4b30542683957dc03d9ed779638e162750c5/analysis/3_Enrichment_MutantVsWT.Rmd" target="_blank">de9c4b3</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-20
+</td>
+<td>
+Resized heatmaps again
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/3_Enrichment_MutantVsWT.html" target="_blank">86ffa07</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-20
+</td>
+<td>
+Updated saample layout figure
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1509,6 +1543,43 @@ np &lt;- 1e5</code></pre>
 <em>UpSet plot indicating distribution of DE genes within all significant terms from the HALLMARK gene sets. Most terms seem relatively independent of each other.</em>
 </p>
 </div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-hmMetaUpset-1">
+Past versions of hmMetaUpset-1.png
+</button>
+</p>
+<div id="fig-hmMetaUpset-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/figure/3_Enrichment_MutantVsWT.Rmd/hmMetaUpset-1.png" target="_blank">86ffa07</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>hmHeat &lt;- hmMeta %&gt;% 
   dplyr::filter(nDE &gt; 5, FDR &lt; 0.05) %&gt;%
   dplyr::select(gs_name, DE) %&gt;%
@@ -1563,6 +1634,43 @@ hmHeat %&gt;%
 <p class="caption">
 <em>Gene expression patterns for all DE genes in HALLMARK genes sets, containing more than 5 DE genes.</em>
 </p>
+</div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-hmHeat-1">
+Past versions of hmHeat-1.png
+</button>
+</p>
+<div id="fig-hmHeat-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/figure/3_Enrichment_MutantVsWT.Rmd/hmHeat-1.png" target="_blank">86ffa07</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 <div id="kegg-gene-sets-2" class="section level2">
@@ -1792,6 +1900,43 @@ hmHeat %&gt;%
 <em>UpSet plot indicating distribution of DE genes within all significant terms from the KEGG gene sets. There is considerable overlap between Oxidative Phosphorylation and both Parkinson’s and Huntington’s Disease, indicating that these terms essentially capture the same signal.</em>
 </p>
 </div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-kgMetaUpset-1">
+Past versions of kgMetaUpset-1.png
+</button>
+</p>
+<div id="fig-kgMetaUpset-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/figure/3_Enrichment_MutantVsWT.Rmd/kgMetaUpset-1.png" target="_blank">86ffa07</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>riboOx &lt;- kg %&gt;%
   dplyr::filter(
     grepl(&quot;OXIDATIVE_PHOS&quot;, gs_name) | grepl(&quot;RIBOSOME&quot;, gs_name),
@@ -1842,6 +1987,43 @@ riboOx %&gt;%
 <p class="caption">
 <em>Given that the largest gene sets within the KEGG results were Oxidative Phosphorylation and Ribosomal gene sets, all DE genes associated with these KEGG terms are displayed below. All genes appear to show increased expression in mutant samples.</em>
 </p>
+</div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-riboOxHeatmap-1">
+Past versions of riboOxHeatmap-1.png
+</button>
+</p>
+<div id="fig-riboOxHeatmap-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/figure/3_Enrichment_MutantVsWT.Rmd/riboOxHeatmap-1.png" target="_blank">86ffa07</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 <div id="go-gene-sets-1" class="section level2">
@@ -2857,6 +3039,43 @@ riboOx %&gt;%
 <em>UpSet plot indicating distribution of DE genes within significant terms from the GO gene sets. Gene sets were restricted to those with 25 or more DE genes and an FDR &lt; 0.05. A group of 47 genes is widely spread across multiple terms, whilst a group of 25 genes is shared by a large group of terms, indicating that these genes largely drive the signal for these terms. These genes tend to indicate Ribosomal activity. However, a set of 20 genes seems to more uniquely indicate dsDNA binding, whilst another 15 indicate organo-nitrogen biosynthesis, and a further set of 22 DE genes are predominantly associated with the mitochondrial envelope.</em>
 </p>
 </div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-goMetaUpset-1">
+Past versions of goMetaUpset-1.png
+</button>
+</p>
+<div id="fig-goMetaUpset-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/figure/3_Enrichment_MutantVsWT.Rmd/goMetaUpset-1.png" target="_blank">86ffa07</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div id="genes-associated-with-dsdna-binding" class="section level3">
 <h3>Genes Associated with dsDNA Binding</h3>
 <pre class="r"><code>go %&gt;%
@@ -2899,6 +3118,43 @@ riboOx %&gt;%
 <p class="caption">
 <em>All DE genes associated with the GO term ‘Double Stranded DNA Binding’.</em>
 </p>
+</div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-heatDsDNA-1">
+Past versions of heatDsDNA-1.png
+</button>
+</p>
+<div id="fig-heatDsDNA-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/figure/3_Enrichment_MutantVsWT.Rmd/heatDsDNA-1.png" target="_blank">86ffa07</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 <div id="genes-associated-with-the-mitochondrial-envelope" class="section level3">
@@ -2943,6 +3199,43 @@ riboOx %&gt;%
 <p class="caption">
 <em>All DE genes associated with the GO term ‘Mitochondrial Envelope’.</em>
 </p>
+</div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-heatMitoEnvelope-1">
+Past versions of heatMitoEnvelope-1.png
+</button>
+</p>
+<div id="fig-heatMitoEnvelope-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/figure/3_Enrichment_MutantVsWT.Rmd/heatMitoEnvelope-1.png" target="_blank">86ffa07</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 <div id="genes-associated-with-organo-nitrogen-compound-biosynthesis" class="section level3">
@@ -2993,6 +3286,43 @@ riboOx %&gt;%
 <p class="caption">
 <em>All DE genes associated with the GO term ‘Organo-Nitrogen Compound Biosynthetic Process’,</em> <strong>excluding those genes which are additionally annotated to the GO term ‘Ribosome’.</strong>
 </p>
+</div>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-heatOrganoNitro-1">
+Past versions of heatOrganoNitro-1.png
+</button>
+</p>
+<div id="fig-heatOrganoNitro-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/figure/3_Enrichment_MutantVsWT.Rmd/heatOrganoNitro-1.png" target="_blank">86ffa07</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 </div>
