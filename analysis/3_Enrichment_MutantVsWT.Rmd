@@ -816,7 +816,7 @@ goMeta %>%
 
 ### Genes Associated with dsDNA Binding
 
-```{r heatDsDNA, fig.height=6, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Double Stranded DNA Binding'.*"}
+```{r heatDsDNA, fig.height=5, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Double Stranded DNA Binding'.*"}
 go %>%
   dplyr::filter(
     gs_name == "GO_DOUBLE_STRANDED_DNA_BINDING",
@@ -896,7 +896,7 @@ go %>%
 
 ### Genes Associated with Organo-Nitrogen Compound Biosynthesis
 
-```{r heatOrganoNitro, fig.height=6, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Organo-Nitrogen Compound Biosynthetic Process',* **excluding those genes which are additionally annotated to the GO term 'Ribosome'.**"}
+```{r heatOrganoNitro, fig.height=5, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Organo-Nitrogen Compound Biosynthetic Process',* **excluding those genes which are additionally annotated to the GO term 'Ribosome'.**"}
 go %>%
   dplyr::filter(
     gs_name %in% c(
