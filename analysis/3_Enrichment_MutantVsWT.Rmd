@@ -475,7 +475,9 @@ hmMeta %>%
   )
 ```
 
-```{r hmMetaUpset, fig.width=10, fig.cap = "*UpSet plot indicating distribution of DE genes within all significant terms from the HALLMARK gene sets. Most terms seem relatively independent of each other.*"}
+### Exploration of significant Hallmark Gene Sets
+
+```{r hmMetaUpset, fig.width=10, fig.cap = "*UpSet plot indicating distribution of DE genes within all significant HALLMARK gene sets. Most gene sets seem relatively independent of each other.*"}
 hmMeta %>% 
   dplyr::filter(nDE > 0, FDR < 0.05) %>%
   dplyr::select(gs_name, DE) %>%
@@ -489,11 +491,12 @@ hmMeta %>%
   fromList() %>% 
   upset(
     nsets = length(.), 
-    order.by = "freq"
+    order.by = "freq", 
+    mb.ratio = c(0.6, 0.4)
     )
 ```
 
-```{r hmHeat, fig.height=9, fig.width=10, fig.cap = "*Gene expression patterns for all DE genes in HALLMARK genes sets, containing more than 5 DE genes.*"}
+```{r hmHeat, fig.height=9, fig.width=10, fig.cap = "*Gene expression patterns for all DE genes in HALLMARK gene sets, containing more than 5 DE genes.*"}
 hmHeat <- hmMeta %>% 
   dplyr::filter(nDE > 5, FDR < 0.05) %>%
   dplyr::select(gs_name, DE) %>%
@@ -636,6 +639,8 @@ kgMeta %>%
   )
 ```
 
+### Exploration of Significant KEGG Gene Sets
+
 ```{r kgMetaUpset, fig.width=10, fig.cap = "*UpSet plot indicating distribution of DE genes within all significant terms from the KEGG gene sets. There is considerable overlap between Oxidative Phosphorylation and both Parkinson's and Huntington's Disease, indicating that these terms essentially capture the same signal.*"}
 kgMeta %>% 
   dplyr::filter(nDE > 0, FDR < 0.05) %>%
@@ -650,12 +655,13 @@ kgMeta %>%
   fromList() %>% 
   upset(
     nsets = length(.), 
-    order.by = "freq"
+    order.by = "freq",
+    mb.ratio = c(0.6, 0.4)
     )
 ```
 
 
-```{r riboOxHeatmap, fig.width=8, fig.height=8, fig.cap = "*Given that the largest gene sets within the KEGG results were Oxidative Phosphorylation and Ribosomal gene sets, all DE genes associated with these KEGG terms are displayed below. All genes appear to show increased expression in mutant samples.*"}
+```{r riboOxHeatmap, fig.width=8, fig.height=8, fig.cap = "*Given that the largest gene sets within the KEGG results were Oxidative Phosphorylation and Ribosomal gene sets, all DE genes associated with these KEGG terms are displayed. All genes appear to show increased expression in mutant samples.*"}
 riboOx <- kg %>%
   dplyr::filter(
     grepl("OXIDATIVE_PHOS", gs_name) | grepl("RIBOSOME", gs_name),
@@ -795,7 +801,9 @@ goMeta %>%
   )
 ```
 
-```{r goMetaUpset, fig.height=6, fig.width=10, fig.cap = "*UpSet plot indicating distribution of DE genes within significant terms from the GO gene sets. Gene sets were restricted to those with 25 or more DE genes and an FDR < 0.05. A group of 47 genes is widely spread across multiple terms, whilst a group of 25 genes is shared by a large group of terms, indicating that these genes largely drive the signal for these terms. These genes tend to indicate Ribosomal activity. However, a set of 20 genes seems to more uniquely indicate dsDNA binding, whilst another 15 indicate organo-nitrogen biosynthesis, and a further set of 22 DE genes are predominantly associated with the mitochondrial envelope.*"}
+### Exploration of Significant GO Gene Sets
+
+```{r goMetaUpset, fig.height=6, fig.width=10, fig.cap = "*UpSet plot indicating distribution of DE genes within significant terms from the GO gene sets. For this visualisation, GO terms were restricted to those with 25 or more DE genes and an FDR < 0.05. A group of 47 genes is widely spread across multiple terms, whilst a group of 25 genes is shared by a large group of terms, indicating that these genes largely drive the signal for these terms. These genes tend to indicate Ribosomal activity. However, a set of 20 genes seems to more uniquely indicate dsDNA binding, whilst another 15 indicate organo-nitrogen biosynthesis, and a further set of 22 DE genes are predominantly associated with the mitochondrial envelope.*"}
 goMeta %>% 
   dplyr::filter(nDE >= 25, FDR < 0.05) %>%
   dplyr::select(gs_name, DE) %>%
