@@ -387,7 +387,7 @@ div.section {
 
 <h1 class="title toc-ignore">Enrichment Analysis: Homozygous Vs Heterozygous Mutants</h1>
 <h4 class="author">Steve Pederson</h4>
-<h4 class="date">17 February, 2020</h4>
+<h4 class="date">19 February, 2020</h4>
 
 </div>
 
@@ -412,7 +412,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-02-17
+<strong>Last updated:</strong> 2020-02-19
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -503,10 +503,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree53ed0e30b1eff5b43093d31a0de4443f96125be6targetblank53ed0e3a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/53ed0e30b1eff5b43093d31a0de4443f96125be6" target="_blank">53ed0e3</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree541fbf03bb7a1f3bcc98da5cdee8b493ace38637targetblank541fbf0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/541fbf03bb7a1f3bcc98da5cdee8b493ace38637" target="_blank">541fbf0</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree53ed0e30b1eff5b43093d31a0de4443f96125be6targetblank53ed0e3a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree541fbf03bb7a1f3bcc98da5cdee8b493ace38637targetblank541fbf0a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -553,6 +553,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/541fbf03bb7a1f3bcc98da5cdee8b493ace38637/analysis/3_Enrichment_HomVsHet.Rmd" target="_blank">541fbf0</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-19
+</td>
+<td>
+Revised Hom Vs Het Enrichment
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/876e40fc8b5e69e983e028d62c49f977da71a90d/docs/3_Enrichment_HomVsHet.html" target="_blank">876e40f</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-17
+</td>
+<td>
+Compiled after minor corrections
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -729,7 +763,8 @@ entrezGenes &lt;- dgeList$genes %&gt;%
 <h2>Hallmark Gene Sets</h2>
 <pre class="r"><code>hm &lt;- msigdbr(&quot;Danio rerio&quot;, category = &quot;H&quot;)  %&gt;% 
   left_join(entrezGenes) %&gt;%
-  dplyr::filter(!is.na(gene_id)) 
+  dplyr::filter(!is.na(gene_id)) %&gt;%
+  distinct(gs_name, gene_id, .keep_all = TRUE)
 hmByGene &lt;- hm %&gt;%
   split(f = .$gene_id) %&gt;%
   lapply(extract2, &quot;gs_name&quot;)
@@ -742,7 +777,8 @@ hmByID &lt;- hm %&gt;%
 <h2>KEGG Gene Sets</h2>
 <pre class="r"><code>kg &lt;- msigdbr(&quot;Danio rerio&quot;, category = &quot;C2&quot;, subcategory = &quot;CP:KEGG&quot;)  %&gt;% 
   left_join(entrezGenes) %&gt;%
-  dplyr::filter(!is.na(gene_id)) 
+  dplyr::filter(!is.na(gene_id)) %&gt;%
+  distinct(gs_name, gene_id, .keep_all = TRUE)
 kgByGene &lt;- kg  %&gt;%
   split(f = .$gene_id) %&gt;%
   lapply(extract2, &quot;gs_name&quot;)
@@ -765,7 +801,8 @@ minPath &lt;- 3</code></pre>
   left_join(entrezGenes) %&gt;%
   dplyr::filter(!is.na(gene_id)) %&gt;%
   left_join(goSummaries) %&gt;% 
-  dplyr::filter(shortest_path &gt;= minPath) 
+  dplyr::filter(shortest_path &gt;= minPath) %&gt;%
+  distinct(gs_name, gene_id, .keep_all = TRUE)
 goByGene &lt;- go %&gt;%
   split(f = .$gene_id) %&gt;%
   lapply(extract2, &quot;gs_name&quot;)
@@ -773,6 +810,10 @@ goByID &lt;- go %&gt;%
   split(f = .$gs_name) %&gt;%
   lapply(extract2, &quot;gene_id&quot;)</code></pre>
 <p>For analysis of gene-sets from the GO database, gene-sets were restricted to those with 3 or more steps back to the ontology root terms. A total of 11,245 Ensembl IDs were mapped to pathways from restricted database of 8,834 GO gene sets.</p>
+<pre class="r"><code>gsSizes &lt;- bind_rows(hm, kg, go) %&gt;% 
+  dplyr::select(gs_name, gene_symbol, gene_id) %&gt;% 
+  chop(c(gene_symbol, gene_id)) %&gt;%
+  mutate(gs_size = vapply(gene_symbol, length, integer(1)))</code></pre>
 </div>
 </div>
 <div id="enrichment-testing-on-ranked-lists" class="section level1">
@@ -824,36 +865,41 @@ np &lt;- 1e5</code></pre>
   left_join(
     dplyr::select(hmGsea, gs_name, gsea = PValue)
   ) %&gt;%
-  pivot_longer(
-    cols = one_of(c(&quot;fry&quot;, &quot;camera&quot;, &quot;gsea&quot;)),
-    names_to = &quot;method&quot;,
-    values_to = &quot;p&quot;
-  ) %&gt;%
-  dplyr::filter(!is.na(p)) %&gt;%
-  group_by(gs_name) %&gt;%
-  summarise(
-    n = n(),
-    p = wilkinsonp(p, r = n - 1)$p
-  ) %&gt;%
-  arrange(p) %&gt;%
+  nest(p = one_of(c(&quot;fry&quot;, &quot;camera&quot;, &quot;gsea&quot;))) %&gt;%
   mutate(
-    FDR = p.adjust(p, &quot;fdr&quot;),
-    adjP = p.adjust(p, &quot;bonf&quot;)
-  ) </code></pre>
+    n_p = vapply(p, function(x){sum(!is.na(unlist(x)))}, integer(1)), 
+    wilkinson_p = vapply(p, function(x){
+      x &lt;- unlist(x)
+      x &lt;- x[!is.na(x)]
+      wilkinsonp(x, length(x) - 1)$p
+    }, numeric(1)),
+    FDR = p.adjust(wilkinson_p, &quot;fdr&quot;), 
+    adjP = p.adjust(wilkinson_p, &quot;bonferroni&quot;)
+  ) %&gt;% 
+  arrange(wilkinson_p) %&gt;% 
+  unnest(p) %&gt;%
+  left_join(gsSizes) %&gt;%
+  mutate(
+    DE = lapply(gene_id, intersect, dplyr::filter(deTable, DE)$gene_id),
+    DE = lapply(DE, unique),
+    nDE = vapply(DE, length, integer(1))
+  )</code></pre>
 <pre class="r"><code>hmMeta %&gt;%
-  dplyr::filter(FDR &lt; 0.1) %&gt;%
-  mutate_at(vars(one_of(c(&quot;p&quot;, &quot;FDR&quot;, &quot;adjP&quot;))), formatP) %&gt;%
-  dplyr::select(`Gene Set` = gs_name, p, `p~FDR~` = FDR, `p~bonf~` = adjP) %&gt;%
+  dplyr::filter(FDR &lt; 0.05) %&gt;%
+  mutate_at(vars(one_of(c(&quot;wilkinson_p&quot;, &quot;FDR&quot;, &quot;adjP&quot;))), formatP) %&gt;%
+  dplyr::select(`Gene Set` = gs_name, `Number DE` = nDE, `Set Size` = gs_size, `Wilkinson~p~` = wilkinson_p, `p~FDR~` = FDR, `p~bonf~` = adjP) %&gt;%
   pander(
-    caption = &quot;Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.1.&quot;,
-    justify = &quot;lrrr&quot;
+    caption = &quot;Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.05.&quot;,
+    justify = &quot;lrrrrr&quot;
   )</code></pre>
 <table>
-<caption>Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.1.</caption>
+<caption>Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.05.</caption>
 <thead>
 <tr class="header">
 <th align="left">Gene Set</th>
-<th align="right">p</th>
+<th align="right">Number DE</th>
+<th align="right">Set Size</th>
+<th align="right">Wilkinson<sub>p</sub></th>
 <th align="right">p<sub>FDR</sub></th>
 <th align="right">p<sub>bonf</sub></th>
 </tr>
@@ -861,39 +907,27 @@ np &lt;- 1e5</code></pre>
 <tbody>
 <tr class="odd">
 <td align="left">HALLMARK_OXIDATIVE_PHOSPHORYLATION</td>
+<td align="right">1</td>
+<td align="right">201</td>
 <td align="right">0.0011</td>
 <td align="right">0.0315</td>
 <td align="right">0.0537</td>
 </tr>
 <tr class="even">
 <td align="left">HALLMARK_KRAS_SIGNALING_DN</td>
+<td align="right">0</td>
+<td align="right">134</td>
 <td align="right">0.0013</td>
 <td align="right">0.0315</td>
 <td align="right">0.0631</td>
 </tr>
 <tr class="odd">
 <td align="left">HALLMARK_INTERFERON_ALPHA_RESPONSE</td>
+<td align="right">0</td>
+<td align="right">60</td>
 <td align="right">0.0022</td>
 <td align="right">0.0375</td>
 <td align="right">0.1125</td>
-</tr>
-<tr class="even">
-<td align="left">HALLMARK_ESTROGEN_RESPONSE_EARLY</td>
-<td align="right">0.0044</td>
-<td align="right">0.0552</td>
-<td align="right">0.2206</td>
-</tr>
-<tr class="odd">
-<td align="left">HALLMARK_ALLOGRAFT_REJECTION</td>
-<td align="right">0.0075</td>
-<td align="right">0.0753</td>
-<td align="right">0.3763</td>
-</tr>
-<tr class="even">
-<td align="left">HALLMARK_MYOGENESIS</td>
-<td align="right">0.0097</td>
-<td align="right">0.0811</td>
-<td align="right">0.4864</td>
 </tr>
 </tbody>
 </table>
@@ -938,37 +972,42 @@ np &lt;- 1e5</code></pre>
   ) %&gt;%
   left_join(
     dplyr::select(kgGsea, gs_name, gsea = PValue)
-  ) %&gt;%
-  pivot_longer(
-    cols = one_of(c(&quot;fry&quot;, &quot;camera&quot;, &quot;gsea&quot;)),
-    names_to = &quot;method&quot;,
-    values_to = &quot;p&quot;
-  ) %&gt;%
-  dplyr::filter(!is.na(p)) %&gt;%
-  group_by(gs_name) %&gt;%
-  summarise(
-    n = n(),
-    p = wilkinsonp(p, r = n - 1)$p
-  ) %&gt;%
-  arrange(p) %&gt;%
+  )  %&gt;%
+  nest(p = one_of(c(&quot;fry&quot;, &quot;camera&quot;, &quot;gsea&quot;))) %&gt;%
   mutate(
-    FDR = p.adjust(p, &quot;fdr&quot;),
-    adjP = p.adjust(p, &quot;bonf&quot;)
-  ) </code></pre>
+    n_p = vapply(p, function(x){sum(!is.na(unlist(x)))}, integer(1)), 
+    wilkinson_p = vapply(p, function(x){
+      x &lt;- unlist(x)
+      x &lt;- x[!is.na(x)]
+      wilkinsonp(x, length(x) - 1)$p
+    }, numeric(1)),
+    FDR = p.adjust(wilkinson_p, &quot;fdr&quot;), 
+    adjP = p.adjust(wilkinson_p, &quot;bonferroni&quot;)
+  ) %&gt;% 
+  arrange(wilkinson_p) %&gt;% 
+  unnest(p) %&gt;%
+  left_join(gsSizes) %&gt;%
+  mutate(
+    DE = lapply(gene_id, intersect, dplyr::filter(deTable, DE)$gene_id),
+    DE = lapply(DE, unique),
+    nDE = vapply(DE, length, integer(1))
+  )</code></pre>
 <pre class="r"><code>kgMeta %&gt;%
   dplyr::filter(FDR &lt; 0.05) %&gt;%
-  mutate_at(vars(one_of(c(&quot;p&quot;, &quot;FDR&quot;, &quot;adjP&quot;))), formatP) %&gt;%
-  dplyr::select(`Gene Set` = gs_name, p, `p~FDR~` = FDR, `p~bonf~` = adjP) %&gt;%  
+  mutate_at(vars(one_of(c(&quot;wilkinson_p&quot;, &quot;FDR&quot;, &quot;adjP&quot;))), formatP) %&gt;%
+  dplyr::select(`Gene Set` = gs_name, `Number DE` = nDE, `Set Size` = gs_size, `Wilkinson~p~` = wilkinson_p, `p~FDR~` = FDR, `p~bonf~` = adjP) %&gt;%
   pander(
-    caption = &quot;Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.05.&quot;,
-    justify = &quot;lrrr&quot;
+    caption = &quot;Results from combining all above approaches for the KEGG Gene Sets. All terms are significant to an FDR of 0.05.&quot;,
+    justify = &quot;lrrrrr&quot;
   )</code></pre>
 <table>
-<caption>Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.05.</caption>
+<caption>Results from combining all above approaches for the KEGG Gene Sets. All terms are significant to an FDR of 0.05.</caption>
 <thead>
 <tr class="header">
 <th align="left">Gene Set</th>
-<th align="right">p</th>
+<th align="right">Number DE</th>
+<th align="right">Set Size</th>
+<th align="right">Wilkinson<sub>p</sub></th>
 <th align="right">p<sub>FDR</sub></th>
 <th align="right">p<sub>bonf</sub></th>
 </tr>
@@ -976,60 +1015,80 @@ np &lt;- 1e5</code></pre>
 <tbody>
 <tr class="odd">
 <td align="left">KEGG_RIBOSOME</td>
-<td align="right">7.88e-10</td>
-<td align="right">1.47e-07</td>
-<td align="right">1.47e-07</td>
+<td align="right">0</td>
+<td align="right">80</td>
+<td align="right">7.93e-10</td>
+<td align="right">1.48e-07</td>
+<td align="right">1.48e-07</td>
 </tr>
 <tr class="even">
 <td align="left">KEGG_OXIDATIVE_PHOSPHORYLATION</td>
+<td align="right">0</td>
+<td align="right">119</td>
 <td align="right">2.88e-08</td>
 <td align="right">2.68e-06</td>
 <td align="right">5.35e-06</td>
 </tr>
 <tr class="odd">
 <td align="left">KEGG_PARKINSONS_DISEASE</td>
+<td align="right">0</td>
+<td align="right">112</td>
 <td align="right">9.90e-08</td>
 <td align="right">6.14e-06</td>
 <td align="right">1.84e-05</td>
 </tr>
 <tr class="even">
 <td align="left">KEGG_SYSTEMIC_LUPUS_ERYTHEMATOSUS</td>
+<td align="right">1</td>
+<td align="right">86</td>
 <td align="right">2.24e-05</td>
 <td align="right">0.0010</td>
 <td align="right">0.0042</td>
 </tr>
 <tr class="odd">
 <td align="left">KEGG_HUNTINGTONS_DISEASE</td>
+<td align="right">0</td>
+<td align="right">159</td>
 <td align="right">0.0001</td>
 <td align="right">0.0053</td>
 <td align="right">0.0264</td>
 </tr>
 <tr class="even">
 <td align="left">KEGG_PROTEASOME</td>
+<td align="right">0</td>
+<td align="right">42</td>
 <td align="right">0.0003</td>
 <td align="right">0.0092</td>
 <td align="right">0.0550</td>
 </tr>
 <tr class="odd">
 <td align="left">KEGG_ALZHEIMERS_DISEASE</td>
+<td align="right">0</td>
+<td align="right">141</td>
 <td align="right">0.0004</td>
 <td align="right">0.0101</td>
 <td align="right">0.0742</td>
 </tr>
 <tr class="even">
 <td align="left">KEGG_PRIMARY_IMMUNODEFICIENCY</td>
+<td align="right">0</td>
+<td align="right">15</td>
 <td align="right">0.0004</td>
 <td align="right">0.0101</td>
 <td align="right">0.0811</td>
 </tr>
 <tr class="odd">
 <td align="left">KEGG_NOD_LIKE_RECEPTOR_SIGNALING_PATHWAY</td>
+<td align="right">0</td>
+<td align="right">35</td>
 <td align="right">0.0011</td>
 <td align="right">0.0225</td>
 <td align="right">0.2028</td>
 </tr>
 <tr class="even">
 <td align="left">KEGG_LEISHMANIA_INFECTION</td>
+<td align="right">0</td>
+<td align="right">41</td>
 <td align="right">0.0017</td>
 <td align="right">0.0320</td>
 <td align="right">0.3205</td>
@@ -1077,43 +1136,50 @@ np &lt;- 1e5</code></pre>
   ) %&gt;%
   left_join(
     dplyr::select(goGsea, gs_name, gsea = PValue)
-  ) %&gt;%
-  pivot_longer(
-    cols = one_of(c(&quot;fry&quot;, &quot;camera&quot;, &quot;gsea&quot;)),
-    names_to = &quot;method&quot;,
-    values_to = &quot;p&quot;
-  ) %&gt;%
-  dplyr::filter(!is.na(p)) %&gt;%
-  group_by(gs_name) %&gt;%
-  summarise(
-    n = n(),
-    p = wilkinsonp(p, r = n - 1)$p
-  ) %&gt;%
-  arrange(p) %&gt;%
+  )  %&gt;%
+  nest(p = one_of(c(&quot;fry&quot;, &quot;camera&quot;, &quot;gsea&quot;))) %&gt;%
   mutate(
-    FDR = p.adjust(p, &quot;fdr&quot;),
-    adjP = p.adjust(p, &quot;bonf&quot;)
-  ) </code></pre>
+    n_p = vapply(p, function(x){sum(!is.na(unlist(x)))}, integer(1)), 
+    wilkinson_p = vapply(p, function(x){
+      x &lt;- unlist(x)
+      x &lt;- x[!is.na(x)]
+      wilkinsonp(x, length(x) - 1)$p
+    }, numeric(1)),
+    FDR = p.adjust(wilkinson_p, &quot;fdr&quot;), 
+    adjP = p.adjust(wilkinson_p, &quot;bonferroni&quot;)
+  ) %&gt;% 
+  arrange(wilkinson_p) %&gt;% 
+  unnest(p) %&gt;%
+  left_join(gsSizes) %&gt;%
+  mutate(
+    DE = lapply(gene_id, intersect, dplyr::filter(deTable, DE)$gene_id),
+    DE = lapply(DE, unique),
+    nDE = vapply(DE, length, integer(1))
+  )</code></pre>
 <pre class="r"><code>goMeta %&gt;%
   dplyr::filter(adjP &lt; 0.01) %&gt;%
-  mutate_at(vars(one_of(c(&quot;p&quot;, &quot;FDR&quot;, &quot;adjP&quot;))), formatP) %&gt;%
-  dplyr::select(`Gene Set` = gs_name, p, `p~FDR~` = FDR, `p~bonf~` = adjP) %&gt;%  
+  mutate_at(vars(one_of(c(&quot;wilkinson_p&quot;, &quot;FDR&quot;, &quot;adjP&quot;))), formatP) %&gt;%
+  dplyr::select(`Gene Set` = gs_name, `Number DE` = nDE, `Set Size` = gs_size, `Wilkinson~p~` = wilkinson_p, `p~FDR~` = FDR, `p~bonf~` = adjP) %&gt;%
   pander(
-    caption = &quot;Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant using a Bonferroni-adjusted p-value &lt; 0.01.&quot;,
-    justify = &quot;lrrr&quot;
+    caption = &quot;Results from combining all above approaches for the GO Gene Sets. All terms are significant to an FDR of 0.01.&quot;,
+    justify = &quot;lrrrrr&quot;
   )</code></pre>
-<table style="width:100%;">
-<caption>Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant using a Bonferroni-adjusted p-value &lt; 0.01.</caption>
+<table>
+<caption>Results from combining all above approaches for the GO Gene Sets. All terms are significant to an FDR of 0.01.</caption>
 <colgroup>
-<col width="69%" />
-<col width="10%" />
-<col width="10%" />
-<col width="10%" />
+<col width="54%" />
+<col width="9%" />
+<col width="8%" />
+<col width="11%" />
+<col width="8%" />
+<col width="8%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="left">Gene Set</th>
-<th align="right">p</th>
+<th align="right">Number DE</th>
+<th align="right">Set Size</th>
+<th align="right">Wilkinson<sub>p</sub></th>
 <th align="right">p<sub>FDR</sub></th>
 <th align="right">p<sub>bonf</sub></th>
 </tr>
@@ -1121,252 +1187,339 @@ np &lt;- 1e5</code></pre>
 <tbody>
 <tr class="odd">
 <td align="left">GO_ESTABLISHMENT_OF_PROTEIN_LOCALIZATION_TO_ENDOPLASMIC_RETICULUM</td>
-<td align="right">7.46e-10</td>
-<td align="right">9.37e-07</td>
-<td align="right">6.59e-06</td>
+<td align="right">0</td>
+<td align="right">105</td>
+<td align="right">7.49e-10</td>
+<td align="right">8.93e-07</td>
+<td align="right">6.62e-06</td>
 </tr>
 <tr class="even">
 <td align="left">GO_CYTOSOLIC_RIBOSOME</td>
-<td align="right">7.47e-10</td>
-<td align="right">9.37e-07</td>
-<td align="right">6.60e-06</td>
+<td align="right">0</td>
+<td align="right">97</td>
+<td align="right">7.59e-10</td>
+<td align="right">8.93e-07</td>
+<td align="right">6.70e-06</td>
 </tr>
 <tr class="odd">
 <td align="left">GO_COTRANSLATIONAL_PROTEIN_TARGETING_TO_MEMBRANE</td>
-<td align="right">7.61e-10</td>
-<td align="right">9.37e-07</td>
-<td align="right">6.72e-06</td>
+<td align="right">0</td>
+<td align="right">93</td>
+<td align="right">7.67e-10</td>
+<td align="right">8.93e-07</td>
+<td align="right">6.77e-06</td>
 </tr>
 <tr class="even">
 <td align="left">GO_CYTOSOLIC_LARGE_RIBOSOMAL_SUBUNIT</td>
-<td align="right">8.26e-10</td>
-<td align="right">9.37e-07</td>
-<td align="right">7.30e-06</td>
+<td align="right">0</td>
+<td align="right">51</td>
+<td align="right">8.47e-10</td>
+<td align="right">8.93e-07</td>
+<td align="right">7.49e-06</td>
 </tr>
 <tr class="odd">
 <td align="left">GO_CYTOSOLIC_SMALL_RIBOSOMAL_SUBUNIT</td>
-<td align="right">8.55e-10</td>
-<td align="right">9.37e-07</td>
-<td align="right">7.55e-06</td>
+<td align="right">0</td>
+<td align="right">41</td>
+<td align="right">8.75e-10</td>
+<td align="right">8.93e-07</td>
+<td align="right">7.73e-06</td>
 </tr>
 <tr class="even">
 <td align="left">GO_POLYSOMAL_RIBOSOME</td>
-<td align="right">9.12e-10</td>
-<td align="right">9.37e-07</td>
-<td align="right">8.06e-06</td>
+<td align="right">0</td>
+<td align="right">28</td>
+<td align="right">9.21e-10</td>
+<td align="right">8.93e-07</td>
+<td align="right">8.14e-06</td>
 </tr>
 <tr class="odd">
 <td align="left">GO_PROTON_TRANSPORTING_ATP_SYNTHASE_COMPLEX</td>
-<td align="right">9.37e-10</td>
-<td align="right">9.37e-07</td>
-<td align="right">8.28e-06</td>
+<td align="right">0</td>
+<td align="right">20</td>
+<td align="right">9.46e-10</td>
+<td align="right">8.93e-07</td>
+<td align="right">8.36e-06</td>
 </tr>
 <tr class="even">
-<td align="left">GO_INNATE_IMMUNE_RESPONSE_IN_MUCOSA</td>
-<td align="right">1.26e-09</td>
-<td align="right">9.37e-07</td>
-<td align="right">1.12e-05</td>
-</tr>
-<tr class="odd">
 <td align="left">GO_MHC_CLASS_II_RECEPTOR_ACTIVITY</td>
-<td align="right">1.30e-09</td>
-<td align="right">9.37e-07</td>
-<td align="right">1.15e-05</td>
-</tr>
-<tr class="even">
-<td align="left">GO_INTERMEDIATE_FILAMENT_BUNDLE_ASSEMBLY</td>
-<td align="right">1.44e-09</td>
-<td align="right">9.37e-07</td>
-<td align="right">1.27e-05</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">1.29e-09</td>
+<td align="right">8.93e-07</td>
+<td align="right">1.14e-05</td>
 </tr>
 <tr class="odd">
+<td align="left">GO_INTERMEDIATE_FILAMENT_BUNDLE_ASSEMBLY</td>
+<td align="right">0</td>
+<td align="right">8</td>
+<td align="right">1.42e-09</td>
+<td align="right">8.93e-07</td>
+<td align="right">1.26e-05</td>
+</tr>
+<tr class="even">
 <td align="left">GO_KERATIN_FILAMENT_BINDING</td>
-<td align="right">1.45e-09</td>
-<td align="right">9.37e-07</td>
+<td align="right">0</td>
+<td align="right">9</td>
+<td align="right">1.44e-09</td>
+<td align="right">8.93e-07</td>
 <td align="right">1.28e-05</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">GO_HEMIDESMOSOME_ASSEMBLY</td>
-<td align="right">1.49e-09</td>
-<td align="right">9.37e-07</td>
-<td align="right">1.32e-05</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_CORNIFIED_ENVELOPE</td>
-<td align="right">1.57e-09</td>
-<td align="right">9.37e-07</td>
-<td align="right">1.39e-05</td>
-</tr>
-<tr class="even">
-<td align="left">GO_INTERMEDIATE_FILAMENT_ORGANIZATION</td>
-<td align="right">1.58e-09</td>
-<td align="right">9.37e-07</td>
-<td align="right">1.39e-05</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_PEPTIDE_CROSS_LINKING</td>
-<td align="right">1.59e-09</td>
-<td align="right">9.37e-07</td>
-<td align="right">1.41e-05</td>
+<td align="right">0</td>
+<td align="right">12</td>
+<td align="right">1.48e-09</td>
+<td align="right">8.93e-07</td>
+<td align="right">1.30e-05</td>
 </tr>
 <tr class="even">
 <td align="left">GO_KERATIN_FILAMENT</td>
-<td align="right">1.73e-09</td>
-<td align="right">9.56e-07</td>
-<td align="right">1.53e-05</td>
+<td align="right">0</td>
+<td align="right">13</td>
+<td align="right">1.49e-09</td>
+<td align="right">8.93e-07</td>
+<td align="right">1.32e-05</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_CORNIFICATION</td>
-<td align="right">2.20e-09</td>
-<td align="right">1.14e-06</td>
-<td align="right">1.94e-05</td>
+<td align="left">GO_INTERMEDIATE_FILAMENT_ORGANIZATION</td>
+<td align="right">0</td>
+<td align="right">17</td>
+<td align="right">1.54e-09</td>
+<td align="right">8.93e-07</td>
+<td align="right">1.36e-05</td>
 </tr>
 <tr class="even">
+<td align="left">GO_CORNIFIED_ENVELOPE</td>
+<td align="right">0</td>
+<td align="right">18</td>
+<td align="right">1.55e-09</td>
+<td align="right">8.93e-07</td>
+<td align="right">1.37e-05</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_PEPTIDE_CROSS_LINKING</td>
+<td align="right">0</td>
+<td align="right">22</td>
+<td align="right">1.58e-09</td>
+<td align="right">8.93e-07</td>
+<td align="right">1.39e-05</td>
+</tr>
+<tr class="even">
+<td align="left">GO_CORNIFICATION</td>
+<td align="right">0</td>
+<td align="right">26</td>
+<td align="right">1.62e-09</td>
+<td align="right">8.93e-07</td>
+<td align="right">1.43e-05</td>
+</tr>
+<tr class="odd">
 <td align="left">GO_PROTEIN_LOCALIZATION_TO_ENDOPLASMIC_RETICULUM</td>
+<td align="right">0</td>
+<td align="right">128</td>
 <td align="right">3.56e-09</td>
-<td align="right">1.75e-06</td>
+<td align="right">1.85e-06</td>
 <td align="right">3.15e-05</td>
+</tr>
+<tr class="even">
+<td align="left">GO_INNATE_IMMUNE_RESPONSE_IN_MUCOSA</td>
+<td align="right">1</td>
+<td align="right">21</td>
+<td align="right">3.78e-09</td>
+<td align="right">1.85e-06</td>
+<td align="right">3.34e-05</td>
 </tr>
 <tr class="odd">
 <td align="left">GO_ORGAN_OR_TISSUE_SPECIFIC_IMMUNE_RESPONSE</td>
+<td align="right">1</td>
+<td align="right">23</td>
 <td align="right">5.54e-09</td>
 <td align="right">2.57e-06</td>
 <td align="right">4.89e-05</td>
 </tr>
 <tr class="even">
 <td align="left">GO_INTERMEDIATE_FILAMENT_BINDING</td>
+<td align="right">0</td>
+<td align="right">15</td>
 <td align="right">6.09e-09</td>
 <td align="right">2.69e-06</td>
 <td align="right">5.38e-05</td>
 </tr>
 <tr class="odd">
 <td align="left">GO_SMALL_RIBOSOMAL_SUBUNIT</td>
+<td align="right">0</td>
+<td align="right">69</td>
 <td align="right">8.64e-09</td>
 <td align="right">3.63e-06</td>
 <td align="right">7.63e-05</td>
 </tr>
 <tr class="even">
 <td align="left">GO_RIBOSOMAL_SMALL_SUBUNIT_ASSEMBLY</td>
-<td align="right">1.06e-08</td>
-<td align="right">4.27e-06</td>
-<td align="right">9.40e-05</td>
+<td align="right">0</td>
+<td align="right">16</td>
+<td align="right">3.47e-08</td>
+<td align="right">1.39e-05</td>
+<td align="right">0.0003</td>
 </tr>
 <tr class="odd">
 <td align="left">GO_AEROBIC_ELECTRON_TRANSPORT_CHAIN</td>
-<td align="right">1.51e-08</td>
-<td align="right">5.80e-06</td>
-<td align="right">0.0001</td>
+<td align="right">0</td>
+<td align="right">19</td>
+<td align="right">6.08e-08</td>
+<td align="right">2.32e-05</td>
+<td align="right">0.0005</td>
 </tr>
 <tr class="even">
-<td align="left">GO_PHOSPHOLIPASE_A2_INHIBITOR_ACTIVITY</td>
-<td align="right">4.69e-08</td>
-<td align="right">1.72e-05</td>
-<td align="right">0.0004</td>
-</tr>
-<tr class="odd">
 <td align="left">GO_NUCLEAR_NUCLEOSOME</td>
+<td align="right">0</td>
+<td align="right">38</td>
 <td align="right">6.31e-08</td>
-<td align="right">2.23e-05</td>
-<td align="right">0.0006</td>
-</tr>
-<tr class="even">
-<td align="left">GO_MITOCHONDRIAL_RESPIRATORY_CHAIN_COMPLEX_I</td>
-<td align="right">7.01e-08</td>
 <td align="right">2.32e-05</td>
 <td align="right">0.0006</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_NADH_DEHYDROGENASE_ACTIVITY</td>
-<td align="right">7.09e-08</td>
-<td align="right">2.32e-05</td>
+<td align="left">GO_MITOCHONDRIAL_RESPIRATORY_CHAIN_COMPLEX_I</td>
+<td align="right">0</td>
+<td align="right">48</td>
+<td align="right">7.01e-08</td>
+<td align="right">2.41e-05</td>
 <td align="right">0.0006</td>
+</tr>
+<tr class="even">
+<td align="left">GO_NADH_DEHYDROGENASE_ACTIVITY</td>
+<td align="right">0</td>
+<td align="right">44</td>
+<td align="right">7.09e-08</td>
+<td align="right">2.41e-05</td>
+<td align="right">0.0006</td>
+</tr>
+<tr class="odd">
+<td align="left">GO_PHOSPHOLIPASE_A2_INHIBITOR_ACTIVITY</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">8.24e-08</td>
+<td align="right">2.69e-05</td>
+<td align="right">0.0007</td>
 </tr>
 <tr class="even">
 <td align="left">GO_OXIDATIVE_PHOSPHORYLATION</td>
+<td align="right">0</td>
+<td align="right">122</td>
 <td align="right">1.13e-07</td>
 <td align="right">3.56e-05</td>
 <td align="right">0.0010</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_RESPIRATORY_CHAIN_COMPLEX_IV</td>
-<td align="right">1.17e-07</td>
-<td align="right">3.57e-05</td>
-<td align="right">0.0010</td>
+<td align="left">GO_STRAND_INVASION</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">1.41e-07</td>
+<td align="right">4.21e-05</td>
+<td align="right">0.0012</td>
 </tr>
 <tr class="even">
 <td align="left">GO_RIBOSOMAL_SUBUNIT</td>
+<td align="right">0</td>
+<td align="right">175</td>
 <td align="right">1.45e-07</td>
 <td align="right">4.21e-05</td>
 <td align="right">0.0013</td>
 </tr>
 <tr class="odd">
 <td align="left">GO_ATP_SYNTHESIS_COUPLED_ELECTRON_TRANSPORT</td>
+<td align="right">0</td>
+<td align="right">85</td>
 <td align="right">1.48e-07</td>
 <td align="right">4.21e-05</td>
 <td align="right">0.0013</td>
 </tr>
 <tr class="even">
 <td align="left">GO_RESPIRATORY_CHAIN_COMPLEX</td>
+<td align="right">0</td>
+<td align="right">75</td>
 <td align="right">1.84e-07</td>
 <td align="right">5.07e-05</td>
 <td align="right">0.0016</td>
 </tr>
 <tr class="odd">
 <td align="left">GO_PHOTORECEPTOR_DISC_MEMBRANE</td>
+<td align="right">0</td>
+<td align="right">20</td>
 <td align="right">1.89e-07</td>
 <td align="right">5.07e-05</td>
 <td align="right">0.0017</td>
 </tr>
 <tr class="even">
-<td align="left">GO_STRAND_INVASION</td>
-<td align="right">2.60e-07</td>
-<td align="right">6.75e-05</td>
-<td align="right">0.0023</td>
-</tr>
-<tr class="odd">
 <td align="left">GO_CRISTAE_FORMATION</td>
+<td align="right">0</td>
+<td align="right">31</td>
 <td align="right">3.97e-07</td>
 <td align="right">0.0001</td>
 <td align="right">0.0035</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">GO_INTERLEUKIN_8_SECRETION</td>
+<td align="right">0</td>
+<td align="right">14</td>
 <td align="right">4.84e-07</td>
 <td align="right">0.0001</td>
 <td align="right">0.0043</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">GO_INTERMEDIATE_FILAMENT_CYTOSKELETON</td>
+<td align="right">0</td>
+<td align="right">82</td>
 <td align="right">5.94e-07</td>
 <td align="right">0.0001</td>
 <td align="right">0.0052</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">GO_CELL_SUBSTRATE_JUNCTION_ASSEMBLY</td>
+<td align="right">0</td>
+<td align="right">90</td>
 <td align="right">6.00e-07</td>
 <td align="right">0.0001</td>
 <td align="right">0.0053</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">GO_VIRAL_GENE_EXPRESSION</td>
+<td align="right">0</td>
+<td align="right">172</td>
 <td align="right">6.14e-07</td>
 <td align="right">0.0001</td>
 <td align="right">0.0054</td>
 </tr>
-<tr class="even">
-<td align="left">GO_O_PALMITOYLTRANSFERASE_ACTIVITY</td>
-<td align="right">8.00e-07</td>
-<td align="right">0.0002</td>
-<td align="right">0.0071</td>
-</tr>
 <tr class="odd">
 <td align="left">GO_ANTIBACTERIAL_HUMORAL_RESPONSE</td>
+<td align="right">1</td>
+<td align="right">27</td>
 <td align="right">1.03e-06</td>
 <td align="right">0.0002</td>
 <td align="right">0.0091</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div id="data-export" class="section level1">
+<h1>Data Export</h1>
+<p>All enriched gene sets terms with an FDR adjusted p-value &lt; 0.05 were exported as a single csv file.</p>
+<pre class="r"><code>bind_rows(
+  hmMeta,
+  kgMeta,
+  goMeta
+) %&gt;%
+  dplyr::filter(FDR &lt; 0.05) %&gt;%
+  mutate(
+    DE = lapply(DE, function(x){dplyr::filter(deTable, gene_id %in% x)$gene_name}),
+    DE = lapply(DE, unique),
+    DE = vapply(DE, paste, character(1), collapse = &quot;;&quot;)
+  ) %&gt;%
+  arrange(wilkinson_p) %&gt;%
+  dplyr::select(
+    gs_name, gs_size, nDE, wilkinson_p, FDR, fry, camera, gsea, DE
+  ) %&gt;%
+  write_csv(here::here(&quot;output&quot;, &quot;Enrichment_Hom_V_Het.csv&quot;))</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1385,7 +1538,7 @@ np &lt;- 1e5</code></pre>
  collate  en_AU.UTF-8                 
  ctype    en_AU.UTF-8                 
  tz       Australia/Adelaide          
- date     2020-02-17                  
+ date     2020-02-19                  
 
 ─ Packages ───────────────────────────────────────────────────────────────────
  package              * version    date       lib source        
@@ -1450,6 +1603,7 @@ np &lt;- 1e5</code></pre>
  gridExtra              2.3        2017-09-09 [2] CRAN (R 3.6.0)
  gtable                 0.3.0      2019-03-25 [2] CRAN (R 3.6.0)
  haven                  2.2.0      2019-11-08 [2] CRAN (R 3.6.1)
+ here                   0.1        2017-05-28 [2] CRAN (R 3.6.0)
  hms                    0.5.3      2020-01-08 [2] CRAN (R 3.6.2)
  htmltools              0.4.0      2019-10-04 [2] CRAN (R 3.6.1)
  htmlwidgets            1.5.1      2019-10-08 [2] CRAN (R 3.6.1)
@@ -1562,7 +1716,6 @@ np &lt;- 1e5</code></pre>
 [2] /usr/local/lib/R/site-library
 [3] /usr/lib/R/site-library
 [4] /usr/lib/R/library</code></pre>
-</div>
 </div>
 </div>
 
