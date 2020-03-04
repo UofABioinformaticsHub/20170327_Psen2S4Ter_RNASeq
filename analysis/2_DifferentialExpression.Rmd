@@ -268,7 +268,6 @@ Both mutant genotypes appear to cluster together, however it has previously been
 
 ## Model Description
 
-
 ```{r plotLayout, echo=FALSE, out.width='50%'}
 here::here("docs/figure/index.Rmd/plotLayout-1.png") %>%
   knitr::include_graphics()
