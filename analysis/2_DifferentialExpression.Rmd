@@ -9,11 +9,11 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
-    autodep = TRUE,
-    echo = TRUE,
-    warning = FALSE,
-    message = FALSE,
-    fig.align = "center"
+  autodep = TRUE,
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center"
 )
 ```
 
@@ -46,37 +46,37 @@ panderOptions("table.style", "rmarkdown")
 
 ```{r annotationSetup}
 ah <- AnnotationHub() %>%
-    subset(species == "Danio rerio") %>%
-    subset(rdataclass == "EnsDb")
+  subset(species == "Danio rerio") %>%
+  subset(rdataclass == "EnsDb")
 ensDb <- ah[["AH74989"]]
 ```
 
 ```{r transAnnotation}
 grTrans <- transcripts(ensDb)
 trLengths <- exonsBy(ensDb, "tx") %>%
-    width() %>%
-    vapply(sum, integer(1))
+  width() %>%
+  vapply(sum, integer(1))
 mcols(grTrans)$length <- trLengths[names(grTrans)]
 ```
 
 
 ```{r geneAnnotation}
 gcGene <- grTrans %>%
-    mcols() %>%
-    as.data.frame() %>%
-    dplyr::select(gene_id, tx_id, gc_content, length) %>%
-    as_tibble() %>%
-    group_by(gene_id) %>%
-    summarise(
-        gc_content = sum(gc_content*length) / sum(length),
-        length = ceiling(median(length))
-    )
+  mcols() %>%
+  as.data.frame() %>%
+  dplyr::select(gene_id, tx_id, gc_content, length) %>%
+  as_tibble() %>%
+  group_by(gene_id) %>%
+  summarise(
+    gc_content = sum(gc_content*length) / sum(length),
+    length = ceiling(median(length))
+  )
 grGenes <- genes(ensDb)
 mcols(grGenes) %<>%
-    as.data.frame() %>%
-    left_join(gcGene) %>%
-    as.data.frame() %>%
-    DataFrame()
+  as.data.frame() %>%
+  left_join(gcGene) %>%
+  as.data.frame() %>%
+  DataFrame()
 ```
 
 Similarly to the Quality Assessment steps, `GRanges` objects were formed at the gene and transcript levels, to enable estimation of GC content and length for each transcript and gene.
@@ -109,26 +109,26 @@ All other fields were considered irrelevant.
 minCPM <- 1.5
 minSamples <- 4
 dgeList <- file.path("data", "2_alignedData", "featureCounts", "genes.out") %>%
-    read_delim(delim = "\t") %>%
-    set_names(basename(names(.))) %>%
-    as.data.frame() %>%
-    column_to_rownames("Geneid") %>%
-    as.matrix() %>% 
-    set_colnames(str_remove(colnames(.), "Aligned.sortedByCoord.out.bam")) %>%
-    .[rowSums(cpm(.) >= minCPM) >= minCPM,] %>%
-    DGEList(
-        samples = tibble(sample = colnames(.)) %>%
-            left_join(samples),
-        genes = grGenes[rownames(.)] %>%
-            as.data.frame() %>%
-            dplyr::select(
-                chromosome = seqnames, start, end, 
-                gene_id, gene_name, gene_biotype, description, 
-                entrezid, gc_content, length
-            )
-    ) %>%
-    .[!grepl("rRNA", .$genes$gene_biotype),] %>%
-    calcNormFactors()
+  read_delim(delim = "\t") %>%
+  set_names(basename(names(.))) %>%
+  as.data.frame() %>%
+  column_to_rownames("Geneid") %>%
+  as.matrix() %>% 
+  set_colnames(str_remove(colnames(.), "Aligned.sortedByCoord.out.bam")) %>%
+  .[rowSums(cpm(.) >= minCPM) >= minCPM,] %>%
+  DGEList(
+    samples = tibble(sample = colnames(.)) %>%
+      left_join(samples),
+    genes = grGenes[rownames(.)] %>%
+      as.data.frame() %>%
+      dplyr::select(
+        chromosome = seqnames, start, end, 
+        gene_id, gene_name, gene_biotype, description, 
+        entrezid, gc_content, length
+      )
+  ) %>%
+  .[!grepl("rRNA", .$genes$gene_biotype),] %>%
+  calcNormFactors()
 ```
 
 Gene-level count data as output by `featureCounts`, was loaded and formed into a `DGEList` object.
@@ -175,19 +175,19 @@ cpm(dgeList, log = TRUE) %>%
 
 ```{r labellers}
 contLabeller <- as_labeller(
-    c(
-        HetVsWT = "S4Ter/+ Vs +/+",
-        HomVsWT = "S4Ter/S4Ter Vs +/+",
-        HomVsHet = "S4Ter/S4Ter Vs S4Ter/+",
-        Hom = "S4Ter/S4Ter",
-        Het = "S4Ter/+",
-        WT = "+/+",
-        mutant = "S4Ter Vs WT",
-        homozygous = "S4Ter/S4Ter Vs S4Ter/+"
-    )
+  c(
+    HetVsWT = "S4Ter/+ Vs +/+",
+    HomVsWT = "S4Ter/S4Ter Vs +/+",
+    HomVsHet = "S4Ter/S4Ter Vs S4Ter/+",
+    Hom = "S4Ter/S4Ter",
+    Het = "S4Ter/+",
+    WT = "+/+",
+    mutant = "S4Ter Vs WT",
+    homozygous = "S4Ter/S4Ter Vs S4Ter/+"
+  )
 )
 geneLabeller <- structure(grGenes$gene_name, names = grGenes$gene_id) %>%
-    as_labeller()
+  as_labeller()
 ```
 
 Labeller functions for genotypes, contrasts and gene names were additionally defined for simpler plotting using `ggplot2`.
@@ -235,9 +235,9 @@ riboCors <- cpm(dgeList, log = TRUE) %>%
 
 ```{r pca}
 pca <- dgeList %>%
-    cpm(log = TRUE) %>%
-    t() %>%
-    prcomp() 
+  cpm(log = TRUE) %>%
+  t() %>%
+  prcomp() 
 pcaVars <- percent_format(0.1)(summary(pca)$importance["Proportion of Variance",])
 ```
 
@@ -303,10 +303,10 @@ The resultant `glm.offset` values were added to the original `DGEList` object, a
 
 ```{r gcCqn}
 gcCqn <- cqn(
-    counts = dgeList$counts,
-    x = dgeList$genes$gc_content,
-    lengths = dgeList$genes$length,
-    sizeFactors = dgeList$samples$lib.size
+  counts = dgeList$counts,
+  x = dgeList$genes$gc_content,
+  lengths = dgeList$genes$length,
+  sizeFactors = dgeList$samples$lib.size
 )
 ```
 
@@ -334,8 +334,8 @@ cpmPostNorm <- gcCqn %>%
 
 ```{r pcaPost}
 pcaPost <- cpmPostNorm %>%
-    t() %>%
-    prcomp() 
+  t() %>%
+  prcomp() 
 pcaVars <- percent_format(0.1)(summary(pcaPost)$importance["Proportion of Variance",])
 ```
 
@@ -458,7 +458,7 @@ topTables$mutant %>%
   mutate(FDR = case_when(
     FDR >= 0.0001 ~ sprintf("%.4f", FDR),
     FDR < 0.0001 ~ sprintf("%.2e", FDR)
-    )
+  )
   ) %>%
   dplyr::slice(1:40) %>%
   pander(
@@ -489,7 +489,7 @@ topTables$mutant %>%
   mutate(FDR = case_when(
     FDR >= 0.0001 ~ sprintf("%.4f", FDR),
     FDR < 0.0001 ~ sprintf("%.2e", FDR)
-    )
+  )
   ) %>%
   dplyr::slice(1:20) %>%
   pander(
@@ -508,37 +508,37 @@ topTables$mutant %>%
 
 ```{r checkGCBias, fig.height=5, fig.width=8, fig.cap="*Checks for GC bias in differential expression. GC content is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change. A small amount of bias was noted particularly in the comparison between mutants and wild-type.*"}
 topTables %>%
-    bind_rows() %>%
-    mutate(stat = -sign(logFC)*log10(PValue)) %>%
-    ggplot(aes(gc_content, stat)) +
-    geom_point(aes(colour = DE), alpha = 0.4) +
-    geom_smooth(se = FALSE) +
-    facet_wrap(~coef, labeller = contLabeller)  +
-    labs(
-        x = "GC content (%)",
-        y = "Ranking Statistic"
-    ) +
-    coord_cartesian(ylim = c(-10, 10)) +
-    scale_colour_manual(values = deCols) +
-    theme(legend.position = "none")
+  bind_rows() %>%
+  mutate(stat = -sign(logFC)*log10(PValue)) %>%
+  ggplot(aes(gc_content, stat)) +
+  geom_point(aes(colour = DE), alpha = 0.4) +
+  geom_smooth(se = FALSE) +
+  facet_wrap(~coef, labeller = contLabeller)  +
+  labs(
+    x = "GC content (%)",
+    y = "Ranking Statistic"
+  ) +
+  coord_cartesian(ylim = c(-10, 10)) +
+  scale_colour_manual(values = deCols) +
+  theme(legend.position = "none")
 ```
 
 ```{r checkLengthBias, fig.height=5, fig.width=8, fig.cap="*Checks for length bias in differential expression. Gene length is shown against the ranking statistic, using -log10(p) multiplied by the sign of log fold-change. Again, a small amount of bias was noted particularly in the comparison between mutants and wild-type.*"}
 topTables %>%
-    bind_rows() %>%
-    mutate(stat = -sign(logFC)*log10(PValue)) %>%
-    ggplot(aes(length, stat)) +
-    geom_point(aes(colour = DE), alpha = 0.4) +
-    geom_smooth(se = FALSE) +
-    facet_wrap(~coef, labeller = contLabeller)  +
-    labs(
-        x = "Gene Length (bp)",
-        y = "Ranking Statistic"
-    ) +
-    coord_cartesian(ylim = c(-10, 10)) +
-    scale_x_log10(labels = comma) +
-    scale_colour_manual(values = deCols) +
-    theme(legend.position = "none")
+  bind_rows() %>%
+  mutate(stat = -sign(logFC)*log10(PValue)) %>%
+  ggplot(aes(length, stat)) +
+  geom_point(aes(colour = DE), alpha = 0.4) +
+  geom_smooth(se = FALSE) +
+  facet_wrap(~coef, labeller = contLabeller)  +
+  labs(
+    x = "Gene Length (bp)",
+    y = "Ranking Statistic"
+  ) +
+  coord_cartesian(ylim = c(-10, 10)) +
+  scale_x_log10(labels = comma) +
+  scale_colour_manual(values = deCols) +
+  theme(legend.position = "none")
 ```
 
 Checks for both GC and length bias on differential expression showed that a small bias remained evident, despite using conditional-quantile normalisation.
@@ -581,7 +581,7 @@ topTables %>%
   geom_histogram(
     binwidth = 0.02,
     colour = "black", fill = "grey90"
-    ) +
+  ) +
   facet_wrap(~coef, labeller = contLabeller)
 ```
 
@@ -590,17 +590,17 @@ topTables %>%
 
 ```{r volcanoPlots, fig.height=5, fig.width=8, fig.cap="*Volcano Plots showing DE genes against logFC.*"}
 topTables %>%
-    bind_rows() %>%
-    ggplot(aes(logFC, -log10(PValue), colour = DE)) +
-    geom_point(alpha = 0.4) +
-    geom_text_repel(
-        aes(label = gene_name),
-        data = . %>% dplyr::filter(PValue < 1e-13 | abs(logFC) > 4)
-    ) +
-    geom_text_repel(
-        aes(label = gene_name),
-        data = . %>% dplyr::filter(FDR < 0.05 & coef == "homozygous")
-    ) +
+  bind_rows() %>%
+  ggplot(aes(logFC, -log10(PValue), colour = DE)) +
+  geom_point(alpha = 0.4) +
+  geom_text_repel(
+    aes(label = gene_name),
+    data = . %>% dplyr::filter(PValue < 1e-13 | abs(logFC) > 4)
+  ) +
+  geom_text_repel(
+    aes(label = gene_name),
+    data = . %>% dplyr::filter(FDR < 0.05 & coef == "homozygous")
+  ) +
   geom_vline(
     xintercept = c(-1, 1)*minLfc,
     linetype = 2,
@@ -685,10 +685,29 @@ cpmPostNorm %>%
 Final gene lists were exported as separate csv files, along with  fit and dgeList objects.
 
 ```{r writeResults}
-write_csv(topTables$mutant, "output/psen2VsWT.csv")
-write_csv(topTables$homozygous, "output/psen2HomVsHet.csv")
-write_rds(fit, "data/fit.rds", compress = "gz")
-write_rds(dgeList, "data/dgeList.rds", compress = "gz")
+write_csv(
+  x = topTables$mutant, 
+  path = here::here("output/psen2VsWT.csv")
+)
+write_csv(
+  x = topTables$homozygous,
+  path = here::here("output/psen2HomVsHet.csv")
+)
+write_rds(
+  x = fit, 
+  path = here::here("data/fit.rds"),
+  compress = "gz"
+)
+write_rds(
+  x = dgeList,
+  path = here::here("data/dgeList.rds"), 
+  compress = "gz"
+)
+write_rds(
+  x = cpmPostNorm, 
+  path = here::here("data/cpmPostNorm.rds"),
+  compress = "gz"
+)
 ```
 
 
