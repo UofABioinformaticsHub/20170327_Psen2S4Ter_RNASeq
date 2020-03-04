@@ -96,7 +96,7 @@ Enrichment analysis for this dataset present some challenges.
 Despite normalisation to account for gene length and GC bias, some appeared to still be present in the final results.
 In addition, the confounding of incomplete rRNA removal with genotype may lead to other distortions in both DE genes and ranking statistics.
 
-As the list of DE genes for this comparison was small ($n_{\text{DE}} = `r nrow(dplyr::filter(deTable, DE))`$), t enrichment esting was only performed using ranked-list approaches.
+As the list of DE genes for this comparison was small ($n_{\text{DE}} = `r nrow(dplyr::filter(deTable, DE))`$), enrichment testing was only performed using ranked-list approaches.
 Testing for enrichment *with ranked lists* will be performed using:
 
 1. `fry` as this can take into account inter-gene correlations. Values supplied will be fitted values for each gene/sample as these have been corrected for GC and length biases.
