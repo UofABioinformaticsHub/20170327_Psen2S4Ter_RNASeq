@@ -270,7 +270,8 @@ Both mutant genotypes appear to cluster together, however it has previously been
 
 
 ```{r plotLayout, echo=FALSE, out.width='50%'}
-knitr::include_graphics("figure/index.Rmd/plotLayout-1.png")
+here::here("docs/figure/index.Rmd/plotLayout-1.png") %>%
+  knitr::include_graphics()
 ```
 
 The initial expectation was to perform three pairwise comparisons as described in the above figure.
