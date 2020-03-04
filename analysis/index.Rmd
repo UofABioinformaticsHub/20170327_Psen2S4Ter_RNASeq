@@ -33,7 +33,7 @@ samples <- read_csv("data/samples.csv") %>%
 This dataset is an analysis of RNASeq data from a 3-way comparison of WT zebrafish with Heterozygous mutants (*psen2^S4Ter/+^*) and Homozygous mutants *psen2^S4Ter/S4Ter^*.
 The *psen2^S4Ter^* mutant allele is expected to be a premature termination of the *psen2* gene, but instead an alternate downstream start site resulted in a near full-length transcript with significant similarity to a conventional Early Onset Familial Alzhemier's Disease mutation.
 
-The expected comparisons are shown below, however the final model was defined by fitting the wild-type samples, differences between heterozygotes and wild-type, followed by the difference between the two mutant genotypes
+The expected comparisons were intended to be a three-way group comparison, however the final model was defined by fitting the wild-type samples, differences between heterozygotes and wild-type, followed by the difference between the two mutant genotypes
 
 ```{r plotLayout, fig.width=4, fig.height=4}
 create_ring(3) %>% 

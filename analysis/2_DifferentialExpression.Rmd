@@ -231,7 +231,7 @@ riboCors <- cpm(dgeList, log = TRUE) %>%
 
 # Analysis
 
-## PCA
+## Initial PCA
 
 ```{r pca}
 pca <- dgeList %>%
@@ -295,7 +295,7 @@ pheatmap(
 ```
 
 
-### Normalisation
+### Conditional Quantile Normalisation
 
 As GC content and length was noted as being of concern for this dataset, *conditional-quantile normalisation* was performed using the `cqn` package.
 This adds a gene and sample-level offset for each count which takes into account any systemic bias, such as that identified previously as an artefact of variable rRNA removal.
@@ -319,12 +319,50 @@ legend("bottomright", legend = levels(samples$genotype), col = genoCols, lty = 1
 par(mfrow = c(1, 1))
 ```
 
-
 ```{r addOffset}
 dgeList$offset <- gcCqn$glm.offset 
 dgeList %<>% estimateDisp(design = d)
 ```
 
+
+### PCA After Normalisation
+
+```{r cpmPostNorm}
+cpmPostNorm <- gcCqn %>%
+  with(y + offset)
+```
+
+```{r pcaPost}
+pcaPost <- cpmPostNorm %>%
+    t() %>%
+    prcomp() 
+pcaVars <- percent_format(0.1)(summary(pcaPost)$importance["Proportion of Variance",])
+```
+
+
+```{r plotPcaPost, fig.width=5, fig.height=4, fig.cap="*PCA of gene-level counts after conditional quantile normalisation.*"}
+pcaPost$x %>%
+  as.data.frame() %>%
+  rownames_to_column("sample") %>%
+  left_join(samples) %>%
+  as_tibble() %>%
+  ggplot(aes(PC1, PC2, colour = genotype, fill = genotype)) +
+  geom_point() +
+  geom_text_repel(aes(label = sampleID), show.legend = FALSE) +
+  stat_ellipse(geom = "polygon", alpha = 0.05, show.legend = FALSE) +
+  guides(fill = FALSE) +
+  scale_colour_manual(
+    values = genoCols
+  ) +
+  labs(
+    x = paste0("PC1 (", pcaVars[["PC1"]], ")"),
+    y = paste0("PC2 (", pcaVars[["PC2"]], ")"),
+    colour = "Genotype"
+  )
+```
+
+After conditional quantile normalisation, a second PCA analysis was performed in order to check for improvement in group separation.
+However, there appeared to minimal improvement at this level, with PC1 still only accounting for `r pcaVars[["PC1"]]` of the variability.
 
 ## Model Fitting
 
@@ -599,8 +637,7 @@ These represent the samples with lowest and highest expression of SNORNA70 respe
 ```{r commonSummaryHeatmap, fig.height=8, fig.width=8, fig.cap = paste("*The", n, "most highly-ranked genes by FDR which are commonly considered DE between mutants and WT samples. Plotted values are logCPM based on normalised counts.*")}
 genoCols <- RColorBrewer::brewer.pal(3, "Set1") %>%
   setNames(levels(dgeList$samples$genotype))
-fit$fitted.values %>%
-  cpm(log = TRUE) %>% 
+cpmPostNorm %>%
   extract(deGenes$mutant[seq_len(n)],) %>%
   as.data.frame() %>%
   set_rownames(unlist(geneLabeller(rownames(.)))) %>%
@@ -615,7 +652,7 @@ fit$fitted.values %>%
     annotation_names_col = FALSE,
     annotation_colors = list(Genotype = genoCols),
     cutree_cols = 2,
-    cutree_rows = 6
+    cutree_rows = 4
   )
 ```
 
@@ -624,8 +661,7 @@ fit$fitted.values %>%
 When inspecting the genes showing differences between mutants, it was noted that the WT and Homozygous mutant samples clustered together, implying that there was a unique effect on these genes which was specific to the heterozygous condition. 
 
 ```{r homozygousHeatmap, fig.height=4, fig.width=7, fig.cap = paste("*The", length(deGenes$homozygous), "most highly-ranked genes by FDR which are DE between between mutants. Plotted values are logCPM based on normalised counts.*")}
-fit$fitted.values %>%
-  cpm(log = TRUE) %>% 
+cpmPostNorm %>%
   extract(deGenes$homozygous,) %>%
   as.data.frame() %>%
   set_rownames(unlist(geneLabeller(rownames(.)))) %>%
