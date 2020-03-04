@@ -791,7 +791,7 @@ goMeta %>%
 
 ### Exploration of Significant GO Gene Sets
 
-```{r goMetaUpset, fig.height=6, fig.width=10, fig.cap = "*UpSet plot indicating distribution of DE genes within significant terms from the GO gene sets. For this visualisation, GO terms were restricted to those with 25 or more DE genes and an FDR < 0.05. A group of about 300 genes is widely spread across multiple terms and not shown, with the next largest group being 19 genes uniquely associated with RNA Metabolic Process. A group of 15 genes is shared by a large group of terms, indicating that these genes largely drive the signal for these terms. These genes tend to indicate Ribosomal activity (i.e. protein synthesis). However, a set of 14 genes seems to more uniquely indicate Mitochondrial activity, followed by 12 uniquely associated with Ion Transport, and two sets of 9 genes associated with homeostasis and regulation of gene expression.*"}
+```{r goMetaUpset, fig.height=6, fig.width=10, fig.cap = "*UpSet plot indicating distribution of DE genes within significant terms from the GO gene sets. For this visualisation, GO terms were restricted to those with 25 or more DE genes and an FDR < 0.05. A group of about 300 genes is widely spread across multiple terms and not shown, with the next largest group being 19 genes uniquely associated with RNA Metabolic Process. A group of 15 genes is shared by a large group of terms, indicating that these genes largely drive the signal for these terms. These genes tend to indicate Ribosomal activity (i.e. protein synthesis). However, a set of 14 genes seems to more uniquely indicate Mitochondrial activity, followed by 12 uniquely associated with Ion Transport, and a set of 9 genes associated with homeostasis followed by 25 (9 + + 8) involved with regulation of gene expression.*"}
 goMeta %>% 
   dplyr::filter(nDE >= 25, FDR < 0.05) %>%
   dplyr::select(gs_name, DE) %>%
@@ -813,7 +813,7 @@ goMeta %>%
 
 ### Genes Associated with RNA Metabolic Process
 
-```{r heatDsDNA, fig.height=5.5, fig.width=8, fig.cap="*All DE genes associated with the GO term 'RNA Metabolic Process'.*"}
+```{r heatDsDNA, fig.height=8, fig.width=8, fig.cap="*All DE genes associated with the GO term 'RNA Metabolic Process'.*"}
 go %>%
   dplyr::filter(
     gs_name == "GO_RNA_METABOLIC_PROCESS",
@@ -852,7 +852,7 @@ go %>%
 
 ### Genes Associated with the Mitochondrial Envelope
 
-```{r heatMitoEnvelope, fig.height=6, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Mitochondrion'.*"}
+```{r heatMitoEnvelope, fig.height=8, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Mitochondrion'.*"}
 go %>%
   dplyr::filter(
     gs_name == "GO_MITOCHONDRION",
@@ -934,7 +934,7 @@ go %>%
 
 ### Genes Associated with Homeostasis
 
-```{r heatHomeo, fig.height=6, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Homeostatic Process'.*"}
+```{r heatHomeo, fig.height=8, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Homeostatic Process'.*"}
 go %>%
   dplyr::filter(
     gene_id %in% dplyr::filter(deTable, DE)$gene_id,
@@ -974,6 +974,50 @@ go %>%
     cutree_cols = 3
   )
 ```
+
+### Genes Associated with Gene Regulation
+
+```{r heatReg, fig.height=8, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Positive Regulation of Gene Expression'.*"}
+go %>%
+  dplyr::filter(
+    gene_id %in% dplyr::filter(deTable, DE)$gene_id,
+    gs_name %in% c("GO_POSITIVE_REGULATION_OF_GENE_EXPRESSION")
+  ) %>%
+  group_by(gene_id, gene_name) %>%
+  tally() %>%
+  ungroup() %>%
+  dplyr::filter(n == 1) %>%
+  dplyr::select(
+    gene_id, gene_name
+  ) %>%
+  left_join(
+    cpmPostNorm %>%
+      as.data.frame() %>%
+      rownames_to_column("gene_id")
+  ) %>%
+  dplyr::select(gene_name, starts_with("Ps")) %>%
+  as.data.frame() %>%
+  column_to_rownames("gene_name") %>%
+  as.matrix() %>%
+  pheatmap(
+    color = viridis_pal(option = "magma")(100),
+    legend_breaks = c(seq(-2, 8, by = 2), max(.)),
+    legend_labels = c(seq(-2, 8, by = 2), "logCPM\n"),
+    labels_col = hmHeat %>%
+      dplyr::select(starts_with("Ps")) %>% 
+      colnames() %>% 
+      enframe(name = NULL) %>% 
+      dplyr::rename(sample = value) %>%
+      left_join(dgeList$samples) %>%
+      dplyr::select(sample, sampleID) %>%
+      with(
+        structure(sampleID, names = sample)
+      ),
+    cutree_rows = 4,
+    cutree_cols = 3
+  )
+```
+
 
 # Data Export
 
