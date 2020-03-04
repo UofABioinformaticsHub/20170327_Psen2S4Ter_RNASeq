@@ -482,7 +482,7 @@ hmMeta %>%
   unnest(DE) %>% 
   mutate(
     gs_name = str_remove(gs_name, "HALLMARK_"),
-    gs_name = fct_lump(gs_name, prop = 0.03)
+    gs_name = fct_lump(gs_name, n = 12)
     ) %>% 
   split(f = .$gs_name) %>% 
   lapply(magrittr::extract2, "DE") %>% 
@@ -533,7 +533,7 @@ hmHeat %>%
         structure(sampleID, names = sample)
       ),
     cutree_rows = 6,
-    cutree_cols = 3,
+    cutree_cols = 2,
     annotation_names_row = FALSE,
     annotation_row = hmHeat %>%
       dplyr::select(gene_name, starts_with("HALLMARK_")) %>%
@@ -644,7 +644,7 @@ kgMeta %>%
   unnest(DE) %>% 
   mutate(
     gs_name = str_remove(gs_name, "KEGG_"),
-    gs_name = fct_lump(gs_name, n = 7)
+    gs_name = fct_lump(gs_name, n = 8)
     ) %>% 
   split(f = .$gs_name) %>% 
   lapply(magrittr::extract2, "DE") %>% 
@@ -695,7 +695,7 @@ riboOx %>%
     legend_labels = c(seq(-2, 8, by = 2), "logCPM\n"),
     annotation_names_row = FALSE,
     cutree_rows = 3,
-    cutree_cols = 3
+    cutree_cols = 2
   )
 ```
 
@@ -846,7 +846,7 @@ go %>%
         structure(sampleID, names = sample)
       ),
     cutree_rows = 4,
-    cutree_cols = 3
+    cutree_cols = 2
   )
 ```
 
@@ -885,7 +885,7 @@ go %>%
         structure(sampleID, names = sample)
       ),
     cutree_rows = 5,
-    cutree_cols = 3
+    cutree_cols = 2
   )
 ```
 
@@ -928,7 +928,7 @@ go %>%
         structure(sampleID, names = sample)
       ),
     cutree_rows = 4,
-    cutree_cols = 3
+    cutree_cols = 2
   )
 ```
 
@@ -971,7 +971,7 @@ go %>%
         structure(sampleID, names = sample)
       ),
     cutree_rows = 4,
-    cutree_cols = 3
+    cutree_cols = 2
   )
 ```
 
@@ -1014,7 +1014,7 @@ go %>%
         structure(sampleID, names = sample)
       ),
     cutree_rows = 4,
-    cutree_cols = 3
+    cutree_cols = 2
   )
 ```
 

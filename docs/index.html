@@ -333,7 +333,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-02-20
+<strong>Last updated:</strong> 2020-03-05
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -424,10 +424,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree4d2af23dbbdd8c6f32404a1df10f65fcf0dbb266targetblank4d2af23a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/4d2af23dbbdd8c6f32404a1df10f65fcf0dbb266" target="_blank">4d2af23</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree377410a12ca13a7e233e39fb2f77f165e846d830targetblank377410aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/377410a12ca13a7e233e39fb2f77f165e846d830" target="_blank">377410a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree4d2af23dbbdd8c6f32404a1df10f65fcf0dbb266targetblank4d2af23a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree377410a12ca13a7e233e39fb2f77f165e846d830targetblank377410aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -436,6 +436,10 @@ Great! You are using Git for version control. Tracking code development and conn
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+
+Unstaged changes:
+    Modified:   output/Enrichment_Hom_V_Het.csv
+    Modified:   output/Enrichment_Mutant_V_WT.csv
 
 </code></pre>
 <p>
@@ -479,13 +483,47 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/f75f82a2155f610f0a0f0ae0d8a944411ded63a8/analysis/index.Rmd" target="_blank">f75f82a</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-03-05
+</td>
+<td>
+Added post-CQN PCA
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/index.html" target="_blank">86ffa07</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-20
+</td>
+<td>
+Updated saample layout figure
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/4d2af23dbbdd8c6f32404a1df10f65fcf0dbb266/analysis/index.Rmd" target="_blank">4d2af23</a>
 </td>
 <td>
 Steve Ped
 </td>
 <td>
-2020-02-19
+2020-02-20
 </td>
 <td>
 Modified heatmap sizes &amp; initial network layout
@@ -863,7 +901,7 @@ library(ggraph)</code></pre>
     dplyr::select(sample = sampleName, sampleID, genotype) %&gt;%
     mutate(genotype = factor(genotype, levels = c(&quot;WT&quot;, &quot;Het&quot;, &quot;Hom&quot;)))</code></pre>
 <p>This dataset is an analysis of RNASeq data from a 3-way comparison of WT zebrafish with Heterozygous mutants (<em>psen2<sup>S4Ter/+</sup></em>) and Homozygous mutants <em>psen2<sup>S4Ter/S4Ter</sup></em>. The <em>psen2<sup>S4Ter</sup></em> mutant allele is expected to be a premature termination of the <em>psen2</em> gene, but instead an alternate downstream start site resulted in a near full-length transcript with significant similarity to a conventional Early Onset Familial Alzhemier’s Disease mutation.</p>
-<p>The expected comparisons are shown below, however the final model was defined by fitting the wild-type samples, differences between heterozygotes and wild-type, followed by the difference between the two mutant genotypes</p>
+<p>The expected comparisons were intended to be a three-way group comparison, however the final model was defined by fitting the wild-type samples, differences between heterozygotes and wild-type, followed by the difference between the two mutant genotypes</p>
 <pre class="r"><code>create_ring(3) %&gt;% 
   mutate(
     name = paste0(levels(samples$genotype), &quot;\n(n = 4)&quot;),
@@ -923,6 +961,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/figure/index.Rmd/plotLayout-1.png" target="_blank">86ffa07</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/10a285b55e3d5e8c883f78710a0a9f9dd3a6e75a/docs/figure/index.Rmd/plotLayout-1.png" target="_blank">10a285b</a>
 </td>
 <td>
@@ -958,22 +1007,22 @@ Steve Ped
 <pre class="r"><code>devtools::session_info()</code></pre>
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value                       
- version  R version 3.6.2 (2019-12-12)
+ version  R version 3.6.3 (2020-02-29)
  os       Ubuntu 18.04.4 LTS          
  system   x86_64, linux-gnu           
  ui       X11                         
  language en_AU:en                    
  collate  en_AU.UTF-8                 
  ctype    en_AU.UTF-8                 
- tz       Australia/Adelaide          
- date     2020-02-20                  
+ tz       Australia/Melbourne         
+ date     2020-03-05                  
 
 ─ Packages ───────────────────────────────────────────────────────────────────
  package      * version  date       lib source        
  assertthat     0.2.1    2019-03-21 [2] CRAN (R 3.6.0)
  backports      1.1.5    2019-10-02 [2] CRAN (R 3.6.1)
  broom          0.5.4    2020-01-27 [2] CRAN (R 3.6.2)
- callr          3.4.1    2020-01-24 [2] CRAN (R 3.6.2)
+ callr          3.4.2    2020-02-12 [2] CRAN (R 3.6.2)
  cellranger     1.1.0    2016-07-27 [2] CRAN (R 3.6.0)
  cli            2.0.1    2020-01-08 [2] CRAN (R 3.6.2)
  colorspace     1.4-1    2019-03-18 [2] CRAN (R 3.6.0)
@@ -981,8 +1030,8 @@ Steve Ped
  DBI            1.1.0    2019-12-15 [2] CRAN (R 3.6.2)
  dbplyr         1.4.2    2019-06-17 [2] CRAN (R 3.6.0)
  desc           1.2.0    2018-05-01 [2] CRAN (R 3.6.0)
- devtools       2.2.1    2019-09-24 [2] CRAN (R 3.6.1)
- digest         0.6.23   2019-11-23 [2] CRAN (R 3.6.1)
+ devtools       2.2.2    2020-02-17 [2] CRAN (R 3.6.2)
+ digest         0.6.25   2020-02-23 [2] CRAN (R 3.6.2)
  dplyr        * 0.8.4    2020-01-31 [2] CRAN (R 3.6.2)
  ellipsis       0.3.0    2019-09-20 [2] CRAN (R 3.6.1)
  evaluate       0.14     2019-05-28 [2] CRAN (R 3.6.0)
@@ -993,7 +1042,7 @@ Steve Ped
  generics       0.0.2    2018-11-29 [2] CRAN (R 3.6.0)
  ggforce        0.3.1    2019-08-20 [2] CRAN (R 3.6.1)
  ggplot2      * 3.2.1    2019-08-10 [2] CRAN (R 3.6.1)
- ggraph       * 2.0.0    2019-09-02 [2] CRAN (R 3.6.1)
+ ggraph       * 2.0.1    2020-02-07 [2] CRAN (R 3.6.2)
  ggrepel        0.8.1    2019-05-07 [2] CRAN (R 3.6.0)
  git2r          0.26.1   2019-06-29 [2] CRAN (R 3.6.1)
  glue           1.3.1    2019-03-12 [2] CRAN (R 3.6.0)
@@ -1006,18 +1055,18 @@ Steve Ped
  httpuv         1.5.2    2019-09-11 [2] CRAN (R 3.6.1)
  httr           1.4.1    2019-08-05 [2] CRAN (R 3.6.1)
  igraph         1.2.4.2  2019-11-27 [2] CRAN (R 3.6.1)
- jsonlite       1.6      2018-12-07 [2] CRAN (R 3.6.0)
- knitr          1.27     2020-01-16 [2] CRAN (R 3.6.2)
+ jsonlite       1.6.1    2020-02-02 [2] CRAN (R 3.6.2)
+ knitr          1.28     2020-02-06 [2] CRAN (R 3.6.2)
  labeling       0.3      2014-08-23 [2] CRAN (R 3.6.0)
  later          1.0.0    2019-10-04 [2] CRAN (R 3.6.1)
- lattice        0.20-38  2018-11-04 [4] CRAN (R 3.6.0)
+ lattice        0.20-40  2020-02-19 [4] CRAN (R 3.6.2)
  lazyeval       0.2.2    2019-03-15 [2] CRAN (R 3.6.0)
  lifecycle      0.1.0    2019-08-01 [2] CRAN (R 3.6.1)
  lubridate      1.7.4    2018-04-11 [2] CRAN (R 3.6.0)
  magrittr       1.5      2014-11-22 [2] CRAN (R 3.6.0)
  MASS           7.3-51.5 2019-12-20 [4] CRAN (R 3.6.2)
  memoise        1.1.0    2017-04-21 [2] CRAN (R 3.6.0)
- modelr         0.1.5    2019-08-08 [2] CRAN (R 3.6.1)
+ modelr         0.1.6    2020-02-22 [2] CRAN (R 3.6.2)
  munsell        0.5.0    2018-06-12 [2] CRAN (R 3.6.0)
  nlme           3.1-144  2020-02-06 [4] CRAN (R 3.6.2)
  pillar         1.4.3    2019-12-20 [2] CRAN (R 3.6.2)
@@ -1026,24 +1075,24 @@ Steve Ped
  pkgload        1.0.2    2018-10-29 [2] CRAN (R 3.6.0)
  polyclip       1.10-0   2019-03-14 [2] CRAN (R 3.6.0)
  prettyunits    1.1.1    2020-01-24 [2] CRAN (R 3.6.2)
- processx       3.4.1    2019-07-18 [2] CRAN (R 3.6.1)
+ processx       3.4.2    2020-02-09 [2] CRAN (R 3.6.2)
  promises       1.1.0    2019-10-04 [2] CRAN (R 3.6.1)
- ps             1.3.0    2018-12-21 [2] CRAN (R 3.6.0)
+ ps             1.3.2    2020-02-13 [2] CRAN (R 3.6.2)
  purrr        * 0.3.3    2019-10-18 [2] CRAN (R 3.6.1)
  R6             2.4.1    2019-11-12 [2] CRAN (R 3.6.1)
  Rcpp           1.0.3    2019-11-08 [2] CRAN (R 3.6.1)
  readr        * 1.3.1    2018-12-21 [2] CRAN (R 3.6.0)
  readxl         1.3.1    2019-03-13 [2] CRAN (R 3.6.0)
- remotes        2.1.0    2019-06-24 [2] CRAN (R 3.6.0)
+ remotes        2.1.1    2020-02-15 [2] CRAN (R 3.6.2)
  reprex         0.3.0    2019-05-16 [2] CRAN (R 3.6.0)
  rlang          0.4.4    2020-01-28 [2] CRAN (R 3.6.2)
  rmarkdown      2.1      2020-01-20 [2] CRAN (R 3.6.2)
  rprojroot      1.3-2    2018-01-03 [2] CRAN (R 3.6.0)
- rstudioapi     0.10     2019-03-19 [2] CRAN (R 3.6.0)
+ rstudioapi     0.11     2020-02-07 [2] CRAN (R 3.6.2)
  rvest          0.3.5    2019-11-08 [2] CRAN (R 3.6.1)
  scales         1.1.0    2019-11-18 [2] CRAN (R 3.6.1)
  sessioninfo    1.1.1    2018-11-05 [2] CRAN (R 3.6.0)
- stringi        1.4.5    2020-01-11 [2] CRAN (R 3.6.2)
+ stringi        1.4.6    2020-02-17 [2] CRAN (R 3.6.2)
  stringr      * 1.4.0    2019-02-10 [2] CRAN (R 3.6.0)
  testthat       2.3.1    2019-12-01 [2] CRAN (R 3.6.1)
  tibble       * 2.1.3    2019-06-06 [2] CRAN (R 3.6.0)
@@ -1053,7 +1102,7 @@ Steve Ped
  tidyverse    * 1.3.0    2019-11-21 [2] CRAN (R 3.6.1)
  tweenr         1.0.1    2018-12-14 [2] CRAN (R 3.6.0)
  usethis        1.5.1    2019-07-04 [2] CRAN (R 3.6.1)
- vctrs          0.2.2    2020-01-24 [2] CRAN (R 3.6.2)
+ vctrs          0.2.3    2020-02-20 [2] CRAN (R 3.6.2)
  viridis        0.5.1    2018-03-29 [2] CRAN (R 3.6.0)
  viridisLite    0.3.0    2018-02-01 [2] CRAN (R 3.6.0)
  whisker        0.4      2019-08-28 [2] CRAN (R 3.6.1)
