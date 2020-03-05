@@ -1024,6 +1024,9 @@ go %>%
 All enriched gene sets with an FDR adjusted p-value < 0.05 were exported as a single csv file.
 
 ```{r}
+add_prefix <- function(x, pre = "p_"){
+  paste0(pre, x)
+}
 bind_rows(
   hmMeta,
   kgMeta,
@@ -1037,8 +1040,19 @@ bind_rows(
   ) %>%
   arrange(wilkinson_p) %>%
   dplyr::select(
-    gs_name, gs_size, nDE, wilkinson_p, FDR, fry, camera, gsea, goseq, DE
+    `Gene Set` = gs_name, 
+    `Nbr Detected Genes` = gs_size, 
+    `Nbr DE Genes` = nDE, 
+    combined = wilkinson_p, FDR, 
+    fry, camera, gsea, goseq, 
+    `DE Genes` = DE
   ) %>%
-  write_csv(here::here("output", "Enrichment_Mutant_V_WT.csv"))
+  rename_at(
+    vars(combined, fry, camera, gsea, goseq),
+    add_prefix
+  ) %>%
+  write_csv(
+    here::here("output", "Enrichment_Mutant_V_WT.csv")
+  )
 ```
 
