@@ -413,7 +413,7 @@ hmFry %>%
 
 ### Exploration of significant Hallmark Gene Sets
 
-```{r hmMetaUpset, fig.width=10, fig.cap = "*UpSet plot indicating distribution of DE genes within all significant HALLMARK gene sets. Gene sets were restricted to those with an FDR < 0.05 and at least 5 DE genes. The plot is truncated at the right for simplicity. Most gene sets seem relatively independent of each other with regard to DE genes.*"}
+```{r hmFryUpset, fig.width=10, fig.cap = "*UpSet plot indicating distribution of DE genes within all significant HALLMARK gene sets. Gene sets were restricted to those with an FDR < 0.05 and at least 5 DE genes. The plot is truncated at the right for simplicity. Most gene sets seem relatively independent of each other with regard to DE genes.*"}
 hmFry %>% 
   left_join(gsSizes) %>%
   dplyr::filter(de_size >= 5, FDR < 0.05) %>%
@@ -526,7 +526,7 @@ kgFry %>%
 
 ### Exploration of Significant KEGG Gene Sets
 
-```{r kgMetaUpset, fig.width=8, fig.cap = "*UpSet plot indicating distribution of DE genes within all significant terms from the KEGG gene sets. Gene sets were restricted to those with an FDR < 0.05 and four or more DE genes. There is considerable overlap between DE genes in Oxidative Phosphorylation and both Parkinson's and Huntington's Disease, indicating that these terms essentially capture the same expression signal within this dataset.*"}
+```{r kgFryUpset, fig.width=8, fig.cap = "*UpSet plot indicating distribution of DE genes within all significant terms from the KEGG gene sets. Gene sets were restricted to those with an FDR < 0.05 and four or more DE genes. There is considerable overlap between DE genes in Oxidative Phosphorylation and both Parkinson's and Huntington's Disease, indicating that these terms essentially capture the same expression signal within this dataset.*"}
 kgFry %>% 
   left_join(gsSizes) %>%
   dplyr::filter(de_size >= 4, FDR < 0.05) %>%
@@ -631,7 +631,7 @@ goFry %>%
 
 ### Exploration of Significant GO Gene Sets
 
-```{r goMetaUpset, fig.height=6, fig.width=10, fig.cap = "*UpSet plot indicating distribution of DE genes within significantly enriched terms from the GO gene sets. For this visualisation, GO terms were restricted to those with 15 or more DE genes, where this represented more than 5% of a gene set as being DE, along with an FDR < 0.02 and more than 3 steps back to the ontology root. The 20 largest GO terms satisfying these criteria are shown. The plot is  truncated at the right hand side for simplicity. A group of 28 genes is uniquely attributed to the Mitochondrial Envelop, with a further 18 being relatively unique to mRNA Metabolic Process. The next grouping of 15 genes are unique to Regulation Of Nucleobase-Containing Compound Metabolic Process followed by 25 genes, spread across two clusters of terms which largely represent Ribosomal activity. In between these are 13 genes uniquely associated with Anion Transport.*"}
+```{r goFryUpset, fig.height=6, fig.width=10, fig.cap = "*UpSet plot indicating distribution of DE genes within significantly enriched terms from the GO gene sets. For this visualisation, GO terms were restricted to those with 15 or more DE genes, where this represented more than 5% of a gene set as being DE, along with an FDR < 0.02 and more than 3 steps back to the ontology root. The 20 largest GO terms satisfying these criteria are shown. The plot is  truncated at the right hand side for simplicity. A group of 28 genes is uniquely attributed to the Mitochondrial Envelop, with a further 18 being relatively unique to mRNA Metabolic Process. The next grouping of 15 genes are unique to Regulation Of Nucleobase-Containing Compound Metabolic Process followed by 25 genes, spread across two clusters of terms which largely represent Ribosomal activity. In between these are 13 genes uniquely associated with Anion Transport.*"}
 goFry %>% 
   left_join(gsSizes) %>%
   left_join(distinct(go, gs_name, shortest_path)) %>%
