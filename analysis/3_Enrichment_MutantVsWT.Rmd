@@ -102,9 +102,8 @@ Two steps for enrichment analysis will be undertaken.
 Testing for enrichment *within discrete gene sets* will be performed using `goseq` as this allows for the incorporation of a single covariate as a predictor of differential expression.
 GC content, gene length and correlation with rRNA removal can all be supplied as separate covariates.
 
-Testing for enrichment *with ranked lists* will be performed using:
-
-1. `fry` as this can take into account inter-gene correlations. Values supplied will be fitted values for each gene/sample as these have been corrected for GC and length biases.
+For enrichment within larger gene lists,  `fry` can take into account inter-gene correlations. 
+Values supplied will be logCPM for each gene/sample after being adjusted for GC and length biases.
 
 
 # Databases used for testing

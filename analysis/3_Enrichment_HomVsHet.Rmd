@@ -31,8 +31,6 @@ library(msigdbr)
 library(AnnotationDbi)
 library(RColorBrewer)
 library(ngsReports)
-library(fgsea)
-library(metap)
 ```
 
 ```{r setOpts}
@@ -97,13 +95,8 @@ Despite normalisation to account for gene length and GC bias, some appeared to s
 In addition, the confounding of incomplete rRNA removal with genotype may lead to other distortions in both DE genes and ranking statistics.
 
 As the list of DE genes for this comparison was small ($n_{\text{DE}} = `r nrow(dplyr::filter(deTable, DE))`$), enrichment testing was only performed using ranked-list approaches.
-Testing for enrichment *with ranked lists* will be performed using:
-
-1. `fry` as this can take into account inter-gene correlations. Values supplied will be fitted values for each gene/sample as these have been corrected for GC and length biases.
-2. `camera`, which also accommodates inter-gene correlations. Values supplied will be fitted values for each gene/sample as these have been corrected for GC and length biases.
-3. `fgsea` which is an R implementation of GSEA. This approach simply takes a ranked list and doesn't directly account for correlations. However, the ranked list will be derived from analysis using CQN-normalisation so will be robust to these technical artefacts.
-
-In the case of `camera`, inter-gene correlations will be calculated for each gene-set prior to analysis to *ensure more conservative p-values are obtained* that more strictly control the error rate.
+For enrichment within larger gene lists,  `fry` can take into account inter-gene correlations. 
+Values supplied will be logCPM for each gene/sample after being adjusted for GC and length biases.
 
 # Databases used for testing
 
@@ -184,25 +177,19 @@ A total of `r comma(length(goByGene))` Ensembl IDs were mapped to pathways from 
 gsSizes <- bind_rows(hm, kg, go) %>% 
   dplyr::select(gs_name, gene_symbol, gene_id) %>% 
   chop(c(gene_symbol, gene_id)) %>%
-  mutate(gs_size = vapply(gene_symbol, length, integer(1)))
+  mutate(
+    gs_size = vapply(gene_symbol, length, integer(1)),
+    de_id = lapply(
+      X = gene_id, 
+      FUN = intersect, 
+      y = dplyr::filter(deTable, DE)$gene_id
+      ),
+    de_size = vapply(de_id, length, integer(1))
+  )
 ```
 
 
 # Enrichment Testing on Ranked Lists
-
-
-
-```{r rnk}
-rnk <- structure(
-  -sign(deTable$logFC)*log10(deTable$PValue), 
-  names = deTable$gene_id
-) %>% sort()
-np <- 1e5
-```
-
-
-Genes were ranked by -sign(logFC)*log~10~(p) for approaches which required a ranked list.
-Multiple approaches were first calculated individually, before being combined for the final integrated set of results.
 
 
 ## Hallmark Gene Sets
@@ -219,75 +206,8 @@ hmFry <- cpmPostNorm %>%
   as_tibble()
 ```
 
-
-```{r hmCamera}
-hmCamera <- cpmPostNorm %>%
-  camera(
-    index = hmByID,
-    design = dgeList$design,
-    contrast = "homozygous",
-    inter.gene.cor = NULL
-    ) %>%
-  rownames_to_column("gs_name") %>%
-  as_tibble()
-```
-
-For generation of the GSEA ranked list, `r comma(np)` permutations were conducted.
-
-```{r hmGsea}
-hmGsea <- fgsea(
-  pathways = hmByID, 
-  stats = rnk,
-  nperm = np
-) %>%
-  as_tibble() %>%
-  dplyr::rename(gs_name = pathway, PValue = pval) %>%
-  arrange(PValue)
-```
-
-Results for all analyses were then combined using Wilkinson's method to combine p-values.
-For a conservative approach, under $m$ tests, the $m - 1^{\text{th}}$ smallest p-value was chosen.
-
-```{r hmMeta}
-hmMeta <- hmFry %>%
-  dplyr::select(gs_name, fry = PValue) %>%
-  left_join(
-    dplyr::select(hmCamera, gs_name, camera = PValue)
-  ) %>%
-  left_join(
-    dplyr::select(hmGsea, gs_name, gsea = PValue)
-  ) %>%
-  nest(p = one_of(c("fry", "camera", "gsea"))) %>%
-  mutate(
-    n_p = vapply(p, function(x){sum(!is.na(unlist(x)))}, integer(1)), 
-    wilkinson_p = vapply(p, function(x){
-      x <- unlist(x)
-      x <- x[!is.na(x)]
-      wilkinsonp(x, length(x) - 1)$p
-    }, numeric(1)),
-    FDR = p.adjust(wilkinson_p, "fdr"), 
-    adjP = p.adjust(wilkinson_p, "bonferroni")
-  ) %>% 
-  arrange(wilkinson_p) %>% 
-  unnest(p) %>%
-  left_join(gsSizes) %>%
-  mutate(
-    DE = lapply(gene_id, intersect, dplyr::filter(deTable, DE)$gene_id),
-    DE = lapply(DE, unique),
-    nDE = vapply(DE, length, integer(1))
-  )
-```
-
-```{r}
-hmMeta %>%
-  dplyr::filter(FDR < 0.1) %>%
-  mutate_at(vars(one_of(c("wilkinson_p", "FDR", "adjP"))), formatP) %>%
-  dplyr::select(`Gene Set` = gs_name, `Number DE` = nDE, `Set Size` = gs_size, `Wilkinson~p~` = wilkinson_p, `p~FDR~` = FDR, `p~bonf~` = adjP) %>%
-  pander(
-    caption = "Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.1, with none passing the initial filter of FDR < 0.05",
-    justify = "lrrrrr"
-  )
-```
+Using the directional results from `fry`, no Hallmark Gene Sets were detected as different between mutant genotypes, with a minimum FDR being found as `r percent(min(hmFry$FDR))`.
+Similarly for a non-directional approach, no Hallmark Gene Sets were detected as different, with a minimum `FDR.Mixed` being `r percent(min(hmFry$FDR.Mixed))`.
 
 ## KEGG Gene Sets
 
@@ -303,74 +223,29 @@ kgFry <-cpmPostNorm%>%
   as_tibble()
 ```
 
-```{r kgCamera}
-kgCamera <- cpmPostNorm %>%
-  camera(
-    index = kgByID,
-    design = dgeList$design,
-    contrast = "homozygous",
-    inter.gene.cor = NULL
-    ) %>%
-  rownames_to_column("gs_name") %>%
-  as_tibble()
-```
-
-For generation of the GSEA ranked list, `r comma(np)` permutations were conducted.
-
-```{r kgGsea}
-kgGsea <- fgsea(
-  pathways = kgByID, 
-  stats = rnk,
-  nperm = np
-) %>%
-  as_tibble() %>%
-  dplyr::rename(gs_name = pathway, PValue = pval) %>%
-  arrange(PValue)
-```
-
-Results for all analyses were then combined using Wilkinson's method to combine p-values.
-For a conservative approach, under $m$ tests, the $m - 1^{\text{th}}$ smallest p-value was chosen.
-
-```{r kgMeta}
-kgMeta <- kgFry %>%
-  dplyr::select(gs_name, fry = PValue) %>%
-  left_join(
-    dplyr::select(kgCamera, gs_name, camera = PValue)
-  ) %>%
-  left_join(
-    dplyr::select(kgGsea, gs_name, gsea = PValue)
-  )  %>%
-  nest(p = one_of(c("fry", "camera", "gsea"))) %>%
-  mutate(
-    n_p = vapply(p, function(x){sum(!is.na(unlist(x)))}, integer(1)), 
-    wilkinson_p = vapply(p, function(x){
-      x <- unlist(x)
-      x <- x[!is.na(x)]
-      wilkinsonp(x, length(x) - 1)$p
-    }, numeric(1)),
-    FDR = p.adjust(wilkinson_p, "fdr"), 
-    adjP = p.adjust(wilkinson_p, "bonferroni")
-  ) %>% 
-  arrange(wilkinson_p) %>% 
-  unnest(p) %>%
-  left_join(gsSizes) %>%
-  mutate(
-    DE = lapply(gene_id, intersect, dplyr::filter(deTable, DE)$gene_id),
-    DE = lapply(DE, unique),
-    nDE = vapply(DE, length, integer(1))
-  )
-```
+Using the directional results from `fry`, no KEGG Gene Sets were detected as different between mutant genotypes, with a minimum FDR being found as `r percent(min(kgFry$FDR))`.
 
 ```{r}
-kgMeta %>%
-  dplyr::filter(FDR < 0.01) %>%
-  mutate_at(vars(one_of(c("wilkinson_p", "FDR", "adjP"))), formatP) %>%
-  dplyr::select(`Gene Set` = gs_name, `Number DE` = nDE, `Set Size` = gs_size, `Wilkinson~p~` = wilkinson_p, `p~FDR~` = FDR, `p~bonf~` = adjP) %>%
+kgFry %>% 
+  arrange(PValue.Mixed) %>%
+  dplyr::select(gs_name, NGenes, contains("Mixed")) %>%
+  set_names(str_remove(names(.), ".Mixed")) %>%
+  dplyr::filter(FDR < 0.05) %>%
+  dplyr::select(
+    `KEGG Gene Set` = gs_name,
+    `Expressed Genes` = NGenes, 
+    PValue, FDR
+  ) %>%
+  mutate_at(
+    vars(PValue, FDR), formatP
+  ) %>%
   pander(
-    caption = "Results from combining all above approaches for the KEGG Gene Sets. All terms are significant to an FDR of 0.05.",
-    justify = "lrrrrr"
+    caption = "The only KEGG Gene Set detected as different between mutants."
   )
 ```
+
+Using a non-directional (i.e. Mixed) approach, one KEGG gene set was detected as different.
+However, an FDR of 0.047 in this instance does not provide much confidence to this observation.
 
 ## GO Gene Sets
 
@@ -386,106 +261,62 @@ goFry <- cpmPostNorm %>%
   as_tibble()
 ```
 
-```{r goCamera}
-goCamera <- cpmPostNorm %>%
-  camera(
-    index = goByID,
-    design = dgeList$design,
-    contrast = "homozygous",
-    inter.gene.cor = NULL
-    ) %>%
-  rownames_to_column("gs_name") %>%
-  as_tibble()
-```
-
-For generation of the GSEA ranked list, `r comma(np)` permutations were conducted.
-
-```{r goGsea}
-goGsea <- fgsea(
-  pathways = goByID, 
-  stats = rnk,
-  nperm = np
-) %>%
-  as_tibble() %>%
-  dplyr::rename(gs_name = pathway, PValue = pval) %>%
-  arrange(PValue)
-```
-
-Results for all analyses were then combined using Wilkinson's method to combine p-values.
-For a conservative approach, under $m$ tests, the $m - 1^{\text{th}}$ smallest p-value was chosen.
-
-```{r goMeta}
-goMeta <- goFry %>%
-  dplyr::select(gs_name, fry = PValue) %>%
-  left_join(
-    dplyr::select(goCamera, gs_name, camera = PValue)
-  ) %>%
-  left_join(
-    dplyr::select(goGsea, gs_name, gsea = PValue)
-  )  %>%
-  nest(p = one_of(c("fry", "camera", "gsea"))) %>%
-  mutate(
-    n_p = vapply(p, function(x){sum(!is.na(unlist(x)))}, integer(1)), 
-    wilkinson_p = vapply(p, function(x){
-      x <- unlist(x)
-      x <- x[!is.na(x)]
-      wilkinsonp(x, length(x) - 1)$p
-    }, numeric(1)),
-    FDR = p.adjust(wilkinson_p, "fdr"), 
-    adjP = p.adjust(wilkinson_p, "bonferroni")
-  ) %>% 
-  arrange(wilkinson_p) %>% 
-  unnest(p) %>%
-  left_join(gsSizes) %>%
-  mutate(
-    DE = lapply(gene_id, intersect, dplyr::filter(deTable, DE)$gene_id),
-    DE = lapply(DE, unique),
-    nDE = vapply(DE, length, integer(1))
-  )
-```
+No GO Gene Sets were detected as different between mutant genotypes, with a minimum FDR being found as `r percent(min(goFry$FDR))`.
 
 ```{r}
-goMeta %>%
-  dplyr::filter(adjP < 0.05) %>%
-  mutate_at(vars(one_of(c("wilkinson_p", "FDR", "adjP"))), formatP) %>%
-  dplyr::select(`Gene Set` = gs_name, `Number DE` = nDE, `Set Size` = gs_size, `Wilkinson~p~` = wilkinson_p, `p~FDR~` = FDR, `p~bonf~` = adjP) %>%
+goFry %>% 
+  arrange(PValue.Mixed) %>%
+  dplyr::select(gs_name, NGenes, contains("Mixed")) %>%
+  set_names(str_remove(names(.), ".Mixed")) %>%
+  dplyr::filter(FDR < 0.05) %>%
+  dplyr::select(
+    `GO Gene Set` = gs_name,
+    `Expressed Genes` = NGenes, 
+    PValue, FDR
+  ) %>%
+  mutate_at(
+    vars(PValue, FDR), formatP
+  ) %>%
   pander(
-    caption = "Results from combining all above approaches for the GO Gene Sets. All terms are significant to a bonferroni-adjusted p-value < 0.05.",
-    justify = "lrrrrr"
+    caption = "The only GO Gene Set detected as different between mutants."
   )
 ```
+
+Again, using a non-directional (i.e. Mixed) approach, one GO gene set was detected as different.
+However, an FDR of 0.046 in this instance does not provide much confidence to this observation.
 
 # Data Export
 
 All enriched gene sets terms with an FDR adjusted p-value < 0.05 were exported as a single csv file.
 
 ```{r}
-add_prefix <- function(x, pre = "p_"){
-  paste0(pre, x)
-}
 bind_rows(
-  hmMeta,
-  kgMeta,
-  goMeta
+  hmFry,
+  kgFry,
+  goFry
 ) %>%
-  dplyr::filter(FDR < 0.05) %>%
+  dplyr::filter(FDR.Mixed < 0.05) %>%
+  left_join(gsSizes) %>%
+  dplyr::select(
+    gs_name, NGenes, 
+    PValue = PValue.Mixed, 
+    FDR = FDR.Mixed,
+    gene_symbol, de_size
+  ) %>%
   mutate(
-    DE = lapply(DE, function(x){dplyr::filter(deTable, gene_id %in% x)$gene_name}),
-    DE = lapply(DE, unique),
+    DE = lapply(
+      X = gene_symbol,
+      FUN =  intersect, 
+      y = dplyr::filter(deTable, DE)$gene_name
+    ),
     DE = vapply(DE, paste, character(1), collapse = ";")
   ) %>%
-  arrange(wilkinson_p) %>%
   dplyr::select(
     `Gene Set` = gs_name, 
-    `Nbr Detected Genes` = gs_size, 
-    `Nbr DE Genes` = nDE, 
-    combined = wilkinson_p, FDR, 
-    fry, camera, gsea, 
+    `Nbr Detected Genes` = NGenes, 
+    `Nbr DE Genes` = de_size, 
+     PValue, FDR, 
     `DE Genes` = DE
-  ) %>%
-  rename_at(
-    vars(combined, fry, camera, gsea),
-    add_prefix
   ) %>%
   write_csv(
     here::here("output", "Enrichment_Hom_V_Het.csv")
