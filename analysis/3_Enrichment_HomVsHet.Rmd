@@ -103,7 +103,7 @@ Testing for enrichment *with ranked lists* will be performed using:
 2. `camera`, which also accommodates inter-gene correlations. Values supplied will be fitted values for each gene/sample as these have been corrected for GC and length biases.
 3. `fgsea` which is an R implementation of GSEA. This approach simply takes a ranked list and doesn't directly account for correlations. However, the ranked list will be derived from analysis using CQN-normalisation so will be robust to these technical artefacts.
 
-In the case of `camera`, inter-gene correlations will be calculated for each gene-set prior to analysis to ensure more conservative p-values are obtained.
+In the case of `camera`, inter-gene correlations will be calculated for each gene-set prior to analysis to *ensure more conservative p-values are obtained* that more strictly control the error rate.
 
 # Databases used for testing
 
@@ -219,7 +219,6 @@ hmFry <- cpmPostNorm %>%
   as_tibble()
 ```
 
-For analysis under `camera` when inter-gene correlations were calculated for a more conservative result.
 
 ```{r hmCamera}
 hmCamera <- cpmPostNorm %>%
@@ -304,8 +303,6 @@ kgFry <-cpmPostNorm%>%
   as_tibble()
 ```
 
-For analysis under `camera` when inter-gene correlations were calculated for a more conservative result.
-
 ```{r kgCamera}
 kgCamera <- cpmPostNorm %>%
   camera(
@@ -388,8 +385,6 @@ goFry <- cpmPostNorm %>%
   rownames_to_column("gs_name") %>%
   as_tibble()
 ```
-
-For analysis under `camera` when inter-gene correlations were calculated for a more conservative result.
 
 ```{r goCamera}
 goCamera <- cpmPostNorm %>%
