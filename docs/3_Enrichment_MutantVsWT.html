@@ -387,7 +387,7 @@ div.section {
 
 <h1 class="title toc-ignore">Enrichment Analysis: Mutant Vs Wild-Type</h1>
 <h4 class="author">Steve Pederson</h4>
-<h4 class="date">05 March, 2020</h4>
+<h4 class="date">06 March, 2020</h4>
 
 </div>
 
@@ -412,7 +412,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-03-05
+<strong>Last updated:</strong> 2020-03-06
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -503,10 +503,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree2c56cefee54ceee830d89b3ef09f6063b5a5b27dtargetblank2c56cefa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/2c56cefee54ceee830d89b3ef09f6063b5a5b27d" target="_blank">2c56cef</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree2772d42413d55a72b869d7b6929a15ddcd0f2bb6targetblank2772d42a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/2772d42413d55a72b869d7b6929a15ddcd0f2bb6" target="_blank">2772d42</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree2c56cefee54ceee830d89b3ef09f6063b5a5b27dtargetblank2c56cefa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree2772d42413d55a72b869d7b6929a15ddcd0f2bb6targetblank2772d42a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -515,6 +515,9 @@ Great! You are using Git for version control. Tracking code development and conn
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  output/AllResults.xlsx
 
 Unstaged changes:
     Modified:   output/Enrichment_Hom_V_Het.csv
@@ -557,6 +560,125 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/2772d42413d55a72b869d7b6929a15ddcd0f2bb6/analysis/3_Enrichment_MutantVsWT.Rmd" target="_blank">2772d42</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-03-06
+</td>
+<td>
+Corrected UpSet names
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/a9781d973379ddbcb43886194de4e7ba7afa7ba0/analysis/3_Enrichment_MutantVsWT.Rmd" target="_blank">a9781d9</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-03-06
+</td>
+<td>
+Fixed duplicate labels
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/154085bd3661ef17a5a5260df5f3b3c539978b24/analysis/3_Enrichment_MutantVsWT.Rmd" target="_blank">154085b</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-03-06
+</td>
+<td>
+Reduced ranked lists to fry only
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/2aa6e06392d2e643c7fefc36c4e661f472ce9f0d/analysis/3_Enrichment_MutantVsWT.Rmd" target="_blank">2aa6e06</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-03-06
+</td>
+<td>
+Removed gsea, camera &amp; combining data. Now only using fry + goseq
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/433a7294defb4f538bb7e0db7e18c764c798b225/analysis/3_Enrichment_MutantVsWT.Rmd" target="_blank">433a729</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-03-06
+</td>
+<td>
+Prepared to remove EGSEA-type approach
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/956c06574bb65a9ff9a96d32d44aaf0d7ca83be2/analysis/3_Enrichment_MutantVsWT.Rmd" target="_blank">956c065</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-03-05
+</td>
+<td>
+Revised GO exploration
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/1385ceb4a1970ff77ddd3c38195e150aa718edf7/docs/3_Enrichment_MutantVsWT.html" target="_blank">1385ceb</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-03-05
+</td>
+<td>
+Compiled after renaming columns
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -687,7 +809,7 @@ Rmd
 Steve Ped
 </td>
 <td>
-2020-02-19
+2020-02-20
 </td>
 <td>
 Modified heatmap sizes &amp; initial network layout
@@ -704,7 +826,7 @@ Rmd
 Steve Ped
 </td>
 <td>
-2020-02-19
+2020-02-20
 </td>
 <td>
 Added multiple heatmaps &amp; UpSet plots
@@ -984,8 +1106,6 @@ library(msigdbr)
 library(AnnotationDbi)
 library(RColorBrewer)
 library(ngsReports)
-library(fgsea)
-library(metap)
 library(UpSetR)
 library(pheatmap)</code></pre>
 <pre class="r"><code>theme_set(theme_bw())
@@ -1011,6 +1131,11 @@ entrezGenes &lt;- dgeList$genes %&gt;%
   dplyr::filter(!is.na(entrezid)) %&gt;%
   unnest(entrezid) %&gt;%
   dplyr::rename(entrez_gene = entrezid)</code></pre>
+<pre class="r"><code>deTable &lt;- here::here(&quot;output&quot;, &quot;psen2VsWT.csv&quot;) %&gt;% 
+  read_csv() %&gt;%
+  mutate(
+    entrezid = dgeList$genes$entrezid[gene_id]
+  )</code></pre>
 <pre class="r"><code>formatP &lt;- function(p, m = 0.0001){
   out &lt;- rep(&quot;&quot;, length(p))
   out[p &lt; m] &lt;- sprintf(&quot;%.2e&quot;, p[p&lt;m])
@@ -1024,16 +1149,10 @@ entrezGenes &lt;- dgeList$genes %&gt;%
 <p>Two steps for enrichment analysis will be undertaken.</p>
 <ol style="list-style-type: decimal">
 <li>Testing for enrichment within <em>discrete sets of DE genes</em> as defined in the previous steps</li>
-<li>Testing for enrichment within <em>ranked lists</em>, regardless of DE status or statistical significance, before integration of all enrichment analyses using Fisher’s method for combining p-values.</li>
+<li>Testing for enrichment using the complete set of results using <code>fry</code>.</li>
 </ol>
 <p>Testing for enrichment <em>within discrete gene sets</em> will be performed using <code>goseq</code> as this allows for the incorporation of a single covariate as a predictor of differential expression. GC content, gene length and correlation with rRNA removal can all be supplied as separate covariates.</p>
-<p>Testing for enrichment <em>with ranked lists</em> will be performed using:</p>
-<ol style="list-style-type: decimal">
-<li><code>fry</code> as this can take into account inter-gene correlations. Values supplied will be fitted values for each gene/sample as these have been corrected for GC and length biases.</li>
-<li><code>camera</code>, which also accommodates inter-gene correlations. Values supplied will be fitted values for each gene/sample as these have been corrected for GC and length biases.</li>
-<li><code>fgsea</code> which is an R implementation of GSEA. This approach simply takes a ranked list and doesn’t directly account for correlations. However, the ranked list will be derived from analysis using CQN-normalisation so will be robust to these technical artefacts.</li>
-</ol>
-<p>In the case of <code>camera</code>, inter-gene correlations will be calculated for each gene-set prior to analysis to ensure more conservative p-values are obtained.</p>
+<p>For enrichment within larger gene lists, <code>fry</code> can take into account inter-gene correlations. Values supplied will be logCPM for each gene/sample after being adjusted for GC and length biases.</p>
 </div>
 <div id="databases-used-for-testing" class="section level1">
 <h1>Databases used for testing</h1>
@@ -1092,16 +1211,19 @@ goByID &lt;- go %&gt;%
 <pre class="r"><code>gsSizes &lt;- bind_rows(hm, kg, go) %&gt;% 
   dplyr::select(gs_name, gene_symbol, gene_id) %&gt;% 
   chop(c(gene_symbol, gene_id)) %&gt;%
-  mutate(gs_size = vapply(gene_symbol, length, integer(1)))</code></pre>
+  mutate(
+    gs_size = vapply(gene_symbol, length, integer(1)),
+    de_id = lapply(
+      X = gene_id, 
+      FUN = intersect, 
+      y = dplyr::filter(deTable, DE)$gene_id
+      ),
+    de_size = vapply(de_id, length, integer(1))
+  )</code></pre>
 </div>
 </div>
 <div id="enrichment-in-the-de-gene-set" class="section level1">
 <h1>Enrichment in the DE Gene Set</h1>
-<pre class="r"><code>deTable &lt;- here::here(&quot;output&quot;, &quot;psen2VsWT.csv&quot;) %&gt;% 
-  read_csv() %&gt;%
-  mutate(
-    entrezid = dgeList$genes$entrezid[gene_id]
-  )</code></pre>
 <p>The first step of analysis using <code>goseq</code>, regardless of the gene-set, is estimation of the probability weight function (PWF) which quantifies the probability of a gene being considered as DE based on a single covariate. As GC content and length should have been accounted for during conditional-quantile normalisation, these were not required for any bias. However, the <em>gene-level correlations with rRNA contamination</em> were instead used a predictor of bias in selection of a gene as being DE.</p>
 <pre class="r"><code>rawFqc &lt;- list.files(
   path = here::here(&quot;data/0_rawData/FastQC/&quot;),
@@ -1479,12 +1601,6 @@ Steve Ped
 </div>
 <div id="enrichment-testing-on-ranked-lists" class="section level1">
 <h1>Enrichment Testing on Ranked Lists</h1>
-<pre class="r"><code>rnk &lt;- structure(
-  -sign(deTable$logFC)*log10(deTable$PValue), 
-  names = deTable$gene_id
-) %&gt;% sort()
-np &lt;- 1e5</code></pre>
-<p>Genes were ranked by -sign(logFC)*log<sub>10</sub>(p) for approaches which required a ranked list. Multiple approaches were first calculated individually, before being combined for the final integrated set of results.</p>
 <div id="hallmark-gene-sets-2" class="section level2">
 <h2>Hallmark Gene Sets</h2>
 <pre class="r"><code>hmFry &lt;- cpmPostNorm %&gt;%
@@ -1496,355 +1612,258 @@ np &lt;- 1e5</code></pre>
     ) %&gt;%
   rownames_to_column(&quot;gs_name&quot;) %&gt;%
   as_tibble()</code></pre>
-<p>For analysis under <code>camera</code> when inter-gene correlations were calculated for a more conservative result.</p>
-<pre class="r"><code>hmCamera &lt;- cpmPostNorm %&gt;%
-  camera(
-    index = hmByID,
-    design = dgeList$design,
-    contrast = &quot;mutant&quot;,
-    inter.gene.cor = NULL
-    ) %&gt;%
-  rownames_to_column(&quot;gs_name&quot;) %&gt;%
-  as_tibble()</code></pre>
-<p>For generation of the GSEA ranked list, 100,000 permutations were conducted.</p>
-<pre class="r"><code>hmGsea &lt;- fgsea(
-  pathways = hmByID, 
-  stats = rnk,
-  nperm = np
-) %&gt;%
-  as_tibble() %&gt;%
-  dplyr::rename(gs_name = pathway, PValue = pval) %&gt;%
-  arrange(PValue)</code></pre>
-<p>Results for all analyses, including goseq were then combined using Wilkinson’s method to combine p-values. For a conservative approach, under <span class="math inline">\(m\)</span> tests, the <span class="math inline">\(m - 1^{\text{th}}\)</span> smallest p-value was chosen.</p>
-<pre class="r"><code>hmMeta &lt;- hmFry %&gt;%
-  dplyr::select(gs_name, fry = PValue) %&gt;%
-  left_join(
-    dplyr::select(hmCamera, gs_name, camera = PValue)
+<pre class="r"><code>hmFry %&gt;%
+  dplyr::filter(
+    PValue &lt; 0.01
   ) %&gt;%
-  left_join(
-    dplyr::select(hmGsea, gs_name, gsea = PValue)
-  ) %&gt;%
-  left_join(
-    dplyr::select(hmRiboGoseq, gs_name, goseq = PValue)
-  ) %&gt;% 
-  nest(p = one_of(c(&quot;fry&quot;, &quot;camera&quot;, &quot;gsea&quot;, &quot;goseq&quot;))) %&gt;%
-  mutate(
-    n_p = vapply(p, function(x){sum(!is.na(unlist(x)))}, integer(1)), 
-    wilkinson_p = vapply(p, function(x){
-      x &lt;- unlist(x)
-      x &lt;- x[!is.na(x)]
-      wilkinsonp(x, length(x) - 1)$p
-    }, numeric(1)),
-    FDR = p.adjust(wilkinson_p, &quot;fdr&quot;), 
-    adjP = p.adjust(wilkinson_p, &quot;bonferroni&quot;)
-  ) %&gt;% 
-  arrange(wilkinson_p) %&gt;% 
-  unnest(p) %&gt;%
   left_join(gsSizes) %&gt;%
-  mutate(
-    DE = lapply(gene_id, intersect, dplyr::filter(deTable, DE)$gene_id),
-    DE = lapply(DE, unique),
-    nDE = vapply(DE, length, integer(1))
-  )</code></pre>
-<pre class="r"><code>hmMeta %&gt;%
-  dplyr::filter(FDR &lt; 0.05) %&gt;%
-  mutate_at(vars(one_of(c(&quot;wilkinson_p&quot;, &quot;FDR&quot;, &quot;adjP&quot;))), formatP) %&gt;%
-  dplyr::select(`Gene Set` = gs_name, `Number DE` = nDE, `Set Size` = gs_size, `Wilkinson~p~` = wilkinson_p, `p~FDR~` = FDR, `p~bonf~` = adjP) %&gt;%
+  mutate(gs_name = str_remove(gs_name, &quot;HALLMARK_&quot;)) %&gt;%
+  dplyr::select(
+    `Hallmark Gene Set` = gs_name,
+    `Expressed Genes` = NGenes,
+    `DE Genes` = de_size,
+    Direction,
+    PValue, FDR
+    ) %&gt;%
   pander(
-    caption = &quot;Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.05.&quot;,
-    justify = &quot;lrrrrr&quot;
+    caption = &quot;Enriched Hallmark Gene Sets, using a threshold p &lt; 0.01, which corresponds to an FDR of 0.02&quot;
   )</code></pre>
 <table>
-<caption>Results from combining all above approaches for the Hallmark Gene Sets. All terms are significant to an FDR of 0.05.</caption>
+<caption>Enriched Hallmark Gene Sets, using a threshold p &lt; 0.01, which corresponds to an FDR of 0.02</caption>
 <thead>
 <tr class="header">
-<th align="left">Gene Set</th>
-<th align="right">Number DE</th>
-<th align="right">Set Size</th>
-<th align="right">Wilkinson<sub>p</sub></th>
-<th align="right">p<sub>FDR</sub></th>
-<th align="right">p<sub>bonf</sub></th>
+<th align="center">Hallmark Gene Set</th>
+<th align="center">Expressed Genes</th>
+<th align="center">DE Genes</th>
+<th align="center">Direction</th>
+<th align="center">PValue</th>
+<th align="center">FDR</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">HALLMARK_UV_RESPONSE_UP</td>
-<td align="right">7</td>
-<td align="right">141</td>
-<td align="right">5.90e-08</td>
-<td align="right">2.95e-06</td>
-<td align="right">2.95e-06</td>
+<td align="center">UV_RESPONSE_UP</td>
+<td align="center">141</td>
+<td align="center">7</td>
+<td align="center">Up</td>
+<td align="center">4.187e-06</td>
+<td align="center">0.0002094</td>
 </tr>
 <tr class="even">
-<td align="left">HALLMARK_XENOBIOTIC_METABOLISM</td>
-<td align="right">11</td>
-<td align="right">146</td>
-<td align="right">1.87e-05</td>
-<td align="right">0.0005</td>
-<td align="right">0.0009</td>
+<td align="center">XENOBIOTIC_METABOLISM</td>
+<td align="center">146</td>
+<td align="center">11</td>
+<td align="center">Up</td>
+<td align="center">8.577e-05</td>
+<td align="center">0.001756</td>
 </tr>
 <tr class="odd">
-<td align="left">HALLMARK_MTORC1_SIGNALING</td>
-<td align="right">11</td>
-<td align="right">194</td>
-<td align="right">9.13e-05</td>
-<td align="right">0.0012</td>
-<td align="right">0.0046</td>
+<td align="center">REACTIVE_OXYGEN_SPECIES_PATHWAY</td>
+<td align="center">45</td>
+<td align="center">5</td>
+<td align="center">Up</td>
+<td align="center">0.0001128</td>
+<td align="center">0.001756</td>
 </tr>
 <tr class="even">
-<td align="left">HALLMARK_FATTY_ACID_METABOLISM</td>
-<td align="right">6</td>
-<td align="right">135</td>
-<td align="right">9.46e-05</td>
-<td align="right">0.0012</td>
-<td align="right">0.0047</td>
+<td align="center">FATTY_ACID_METABOLISM</td>
+<td align="center">135</td>
+<td align="center">6</td>
+<td align="center">Up</td>
+<td align="center">0.0001574</td>
+<td align="center">0.001756</td>
 </tr>
 <tr class="odd">
-<td align="left">HALLMARK_GLYCOLYSIS</td>
-<td align="right">8</td>
-<td align="right">172</td>
-<td align="right">0.0002</td>
-<td align="right">0.0015</td>
-<td align="right">0.0084</td>
+<td align="center">MTORC1_SIGNALING</td>
+<td align="center">194</td>
+<td align="center">11</td>
+<td align="center">Up</td>
+<td align="center">0.0001756</td>
+<td align="center">0.001756</td>
 </tr>
 <tr class="even">
-<td align="left">HALLMARK_PEROXISOME</td>
-<td align="right">2</td>
-<td align="right">95</td>
-<td align="right">0.0002</td>
-<td align="right">0.0015</td>
-<td align="right">0.0115</td>
+<td align="center">GLYCOLYSIS</td>
+<td align="center">172</td>
+<td align="center">8</td>
+<td align="center">Up</td>
+<td align="center">0.0002864</td>
+<td align="center">0.002387</td>
 </tr>
 <tr class="odd">
-<td align="left">HALLMARK_COAGULATION</td>
-<td align="right">3</td>
-<td align="right">80</td>
-<td align="right">0.0003</td>
-<td align="right">0.0015</td>
-<td align="right">0.0127</td>
+<td align="center">PEROXISOME</td>
+<td align="center">95</td>
+<td align="center">2</td>
+<td align="center">Up</td>
+<td align="center">0.0004238</td>
+<td align="center">0.003027</td>
 </tr>
 <tr class="even">
-<td align="left">HALLMARK_MYC_TARGETS_V1</td>
-<td align="right">15</td>
-<td align="right">192</td>
-<td align="right">0.0003</td>
-<td align="right">0.0015</td>
-<td align="right">0.0138</td>
+<td align="center">ADIPOGENESIS</td>
+<td align="center">186</td>
+<td align="center">13</td>
+<td align="center">Up</td>
+<td align="center">0.0005475</td>
+<td align="center">0.003236</td>
 </tr>
 <tr class="odd">
-<td align="left">HALLMARK_CHOLESTEROL_HOMEOSTASIS</td>
-<td align="right">2</td>
-<td align="right">69</td>
-<td align="right">0.0003</td>
-<td align="right">0.0015</td>
-<td align="right">0.0153</td>
+<td align="center">BILE_ACID_METABOLISM</td>
+<td align="center">86</td>
+<td align="center">1</td>
+<td align="center">Up</td>
+<td align="center">0.0006345</td>
+<td align="center">0.003236</td>
 </tr>
 <tr class="even">
-<td align="left">HALLMARK_REACTIVE_OXYGEN_SPECIES_PATHWAY</td>
-<td align="right">5</td>
-<td align="right">45</td>
-<td align="right">0.0003</td>
-<td align="right">0.0015</td>
-<td align="right">0.0158</td>
+<td align="center">PROTEIN_SECRETION</td>
+<td align="center">92</td>
+<td align="center">3</td>
+<td align="center">Up</td>
+<td align="center">0.0006473</td>
+<td align="center">0.003236</td>
 </tr>
 <tr class="odd">
-<td align="left">HALLMARK_BILE_ACID_METABOLISM</td>
-<td align="right">1</td>
-<td align="right">86</td>
-<td align="right">0.0003</td>
-<td align="right">0.0015</td>
-<td align="right">0.0169</td>
+<td align="center">COAGULATION</td>
+<td align="center">80</td>
+<td align="center">3</td>
+<td align="center">Up</td>
+<td align="center">0.0008365</td>
+<td align="center">0.003624</td>
 </tr>
 <tr class="even">
-<td align="left">HALLMARK_ESTROGEN_RESPONSE_LATE</td>
-<td align="right">3</td>
-<td align="right">153</td>
-<td align="right">0.0004</td>
-<td align="right">0.0016</td>
-<td align="right">0.0188</td>
+<td align="center">UNFOLDED_PROTEIN_RESPONSE</td>
+<td align="center">113</td>
+<td align="center">4</td>
+<td align="center">Up</td>
+<td align="center">0.0008697</td>
+<td align="center">0.003624</td>
 </tr>
 <tr class="odd">
-<td align="left">HALLMARK_ADIPOGENESIS</td>
-<td align="right">13</td>
-<td align="right">186</td>
-<td align="right">0.0007</td>
-<td align="right">0.0027</td>
-<td align="right">0.0355</td>
+<td align="center">CHOLESTEROL_HOMEOSTASIS</td>
+<td align="center">69</td>
+<td align="center">2</td>
+<td align="center">Up</td>
+<td align="center">0.001557</td>
+<td align="center">0.005666</td>
 </tr>
 <tr class="even">
-<td align="left">HALLMARK_HYPOXIA</td>
-<td align="right">9</td>
-<td align="right">169</td>
-<td align="right">0.0009</td>
-<td align="right">0.0032</td>
-<td align="right">0.0451</td>
+<td align="center">NOTCH_SIGNALING</td>
+<td align="center">29</td>
+<td align="center">0</td>
+<td align="center">Up</td>
+<td align="center">0.001623</td>
+<td align="center">0.005666</td>
 </tr>
 <tr class="odd">
-<td align="left">HALLMARK_PROTEIN_SECRETION</td>
-<td align="right">3</td>
-<td align="right">92</td>
-<td align="right">0.0009</td>
-<td align="right">0.0032</td>
-<td align="right">0.0475</td>
+<td align="center">ESTROGEN_RESPONSE_LATE</td>
+<td align="center">153</td>
+<td align="center">3</td>
+<td align="center">Up</td>
+<td align="center">0.0017</td>
+<td align="center">0.005666</td>
 </tr>
 <tr class="even">
-<td align="left">HALLMARK_UNFOLDED_PROTEIN_RESPONSE</td>
-<td align="right">4</td>
-<td align="right">113</td>
-<td align="right">0.0017</td>
-<td align="right">0.0054</td>
-<td align="right">0.0864</td>
+<td align="center">MYC_TARGETS_V1</td>
+<td align="center">192</td>
+<td align="center">15</td>
+<td align="center">Up</td>
+<td align="center">0.0021</td>
+<td align="center">0.005993</td>
 </tr>
 <tr class="odd">
-<td align="left">HALLMARK_EPITHELIAL_MESENCHYMAL_TRANSITION</td>
-<td align="right">7</td>
-<td align="right">156</td>
-<td align="right">0.0020</td>
-<td align="right">0.0060</td>
-<td align="right">0.1020</td>
+<td align="center">HYPOXIA</td>
+<td align="center">169</td>
+<td align="center">9</td>
+<td align="center">Up</td>
+<td align="center">0.002131</td>
+<td align="center">0.005993</td>
 </tr>
 <tr class="even">
-<td align="left">HALLMARK_TNFA_SIGNALING_VIA_NFKB</td>
-<td align="right">7</td>
-<td align="right">149</td>
-<td align="right">0.0037</td>
-<td align="right">0.0099</td>
-<td align="right">0.1841</td>
+<td align="center">OXIDATIVE_PHOSPHORYLATION</td>
+<td align="center">201</td>
+<td align="center">15</td>
+<td align="center">Up</td>
+<td align="center">0.002158</td>
+<td align="center">0.005993</td>
 </tr>
 <tr class="odd">
-<td align="left">HALLMARK_IL2_STAT5_SIGNALING</td>
-<td align="right">2</td>
-<td align="right">147</td>
-<td align="right">0.0038</td>
-<td align="right">0.0099</td>
-<td align="right">0.1889</td>
+<td align="center">EPITHELIAL_MESENCHYMAL_TRANSITION</td>
+<td align="center">156</td>
+<td align="center">7</td>
+<td align="center">Up</td>
+<td align="center">0.003453</td>
+<td align="center">0.009086</td>
 </tr>
 <tr class="even">
-<td align="left">HALLMARK_OXIDATIVE_PHOSPHORYLATION</td>
-<td align="right">15</td>
-<td align="right">201</td>
-<td align="right">0.0041</td>
-<td align="right">0.0101</td>
-<td align="right">0.2028</td>
+<td align="center">TNFA_SIGNALING_VIA_NFKB</td>
+<td align="center">149</td>
+<td align="center">7</td>
+<td align="center">Up</td>
+<td align="center">0.004565</td>
+<td align="center">0.01141</td>
 </tr>
 <tr class="odd">
-<td align="left">HALLMARK_NOTCH_SIGNALING</td>
-<td align="right">0</td>
-<td align="right">29</td>
-<td align="right">0.0135</td>
-<td align="right">0.0317</td>
-<td align="right">0.6744</td>
+<td align="center">IL2_STAT5_SIGNALING</td>
+<td align="center">147</td>
+<td align="center">2</td>
+<td align="center">Up</td>
+<td align="center">0.005095</td>
+<td align="center">0.01213</td>
 </tr>
 <tr class="even">
-<td align="left">HALLMARK_ANGIOGENESIS</td>
-<td align="right">1</td>
-<td align="right">26</td>
-<td align="right">0.0140</td>
-<td align="right">0.0317</td>
-<td align="right">0.6985</td>
+<td align="center">ANDROGEN_RESPONSE</td>
+<td align="center">90</td>
+<td align="center">2</td>
+<td align="center">Up</td>
+<td align="center">0.006364</td>
+<td align="center">0.01446</td>
 </tr>
 <tr class="odd">
-<td align="left">HALLMARK_ANDROGEN_RESPONSE</td>
-<td align="right">2</td>
-<td align="right">90</td>
-<td align="right">0.0222</td>
-<td align="right">0.0482</td>
-<td align="right">1.0000</td>
+<td align="center">PI3K_AKT_MTOR_SIGNALING</td>
+<td align="center">98</td>
+<td align="center">2</td>
+<td align="center">Up</td>
+<td align="center">0.00925</td>
+<td align="center">0.02011</td>
 </tr>
 </tbody>
 </table>
 <div id="exploration-of-significant-hallmark-gene-sets" class="section level3">
 <h3>Exploration of significant Hallmark Gene Sets</h3>
-<pre class="r"><code>hmMeta %&gt;% 
-  dplyr::filter(nDE &gt; 0, FDR &lt; 0.05) %&gt;%
-  dplyr::select(gs_name, DE) %&gt;%
-  unnest(DE) %&gt;% 
+<pre class="r"><code>hmFry %&gt;% 
+  left_join(gsSizes) %&gt;%
+  dplyr::filter(de_size &gt;= 5, FDR &lt; 0.05) %&gt;%
+  dplyr::select(gs_name, de_id) %&gt;%
+  unnest(de_id) %&gt;% 
   mutate(
     gs_name = str_remove(gs_name, &quot;HALLMARK_&quot;),
-    gs_name = fct_lump(gs_name, n = 12)
+    gs_name = fct_lump(gs_name, n = 14)
     ) %&gt;% 
   split(f = .$gs_name) %&gt;% 
-  lapply(magrittr::extract2, &quot;DE&quot;) %&gt;% 
+  lapply(magrittr::extract2, &quot;de_id&quot;) %&gt;% 
   fromList() %&gt;% 
   upset(
     nsets = length(.), 
+    nintersects = 20,
     order.by = &quot;freq&quot;, 
-    mb.ratio = c(0.6, 0.4)
+    mb.ratio = c(0.6, 0.4),
+    sets.x.label = &quot;Number Of DE Genes&quot;
     )</code></pre>
 <div class="figure" style="text-align: center">
-<img src="figure/3_Enrichment_MutantVsWT.Rmd/hmMetaUpset-1.png" alt="*UpSet plot indicating distribution of DE genes within all significant HALLMARK gene sets. Most gene sets seem relatively independent of each other.*" width="960" />
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/hmFryUpset-1.png" alt="*UpSet plot indicating distribution of DE genes within all significant HALLMARK gene sets. Gene sets were restricted to those with an FDR &lt; 0.05 and at least 5 DE genes. The plot is truncated at the right for simplicity. Most gene sets seem relatively independent of each other with regard to DE genes.*" width="960" />
 <p class="caption">
-<em>UpSet plot indicating distribution of DE genes within all significant HALLMARK gene sets. Most gene sets seem relatively independent of each other.</em>
+<em>UpSet plot indicating distribution of DE genes within all significant HALLMARK gene sets. Gene sets were restricted to those with an FDR &lt; 0.05 and at least 5 DE genes. The plot is truncated at the right for simplicity. Most gene sets seem relatively independent of each other with regard to DE genes.</em>
 </p>
 </div>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-hmMetaUpset-1">
-Past versions of hmMetaUpset-1.png
-</button>
-</p>
-<div id="fig-hmMetaUpset-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/7fe1505995bf93217d6ecd0c1de1f60f27e27c26/docs/figure/3_Enrichment_MutantVsWT.Rmd/hmMetaUpset-1.png" target="_blank">7fe1505</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-03-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/7e59d3c3eeb91b99f90f7d919772149389e7b85a/docs/figure/3_Enrichment_MutantVsWT.Rmd/hmMetaUpset-1.png" target="_blank">7e59d3c</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-02-20
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/figure/3_Enrichment_MutantVsWT.Rmd/hmMetaUpset-1.png" target="_blank">86ffa07</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-02-20
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>hmHeat &lt;- hmMeta %&gt;% 
-  dplyr::filter(nDE &gt; 10, FDR &lt; 0.05) %&gt;%
-  dplyr::select(gs_name, DE) %&gt;%
-  unnest(DE) %&gt;%
-  left_join(dgeList$genes, by = c(&quot;DE&quot; = &quot;gene_id&quot;)) %&gt;%
-  dplyr::select(gs_name, DE, gene_name) %&gt;%
+<pre class="r"><code>hmHeat &lt;- hmFry %&gt;% 
+  left_join(gsSizes) %&gt;%
+  dplyr::filter(de_size &gt;= 12, FDR &lt; 0.05) %&gt;%
+  dplyr::select(gs_name, de_id) %&gt;%
+  unnest(de_id) %&gt;%
+  left_join(dgeList$genes, by = c(&quot;de_id&quot; = &quot;gene_id&quot;)) %&gt;%
+  dplyr::select(gs_name, de_id, gene_name) %&gt;%
   mutate(belongs = TRUE) %&gt;%
   pivot_wider(
-    id_cols = c(DE, gene_name),
+    id_cols = c(de_id, gene_name),
     names_from = gs_name,
     values_from = belongs,
     values_fill = list(belongs = FALSE)
@@ -1852,8 +1871,8 @@ Steve Ped
   left_join(
     cpmPostNorm %&gt;%
       as.data.frame() %&gt;%
-      rownames_to_column(&quot;DE&quot;)
-  )
+      rownames_to_column(&quot;de_id&quot;)
+  ) 
 hmHeat %&gt;%
   dplyr::select(gene_name, starts_with(&quot;Ps&quot;)) %&gt;%
   as.data.frame() %&gt;%
@@ -1886,9 +1905,9 @@ hmHeat %&gt;%
       )
   )</code></pre>
 <div class="figure" style="text-align: center">
-<img src="figure/3_Enrichment_MutantVsWT.Rmd/hmHeat-1.png" alt="*Gene expression patterns for all DE genes in HALLMARK gene sets, containing more than 10 DE genes.*" width="960" />
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/hmHeat-1.png" alt="*Gene expression patterns for all DE genes in HALLMARK gene sets, containing more than 12 DE genes.*" width="960" />
 <p class="caption">
-<em>Gene expression patterns for all DE genes in HALLMARK gene sets, containing more than 10 DE genes.</em>
+<em>Gene expression patterns for all DE genes in HALLMARK gene sets, containing more than 12 DE genes.</em>
 </p>
 </div>
 <p>
@@ -1952,289 +1971,455 @@ Steve Ped
     ) %&gt;%
   rownames_to_column(&quot;gs_name&quot;) %&gt;%
   as_tibble()</code></pre>
-<p>For analysis under <code>camera</code> when inter-gene correlations were calculated for a more conservative result.</p>
-<pre class="r"><code>kgCamera &lt;- cpmPostNorm %&gt;%
-  camera(
-    index = kgByID,
-    design = dgeList$design,
-    contrast = &quot;mutant&quot;,
-    inter.gene.cor = NULL
-    ) %&gt;%
-  rownames_to_column(&quot;gs_name&quot;) %&gt;%
-  as_tibble()</code></pre>
-<p>For generation of the GSEA ranked list, 100,000 permutations were conducted.</p>
-<pre class="r"><code>kgGsea &lt;- fgsea(
-  pathways = kgByID, 
-  stats = rnk,
-  nperm = np
-) %&gt;%
-  as_tibble() %&gt;%
-  dplyr::rename(gs_name = pathway, PValue = pval) %&gt;%
-  arrange(PValue)</code></pre>
-<p>Results for all analyses, including goseq were then combined using Wilkinson’s method to combine p-values. For a conservative approach, under <span class="math inline">\(m\)</span> tests, the <span class="math inline">\(m - 1^{\text{th}}\)</span> smallest p-value was chosen.</p>
-<pre class="r"><code>kgMeta &lt;- kgFry %&gt;%
-  dplyr::select(gs_name, fry = PValue) %&gt;%
-  left_join(
-    dplyr::select(kgCamera, gs_name, camera = PValue)
+<pre class="r"><code>kgFry %&gt;%
+  dplyr::filter(
+    PValue &lt; 0.005
   ) %&gt;%
-  left_join(
-    dplyr::select(kgGsea, gs_name, gsea = PValue)
-  ) %&gt;%
-  left_join(
-    dplyr::select(kgRiboGoseq, gs_name, goseq = PValue)
-  ) %&gt;% 
-  nest(p = one_of(c(&quot;fry&quot;, &quot;camera&quot;, &quot;gsea&quot;, &quot;goseq&quot;))) %&gt;%
-  mutate(
-    n_p = vapply(p, function(x){sum(!is.na(unlist(x)))}, integer(1)), 
-    wilkinson_p = vapply(p, function(x){
-      x &lt;- unlist(x)
-      x &lt;- x[!is.na(x)]
-      wilkinsonp(x, length(x) - 1)$p
-    }, numeric(1)),
-    FDR = p.adjust(wilkinson_p, &quot;fdr&quot;), 
-    adjP = p.adjust(wilkinson_p, &quot;bonferroni&quot;)
-  ) %&gt;% 
-  arrange(wilkinson_p) %&gt;% 
-  unnest(p) %&gt;%
   left_join(gsSizes) %&gt;%
-  mutate(
-    DE = lapply(gene_id, intersect, dplyr::filter(deTable, DE)$gene_id),
-    DE = lapply(DE, unique),
-    nDE = vapply(DE, length, integer(1))
-  )</code></pre>
-<pre class="r"><code>kgMeta %&gt;%
-  dplyr::filter(FDR &lt; 0.05, nDE &gt; 2) %&gt;%
-  mutate_at(vars(one_of(c(&quot;wilkinson_p&quot;, &quot;FDR&quot;, &quot;adjP&quot;))), formatP) %&gt;%
-  dplyr::select(`Gene Set` = gs_name, `Number DE` = nDE, `Set Size` = gs_size, `Wilkinson~p~` = wilkinson_p, `p~FDR~` = FDR, `p~bonf~` = adjP) %&gt;%
+  mutate(gs_name = str_remove(gs_name, &quot;HALLMARK_&quot;)) %&gt;%
+  dplyr::select(
+    `KEGG Gene Set` = gs_name,
+    `Expressed Genes` = NGenes,
+    `DE Genes` = de_size,
+    Direction,
+    PValue, FDR
+    ) %&gt;%
   pander(
-    caption = &quot;Results from combining all above approaches for the KEGG Gene Sets. All terms are significant to an FDR of 0.05. Only Gene Sets with at least three DE genes are shown.&quot;,
-    justify = &quot;lrrrrr&quot;
+    caption = &quot;Enriched KEGG Gene Sets, using a threshold p &lt; 0.005, which corresponds to an FDR of 0.02&quot;
   )</code></pre>
 <table>
-<caption>Results from combining all above approaches for the KEGG Gene Sets. All terms are significant to an FDR of 0.05. Only Gene Sets with at least three DE genes are shown.</caption>
+<caption>Enriched KEGG Gene Sets, using a threshold p &lt; 0.005, which corresponds to an FDR of 0.02</caption>
+<colgroup>
+<col width="52%" />
+<col width="13%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th align="left">Gene Set</th>
-<th align="right">Number DE</th>
-<th align="right">Set Size</th>
-<th align="right">Wilkinson<sub>p</sub></th>
-<th align="right">p<sub>FDR</sub></th>
-<th align="right">p<sub>bonf</sub></th>
+<th align="center">KEGG Gene Set</th>
+<th align="center">Expressed Genes</th>
+<th align="center">DE Genes</th>
+<th align="center">Direction</th>
+<th align="center">PValue</th>
+<th align="center">FDR</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">KEGG_RIBOSOME</td>
-<td align="right">26</td>
-<td align="right">80</td>
-<td align="right">8.32e-09</td>
-<td align="right">1.55e-06</td>
-<td align="right">1.55e-06</td>
+<td align="center">KEGG_GLUTATHIONE_METABOLISM</td>
+<td align="center">36</td>
+<td align="center">4</td>
+<td align="center">Up</td>
+<td align="center">1.313e-05</td>
+<td align="center">0.002442</td>
 </tr>
 <tr class="even">
-<td align="left">KEGG_GLUTATHIONE_METABOLISM</td>
-<td align="right">4</td>
-<td align="right">36</td>
-<td align="right">1.22e-06</td>
-<td align="right">7.56e-05</td>
-<td align="right">0.0002</td>
+<td align="center">KEGG_GLYCINE_SERINE_AND_THREONINE_METABOLISM</td>
+<td align="center">24</td>
+<td align="center">2</td>
+<td align="center">Up</td>
+<td align="center">9.541e-05</td>
+<td align="center">0.005307</td>
 </tr>
 <tr class="odd">
-<td align="left">KEGG_CYSTEINE_AND_METHIONINE_METABOLISM</td>
-<td align="right">4</td>
-<td align="right">26</td>
-<td align="right">0.0001</td>
-<td align="right">0.0013</td>
-<td align="right">0.0189</td>
+<td align="center">KEGG_ARGININE_AND_PROLINE_METABOLISM</td>
+<td align="center">39</td>
+<td align="center">2</td>
+<td align="center">Up</td>
+<td align="center">9.545e-05</td>
+<td align="center">0.005307</td>
 </tr>
 <tr class="even">
-<td align="left">KEGG_METABOLISM_OF_XENOBIOTICS_BY_CYTOCHROME_P450</td>
-<td align="right">3</td>
-<td align="right">26</td>
-<td align="right">0.0002</td>
-<td align="right">0.0020</td>
-<td align="right">0.0393</td>
+<td align="center">KEGG_LIMONENE_AND_PINENE_DEGRADATION</td>
+<td align="center">8</td>
+<td align="center">0</td>
+<td align="center">Up</td>
+<td align="center">0.0001542</td>
+<td align="center">0.005307</td>
 </tr>
 <tr class="odd">
-<td align="left">KEGG_DRUG_METABOLISM_CYTOCHROME_P450</td>
-<td align="right">3</td>
-<td align="right">26</td>
-<td align="right">0.0003</td>
-<td align="right">0.0021</td>
-<td align="right">0.0487</td>
+<td align="center">KEGG_PRIMARY_IMMUNODEFICIENCY</td>
+<td align="center">15</td>
+<td align="center">2</td>
+<td align="center">Down</td>
+<td align="center">0.0001638</td>
+<td align="center">0.005307</td>
 </tr>
 <tr class="even">
-<td align="left">KEGG_RETINOL_METABOLISM</td>
-<td align="right">3</td>
-<td align="right">25</td>
-<td align="right">0.0005</td>
-<td align="right">0.0036</td>
-<td align="right">0.0960</td>
+<td align="center">KEGG_PORPHYRIN_AND_CHLOROPHYLL_METABOLISM</td>
+<td align="center">25</td>
+<td align="center">0</td>
+<td align="center">Up</td>
+<td align="center">0.0002012</td>
+<td align="center">0.005307</td>
 </tr>
 <tr class="odd">
-<td align="left">KEGG_PARKINSONS_DISEASE</td>
-<td align="right">13</td>
-<td align="right">112</td>
-<td align="right">0.0006</td>
-<td align="right">0.0040</td>
-<td align="right">0.1122</td>
+<td align="center">KEGG_ASCORBATE_AND_ALDARATE_METABOLISM</td>
+<td align="center">7</td>
+<td align="center">0</td>
+<td align="center">Up</td>
+<td align="center">0.000218</td>
+<td align="center">0.005307</td>
 </tr>
 <tr class="even">
-<td align="left">KEGG_PURINE_METABOLISM</td>
-<td align="right">4</td>
-<td align="right">135</td>
-<td align="right">0.0007</td>
-<td align="right">0.0044</td>
-<td align="right">0.1310</td>
+<td align="center">KEGG_BETA_ALANINE_METABOLISM</td>
+<td align="center">18</td>
+<td align="center">1</td>
+<td align="center">Up</td>
+<td align="center">0.0002525</td>
+<td align="center">0.005307</td>
 </tr>
 <tr class="odd">
-<td align="left">KEGG_HUNTINGTONS_DISEASE</td>
-<td align="right">15</td>
-<td align="right">159</td>
-<td align="right">0.0027</td>
-<td align="right">0.0125</td>
-<td align="right">0.5003</td>
+<td align="center">KEGG_GLYCEROLIPID_METABOLISM</td>
+<td align="center">37</td>
+<td align="center">1</td>
+<td align="center">Up</td>
+<td align="center">0.0002568</td>
+<td align="center">0.005307</td>
 </tr>
 <tr class="even">
-<td align="left">KEGG_PATHOGENIC_ESCHERICHIA_COLI_INFECTION</td>
-<td align="right">3</td>
-<td align="right">44</td>
-<td align="right">0.0036</td>
-<td align="right">0.0148</td>
-<td align="right">0.6616</td>
+<td align="center">KEGG_PPAR_SIGNALING_PATHWAY</td>
+<td align="center">53</td>
+<td align="center">1</td>
+<td align="center">Up</td>
+<td align="center">0.0002947</td>
+<td align="center">0.005397</td>
 </tr>
 <tr class="odd">
-<td align="left">KEGG_ALZHEIMERS_DISEASE</td>
-<td align="right">12</td>
-<td align="right">141</td>
-<td align="right">0.0039</td>
-<td align="right">0.0159</td>
-<td align="right">0.7294</td>
+<td align="center">KEGG_FATTY_ACID_METABOLISM</td>
+<td align="center">38</td>
+<td align="center">1</td>
+<td align="center">Up</td>
+<td align="center">0.0003304</td>
+<td align="center">0.005397</td>
 </tr>
 <tr class="even">
-<td align="left">KEGG_OXIDATIVE_PHOSPHORYLATION</td>
-<td align="right">14</td>
-<td align="right">119</td>
-<td align="right">0.0046</td>
-<td align="right">0.0180</td>
-<td align="right">0.8633</td>
+<td align="center">KEGG_BUTANOATE_METABOLISM</td>
+<td align="center">26</td>
+<td align="center">0</td>
+<td align="center">Up</td>
+<td align="center">0.0003879</td>
+<td align="center">0.005397</td>
 </tr>
 <tr class="odd">
-<td align="left">KEGG_HEMATOPOIETIC_CELL_LINEAGE</td>
-<td align="right">3</td>
-<td align="right">31</td>
-<td align="right">0.0047</td>
-<td align="right">0.0180</td>
-<td align="right">0.8812</td>
+<td align="center">KEGG_T_CELL_RECEPTOR_SIGNALING_PATHWAY</td>
+<td align="center">79</td>
+<td align="center">3</td>
+<td align="center">Down</td>
+<td align="center">0.0004045</td>
+<td align="center">0.005397</td>
 </tr>
 <tr class="even">
-<td align="left">KEGG_GLYCOLYSIS_GLUCONEOGENESIS</td>
-<td align="right">3</td>
-<td align="right">39</td>
-<td align="right">0.0067</td>
-<td align="right">0.0229</td>
-<td align="right">1.0000</td>
+<td align="center">KEGG_AMINOACYL_TRNA_BIOSYNTHESIS</td>
+<td align="center">37</td>
+<td align="center">0</td>
+<td align="center">Up</td>
+<td align="center">0.0004062</td>
+<td align="center">0.005397</td>
 </tr>
 <tr class="odd">
-<td align="left">KEGG_CARDIAC_MUSCLE_CONTRACTION</td>
-<td align="right">3</td>
-<td align="right">63</td>
-<td align="right">0.0158</td>
-<td align="right">0.0451</td>
-<td align="right">1.0000</td>
+<td align="center">KEGG_TYROSINE_METABOLISM</td>
+<td align="center">29</td>
+<td align="center">2</td>
+<td align="center">Up</td>
+<td align="center">0.0004776</td>
+<td align="center">0.005698</td>
 </tr>
 <tr class="even">
-<td align="left">KEGG_SYSTEMIC_LUPUS_ERYTHEMATOSUS</td>
-<td align="right">5</td>
-<td align="right">86</td>
-<td align="right">0.0182</td>
-<td align="right">0.0498</td>
-<td align="right">1.0000</td>
+<td align="center">KEGG_METABOLISM_OF_XENOBIOTICS_BY_CYTOCHROME_P450</td>
+<td align="center">26</td>
+<td align="center">3</td>
+<td align="center">Up</td>
+<td align="center">0.0004901</td>
+<td align="center">0.005698</td>
+</tr>
+<tr class="odd">
+<td align="center">KEGG_DRUG_METABOLISM_CYTOCHROME_P450</td>
+<td align="center">26</td>
+<td align="center">3</td>
+<td align="center">Up</td>
+<td align="center">0.0005606</td>
+<td align="center">0.005827</td>
+</tr>
+<tr class="even">
+<td align="center">KEGG_PYRUVATE_METABOLISM</td>
+<td align="center">27</td>
+<td align="center">1</td>
+<td align="center">Up</td>
+<td align="center">0.0006084</td>
+<td align="center">0.005827</td>
+</tr>
+<tr class="odd">
+<td align="center">KEGG_CYSTEINE_AND_METHIONINE_METABOLISM</td>
+<td align="center">26</td>
+<td align="center">4</td>
+<td align="center">Up</td>
+<td align="center">0.0006305</td>
+<td align="center">0.005827</td>
+</tr>
+<tr class="even">
+<td align="center">KEGG_BIOSYNTHESIS_OF_UNSATURATED_FATTY_ACIDS</td>
+<td align="center">21</td>
+<td align="center">0</td>
+<td align="center">Up</td>
+<td align="center">0.0006464</td>
+<td align="center">0.005827</td>
+</tr>
+<tr class="odd">
+<td align="center">KEGG_GLYOXYLATE_AND_DICARBOXYLATE_METABOLISM</td>
+<td align="center">13</td>
+<td align="center">1</td>
+<td align="center">Up</td>
+<td align="center">0.0006579</td>
+<td align="center">0.005827</td>
+</tr>
+<tr class="even">
+<td align="center">KEGG_SELENOAMINO_ACID_METABOLISM</td>
+<td align="center">22</td>
+<td align="center">0</td>
+<td align="center">Up</td>
+<td align="center">0.0007171</td>
+<td align="center">0.005874</td>
+</tr>
+<tr class="odd">
+<td align="center">KEGG_EPITHELIAL_CELL_SIGNALING_IN_HELICOBACTER_PYLORI_INFECTION</td>
+<td align="center">60</td>
+<td align="center">0</td>
+<td align="center">Up</td>
+<td align="center">0.0007358</td>
+<td align="center">0.005874</td>
+</tr>
+<tr class="even">
+<td align="center">KEGG_VIBRIO_CHOLERAE_INFECTION</td>
+<td align="center">47</td>
+<td align="center">1</td>
+<td align="center">Up</td>
+<td align="center">0.000758</td>
+<td align="center">0.005874</td>
+</tr>
+<tr class="odd">
+<td align="center">KEGG_LYSINE_DEGRADATION</td>
+<td align="center">39</td>
+<td align="center">0</td>
+<td align="center">Up</td>
+<td align="center">0.0009213</td>
+<td align="center">0.006855</td>
+</tr>
+<tr class="even">
+<td align="center">KEGG_PHENYLALANINE_METABOLISM</td>
+<td align="center">11</td>
+<td align="center">1</td>
+<td align="center">Up</td>
+<td align="center">0.0009648</td>
+<td align="center">0.006866</td>
+</tr>
+<tr class="odd">
+<td align="center">KEGG_RENIN_ANGIOTENSIN_SYSTEM</td>
+<td align="center">8</td>
+<td align="center">1</td>
+<td align="center">Up</td>
+<td align="center">0.001033</td>
+<td align="center">0.006866</td>
+</tr>
+<tr class="even">
+<td align="center">KEGG_NITROGEN_METABOLISM</td>
+<td align="center">13</td>
+<td align="center">1</td>
+<td align="center">Up</td>
+<td align="center">0.001034</td>
+<td align="center">0.006866</td>
+</tr>
+<tr class="odd">
+<td align="center">KEGG_COMPLEMENT_AND_COAGULATION_CASCADES</td>
+<td align="center">27</td>
+<td align="center">1</td>
+<td align="center">Up</td>
+<td align="center">0.00112</td>
+<td align="center">0.007181</td>
+</tr>
+<tr class="even">
+<td align="center">KEGG_RIBOSOME</td>
+<td align="center">80</td>
+<td align="center">26</td>
+<td align="center">Up</td>
+<td align="center">0.001277</td>
+<td align="center">0.007917</td>
+</tr>
+<tr class="odd">
+<td align="center">KEGG_PEROXISOME</td>
+<td align="center">70</td>
+<td align="center">0</td>
+<td align="center">Up</td>
+<td align="center">0.00135</td>
+<td align="center">0.008102</td>
+</tr>
+<tr class="even">
+<td align="center">KEGG_VALINE_LEUCINE_AND_ISOLEUCINE_BIOSYNTHESIS</td>
+<td align="center">10</td>
+<td align="center">0</td>
+<td align="center">Up</td>
+<td align="center">0.00144</td>
+<td align="center">0.008369</td>
+</tr>
+<tr class="odd">
+<td align="center">KEGG_PATHOGENIC_ESCHERICHIA_COLI_INFECTION</td>
+<td align="center">44</td>
+<td align="center">3</td>
+<td align="center">Up</td>
+<td align="center">0.001755</td>
+<td align="center">0.009894</td>
+</tr>
+<tr class="even">
+<td align="center">KEGG_VALINE_LEUCINE_AND_ISOLEUCINE_DEGRADATION</td>
+<td align="center">40</td>
+<td align="center">0</td>
+<td align="center">Up</td>
+<td align="center">0.001835</td>
+<td align="center">0.01004</td>
+</tr>
+<tr class="odd">
+<td align="center">KEGG_RETINOL_METABOLISM</td>
+<td align="center">25</td>
+<td align="center">3</td>
+<td align="center">Up</td>
+<td align="center">0.001902</td>
+<td align="center">0.01011</td>
+</tr>
+<tr class="even">
+<td align="center">KEGG_PURINE_METABOLISM</td>
+<td align="center">135</td>
+<td align="center">4</td>
+<td align="center">Up</td>
+<td align="center">0.001958</td>
+<td align="center">0.01011</td>
+</tr>
+<tr class="odd">
+<td align="center">KEGG_LEUKOCYTE_TRANSENDOTHELIAL_MIGRATION</td>
+<td align="center">87</td>
+<td align="center">1</td>
+<td align="center">Up</td>
+<td align="center">0.002044</td>
+<td align="center">0.01018</td>
+</tr>
+<tr class="even">
+<td align="center">KEGG_ALZHEIMERS_DISEASE</td>
+<td align="center">141</td>
+<td align="center">12</td>
+<td align="center">Up</td>
+<td align="center">0.002128</td>
+<td align="center">0.01018</td>
+</tr>
+<tr class="odd">
+<td align="center">KEGG_CITRATE_CYCLE_TCA_CYCLE</td>
+<td align="center">26</td>
+<td align="center">2</td>
+<td align="center">Up</td>
+<td align="center">0.002141</td>
+<td align="center">0.01018</td>
+</tr>
+<tr class="even">
+<td align="center">KEGG_N_GLYCAN_BIOSYNTHESIS</td>
+<td align="center">45</td>
+<td align="center">1</td>
+<td align="center">Up</td>
+<td align="center">0.00219</td>
+<td align="center">0.01018</td>
+</tr>
+<tr class="odd">
+<td align="center">KEGG_OXIDATIVE_PHOSPHORYLATION</td>
+<td align="center">119</td>
+<td align="center">14</td>
+<td align="center">Up</td>
+<td align="center">0.002373</td>
+<td align="center">0.01065</td>
+</tr>
+<tr class="even">
+<td align="center">KEGG_PROPANOATE_METABOLISM</td>
+<td align="center">28</td>
+<td align="center">1</td>
+<td align="center">Up</td>
+<td align="center">0.002406</td>
+<td align="center">0.01065</td>
+</tr>
+<tr class="odd">
+<td align="center">KEGG_PROXIMAL_TUBULE_BICARBONATE_RECLAMATION</td>
+<td align="center">15</td>
+<td align="center">0</td>
+<td align="center">Up</td>
+<td align="center">0.002581</td>
+<td align="center">0.01116</td>
+</tr>
+<tr class="even">
+<td align="center">KEGG_PROTEASOME</td>
+<td align="center">42</td>
+<td align="center">2</td>
+<td align="center">Up</td>
+<td align="center">0.00284</td>
+<td align="center">0.01187</td>
+</tr>
+<tr class="odd">
+<td align="center">KEGG_GLYCOLYSIS_GLUCONEOGENESIS</td>
+<td align="center">39</td>
+<td align="center">3</td>
+<td align="center">Up</td>
+<td align="center">0.002871</td>
+<td align="center">0.01187</td>
+</tr>
+<tr class="even">
+<td align="center">KEGG_B_CELL_RECEPTOR_SIGNALING_PATHWAY</td>
+<td align="center">64</td>
+<td align="center">3</td>
+<td align="center">Down</td>
+<td align="center">0.003085</td>
+<td align="center">0.01247</td>
+</tr>
+<tr class="odd">
+<td align="center">KEGG_GLYCEROPHOSPHOLIPID_METABOLISM</td>
+<td align="center">56</td>
+<td align="center">1</td>
+<td align="center">Up</td>
+<td align="center">0.004306</td>
+<td align="center">0.01704</td>
+</tr>
+<tr class="even">
+<td align="center">KEGG_ABC_TRANSPORTERS</td>
+<td align="center">32</td>
+<td align="center">0</td>
+<td align="center">Up</td>
+<td align="center">0.004993</td>
+<td align="center">0.01935</td>
 </tr>
 </tbody>
 </table>
 <div id="exploration-of-significant-kegg-gene-sets" class="section level3">
 <h3>Exploration of Significant KEGG Gene Sets</h3>
-<pre class="r"><code>kgMeta %&gt;% 
-  dplyr::filter(nDE &gt; 2, FDR &lt; 0.05) %&gt;%
-  dplyr::select(gs_name, DE) %&gt;%
-  unnest(DE) %&gt;% 
+<pre class="r"><code>kgFry %&gt;% 
+  left_join(gsSizes) %&gt;%
+  dplyr::filter(de_size &gt;= 4, FDR &lt; 0.05) %&gt;%
+  dplyr::select(gs_name, de_id) %&gt;%
+  unnest(de_id) %&gt;% 
   mutate(
     gs_name = str_remove(gs_name, &quot;KEGG_&quot;),
-    gs_name = fct_lump(gs_name, n = 8)
+    gs_name = fct_lump(gs_name, n = 14)
     ) %&gt;% 
   split(f = .$gs_name) %&gt;% 
-  lapply(magrittr::extract2, &quot;DE&quot;) %&gt;% 
+  lapply(magrittr::extract2, &quot;de_id&quot;) %&gt;% 
   fromList() %&gt;% 
   upset(
     nsets = length(.), 
-    order.by = &quot;freq&quot;,
-    mb.ratio = c(0.6, 0.4)
+    nintersects = 20,
+    order.by = &quot;freq&quot;, 
+    mb.ratio = c(0.6, 0.4),
+    sets.x.label = &quot;Number Of DE Genes&quot;
     )</code></pre>
 <div class="figure" style="text-align: center">
-<img src="figure/3_Enrichment_MutantVsWT.Rmd/kgMetaUpset-1.png" alt="*UpSet plot indicating distribution of DE genes within all significant terms from the KEGG gene sets. There is considerable overlap between Oxidative Phosphorylation and both Parkinson's and Huntington's Disease, indicating that these terms essentially capture the same signal.*" width="960" />
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/kgFryUpset-1.png" alt="*UpSet plot indicating distribution of DE genes within all significant terms from the KEGG gene sets. Gene sets were restricted to those with an FDR &lt; 0.05 and four or more DE genes. There is considerable overlap between DE genes in Oxidative Phosphorylation and both Parkinson's and Huntington's Disease, indicating that these terms essentially capture the same expression signal within this dataset.*" width="768" />
 <p class="caption">
-<em>UpSet plot indicating distribution of DE genes within all significant terms from the KEGG gene sets. There is considerable overlap between Oxidative Phosphorylation and both Parkinson’s and Huntington’s Disease, indicating that these terms essentially capture the same signal.</em>
+<em>UpSet plot indicating distribution of DE genes within all significant terms from the KEGG gene sets. Gene sets were restricted to those with an FDR &lt; 0.05 and four or more DE genes. There is considerable overlap between DE genes in Oxidative Phosphorylation and both Parkinson’s and Huntington’s Disease, indicating that these terms essentially capture the same expression signal within this dataset.</em>
 </p>
-</div>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-kgMetaUpset-1">
-Past versions of kgMetaUpset-1.png
-</button>
-</p>
-<div id="fig-kgMetaUpset-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/7fe1505995bf93217d6ecd0c1de1f60f27e27c26/docs/figure/3_Enrichment_MutantVsWT.Rmd/kgMetaUpset-1.png" target="_blank">7fe1505</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-03-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/7e59d3c3eeb91b99f90f7d919772149389e7b85a/docs/figure/3_Enrichment_MutantVsWT.Rmd/kgMetaUpset-1.png" target="_blank">7e59d3c</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-02-20
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/figure/3_Enrichment_MutantVsWT.Rmd/kgMetaUpset-1.png" target="_blank">86ffa07</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-02-20
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 <pre class="r"><code>riboOx &lt;- kg %&gt;%
   dplyr::filter(
@@ -2342,1096 +2527,642 @@ Steve Ped
     ) %&gt;%
   rownames_to_column(&quot;gs_name&quot;) %&gt;%
   as_tibble()</code></pre>
-<p>For analysis under <code>camera</code> inter-gene correlations were directly calculated for a more conservative result.</p>
-<pre class="r"><code>goCamera &lt;- cpmPostNorm %&gt;%
-  camera(
-    index = goByID,
-    design = dgeList$design,
-    contrast = &quot;mutant&quot;,
-    inter.gene.cor = NULL
-    ) %&gt;%
-  rownames_to_column(&quot;gs_name&quot;) %&gt;%
-  as_tibble()</code></pre>
-<p>For generation of the GSEA ranked list, 100,000 permutations were conducted.</p>
-<pre class="r"><code>goGsea &lt;- fgsea(
-  pathways = goByID, 
-  stats = rnk,
-  nperm = np
-) %&gt;%
-  as_tibble() %&gt;%
-  dplyr::rename(gs_name = pathway, PValue = pval) %&gt;%
-  arrange(PValue)</code></pre>
-<p>Results for all analyses, including goseq were then combined using Wilkinson’s method to combine p-values. For a conservative approach, under <span class="math inline">\(m\)</span> tests, the <span class="math inline">\(m - 1^{\text{th}}\)</span> smallest p-value was chosen.</p>
-<pre class="r"><code>goMeta &lt;- goFry %&gt;%
-  dplyr::select(gs_name, fry = PValue) %&gt;%
-  left_join(
-    dplyr::select(goCamera, gs_name, camera = PValue)
-  ) %&gt;%
-  left_join(
-    dplyr::select(goGsea, gs_name, gsea = PValue)
-  ) %&gt;%
-  left_join(
-    dplyr::select(goRiboGoseq, gs_name, goseq = PValue)
-  )  %&gt;% 
-  nest(p = one_of(c(&quot;fry&quot;, &quot;camera&quot;, &quot;gsea&quot;, &quot;goseq&quot;))) %&gt;%
-  mutate(
-    n_p = vapply(p, function(x){sum(!is.na(unlist(x)))}, integer(1)), 
-    wilkinson_p = vapply(p, function(x){
-      x &lt;- unlist(x)
-      x &lt;- x[!is.na(x)]
-      wilkinsonp(x, length(x) - 1)$p
-    }, numeric(1)),
-    FDR = p.adjust(wilkinson_p, &quot;fdr&quot;), 
-    adjP = p.adjust(wilkinson_p, &quot;bonferroni&quot;)
-  ) %&gt;% 
-  arrange(wilkinson_p) %&gt;% 
-   unnest(p) %&gt;%
+<pre class="r"><code>goFry %&gt;%
   left_join(gsSizes) %&gt;%
-  mutate(
-    DE = lapply(gene_id, intersect, dplyr::filter(deTable, DE)$gene_id),
-    DE = lapply(DE, unique),
-    nDE = vapply(DE, length, integer(1))
-  )</code></pre>
-<pre class="r"><code>goMeta %&gt;%
-  dplyr::filter(FDR &lt; 0.01, nDE &gt;= 10) %&gt;%
-  mutate_at(vars(one_of(c(&quot;wilkinson_p&quot;, &quot;FDR&quot;, &quot;adjP&quot;))), formatP) %&gt;%
-  mutate(gs_name = str_trunc(gs_name, 70)) %&gt;%
-  dplyr::select(`Gene Set` = gs_name, `Number DE` = nDE, `Set Size` = gs_size, `Wilkinson~p~` = wilkinson_p, `p~FDR~` = FDR, `p~bonf~` = adjP) %&gt;%
+  left_join(distinct(go, gs_name, shortest_path)) %&gt;%
+  dplyr::filter(
+    FDR &lt; 0.01, 
+    shortest_path &gt; 3, 
+    NGenes &lt; 1000,
+    de_size &gt;= 5
+  ) %&gt;%
+  dplyr::select(
+    `GO Gene Set` = gs_name,
+    `Expressed Genes` = NGenes,
+    `DE Genes` = de_size,
+    Direction,
+    PValue, FDR
+    ) %&gt;%
   pander(
-    caption = &quot;Results from combining all above approaches for the GO Gene Sets. All terms are significant using an FDR &lt; 0.01. Only Gene Sets with at least ten DE genes are shown.&quot;,
-    justify = &quot;lrrrrr&quot;
+    caption = &quot;Enriched GO Gene Sets, using the thresholds FDR &lt; 0.01, at least 5 DE genes, a set size &lt; 1000 and more than 3 steps back to the ontology root.&quot;
   )</code></pre>
 <table>
-<caption>Results from combining all above approaches for the GO Gene Sets. All terms are significant using an FDR &lt; 0.01. Only Gene Sets with at least ten DE genes are shown.</caption>
+<caption>Enriched GO Gene Sets, using the thresholds FDR &lt; 0.01, at least 5 DE genes, a set size &lt; 1000 and more than 3 steps back to the ontology root.</caption>
 <colgroup>
-<col width="55%" />
+<col width="53%" />
+<col width="13%" />
+<col width="7%" />
 <col width="8%" />
 <col width="8%" />
-<col width="11%" />
-<col width="8%" />
-<col width="8%" />
+<col width="7%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">Gene Set</th>
-<th align="right">Number DE</th>
-<th align="right">Set Size</th>
-<th align="right">Wilkinson<sub>p</sub></th>
-<th align="right">p<sub>FDR</sub></th>
-<th align="right">p<sub>bonf</sub></th>
+<th align="center">GO Gene Set</th>
+<th align="center">Expressed Genes</th>
+<th align="center">DE Genes</th>
+<th align="center">Direction</th>
+<th align="center">PValue</th>
+<th align="center">FDR</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">GO_SYMPORTER_ACTIVITY</td>
-<td align="right">10</td>
-<td align="right">94</td>
-<td align="right">7.34e-12</td>
-<td align="right">6.49e-08</td>
-<td align="right">6.49e-08</td>
+<td align="center">GO_PEPTIDYL_LYSINE_TRIMETHYLATION</td>
+<td align="center">42</td>
+<td align="center">5</td>
+<td align="center">Down</td>
+<td align="center">6.682e-06</td>
+<td align="center">0.001904</td>
 </tr>
 <tr class="even">
-<td align="left">GO_SECONDARY_ACTIVE_TRANSMEMBRANE_TRANSPORTER_ACTIVITY</td>
-<td align="right">13</td>
-<td align="right">154</td>
-<td align="right">2.41e-11</td>
-<td align="right">7.50e-08</td>
-<td align="right">2.13e-07</td>
+<td align="center">GO_FATTY_ACID_BIOSYNTHETIC_PROCESS</td>
+<td align="center">96</td>
+<td align="center">6</td>
+<td align="center">Up</td>
+<td align="center">9.201e-06</td>
+<td align="center">0.002258</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_ANION_TRANSMEMBRANE_TRANSPORT</td>
-<td align="right">15</td>
-<td align="right">203</td>
-<td align="right">2.55e-11</td>
-<td align="right">7.50e-08</td>
-<td align="right">2.25e-07</td>
+<td align="center">GO_ORGANIC_ACID_TRANSPORT</td>
+<td align="center">240</td>
+<td align="center">14</td>
+<td align="center">Up</td>
+<td align="center">3.617e-05</td>
+<td align="center">0.003991</td>
 </tr>
 <tr class="even">
-<td align="left">GO_ORGANIC_ANION_TRANSMEMBRANE_TRANSPORTER_ACTIVITY</td>
-<td align="right">11</td>
-<td align="right">144</td>
-<td align="right">6.48e-11</td>
-<td align="right">1.04e-07</td>
-<td align="right">5.72e-07</td>
+<td align="center">GO_ORGANIC_ACID_BIOSYNTHETIC_PROCESS</td>
+<td align="center">198</td>
+<td align="center">12</td>
+<td align="center">Up</td>
+<td align="center">4.586e-05</td>
+<td align="center">0.004057</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_ESTABLISHMENT_OF_PROTEIN_LOCALIZATION_TO_MEMBRANE</td>
-<td align="right">30</td>
-<td align="right">287</td>
-<td align="right">7.06e-11</td>
-<td align="right">1.04e-07</td>
-<td align="right">6.23e-07</td>
+<td align="center">GO_PEPTIDYL_LYSINE_METHYLATION</td>
+<td align="center">111</td>
+<td align="center">5</td>
+<td align="center">Down</td>
+<td align="center">4.848e-05</td>
+<td align="center">0.004057</td>
 </tr>
 <tr class="even">
-<td align="left">GO_ANION_TRANSMEMBRANE_TRANSPORTER_ACTIVITY</td>
-<td align="right">17</td>
-<td align="right">228</td>
-<td align="right">1.42e-10</td>
-<td align="right">1.79e-07</td>
-<td align="right">1.26e-06</td>
+<td align="center">GO_RESPONSE_TO_CORTICOSTEROID</td>
+<td align="center">121</td>
+<td align="center">5</td>
+<td align="center">Up</td>
+<td align="center">4.854e-05</td>
+<td align="center">0.004057</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_ANION_TRANSPORT</td>
-<td align="right">22</td>
-<td align="right">434</td>
-<td align="right">3.19e-10</td>
-<td align="right">3.38e-07</td>
-<td align="right">2.81e-06</td>
+<td align="center">GO_PEPTIDYL_LYSINE_ACETYLATION</td>
+<td align="center">144</td>
+<td align="center">5</td>
+<td align="center">Down</td>
+<td align="center">6.245e-05</td>
+<td align="center">0.004211</td>
 </tr>
 <tr class="even">
-<td align="left">GO_PROTEIN_TARGETING_TO_MEMBRANE</td>
-<td align="right">30</td>
-<td align="right">171</td>
-<td align="right">2.57e-09</td>
-<td align="right">2.27e-06</td>
-<td align="right">2.27e-05</td>
+<td align="center">GO_MONOCARBOXYLIC_ACID_BIOSYNTHETIC_PROCESS</td>
+<td align="center">127</td>
+<td align="center">7</td>
+<td align="center">Up</td>
+<td align="center">7.071e-05</td>
+<td align="center">0.004534</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_PROTEIN_TARGETING</td>
-<td align="right">34</td>
-<td align="right">379</td>
-<td align="right">7.09e-09</td>
-<td align="right">5.22e-06</td>
-<td align="right">6.26e-05</td>
+<td align="center">GO_REGULATION_OF_LIPID_BIOSYNTHETIC_PROCESS</td>
+<td align="center">138</td>
+<td align="center">6</td>
+<td align="center">Up</td>
+<td align="center">7.186e-05</td>
+<td align="center">0.004534</td>
 </tr>
 <tr class="even">
-<td align="left">GO_CYTOSOLIC_PART</td>
-<td align="right">30</td>
-<td align="right">206</td>
-<td align="right">9.18e-09</td>
-<td align="right">5.52e-06</td>
-<td align="right">8.11e-05</td>
+<td align="center">GO_RESPONSE_TO_ALCOHOL</td>
+<td align="center">177</td>
+<td align="center">7</td>
+<td align="center">Up</td>
+<td align="center">7.293e-05</td>
+<td align="center">0.004534</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_CYTOSOLIC_SMALL_RIBOSOMAL_SUBUNIT</td>
-<td align="right">11</td>
-<td align="right">41</td>
-<td align="right">9.40e-09</td>
-<td align="right">5.52e-06</td>
-<td align="right">8.30e-05</td>
+<td align="center">GO_HISTONE_METHYLATION</td>
+<td align="center">118</td>
+<td align="center">5</td>
+<td align="center">Down</td>
+<td align="center">7.92e-05</td>
+<td align="center">0.004536</td>
 </tr>
 <tr class="even">
-<td align="left">GO_ESTABLISHMENT_OF_PROTEIN_LOCALIZATION_TO_ORGANELLE</td>
-<td align="right">38</td>
-<td align="right">484</td>
-<td align="right">1.00e-08</td>
-<td align="right">5.52e-06</td>
-<td align="right">8.84e-05</td>
+<td align="center">GO_MONOCARBOXYLIC_ACID_METABOLIC_PROCESS</td>
+<td align="center">315</td>
+<td align="center">10</td>
+<td align="center">Up</td>
+<td align="center">9.221e-05</td>
+<td align="center">0.004724</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_TRANSLATIONAL_INITIATION</td>
-<td align="right">29</td>
-<td align="right">177</td>
-<td align="right">1.29e-08</td>
-<td align="right">6.70e-06</td>
-<td align="right">0.0001</td>
+<td align="center">GO_NUCLEAR_BODY</td>
+<td align="center">649</td>
+<td align="center">21</td>
+<td align="center">Down</td>
+<td align="center">0.0001011</td>
+<td align="center">0.004828</td>
 </tr>
 <tr class="even">
-<td align="left">GO_CYTOSOLIC_LARGE_RIBOSOMAL_SUBUNIT</td>
-<td align="right">15</td>
-<td align="right">51</td>
-<td align="right">1.47e-08</td>
-<td align="right">7.20e-06</td>
-<td align="right">0.0001</td>
+<td align="center">GO_MONOCARBOXYLIC_ACID_TRANSPORT</td>
+<td align="center">110</td>
+<td align="center">6</td>
+<td align="center">Up</td>
+<td align="center">0.0001017</td>
+<td align="center">0.004829</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_ESTABLISHMENT_OF_PROTEIN_LOCALIZATION_TO_ENDOPLASMIC_RETICULUM</td>
-<td align="right">27</td>
-<td align="right">105</td>
-<td align="right">1.58e-08</td>
-<td align="right">7.34e-06</td>
-<td align="right">0.0001</td>
+<td align="center">GO_CARBOHYDRATE_BIOSYNTHETIC_PROCESS</td>
+<td align="center">148</td>
+<td align="center">6</td>
+<td align="center">Up</td>
+<td align="center">0.0001221</td>
+<td align="center">0.005132</td>
 </tr>
 <tr class="even">
-<td align="left">GO_COTRANSLATIONAL_PROTEIN_TARGETING_TO_MEMBRANE</td>
-<td align="right">28</td>
-<td align="right">93</td>
-<td align="right">1.91e-08</td>
-<td align="right">8.46e-06</td>
-<td align="right">0.0002</td>
+<td align="center">GO_SYMPORTER_ACTIVITY</td>
+<td align="center">94</td>
+<td align="center">10</td>
+<td align="center">Up</td>
+<td align="center">0.0001224</td>
+<td align="center">0.005132</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_PROTEIN_LOCALIZATION_TO_ENDOPLASMIC_RETICULUM</td>
-<td align="right">27</td>
-<td align="right">128</td>
-<td align="right">2.36e-08</td>
-<td align="right">9.92e-06</td>
-<td align="right">0.0002</td>
+<td align="center">GO_LIPID_BIOSYNTHETIC_PROCESS</td>
+<td align="center">508</td>
+<td align="center">13</td>
+<td align="center">Up</td>
+<td align="center">0.0001267</td>
+<td align="center">0.005207</td>
 </tr>
 <tr class="even">
-<td align="left">GO_CYTOSOLIC_RIBOSOME</td>
-<td align="right">27</td>
-<td align="right">97</td>
-<td align="right">3.13e-08</td>
-<td align="right">1.20e-05</td>
-<td align="right">0.0003</td>
+<td align="center">GO_DRUG_TRANSPORT</td>
+<td align="center">152</td>
+<td align="center">8</td>
+<td align="center">Up</td>
+<td align="center">0.0001461</td>
+<td align="center">0.005379</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_ORGANIC_ACID_TRANSPORT</td>
-<td align="right">14</td>
-<td align="right">240</td>
-<td align="right">4.33e-08</td>
-<td align="right">1.59e-05</td>
-<td align="right">0.0004</td>
+<td align="center">GO_AMINO_ACID_TRANSMEMBRANE_TRANSPORT</td>
+<td align="center">69</td>
+<td align="center">5</td>
+<td align="center">Up</td>
+<td align="center">0.0001709</td>
+<td align="center">0.005806</td>
 </tr>
 <tr class="even">
-<td align="left">GO_ORGANIC_CYCLIC_COMPOUND_CATABOLIC_PROCESS</td>
-<td align="right">40</td>
-<td align="right">474</td>
-<td align="right">5.44e-08</td>
-<td align="right">1.92e-05</td>
-<td align="right">0.0005</td>
+<td align="center">GO_ORGANIC_ACID_TRANSMEMBRANE_TRANSPORT</td>
+<td align="center">106</td>
+<td align="center">9</td>
+<td align="center">Up</td>
+<td align="center">0.0001766</td>
+<td align="center">0.005887</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_RNA_CATABOLIC_PROCESS</td>
-<td align="right">34</td>
-<td align="right">337</td>
-<td align="right">7.51e-08</td>
-<td align="right">2.46e-05</td>
-<td align="right">0.0007</td>
+<td align="center">GO_ORGANIC_ANION_TRANSPORT</td>
+<td align="center">345</td>
+<td align="center">16</td>
+<td align="center">Up</td>
+<td align="center">0.0001785</td>
+<td align="center">0.005928</td>
 </tr>
 <tr class="even">
-<td align="left">GO_RESPONSE_TO_DRUG</td>
-<td align="right">31</td>
-<td align="right">746</td>
-<td align="right">1.05e-07</td>
-<td align="right">3.30e-05</td>
-<td align="right">0.0009</td>
+<td align="center">GO_SECONDARY_ACTIVE_TRANSMEMBRANE_TRANSPORTER_ACTIVITY</td>
+<td align="center">154</td>
+<td align="center">13</td>
+<td align="center">Up</td>
+<td align="center">0.0001819</td>
+<td align="center">0.005967</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_NUCLEAR_TRANSCRIBED_MRNA_CATABOLIC_PROCESS</td>
-<td align="right">30</td>
-<td align="right">183</td>
-<td align="right">1.61e-07</td>
-<td align="right">4.45e-05</td>
-<td align="right">0.0014</td>
+<td align="center">GO_COENZYME_METABOLIC_PROCESS</td>
+<td align="center">195</td>
+<td align="center">5</td>
+<td align="center">Up</td>
+<td align="center">0.000182</td>
+<td align="center">0.005967</td>
 </tr>
 <tr class="even">
-<td align="left">GO_CYTOPLASMIC_TRANSLATION</td>
-<td align="right">11</td>
-<td align="right">87</td>
-<td align="right">3.11e-07</td>
-<td align="right">7.09e-05</td>
-<td align="right">0.0028</td>
+<td align="center">GO_ANION_TRANSMEMBRANE_TRANSPORT</td>
+<td align="center">203</td>
+<td align="center">15</td>
+<td align="center">Up</td>
+<td align="center">0.0001854</td>
+<td align="center">0.005999</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_ORGANONITROGEN_COMPOUND_BIOSYNTHETIC_PROCESS</td>
-<td align="right">68</td>
-<td align="right">1,431</td>
-<td align="right">3.13e-07</td>
-<td align="right">7.09e-05</td>
-<td align="right">0.0028</td>
+<td align="center">GO_ANION_TRANSPORT</td>
+<td align="center">434</td>
+<td align="center">22</td>
+<td align="center">Up</td>
+<td align="center">0.0001883</td>
+<td align="center">0.006049</td>
 </tr>
 <tr class="even">
-<td align="left">GO_AMIDE_BIOSYNTHETIC_PROCESS</td>
-<td align="right">40</td>
-<td align="right">678</td>
-<td align="right">3.31e-07</td>
-<td align="right">7.31e-05</td>
-<td align="right">0.0029</td>
+<td align="center">GO_SEQUENCE_SPECIFIC_DNA_BINDING</td>
+<td align="center">827</td>
+<td align="center">29</td>
+<td align="center">Down</td>
+<td align="center">0.0001932</td>
+<td align="center">0.006093</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_CELLULAR_AMIDE_METABOLIC_PROCESS</td>
-<td align="right">45</td>
-<td align="right">805</td>
-<td align="right">3.62e-07</td>
-<td align="right">7.79e-05</td>
-<td align="right">0.0032</td>
+<td align="center">GO_POSITIVE_REGULATION_OF_TRANSCRIPTION_BY_RNA_POLYMERASE_II</td>
+<td align="center">903</td>
+<td align="center">31</td>
+<td align="center">Down</td>
+<td align="center">0.000212</td>
+<td align="center">0.006139</td>
 </tr>
 <tr class="even">
-<td align="left">GO_INNER_MITOCHONDRIAL_MEMBRANE_PROTEIN_COMPLEX</td>
-<td align="right">16</td>
-<td align="right">124</td>
-<td align="right">3.77e-07</td>
-<td align="right">7.94e-05</td>
-<td align="right">0.0033</td>
+<td align="center">GO_REGULATORY_REGION_NUCLEIC_ACID_BINDING</td>
+<td align="center">720</td>
+<td align="center">24</td>
+<td align="center">Down</td>
+<td align="center">0.0002154</td>
+<td align="center">0.006157</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_SMALL_RIBOSOMAL_SUBUNIT</td>
-<td align="right">11</td>
-<td align="right">69</td>
-<td align="right">3.96e-07</td>
-<td align="right">8.13e-05</td>
-<td align="right">0.0035</td>
+<td align="center">GO_PROTEIN_LOCALIZATION_TO_MEMBRANE</td>
+<td align="center">539</td>
+<td align="center">35</td>
+<td align="center">Up</td>
+<td align="center">0.0002254</td>
+<td align="center">0.006217</td>
 </tr>
 <tr class="even">
-<td align="left">GO_ACTIVE_TRANSMEMBRANE_TRANSPORTER_ACTIVITY</td>
-<td align="right">15</td>
-<td align="right">254</td>
-<td align="right">4.19e-07</td>
-<td align="right">8.22e-05</td>
-<td align="right">0.0037</td>
+<td align="center">GO_PROTEIN_METHYLATION</td>
+<td align="center">153</td>
+<td align="center">8</td>
+<td align="center">Down</td>
+<td align="center">0.0002353</td>
+<td align="center">0.006313</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_ORGANIC_ANION_TRANSPORT</td>
-<td align="right">16</td>
-<td align="right">345</td>
-<td align="right">4.49e-07</td>
-<td align="right">8.63e-05</td>
-<td align="right">0.0040</td>
+<td align="center">GO_REGULATION_OF_PHOSPHATASE_ACTIVITY</td>
+<td align="center">149</td>
+<td align="center">8</td>
+<td align="center">Down</td>
+<td align="center">0.0002413</td>
+<td align="center">0.006313</td>
 </tr>
 <tr class="even">
-<td align="left">GO_PEPTIDE_BIOSYNTHETIC_PROCESS</td>
-<td align="right">38</td>
-<td align="right">572</td>
-<td align="right">1.16e-06</td>
-<td align="right">0.0002</td>
-<td align="right">0.0102</td>
+<td align="center">GO_ACTIVATING_TRANSCRIPTION_FACTOR_BINDING</td>
+<td align="center">70</td>
+<td align="center">5</td>
+<td align="center">Down</td>
+<td align="center">0.0002415</td>
+<td align="center">0.006313</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_RESPONSE_TO_CARBOHYDRATE</td>
-<td align="right">11</td>
-<td align="right">176</td>
-<td align="right">1.31e-06</td>
-<td align="right">0.0002</td>
-<td align="right">0.0116</td>
+<td align="center">GO_ORGANIC_ANION_TRANSMEMBRANE_TRANSPORTER_ACTIVITY</td>
+<td align="center">144</td>
+<td align="center">11</td>
+<td align="center">Up</td>
+<td align="center">0.000253</td>
+<td align="center">0.006397</td>
 </tr>
 <tr class="even">
-<td align="left">GO_RIBOSOMAL_SUBUNIT</td>
-<td align="right">28</td>
-<td align="right">175</td>
-<td align="right">1.34e-06</td>
-<td align="right">0.0002</td>
-<td align="right">0.0118</td>
+<td align="center">GO_ESTABLISHMENT_OF_PROTEIN_LOCALIZATION_TO_MEMBRANE</td>
+<td align="center">287</td>
+<td align="center">30</td>
+<td align="center">Up</td>
+<td align="center">0.0002603</td>
+<td align="center">0.006429</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_ORGANIC_ACID_BIOSYNTHETIC_PROCESS</td>
-<td align="right">12</td>
-<td align="right">198</td>
-<td align="right">1.63e-06</td>
-<td align="right">0.0003</td>
-<td align="right">0.0144</td>
+<td align="center">GO_PROTEIN_ACETYLATION</td>
+<td align="center">168</td>
+<td align="center">5</td>
+<td align="center">Down</td>
+<td align="center">0.0002605</td>
+<td align="center">0.006429</td>
 </tr>
 <tr class="even">
-<td align="left">GO_RRNA_BINDING</td>
-<td align="right">11</td>
-<td align="right">57</td>
-<td align="right">2.23e-06</td>
-<td align="right">0.0003</td>
-<td align="right">0.0197</td>
+<td align="center">GO_ISOPRENOID_METABOLIC_PROCESS</td>
+<td align="center">68</td>
+<td align="center">5</td>
+<td align="center">Up</td>
+<td align="center">0.0002633</td>
+<td align="center">0.006433</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_RIBOSOME</td>
-<td align="right">30</td>
-<td align="right">210</td>
-<td align="right">2.32e-06</td>
-<td align="right">0.0003</td>
-<td align="right">0.0205</td>
+<td align="center">GO_PROTEIN_MATURATION</td>
+<td align="center">210</td>
+<td align="center">8</td>
+<td align="center">Up</td>
+<td align="center">0.0002641</td>
+<td align="center">0.006433</td>
 </tr>
 <tr class="even">
-<td align="left">GO_REGULATION_OF_HORMONE_LEVELS</td>
-<td align="right">19</td>
-<td align="right">362</td>
-<td align="right">2.48e-06</td>
-<td align="right">0.0003</td>
-<td align="right">0.0220</td>
+<td align="center">GO_DRUG_TRANSMEMBRANE_TRANSPORT</td>
+<td align="center">65</td>
+<td align="center">6</td>
+<td align="center">Up</td>
+<td align="center">0.0002665</td>
+<td align="center">0.006433</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_REGULATION_OF_HORMONE_SECRETION</td>
-<td align="right">12</td>
-<td align="right">200</td>
-<td align="right">2.49e-06</td>
-<td align="right">0.0003</td>
-<td align="right">0.0220</td>
+<td align="center">GO_REGULATION_OF_PEPTIDE_HORMONE_SECRETION</td>
+<td align="center">157</td>
+<td align="center">9</td>
+<td align="center">Up</td>
+<td align="center">0.0002996</td>
+<td align="center">0.00691</td>
 </tr>
 <tr class="even">
-<td align="left">GO_RESPONSE_TO_TOXIC_SUBSTANCE</td>
-<td align="right">20</td>
-<td align="right">380</td>
-<td align="right">3.18e-06</td>
-<td align="right">0.0004</td>
-<td align="right">0.0281</td>
+<td align="center">GO_ANION_TRANSMEMBRANE_TRANSPORTER_ACTIVITY</td>
+<td align="center">228</td>
+<td align="center">17</td>
+<td align="center">Up</td>
+<td align="center">0.0003288</td>
+<td align="center">0.007143</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_PROTEIN_LOCALIZATION_TO_MEMBRANE</td>
-<td align="right">35</td>
-<td align="right">539</td>
-<td align="right">3.42e-06</td>
-<td align="right">0.0004</td>
-<td align="right">0.0302</td>
+<td align="center">GO_NUCLEAR_SPECK</td>
+<td align="center">346</td>
+<td align="center">11</td>
+<td align="center">Down</td>
+<td align="center">0.0003295</td>
+<td align="center">0.007143</td>
 </tr>
 <tr class="even">
-<td align="left">GO_VIRAL_GENE_EXPRESSION</td>
-<td align="right">29</td>
-<td align="right">172</td>
-<td align="right">3.66e-06</td>
-<td align="right">0.0004</td>
-<td align="right">0.0323</td>
+<td align="center">GO_PROXIMAL_PROMOTER_SEQUENCE_SPECIFIC_DNA_BINDING</td>
+<td align="center">413</td>
+<td align="center">15</td>
+<td align="center">Down</td>
+<td align="center">0.0003484</td>
+<td align="center">0.007241</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_LARGE_RIBOSOMAL_SUBUNIT</td>
-<td align="right">17</td>
-<td align="right">108</td>
-<td align="right">3.84e-06</td>
-<td align="right">0.0005</td>
-<td align="right">0.0340</td>
+<td align="center">GO_REGULATION_OF_DEPHOSPHORYLATION</td>
+<td align="center">180</td>
+<td align="center">8</td>
+<td align="center">Down</td>
+<td align="center">0.0003661</td>
+<td align="center">0.007384</td>
 </tr>
 <tr class="even">
-<td align="left">GO_SMALL_MOLECULE_BIOSYNTHETIC_PROCESS</td>
-<td align="right">23</td>
-<td align="right">478</td>
-<td align="right">6.98e-06</td>
-<td align="right">0.0007</td>
-<td align="right">0.0616</td>
+<td align="center">GO_COVALENT_CHROMATIN_MODIFICATION</td>
+<td align="center">384</td>
+<td align="center">13</td>
+<td align="center">Down</td>
+<td align="center">0.0003797</td>
+<td align="center">0.007483</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_RNA_METABOLIC_PROCESS</td>
-<td align="right">48</td>
-<td align="right">915</td>
-<td align="right">1.27e-05</td>
-<td align="right">0.0011</td>
-<td align="right">0.1119</td>
+<td align="center">GO_REGULATION_OF_CHROMATIN_ORGANIZATION</td>
+<td align="center">158</td>
+<td align="center">7</td>
+<td align="center">Down</td>
+<td align="center">0.0003848</td>
+<td align="center">0.007483</td>
 </tr>
 <tr class="even">
-<td align="left">GO_OXIDATIVE_PHOSPHORYLATION</td>
-<td align="right">15</td>
-<td align="right">122</td>
-<td align="right">1.35e-05</td>
-<td align="right">0.0011</td>
-<td align="right">0.1189</td>
+<td align="center">GO_REGULATION_OF_INSULIN_SECRETION</td>
+<td align="center">140</td>
+<td align="center">9</td>
+<td align="center">Up</td>
+<td align="center">0.0004112</td>
+<td align="center">0.007729</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_MONOCARBOXYLIC_ACID_METABOLIC_PROCESS</td>
-<td align="right">10</td>
-<td align="right">315</td>
-<td align="right">2.46e-05</td>
-<td align="right">0.0016</td>
-<td align="right">0.2174</td>
+<td align="center">GO_ROUGH_ENDOPLASMIC_RETICULUM</td>
+<td align="center">67</td>
+<td align="center">6</td>
+<td align="center">Up</td>
+<td align="center">0.0004221</td>
+<td align="center">0.00781</td>
 </tr>
 <tr class="even">
-<td align="left">GO_SEQUENCE_SPECIFIC_DNA_BINDING</td>
-<td align="right">29</td>
-<td align="right">827</td>
-<td align="right">2.63e-05</td>
-<td align="right">0.0017</td>
-<td align="right">0.2327</td>
+<td align="center">GO_AMINO_ACID_TRANSPORT</td>
+<td align="center">119</td>
+<td align="center">6</td>
+<td align="center">Up</td>
+<td align="center">0.0004254</td>
+<td align="center">0.00781</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_HOMEOSTATIC_PROCESS</td>
-<td align="right">55</td>
-<td align="right">1,368</td>
-<td align="right">3.07e-05</td>
-<td align="right">0.0018</td>
-<td align="right">0.2715</td>
+<td align="center">GO_SEQUENCE_SPECIFIC_DOUBLE_STRANDED_DNA_BINDING</td>
+<td align="center">668</td>
+<td align="center">23</td>
+<td align="center">Down</td>
+<td align="center">0.0004287</td>
+<td align="center">0.007824</td>
 </tr>
 <tr class="even">
-<td align="left">GO_RESPONSE_TO_OXYGEN_CONTAINING_COMPOUND</td>
-<td align="right">43</td>
-<td align="right">1,156</td>
-<td align="right">3.17e-05</td>
-<td align="right">0.0018</td>
-<td align="right">0.2803</td>
+<td align="center">GO_DOUBLE_STRANDED_DNA_BINDING</td>
+<td align="center">740</td>
+<td align="center">30</td>
+<td align="center">Down</td>
+<td align="center">0.0004372</td>
+<td align="center">0.007859</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_LIPID_BIOSYNTHETIC_PROCESS</td>
-<td align="right">13</td>
-<td align="right">508</td>
-<td align="right">3.25e-05</td>
-<td align="right">0.0018</td>
-<td align="right">0.2874</td>
+<td align="center">GO_REGULATION_OF_MRNA_PROCESSING</td>
+<td align="center">117</td>
+<td align="center">5</td>
+<td align="center">Down</td>
+<td align="center">0.0004506</td>
+<td align="center">0.00795</td>
 </tr>
 <tr class="even">
-<td align="left">GO_REGULATION_OF_SMALL_MOLECULE_METABOLIC_PROCESS</td>
-<td align="right">11</td>
-<td align="right">262</td>
-<td align="right">3.61e-05</td>
-<td align="right">0.0020</td>
-<td align="right">0.3186</td>
+<td align="center">GO_NUCLEOSIDE_PHOSPHATE_BIOSYNTHETIC_PROCESS</td>
+<td align="center">227</td>
+<td align="center">10</td>
+<td align="center">Up</td>
+<td align="center">0.0004663</td>
+<td align="center">0.008076</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_NEGATIVE_REGULATION_OF_CELL_DIFFERENTIATION</td>
-<td align="right">23</td>
-<td align="right">549</td>
-<td align="right">4.09e-05</td>
-<td align="right">0.0021</td>
-<td align="right">0.3612</td>
+<td align="center">GO_NUCLEOPLASM_PART</td>
+<td align="center">943</td>
+<td align="center">31</td>
+<td align="center">Down</td>
+<td align="center">0.0004697</td>
+<td align="center">0.008088</td>
 </tr>
 <tr class="even">
-<td align="left">GO_GENERATION_OF_PRECURSOR_METABOLITES_AND_ENERGY</td>
-<td align="right">25</td>
-<td align="right">422</td>
-<td align="right">4.45e-05</td>
-<td align="right">0.0022</td>
-<td align="right">0.3931</td>
+<td align="center">GO_SECRETORY_VESICLE</td>
+<td align="center">713</td>
+<td align="center">24</td>
+<td align="center">Up</td>
+<td align="center">0.0004815</td>
+<td align="center">0.008218</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_REGULATORY_REGION_NUCLEIC_ACID_BINDING</td>
-<td align="right">24</td>
-<td align="right">720</td>
-<td align="right">4.60e-05</td>
-<td align="right">0.0023</td>
-<td align="right">0.4059</td>
+<td align="center">GO_AMINO_ACID_TRANSMEMBRANE_TRANSPORTER_ACTIVITY</td>
+<td align="center">60</td>
+<td align="center">5</td>
+<td align="center">Up</td>
+<td align="center">0.000498</td>
+<td align="center">0.008306</td>
 </tr>
 <tr class="even">
-<td align="left">GO_ATP_SYNTHESIS_COUPLED_ELECTRON_TRANSPORT</td>
-<td align="right">12</td>
-<td align="right">85</td>
-<td align="right">4.62e-05</td>
-<td align="right">0.0023</td>
-<td align="right">0.4078</td>
+<td align="center">GO_PURINE_CONTAINING_COMPOUND_BIOSYNTHETIC_PROCESS</td>
+<td align="center">170</td>
+<td align="center">6</td>
+<td align="center">Up</td>
+<td align="center">0.0004995</td>
+<td align="center">0.008306</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_RESPIRATORY_CHAIN_COMPLEX</td>
-<td align="right">11</td>
-<td align="right">75</td>
-<td align="right">5.10e-05</td>
-<td align="right">0.0025</td>
-<td align="right">0.4508</td>
+<td align="center">GO_LIPID_CATABOLIC_PROCESS</td>
+<td align="center">221</td>
+<td align="center">7</td>
+<td align="center">Up</td>
+<td align="center">0.0005363</td>
+<td align="center">0.008614</td>
 </tr>
 <tr class="even">
-<td align="left">GO_LIPID_METABOLIC_PROCESS</td>
-<td align="right">30</td>
-<td align="right">906</td>
-<td align="right">5.38e-05</td>
-<td align="right">0.0025</td>
-<td align="right">0.4750</td>
+<td align="center">GO_INORGANIC_ANION_TRANSPORT</td>
+<td align="center">117</td>
+<td align="center">7</td>
+<td align="center">Up</td>
+<td align="center">0.0005584</td>
+<td align="center">0.008701</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_ENZYME_INHIBITOR_ACTIVITY</td>
-<td align="right">12</td>
-<td align="right">219</td>
-<td align="right">5.92e-05</td>
-<td align="right">0.0026</td>
-<td align="right">0.5226</td>
+<td align="center">GO_MONOVALENT_INORGANIC_CATION_TRANSMEMBRANE_TRANSPORTER_ACTIVITY</td>
+<td align="center">268</td>
+<td align="center">13</td>
+<td align="center">Up</td>
+<td align="center">0.0005832</td>
+<td align="center">0.00893</td>
 </tr>
 <tr class="even">
-<td align="left">GO_CELLULAR_LIPID_METABOLIC_PROCESS</td>
-<td align="right">16</td>
-<td align="right">649</td>
-<td align="right">6.23e-05</td>
-<td align="right">0.0027</td>
-<td align="right">0.5508</td>
+<td align="center">GO_PEPTIDE_HORMONE_SECRETION</td>
+<td align="center">194</td>
+<td align="center">9</td>
+<td align="center">Up</td>
+<td align="center">0.0005972</td>
+<td align="center">0.009027</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_ION_TRANSMEMBRANE_TRANSPORTER_ACTIVITY</td>
-<td align="right">25</td>
-<td align="right">616</td>
-<td align="right">6.28e-05</td>
-<td align="right">0.0027</td>
-<td align="right">0.5544</td>
+<td align="center">GO_ALPHA_AMINO_ACID_METABOLIC_PROCESS</td>
+<td align="center">126</td>
+<td align="center">6</td>
+<td align="center">Up</td>
+<td align="center">0.0006074</td>
+<td align="center">0.009142</td>
 </tr>
 <tr class="even">
-<td align="left">GO_ORGANIC_ACID_METABOLIC_PROCESS</td>
-<td align="right">23</td>
-<td align="right">648</td>
-<td align="right">7.15e-05</td>
-<td align="right">0.0030</td>
-<td align="right">0.6318</td>
+<td align="center">GO_ORGANIC_ACID_CATABOLIC_PROCESS</td>
+<td align="center">184</td>
+<td align="center">5</td>
+<td align="center">Up</td>
+<td align="center">0.0006398</td>
+<td align="center">0.009283</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_ENERGY_DERIVATION_BY_OXIDATION_OF_ORGANIC_COMPOUNDS</td>
-<td align="right">18</td>
-<td align="right">242</td>
-<td align="right">7.55e-05</td>
-<td align="right">0.0031</td>
-<td align="right">0.6666</td>
+<td align="center">GO_IMPORT_INTO_CELL</td>
+<td align="center">532</td>
+<td align="center">7</td>
+<td align="center">Up</td>
+<td align="center">0.0006709</td>
+<td align="center">0.009508</td>
 </tr>
 <tr class="even">
-<td align="left">GO_ENDOPLASMIC_RETICULUM</td>
-<td align="right">38</td>
-<td align="right">1,407</td>
-<td align="right">9.11e-05</td>
-<td align="right">0.0034</td>
-<td align="right">0.8048</td>
+<td align="center">GO_RIBOSE_PHOSPHATE_BIOSYNTHETIC_PROCESS</td>
+<td align="center">165</td>
+<td align="center">7</td>
+<td align="center">Up</td>
+<td align="center">0.0006731</td>
+<td align="center">0.009508</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_POSITIVE_REGULATION_OF_TRANSCRIPTION_BY_RNA_POLYMERASE_II</td>
-<td align="right">31</td>
-<td align="right">903</td>
-<td align="right">9.22e-05</td>
-<td align="right">0.0034</td>
-<td align="right">0.8141</td>
+<td align="center">GO_TUBULIN_BINDING</td>
+<td align="center">258</td>
+<td align="center">5</td>
+<td align="center">Down</td>
+<td align="center">0.0006736</td>
+<td align="center">0.009508</td>
 </tr>
 <tr class="even">
-<td align="left">GO_NUCLEAR_BODY</td>
-<td align="right">21</td>
-<td align="right">649</td>
-<td align="right">9.34e-05</td>
-<td align="right">0.0035</td>
-<td align="right">0.8250</td>
+<td align="center">GO_CATION_TRANSMEMBRANE_TRANSPORTER_ACTIVITY</td>
+<td align="center">458</td>
+<td align="center">18</td>
+<td align="center">Up</td>
+<td align="center">0.0006766</td>
+<td align="center">0.009508</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_REGULATION_OF_NUCLEOBASE_CONTAINING_COMPOUND_METABOLIC_PROCESS</td>
-<td align="right">24</td>
-<td align="right">421</td>
-<td align="right">9.38e-05</td>
-<td align="right">0.0035</td>
-<td align="right">0.8286</td>
+<td align="center">GO_MRNA_METABOLIC_PROCESS</td>
+<td align="center">453</td>
+<td align="center">26</td>
+<td align="center">Down</td>
+<td align="center">0.0006959</td>
+<td align="center">0.009529</td>
 </tr>
 <tr class="even">
-<td align="left">GO_ENDOPLASMIC_RETICULUM_PART</td>
-<td align="right">26</td>
-<td align="right">1,018</td>
-<td align="right">9.68e-05</td>
-<td align="right">0.0035</td>
-<td align="right">0.8551</td>
+<td align="center">GO_GUANYL_NUCLEOTIDE_BINDING</td>
+<td align="center">317</td>
+<td align="center">6</td>
+<td align="center">Up</td>
+<td align="center">0.0007188</td>
+<td align="center">0.009678</td>
 </tr>
 <tr class="odd">
-<td align="left">GO_REGULATION_OF_APOPTOTIC_SIGNALING_PATHWAY</td>
-<td align="right">16</td>
-<td align="right">301</td>
-<td align="right">0.0001</td>
-<td align="right">0.0039</td>
-<td align="right">0.9840</td>
-</tr>
-<tr class="even">
-<td align="left">GO_CELLULAR_MACROMOLECULE_CATABOLIC_PROCESS</td>
-<td align="right">48</td>
-<td align="right">939</td>
-<td align="right">0.0001</td>
-<td align="right">0.0039</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_PROTEIN_LOCALIZATION_TO_ORGANELLE</td>
-<td align="right">43</td>
-<td align="right">788</td>
-<td align="right">0.0001</td>
-<td align="right">0.0039</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="even">
-<td align="left">GO_DOUBLE_STRANDED_DNA_BINDING</td>
-<td align="right">30</td>
-<td align="right">740</td>
-<td align="right">0.0001</td>
-<td align="right">0.0040</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_SEQUENCE_SPECIFIC_DOUBLE_STRANDED_DNA_BINDING</td>
-<td align="right">23</td>
-<td align="right">668</td>
-<td align="right">0.0001</td>
-<td align="right">0.0043</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="even">
-<td align="left">GO_TRANSMEMBRANE_TRANSPORT</td>
-<td align="right">38</td>
-<td align="right">1,149</td>
-<td align="right">0.0002</td>
-<td align="right">0.0047</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_RESPIRATORY_ELECTRON_TRANSPORT_CHAIN</td>
-<td align="right">12</td>
-<td align="right">103</td>
-<td align="right">0.0002</td>
-<td align="right">0.0047</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="even">
-<td align="left">GO_PROXIMAL_PROMOTER_SEQUENCE_SPECIFIC_DNA_BINDING</td>
-<td align="right">15</td>
-<td align="right">413</td>
-<td align="right">0.0002</td>
-<td align="right">0.0049</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_ELECTRON_TRANSPORT_CHAIN</td>
-<td align="right">14</td>
-<td align="right">153</td>
-<td align="right">0.0002</td>
-<td align="right">0.0051</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="even">
-<td align="left">GO_ION_TRANSPORT</td>
-<td align="right">41</td>
-<td align="right">1,184</td>
-<td align="right">0.0002</td>
-<td align="right">0.0051</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_INFLAMMATORY_RESPONSE</td>
-<td align="right">18</td>
-<td align="right">376</td>
-<td align="right">0.0002</td>
-<td align="right">0.0052</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="even">
-<td align="left">GO_COFACTOR_METABOLIC_PROCESS</td>
-<td align="right">10</td>
-<td align="right">317</td>
-<td align="right">0.0002</td>
-<td align="right">0.0052</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_APOPTOTIC_SIGNALING_PATHWAY</td>
-<td align="right">24</td>
-<td align="right">458</td>
-<td align="right">0.0002</td>
-<td align="right">0.0052</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="even">
-<td align="left">GO_HORMONE_TRANSPORT</td>
-<td align="right">12</td>
-<td align="right">242</td>
-<td align="right">0.0002</td>
-<td align="right">0.0053</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_TRANSCRIPTION_FACTOR_BINDING</td>
-<td align="right">24</td>
-<td align="right">563</td>
-<td align="right">0.0002</td>
-<td align="right">0.0060</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="even">
-<td align="left">GO_ORGANIC_HYDROXY_COMPOUND_METABOLIC_PROCESS</td>
-<td align="right">15</td>
-<td align="right">342</td>
-<td align="right">0.0002</td>
-<td align="right">0.0061</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_RESPONSE_TO_CYTOKINE</td>
-<td align="right">32</td>
-<td align="right">752</td>
-<td align="right">0.0003</td>
-<td align="right">0.0062</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="even">
-<td align="left">GO_RESPONSE_TO_OXIDATIVE_STRESS</td>
-<td align="right">14</td>
-<td align="right">347</td>
-<td align="right">0.0003</td>
-<td align="right">0.0064</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_SECRETORY_VESICLE</td>
-<td align="right">24</td>
-<td align="right">713</td>
-<td align="right">0.0003</td>
-<td align="right">0.0072</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="even">
-<td align="left">GO_NUCLEOSIDE_PHOSPHATE_BIOSYNTHETIC_PROCESS</td>
-<td align="right">10</td>
-<td align="right">227</td>
-<td align="right">0.0003</td>
-<td align="right">0.0074</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_CELLULAR_RESPONSE_TO_OXYGEN_CONTAINING_COMPOUND</td>
-<td align="right">31</td>
-<td align="right">816</td>
-<td align="right">0.0004</td>
-<td align="right">0.0079</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="even">
-<td align="left">GO_NEGATIVE_REGULATION_OF_APOPTOTIC_SIGNALING_PATHWAY</td>
-<td align="right">10</td>
-<td align="right">171</td>
-<td align="right">0.0004</td>
-<td align="right">0.0079</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_MACROMOLECULE_CATABOLIC_PROCESS</td>
-<td align="right">52</td>
-<td align="right">1,116</td>
-<td align="right">0.0004</td>
-<td align="right">0.0079</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="even">
-<td align="left">GO_REGULATION_OF_DNA_METABOLIC_PROCESS</td>
-<td align="right">15</td>
-<td align="right">236</td>
-<td align="right">0.0004</td>
-<td align="right">0.0080</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_CATION_TRANSMEMBRANE_TRANSPORTER_ACTIVITY</td>
-<td align="right">18</td>
-<td align="right">458</td>
-<td align="right">0.0004</td>
-<td align="right">0.0081</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="even">
-<td align="left">GO_CYTOPLASMIC_VESICLE_PART</td>
-<td align="right">22</td>
-<td align="right">1,141</td>
-<td align="right">0.0005</td>
-<td align="right">0.0087</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_ION_TRANSMEMBRANE_TRANSPORT</td>
-<td align="right">29</td>
-<td align="right">826</td>
-<td align="right">0.0005</td>
-<td align="right">0.0088</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="even">
-<td align="left">GO_PROTEIN_HOMOOLIGOMERIZATION</td>
-<td align="right">10</td>
-<td align="right">246</td>
-<td align="right">0.0005</td>
-<td align="right">0.0090</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_POSITIVE_REGULATION_OF_RNA_BIOSYNTHETIC_PROCESS</td>
-<td align="right">43</td>
-<td align="right">1,232</td>
-<td align="right">0.0005</td>
-<td align="right">0.0093</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="even">
-<td align="left">GO_VESICLE_MEMBRANE</td>
-<td align="right">11</td>
-<td align="right">609</td>
-<td align="right">0.0005</td>
-<td align="right">0.0093</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_MONOVALENT_INORGANIC_CATION_TRANSMEMBRANE_TRANSPORTER_ACTIVITY</td>
-<td align="right">13</td>
-<td align="right">268</td>
-<td align="right">0.0005</td>
-<td align="right">0.0097</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="even">
-<td align="left">GO_INTRACELLULAR_TRANSPORT</td>
-<td align="right">65</td>
-<td align="right">1,571</td>
-<td align="right">0.0005</td>
-<td align="right">0.0098</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="odd">
-<td align="left">GO_TRANSMEMBRANE_RECEPTOR_PROTEIN_TYROSINE_KINASE_SIGNALING_PATHWAY</td>
-<td align="right">12</td>
-<td align="right">569</td>
-<td align="right">0.0006</td>
-<td align="right">0.0098</td>
-<td align="right">1.0000</td>
-</tr>
-<tr class="even">
-<td align="left">GO_CARBOHYDRATE_DERIVATIVE_BIOSYNTHETIC_PROCESS</td>
-<td align="right">18</td>
-<td align="right">540</td>
-<td align="right">0.0006</td>
-<td align="right">0.0099</td>
-<td align="right">1.0000</td>
+<td align="center">GO_ORGANIC_HYDROXY_COMPOUND_BIOSYNTHETIC_PROCESS</td>
+<td align="center">183</td>
+<td align="center">8</td>
+<td align="center">Up</td>
+<td align="center">0.000736</td>
+<td align="center">0.00984</td>
 </tr>
 </tbody>
 </table>
 <div id="exploration-of-significant-go-gene-sets" class="section level3">
 <h3>Exploration of Significant GO Gene Sets</h3>
-<pre class="r"><code>goMeta %&gt;% 
-  dplyr::filter(nDE &gt;= 25, FDR &lt; 0.05) %&gt;%
-  dplyr::select(gs_name, DE) %&gt;%
-  unnest(DE) %&gt;% 
+<pre class="r"><code>goFry %&gt;% 
+  left_join(gsSizes) %&gt;%
+  left_join(distinct(go, gs_name, shortest_path)) %&gt;%
+  mutate(
+    propDE = de_size / gs_size
+  ) %&gt;%
+  dplyr::filter(
+    de_size &gt;= 15, 
+    propDE &gt; 0.05,
+    FDR &lt; 0.02,
+    shortest_path &gt; 3
+  ) %&gt;%
+  dplyr::select(gs_name, de_id) %&gt;%
+  unnest(de_id) %&gt;% 
   mutate(
     gs_name = str_remove(gs_name, &quot;GO_&quot;),
     gs_name = fct_lump(gs_name, n = 20)
     ) %&gt;% 
   split(f = .$gs_name) %&gt;% 
-  lapply(magrittr::extract2, &quot;DE&quot;) %&gt;% 
-  .[setdiff(names(.), &quot;Other&quot;)] %&gt;%
+  lapply(magrittr::extract2, &quot;de_id&quot;) %&gt;% 
   fromList() %&gt;% 
   upset(
     nsets = length(.), 
+    nintersects = 20,
     order.by = &quot;freq&quot;, 
-    mb.ratio = c(0.55, 0.45)
-  )</code></pre>
+    mb.ratio = c(0.6, 0.4),
+    sets.x.label = &quot;Number Of DE Genes&quot;
+    )</code></pre>
 <div class="figure" style="text-align: center">
-<img src="figure/3_Enrichment_MutantVsWT.Rmd/goMetaUpset-1.png" alt="*UpSet plot indicating distribution of DE genes within significant terms from the GO gene sets. For this visualisation, GO terms were restricted to those with 25 or more DE genes and an FDR &lt; 0.05. A group of about 300 genes is widely spread across multiple terms and not shown, with the next largest group being 19 genes uniquely associated with RNA Metabolic Process. A group of 15 genes is shared by a large group of terms, indicating that these genes largely drive the signal for these terms. These genes tend to indicate Ribosomal activity (i.e. protein synthesis). However, a set of 14 genes seems to more uniquely indicate Mitochondrial activity, followed by 12 uniquely associated with Ion Transport, and a set of 9 genes associated with homeostasis followed by 25 (9 + + 8) involved with regulation of gene expression.*" width="960" />
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/goFryUpset-1.png" alt="*UpSet plot indicating distribution of DE genes within significantly enriched terms from the GO gene sets. For this visualisation, GO terms were restricted to those with 15 or more DE genes, where this represented more than 5% of a gene set as being DE, along with an FDR &lt; 0.02 and more than 3 steps back to the ontology root. The 20 largest GO terms satisfying these criteria are shown. The plot is  truncated at the right hand side for simplicity. A group of 28 genes is uniquely attributed to the Mitochondrial Envelop, with a further 18 being relatively unique to mRNA Metabolic Process. The next grouping of 15 genes are unique to Regulation Of Nucleobase-Containing Compound Metabolic Process followed by 25 genes, spread across two clusters of terms which largely represent Ribosomal activity. In between these are 13 genes uniquely associated with Anion Transport.*" width="960" />
 <p class="caption">
-<em>UpSet plot indicating distribution of DE genes within significant terms from the GO gene sets. For this visualisation, GO terms were restricted to those with 25 or more DE genes and an FDR &lt; 0.05. A group of about 300 genes is widely spread across multiple terms and not shown, with the next largest group being 19 genes uniquely associated with RNA Metabolic Process. A group of 15 genes is shared by a large group of terms, indicating that these genes largely drive the signal for these terms. These genes tend to indicate Ribosomal activity (i.e. protein synthesis). However, a set of 14 genes seems to more uniquely indicate Mitochondrial activity, followed by 12 uniquely associated with Ion Transport, and a set of 9 genes associated with homeostasis followed by 25 (9 + + 8) involved with regulation of gene expression.</em>
+<em>UpSet plot indicating distribution of DE genes within significantly enriched terms from the GO gene sets. For this visualisation, GO terms were restricted to those with 15 or more DE genes, where this represented more than 5% of a gene set as being DE, along with an FDR &lt; 0.02 and more than 3 steps back to the ontology root. The 20 largest GO terms satisfying these criteria are shown. The plot is truncated at the right hand side for simplicity. A group of 28 genes is uniquely attributed to the Mitochondrial Envelop, with a further 18 being relatively unique to mRNA Metabolic Process. The next grouping of 15 genes are unique to Regulation Of Nucleobase-Containing Compound Metabolic Process followed by 25 genes, spread across two clusters of terms which largely represent Ribosomal activity. In between these are 13 genes uniquely associated with Anion Transport.</em>
 </p>
-</div>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-goMetaUpset-1">
-Past versions of goMetaUpset-1.png
-</button>
-</p>
-<div id="fig-goMetaUpset-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/7fe1505995bf93217d6ecd0c1de1f60f27e27c26/docs/figure/3_Enrichment_MutantVsWT.Rmd/goMetaUpset-1.png" target="_blank">7fe1505</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-03-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/01688249b9535123903e827dfd11a894c24ce8d8/docs/figure/3_Enrichment_MutantVsWT.Rmd/goMetaUpset-1.png" target="_blank">0168824</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-02-20
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/figure/3_Enrichment_MutantVsWT.Rmd/goMetaUpset-1.png" target="_blank">86ffa07</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-02-20
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="genes-associated-with-rna-metabolic-process" class="section level3">
-<h3>Genes Associated with RNA Metabolic Process</h3>
-<pre class="r"><code>go %&gt;%
-  dplyr::filter(
-    gs_name == &quot;GO_RNA_METABOLIC_PROCESS&quot;,
-    gene_id %in% dplyr::filter(deTable, DE)$gene_id
-  ) %&gt;%
-  dplyr::select(
-    gene_id, gene_name
-  ) %&gt;%
-  left_join(
-    cpmPostNorm %&gt;%
-      as.data.frame() %&gt;%
-      rownames_to_column(&quot;gene_id&quot;)
-  ) %&gt;%
-  dplyr::select(gene_name, starts_with(&quot;Ps&quot;)) %&gt;%
-  as.data.frame() %&gt;%
-  column_to_rownames(&quot;gene_name&quot;) %&gt;%
-  as.matrix() %&gt;%
-  pheatmap(
-    color = viridis_pal(option = &quot;magma&quot;)(100),
-    legend_breaks = c(seq(-2, 8, by = 2), max(.)),
-    legend_labels = c(seq(-2, 8, by = 2), &quot;logCPM\n&quot;),
-    labels_col = hmHeat %&gt;%
-      dplyr::select(starts_with(&quot;Ps&quot;)) %&gt;% 
-      colnames() %&gt;% 
-      enframe(name = NULL) %&gt;% 
-      dplyr::rename(sample = value) %&gt;%
-      left_join(dgeList$samples) %&gt;%
-      dplyr::select(sample, sampleID) %&gt;%
-      with(
-        structure(sampleID, names = sample)
-      ),
-    cutree_rows = 4,
-    cutree_cols = 2
-  )</code></pre>
-<div class="figure" style="text-align: center">
-<img src="figure/3_Enrichment_MutantVsWT.Rmd/heatDsDNA-1.png" alt="*All DE genes associated with the GO term 'RNA Metabolic Process'.*" width="768" />
-<p class="caption">
-<em>All DE genes associated with the GO term ‘RNA Metabolic Process’.</em>
-</p>
-</div>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-heatDsDNA-1">
-Past versions of heatDsDNA-1.png
-</button>
-</p>
-<div id="fig-heatDsDNA-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/7fe1505995bf93217d6ecd0c1de1f60f27e27c26/docs/figure/3_Enrichment_MutantVsWT.Rmd/heatDsDNA-1.png" target="_blank">7fe1505</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-03-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/01688249b9535123903e827dfd11a894c24ce8d8/docs/figure/3_Enrichment_MutantVsWT.Rmd/heatDsDNA-1.png" target="_blank">0168824</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-02-20
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/figure/3_Enrichment_MutantVsWT.Rmd/heatDsDNA-1.png" target="_blank">86ffa07</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-02-20
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 </div>
 <div id="genes-associated-with-the-mitochondrial-envelope" class="section level3">
 <h3>Genes Associated with the Mitochondrial Envelope</h3>
 <pre class="r"><code>go %&gt;%
   dplyr::filter(
-    gs_name == &quot;GO_MITOCHONDRION&quot;,
+    gs_name == &quot;GO_MITOCHONDRIAL_ENVELOPE&quot;,
     gene_id %in% dplyr::filter(deTable, DE)$gene_id
   ) %&gt;%
   dplyr::select(
@@ -3460,75 +3191,25 @@ Steve Ped
       with(
         structure(sampleID, names = sample)
       ),
-    cutree_rows = 5,
+    annotation_col = dgeList$samples %&gt;%
+      dplyr::select(Genotype = genotype),
+    cutree_rows = 4,
     cutree_cols = 2
   )</code></pre>
 <div class="figure" style="text-align: center">
-<img src="figure/3_Enrichment_MutantVsWT.Rmd/heatMitoEnvelope-1.png" alt="*All DE genes associated with the GO term 'Mitochondrion'.*" width="768" />
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/heatMito-1.png" alt="*All DE genes associated with the GO term 'Mitochondrial Envelope'.*" width="768" />
 <p class="caption">
-<em>All DE genes associated with the GO term ‘Mitochondrion’.</em>
+<em>All DE genes associated with the GO term ‘Mitochondrial Envelope’.</em>
 </p>
 </div>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-heatMitoEnvelope-1">
-Past versions of heatMitoEnvelope-1.png
-</button>
-</p>
-<div id="fig-heatMitoEnvelope-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/7fe1505995bf93217d6ecd0c1de1f60f27e27c26/docs/figure/3_Enrichment_MutantVsWT.Rmd/heatMitoEnvelope-1.png" target="_blank">7fe1505</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-03-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/figure/3_Enrichment_MutantVsWT.Rmd/heatMitoEnvelope-1.png" target="_blank">86ffa07</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-02-20
-</td>
-</tr>
-</tbody>
-</table>
 </div>
-</div>
-</div>
-<div id="genes-associated-with-ion-transport" class="section level3">
-<h3>Genes Associated with Ion Transport</h3>
+<div id="genes-associated-with-rna-metabolic-process" class="section level3">
+<h3>Genes Associated with RNA Metabolic Process</h3>
 <pre class="r"><code>go %&gt;%
   dplyr::filter(
-    gene_id %in% dplyr::filter(deTable, DE)$gene_id,
-    gs_name %in% c(&quot;GO_ION_TRANSPORT&quot;)
+    gs_name == &quot;GO_MRNA_METABOLIC_PROCESS&quot;,
+    gene_id %in% dplyr::filter(deTable, DE)$gene_id
   ) %&gt;%
-  group_by(gene_id, gene_name) %&gt;%
-  tally() %&gt;%
-  ungroup() %&gt;%
-  dplyr::filter(n == 1) %&gt;%
   dplyr::select(
     gene_id, gene_name
   ) %&gt;%
@@ -3555,86 +3236,25 @@ Steve Ped
       with(
         structure(sampleID, names = sample)
       ),
+    annotation_col = dgeList$samples %&gt;%
+      dplyr::select(Genotype = genotype),
     cutree_rows = 4,
     cutree_cols = 2
   )</code></pre>
 <div class="figure" style="text-align: center">
-<img src="figure/3_Enrichment_MutantVsWT.Rmd/heatOrganoNitro-1.png" alt="*All DE genes associated with the GO term 'Ion Transport'.*" width="768" />
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/heatRnaMetab-1.png" alt="*All DE genes associated with the GO term 'mRNA Metabolic Process'.*" width="768" />
 <p class="caption">
-<em>All DE genes associated with the GO term ‘Ion Transport’.</em>
+<em>All DE genes associated with the GO term ‘mRNA Metabolic Process’.</em>
 </p>
 </div>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-heatOrganoNitro-1">
-Past versions of heatOrganoNitro-1.png
-</button>
-</p>
-<div id="fig-heatOrganoNitro-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/7fe1505995bf93217d6ecd0c1de1f60f27e27c26/docs/figure/3_Enrichment_MutantVsWT.Rmd/heatOrganoNitro-1.png" target="_blank">7fe1505</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-03-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/01688249b9535123903e827dfd11a894c24ce8d8/docs/figure/3_Enrichment_MutantVsWT.Rmd/heatOrganoNitro-1.png" target="_blank">0168824</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-02-20
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/86ffa07adc34510ac982dcb32159b051f50a7b9a/docs/figure/3_Enrichment_MutantVsWT.Rmd/heatOrganoNitro-1.png" target="_blank">86ffa07</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-02-20
-</td>
-</tr>
-</tbody>
-</table>
 </div>
-</div>
-</div>
-<div id="genes-associated-with-homeostasis" class="section level3">
-<h3>Genes Associated with Homeostasis</h3>
+<div id="genes-associated-with-regulation-of-nucleobase-containing-compound-metabolic-process" class="section level3">
+<h3>Genes Associated with Regulation Of Nucleobase-Containing Compound Metabolic Process</h3>
 <pre class="r"><code>go %&gt;%
   dplyr::filter(
-    gene_id %in% dplyr::filter(deTable, DE)$gene_id,
-    gs_name %in% c(&quot;GO_HOMEOSTATIC_PROCESS&quot;)
+    gs_name == &quot;GO_REGULATION_OF_NUCLEOBASE_CONTAINING_COMPOUND_METABOLIC_PROCESS&quot;,
+    gene_id %in% dplyr::filter(deTable, DE)$gene_id
   ) %&gt;%
-  group_by(gene_id, gene_name) %&gt;%
-  tally() %&gt;%
-  ungroup() %&gt;%
-  dplyr::filter(n == 1) %&gt;%
   dplyr::select(
     gene_id, gene_name
   ) %&gt;%
@@ -3661,64 +3281,25 @@ Steve Ped
       with(
         structure(sampleID, names = sample)
       ),
+    annotation_col = dgeList$samples %&gt;%
+      dplyr::select(Genotype = genotype),
     cutree_rows = 4,
     cutree_cols = 2
   )</code></pre>
 <div class="figure" style="text-align: center">
-<img src="figure/3_Enrichment_MutantVsWT.Rmd/heatHomeo-1.png" alt="*All DE genes associated with the GO term 'Homeostatic Process'.*" width="768" />
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/heatRegNucleo-1.png" alt="*All DE genes associated with the GO term 'mRNA Metabolic Process'.*" width="768" />
 <p class="caption">
-<em>All DE genes associated with the GO term ‘Homeostatic Process’.</em>
+<em>All DE genes associated with the GO term ‘mRNA Metabolic Process’.</em>
 </p>
 </div>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-heatHomeo-1">
-Past versions of heatHomeo-1.png
-</button>
-</p>
-<div id="fig-heatHomeo-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/7fe1505995bf93217d6ecd0c1de1f60f27e27c26/docs/figure/3_Enrichment_MutantVsWT.Rmd/heatHomeo-1.png" target="_blank">7fe1505</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-03-05
-</td>
-</tr>
-</tbody>
-</table>
 </div>
-</div>
-</div>
-<div id="genes-associated-with-gene-regulation" class="section level3">
-<h3>Genes Associated with Gene Regulation</h3>
+<div id="genes-associated-with-anion-transport" class="section level3">
+<h3>Genes Associated with Anion Transport</h3>
 <pre class="r"><code>go %&gt;%
   dplyr::filter(
-    gene_id %in% dplyr::filter(deTable, DE)$gene_id,
-    gs_name %in% c(&quot;GO_POSITIVE_REGULATION_OF_GENE_EXPRESSION&quot;)
+    gs_name == &quot;GO_ANION_TRANSPORT&quot;,
+    gene_id %in% dplyr::filter(deTable, DE)$gene_id
   ) %&gt;%
-  group_by(gene_id, gene_name) %&gt;%
-  tally() %&gt;%
-  ungroup() %&gt;%
-  dplyr::filter(n == 1) %&gt;%
   dplyr::select(
     gene_id, gene_name
   ) %&gt;%
@@ -3745,51 +3326,61 @@ Steve Ped
       with(
         structure(sampleID, names = sample)
       ),
-    cutree_rows = 4,
+    annotation_col = dgeList$samples %&gt;%
+      dplyr::select(Genotype = genotype),
+    cutree_rows = 3,
     cutree_cols = 2
   )</code></pre>
 <div class="figure" style="text-align: center">
-<img src="figure/3_Enrichment_MutantVsWT.Rmd/heatReg-1.png" alt="*All DE genes associated with the GO term 'Positive Regulation of Gene Expression'.*" width="768" />
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/heatAnion-1.png" alt="*All DE genes associated with the GO term 'Anion Transport'.*" width="768" />
 <p class="caption">
-<em>All DE genes associated with the GO term ‘Positive Regulation of Gene Expression’.</em>
+<em>All DE genes associated with the GO term ‘Anion Transport’.</em>
 </p>
 </div>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-heatReg-1">
-Past versions of heatReg-1.png
-</button>
-</p>
-<div id="fig-heatReg-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/blob/7fe1505995bf93217d6ecd0c1de1f60f27e27c26/docs/figure/3_Enrichment_MutantVsWT.Rmd/heatReg-1.png" target="_blank">7fe1505</a>
-</td>
-<td>
-Steve Ped
-</td>
-<td>
-2020-03-05
-</td>
-</tr>
-</tbody>
-</table>
 </div>
+<div id="genes-associated-with-ribosomal-activity" class="section level3">
+<h3>Genes Associated with Ribosomal Activity</h3>
+<pre class="r"><code>go %&gt;%
+  dplyr::filter(
+    gs_name == &quot;GO_CYTOSOLIC_RIBOSOME&quot;,
+    gene_id %in% dplyr::filter(deTable, DE)$gene_id
+  ) %&gt;%
+  dplyr::select(
+    gene_id, gene_name
+  ) %&gt;%
+  left_join(
+    cpmPostNorm %&gt;%
+      as.data.frame() %&gt;%
+      rownames_to_column(&quot;gene_id&quot;)
+  ) %&gt;%
+  dplyr::select(gene_name, starts_with(&quot;Ps&quot;)) %&gt;%
+  as.data.frame() %&gt;%
+  column_to_rownames(&quot;gene_name&quot;) %&gt;%
+  as.matrix() %&gt;%
+  pheatmap(
+    color = viridis_pal(option = &quot;magma&quot;)(100),
+    legend_breaks = c(seq(-2, 8, by = 2), max(.)),
+    legend_labels = c(seq(-2, 8, by = 2), &quot;logCPM\n&quot;),
+    labels_col = hmHeat %&gt;%
+      dplyr::select(starts_with(&quot;Ps&quot;)) %&gt;% 
+      colnames() %&gt;% 
+      enframe(name = NULL) %&gt;% 
+      dplyr::rename(sample = value) %&gt;%
+      left_join(dgeList$samples) %&gt;%
+      dplyr::select(sample, sampleID) %&gt;%
+      with(
+        structure(sampleID, names = sample)
+      ),
+    annotation_col = dgeList$samples %&gt;%
+      dplyr::select(Genotype = genotype),
+    cutree_rows = 3,
+    cutree_cols = 2
+  )</code></pre>
+<div class="figure" style="text-align: center">
+<img src="figure/3_Enrichment_MutantVsWT.Rmd/heatRibo-1.png" alt="*All DE genes associated with the GO term 'Cytosolic Ribosome'.*" width="768" />
+<p class="caption">
+<em>All DE genes associated with the GO term ‘Cytosolic Ribosome’.</em>
+</p>
 </div>
 </div>
 </div>
@@ -3797,32 +3388,31 @@ Steve Ped
 <div id="data-export" class="section level1">
 <h1>Data Export</h1>
 <p>All enriched gene sets with an FDR adjusted p-value &lt; 0.05 were exported as a single csv file.</p>
-<pre class="r"><code>add_prefix &lt;- function(x, pre = &quot;p_&quot;){
-  paste0(pre, x)
-}
-bind_rows(
-  hmMeta,
-  kgMeta,
-  goMeta
+<pre class="r"><code>bind_rows(
+  hmFry,
+  kgFry,
+  goFry
 ) %&gt;%
   dplyr::filter(FDR &lt; 0.05) %&gt;%
+  left_join(gsSizes) %&gt;%
+  dplyr::select(
+    gs_name, NGenes, Direction, PValue, FDR,
+    gene_symbol, de_size
+  ) %&gt;%
   mutate(
-    DE = lapply(DE, function(x){dplyr::filter(deTable, gene_id %in% x)$gene_name}),
-    DE = lapply(DE, unique),
+    DE = lapply(
+      X = gene_symbol,
+      FUN =  intersect, 
+      y = dplyr::filter(deTable, DE)$gene_name
+    ),
     DE = vapply(DE, paste, character(1), collapse = &quot;;&quot;)
   ) %&gt;%
-  arrange(wilkinson_p) %&gt;%
   dplyr::select(
     `Gene Set` = gs_name, 
-    `Nbr Detected Genes` = gs_size, 
-    `Nbr DE Genes` = nDE, 
-    combined = wilkinson_p, FDR, 
-    fry, camera, gsea, goseq, 
+    `Nbr Detected Genes` = NGenes, 
+    `Nbr DE Genes` = de_size, 
+    Direction, PValue, FDR, 
     `DE Genes` = DE
-  ) %&gt;%
-  rename_at(
-    vars(combined, fry, camera, gsea, goseq),
-    add_prefix
   ) %&gt;%
   write_csv(
     here::here(&quot;output&quot;, &quot;Enrichment_Mutant_V_WT.csv&quot;)
@@ -3844,185 +3434,166 @@ bind_rows(
  language en_AU:en                    
  collate  en_AU.UTF-8                 
  ctype    en_AU.UTF-8                 
- tz       Australia/Adelaide          
- date     2020-03-05                  
+ tz       Australia/Melbourne         
+ date     2020-03-06                  
 
 ─ Packages ───────────────────────────────────────────────────────────────────
- package              * version    date       lib source        
- AnnotationDbi        * 1.48.0     2019-10-29 [2] Bioconductor  
- askpass                1.1        2019-01-13 [2] CRAN (R 3.6.0)
- assertthat             0.2.1      2019-03-21 [2] CRAN (R 3.6.0)
- backports              1.1.5      2019-10-02 [2] CRAN (R 3.6.1)
- BiasedUrn            * 1.07       2015-12-28 [2] CRAN (R 3.6.1)
- bibtex                 0.4.2.2    2020-01-02 [2] CRAN (R 3.6.2)
- Biobase              * 2.46.0     2019-10-29 [2] Bioconductor  
- BiocFileCache          1.10.2     2019-11-08 [2] Bioconductor  
- BiocGenerics         * 0.32.0     2019-10-29 [2] Bioconductor  
- BiocParallel           1.20.1     2019-12-21 [2] Bioconductor  
- biomaRt                2.42.0     2019-10-29 [2] Bioconductor  
- Biostrings             2.54.0     2019-10-29 [2] Bioconductor  
- bit                    1.1-15.2   2020-02-10 [2] CRAN (R 3.6.2)
- bit64                  0.9-7      2017-05-08 [2] CRAN (R 3.6.0)
- bitops                 1.0-6      2013-08-17 [2] CRAN (R 3.6.0)
- blob                   1.2.1      2020-01-20 [2] CRAN (R 3.6.2)
- broom                  0.5.4      2020-01-27 [2] CRAN (R 3.6.2)
- callr                  3.4.2      2020-02-12 [2] CRAN (R 3.6.2)
- cellranger             1.1.0      2016-07-27 [2] CRAN (R 3.6.0)
- cli                    2.0.1      2020-01-08 [2] CRAN (R 3.6.2)
- cluster                2.1.0      2019-06-19 [2] CRAN (R 3.6.1)
- codetools              0.2-16     2018-12-24 [4] CRAN (R 3.6.0)
- colorspace             1.4-1      2019-03-18 [2] CRAN (R 3.6.0)
- crayon                 1.3.4      2017-09-16 [2] CRAN (R 3.6.0)
- curl                   4.3        2019-12-02 [2] CRAN (R 3.6.2)
- data.table             1.12.8     2019-12-09 [2] CRAN (R 3.6.2)
- DBI                    1.1.0      2019-12-15 [2] CRAN (R 3.6.2)
- dbplyr                 1.4.2      2019-06-17 [2] CRAN (R 3.6.0)
- DelayedArray           0.12.2     2020-01-06 [2] Bioconductor  
- desc                   1.2.0      2018-05-01 [2] CRAN (R 3.6.0)
- devtools               2.2.2      2020-02-17 [2] CRAN (R 3.6.2)
- digest                 0.6.25     2020-02-23 [2] CRAN (R 3.6.2)
- dplyr                * 0.8.4      2020-01-31 [2] CRAN (R 3.6.2)
- edgeR                * 3.28.1     2020-02-26 [2] Bioconductor  
- ellipsis               0.3.0      2019-09-20 [2] CRAN (R 3.6.1)
- evaluate               0.14       2019-05-28 [2] CRAN (R 3.6.0)
- FactoMineR             2.2        2020-02-05 [2] CRAN (R 3.6.2)
- fansi                  0.4.1      2020-01-08 [2] CRAN (R 3.6.2)
- farver                 2.0.3      2020-01-16 [2] CRAN (R 3.6.2)
- fastmatch              1.1-0      2017-01-28 [2] CRAN (R 3.6.0)
- fgsea                * 1.12.0     2019-10-29 [2] Bioconductor  
- flashClust             1.01-2     2012-08-21 [2] CRAN (R 3.6.1)
- forcats              * 0.4.0      2019-02-17 [2] CRAN (R 3.6.0)
- fs                     1.3.1      2019-05-06 [2] CRAN (R 3.6.0)
- gbRd                   0.4-11     2012-10-01 [2] CRAN (R 3.6.0)
- geneLenDataBase      * 1.22.0     2019-11-05 [2] Bioconductor  
- generics               0.0.2      2018-11-29 [2] CRAN (R 3.6.0)
- GenomeInfoDb           1.22.0     2019-10-29 [2] Bioconductor  
- GenomeInfoDbData       1.2.2      2019-11-21 [2] Bioconductor  
- GenomicAlignments      1.22.1     2019-11-12 [2] Bioconductor  
- GenomicFeatures        1.38.2     2020-02-15 [2] Bioconductor  
- GenomicRanges          1.38.0     2019-10-29 [2] Bioconductor  
- ggdendro               0.1-20     2016-04-27 [2] CRAN (R 3.6.0)
- ggplot2              * 3.2.1      2019-08-10 [2] CRAN (R 3.6.1)
- ggrepel                0.8.1      2019-05-07 [2] CRAN (R 3.6.0)
- git2r                  0.26.1     2019-06-29 [2] CRAN (R 3.6.1)
- glue                   1.3.1      2019-03-12 [2] CRAN (R 3.6.0)
- GO.db                  3.10.0     2019-11-21 [2] Bioconductor  
- goseq                * 1.38.0     2019-10-29 [2] Bioconductor  
- gridExtra              2.3        2017-09-09 [2] CRAN (R 3.6.0)
- gtable                 0.3.0      2019-03-25 [2] CRAN (R 3.6.0)
- haven                  2.2.0      2019-11-08 [2] CRAN (R 3.6.1)
- here                   0.1        2017-05-28 [2] CRAN (R 3.6.0)
- highr                  0.8        2019-03-20 [2] CRAN (R 3.6.0)
- hms                    0.5.3      2020-01-08 [2] CRAN (R 3.6.2)
- htmltools              0.4.0      2019-10-04 [2] CRAN (R 3.6.1)
- htmlwidgets            1.5.1      2019-10-08 [2] CRAN (R 3.6.1)
- httpuv                 1.5.2      2019-09-11 [2] CRAN (R 3.6.1)
- httr                   1.4.1      2019-08-05 [2] CRAN (R 3.6.1)
- hwriter                1.3.2      2014-09-10 [2] CRAN (R 3.6.0)
- IRanges              * 2.20.2     2020-01-13 [2] Bioconductor  
- jpeg                   0.1-8.1    2019-10-24 [2] CRAN (R 3.6.1)
- jsonlite               1.6.1      2020-02-02 [2] CRAN (R 3.6.2)
- kableExtra             1.1.0      2019-03-16 [2] CRAN (R 3.6.1)
- knitr                  1.28       2020-02-06 [2] CRAN (R 3.6.2)
- labeling               0.3        2014-08-23 [2] CRAN (R 3.6.0)
- later                  1.0.0      2019-10-04 [2] CRAN (R 3.6.1)
- lattice                0.20-40    2020-02-19 [4] CRAN (R 3.6.2)
- latticeExtra           0.6-29     2019-12-19 [2] CRAN (R 3.6.2)
- lazyeval               0.2.2      2019-03-15 [2] CRAN (R 3.6.0)
- leaps                  3.1        2020-01-16 [2] CRAN (R 3.6.2)
- lifecycle              0.1.0      2019-08-01 [2] CRAN (R 3.6.1)
- limma                * 3.42.2     2020-02-03 [2] Bioconductor  
- locfit                 1.5-9.1    2013-04-20 [2] CRAN (R 3.6.0)
- lubridate              1.7.4      2018-04-11 [2] CRAN (R 3.6.0)
- magrittr             * 1.5        2014-11-22 [2] CRAN (R 3.6.0)
- MASS                   7.3-51.5   2019-12-20 [4] CRAN (R 3.6.2)
- Matrix                 1.2-18     2019-11-27 [2] CRAN (R 3.6.1)
- matrixStats            0.55.0     2019-09-07 [2] CRAN (R 3.6.1)
- memoise                1.1.0      2017-04-21 [2] CRAN (R 3.6.0)
- metap                * 1.3        2020-01-23 [2] CRAN (R 3.6.2)
- mgcv                   1.8-31     2019-11-09 [4] CRAN (R 3.6.1)
- mnormt                 1.5-6      2020-02-03 [2] CRAN (R 3.6.2)
- modelr                 0.1.6      2020-02-22 [2] CRAN (R 3.6.2)
- msigdbr              * 7.0.1      2019-09-04 [2] CRAN (R 3.6.2)
- multcomp               1.4-12     2020-01-10 [2] CRAN (R 3.6.2)
- multtest               2.42.0     2019-10-29 [2] Bioconductor  
- munsell                0.5.0      2018-06-12 [2] CRAN (R 3.6.0)
- mutoss                 0.1-12     2017-12-04 [2] CRAN (R 3.6.2)
- mvtnorm                1.1-0      2020-02-24 [2] CRAN (R 3.6.2)
- ngsReports           * 1.1.2      2019-10-16 [1] Bioconductor  
- nlme                   3.1-144    2020-02-06 [4] CRAN (R 3.6.2)
- numDeriv               2016.8-1.1 2019-06-06 [2] CRAN (R 3.6.2)
- openssl                1.4.1      2019-07-18 [2] CRAN (R 3.6.1)
- pander               * 0.6.3      2018-11-06 [2] CRAN (R 3.6.0)
- pheatmap             * 1.0.12     2019-01-04 [2] CRAN (R 3.6.0)
- pillar                 1.4.3      2019-12-20 [2] CRAN (R 3.6.2)
- pkgbuild               1.0.6      2019-10-09 [2] CRAN (R 3.6.1)
- pkgconfig              2.0.3      2019-09-22 [2] CRAN (R 3.6.1)
- pkgload                1.0.2      2018-10-29 [2] CRAN (R 3.6.0)
- plotly                 4.9.2      2020-02-12 [2] CRAN (R 3.6.2)
- plotrix                3.7-7      2019-12-05 [2] CRAN (R 3.6.2)
- plyr                   1.8.5      2019-12-10 [2] CRAN (R 3.6.2)
- png                    0.1-7      2013-12-03 [2] CRAN (R 3.6.0)
- prettyunits            1.1.1      2020-01-24 [2] CRAN (R 3.6.2)
- processx               3.4.2      2020-02-09 [2] CRAN (R 3.6.2)
- progress               1.2.2      2019-05-16 [2] CRAN (R 3.6.0)
- promises               1.1.0      2019-10-04 [2] CRAN (R 3.6.1)
- ps                     1.3.2      2020-02-13 [2] CRAN (R 3.6.2)
- purrr                * 0.3.3      2019-10-18 [2] CRAN (R 3.6.1)
- R6                     2.4.1      2019-11-12 [2] CRAN (R 3.6.1)
- rappdirs               0.3.1      2016-03-28 [2] CRAN (R 3.6.0)
- RColorBrewer         * 1.1-2      2014-12-07 [2] CRAN (R 3.6.0)
- Rcpp                 * 1.0.3      2019-11-08 [2] CRAN (R 3.6.1)
- RCurl                  1.98-1.1   2020-01-19 [2] CRAN (R 3.6.2)
- Rdpack                 0.11-1     2019-12-14 [2] CRAN (R 3.6.2)
- readr                * 1.3.1      2018-12-21 [2] CRAN (R 3.6.0)
- readxl                 1.3.1      2019-03-13 [2] CRAN (R 3.6.0)
- remotes                2.1.1      2020-02-15 [2] CRAN (R 3.6.2)
- reprex                 0.3.0      2019-05-16 [2] CRAN (R 3.6.0)
- reshape2               1.4.3      2017-12-11 [2] CRAN (R 3.6.0)
- rlang                  0.4.4      2020-01-28 [2] CRAN (R 3.6.2)
- rmarkdown              2.1        2020-01-20 [2] CRAN (R 3.6.2)
- rprojroot              1.3-2      2018-01-03 [2] CRAN (R 3.6.0)
- Rsamtools              2.2.3      2020-02-23 [2] Bioconductor  
- RSQLite                2.2.0      2020-01-07 [2] CRAN (R 3.6.2)
- rstudioapi             0.11       2020-02-07 [2] CRAN (R 3.6.2)
- rtracklayer            1.46.0     2019-10-29 [2] Bioconductor  
- rvest                  0.3.5      2019-11-08 [2] CRAN (R 3.6.1)
- S4Vectors            * 0.24.3     2020-01-18 [2] Bioconductor  
- sandwich               2.5-1      2019-04-06 [2] CRAN (R 3.6.1)
- scales               * 1.1.0      2019-11-18 [2] CRAN (R 3.6.1)
- scatterplot3d          0.3-41     2018-03-14 [2] CRAN (R 3.6.1)
- sessioninfo            1.1.1      2018-11-05 [2] CRAN (R 3.6.0)
- ShortRead              1.44.3     2020-02-03 [2] Bioconductor  
- sn                     1.5-5      2020-01-30 [2] CRAN (R 3.6.2)
- statmod                1.4.34     2020-02-17 [2] CRAN (R 3.6.2)
- stringi                1.4.6      2020-02-17 [2] CRAN (R 3.6.2)
- stringr              * 1.4.0      2019-02-10 [2] CRAN (R 3.6.0)
- SummarizedExperiment   1.16.1     2019-12-19 [2] Bioconductor  
- survival               3.1-8      2019-12-03 [2] CRAN (R 3.6.2)
- testthat               2.3.1      2019-12-01 [2] CRAN (R 3.6.1)
- TFisher                0.2.0      2018-03-21 [2] CRAN (R 3.6.2)
- TH.data                1.0-10     2019-01-21 [2] CRAN (R 3.6.1)
- tibble               * 2.1.3      2019-06-06 [2] CRAN (R 3.6.0)
- tidyr                * 1.0.2      2020-01-24 [2] CRAN (R 3.6.2)
- tidyselect             1.0.0      2020-01-27 [2] CRAN (R 3.6.2)
- tidyverse            * 1.3.0      2019-11-21 [2] CRAN (R 3.6.1)
- truncnorm              1.0-8      2018-02-27 [2] CRAN (R 3.6.0)
- UpSetR               * 1.4.0      2019-05-22 [2] CRAN (R 3.6.0)
- usethis                1.5.1      2019-07-04 [2] CRAN (R 3.6.1)
- vctrs                  0.2.3      2020-02-20 [2] CRAN (R 3.6.2)
- viridisLite            0.3.0      2018-02-01 [2] CRAN (R 3.6.0)
- webshot                0.5.2      2019-11-22 [2] CRAN (R 3.6.1)
- whisker                0.4        2019-08-28 [2] CRAN (R 3.6.1)
- withr                  2.1.2      2018-03-15 [2] CRAN (R 3.6.0)
- workflowr            * 1.6.0      2019-12-19 [2] CRAN (R 3.6.2)
- xfun                   0.12       2020-01-13 [2] CRAN (R 3.6.2)
- XML                    3.99-0.3   2020-01-20 [2] CRAN (R 3.6.2)
- xml2                   1.2.2      2019-08-09 [2] CRAN (R 3.6.1)
- XVector                0.26.0     2019-10-29 [2] Bioconductor  
- yaml                   2.2.1      2020-02-01 [2] CRAN (R 3.6.2)
- zlibbioc               1.32.0     2019-10-29 [2] Bioconductor  
- zoo                    1.8-7      2020-01-10 [2] CRAN (R 3.6.2)
+ package              * version  date       lib source        
+ AnnotationDbi        * 1.48.0   2019-10-29 [2] Bioconductor  
+ askpass                1.1      2019-01-13 [2] CRAN (R 3.6.0)
+ assertthat             0.2.1    2019-03-21 [2] CRAN (R 3.6.0)
+ backports              1.1.5    2019-10-02 [2] CRAN (R 3.6.1)
+ BiasedUrn            * 1.07     2015-12-28 [2] CRAN (R 3.6.1)
+ Biobase              * 2.46.0   2019-10-29 [2] Bioconductor  
+ BiocFileCache          1.10.2   2019-11-08 [2] Bioconductor  
+ BiocGenerics         * 0.32.0   2019-10-29 [2] Bioconductor  
+ BiocParallel           1.20.1   2019-12-21 [2] Bioconductor  
+ biomaRt                2.42.0   2019-10-29 [2] Bioconductor  
+ Biostrings             2.54.0   2019-10-29 [2] Bioconductor  
+ bit                    1.1-15.2 2020-02-10 [2] CRAN (R 3.6.2)
+ bit64                  0.9-7    2017-05-08 [2] CRAN (R 3.6.0)
+ bitops                 1.0-6    2013-08-17 [2] CRAN (R 3.6.0)
+ blob                   1.2.1    2020-01-20 [2] CRAN (R 3.6.2)
+ broom                  0.5.4    2020-01-27 [2] CRAN (R 3.6.2)
+ callr                  3.4.2    2020-02-12 [2] CRAN (R 3.6.2)
+ cellranger             1.1.0    2016-07-27 [2] CRAN (R 3.6.0)
+ cli                    2.0.1    2020-01-08 [2] CRAN (R 3.6.2)
+ cluster                2.1.0    2019-06-19 [2] CRAN (R 3.6.1)
+ colorspace             1.4-1    2019-03-18 [2] CRAN (R 3.6.0)
+ crayon                 1.3.4    2017-09-16 [2] CRAN (R 3.6.0)
+ curl                   4.3      2019-12-02 [2] CRAN (R 3.6.2)
+ data.table             1.12.8   2019-12-09 [2] CRAN (R 3.6.2)
+ DBI                    1.1.0    2019-12-15 [2] CRAN (R 3.6.2)
+ dbplyr                 1.4.2    2019-06-17 [2] CRAN (R 3.6.0)
+ DelayedArray           0.12.2   2020-01-06 [2] Bioconductor  
+ desc                   1.2.0    2018-05-01 [2] CRAN (R 3.6.0)
+ devtools               2.2.2    2020-02-17 [2] CRAN (R 3.6.2)
+ digest                 0.6.25   2020-02-23 [2] CRAN (R 3.6.2)
+ dplyr                * 0.8.4    2020-01-31 [2] CRAN (R 3.6.2)
+ edgeR                * 3.28.1   2020-02-26 [2] Bioconductor  
+ ellipsis               0.3.0    2019-09-20 [2] CRAN (R 3.6.1)
+ evaluate               0.14     2019-05-28 [2] CRAN (R 3.6.0)
+ FactoMineR             2.2      2020-02-05 [2] CRAN (R 3.6.2)
+ fansi                  0.4.1    2020-01-08 [2] CRAN (R 3.6.2)
+ farver                 2.0.3    2020-01-16 [2] CRAN (R 3.6.2)
+ flashClust             1.01-2   2012-08-21 [2] CRAN (R 3.6.1)
+ forcats              * 0.4.0    2019-02-17 [2] CRAN (R 3.6.0)
+ fs                     1.3.1    2019-05-06 [2] CRAN (R 3.6.0)
+ geneLenDataBase      * 1.22.0   2019-11-05 [2] Bioconductor  
+ generics               0.0.2    2018-11-29 [2] CRAN (R 3.6.0)
+ GenomeInfoDb           1.22.0   2019-10-29 [2] Bioconductor  
+ GenomeInfoDbData       1.2.2    2019-11-21 [2] Bioconductor  
+ GenomicAlignments      1.22.1   2019-11-12 [2] Bioconductor  
+ GenomicFeatures        1.38.2   2020-02-15 [2] Bioconductor  
+ GenomicRanges          1.38.0   2019-10-29 [2] Bioconductor  
+ ggdendro               0.1-20   2016-04-27 [2] CRAN (R 3.6.0)
+ ggplot2              * 3.2.1    2019-08-10 [2] CRAN (R 3.6.1)
+ ggrepel                0.8.1    2019-05-07 [2] CRAN (R 3.6.0)
+ git2r                  0.26.1   2019-06-29 [2] CRAN (R 3.6.1)
+ glue                   1.3.1    2019-03-12 [2] CRAN (R 3.6.0)
+ GO.db                  3.10.0   2019-11-21 [2] Bioconductor  
+ goseq                * 1.38.0   2019-10-29 [2] Bioconductor  
+ gridExtra              2.3      2017-09-09 [2] CRAN (R 3.6.0)
+ gtable                 0.3.0    2019-03-25 [2] CRAN (R 3.6.0)
+ haven                  2.2.0    2019-11-08 [2] CRAN (R 3.6.1)
+ here                   0.1      2017-05-28 [2] CRAN (R 3.6.0)
+ highr                  0.8      2019-03-20 [2] CRAN (R 3.6.0)
+ hms                    0.5.3    2020-01-08 [2] CRAN (R 3.6.2)
+ htmltools              0.4.0    2019-10-04 [2] CRAN (R 3.6.1)
+ htmlwidgets            1.5.1    2019-10-08 [2] CRAN (R 3.6.1)
+ httpuv                 1.5.2    2019-09-11 [2] CRAN (R 3.6.1)
+ httr                   1.4.1    2019-08-05 [2] CRAN (R 3.6.1)
+ hwriter                1.3.2    2014-09-10 [2] CRAN (R 3.6.0)
+ IRanges              * 2.20.2   2020-01-13 [2] Bioconductor  
+ jpeg                   0.1-8.1  2019-10-24 [2] CRAN (R 3.6.1)
+ jsonlite               1.6.1    2020-02-02 [2] CRAN (R 3.6.2)
+ kableExtra             1.1.0    2019-03-16 [2] CRAN (R 3.6.1)
+ knitr                  1.28     2020-02-06 [2] CRAN (R 3.6.2)
+ labeling               0.3      2014-08-23 [2] CRAN (R 3.6.0)
+ later                  1.0.0    2019-10-04 [2] CRAN (R 3.6.1)
+ lattice                0.20-40  2020-02-19 [4] CRAN (R 3.6.2)
+ latticeExtra           0.6-29   2019-12-19 [2] CRAN (R 3.6.2)
+ lazyeval               0.2.2    2019-03-15 [2] CRAN (R 3.6.0)
+ leaps                  3.1      2020-01-16 [2] CRAN (R 3.6.2)
+ lifecycle              0.1.0    2019-08-01 [2] CRAN (R 3.6.1)
+ limma                * 3.42.2   2020-02-03 [2] Bioconductor  
+ locfit                 1.5-9.1  2013-04-20 [2] CRAN (R 3.6.0)
+ lubridate              1.7.4    2018-04-11 [2] CRAN (R 3.6.0)
+ magrittr             * 1.5      2014-11-22 [2] CRAN (R 3.6.0)
+ MASS                   7.3-51.5 2019-12-20 [4] CRAN (R 3.6.2)
+ Matrix                 1.2-18   2019-11-27 [2] CRAN (R 3.6.1)
+ matrixStats            0.55.0   2019-09-07 [2] CRAN (R 3.6.1)
+ memoise                1.1.0    2017-04-21 [2] CRAN (R 3.6.0)
+ mgcv                   1.8-31   2019-11-09 [4] CRAN (R 3.6.1)
+ modelr                 0.1.6    2020-02-22 [2] CRAN (R 3.6.2)
+ msigdbr              * 7.0.1    2019-09-04 [2] CRAN (R 3.6.2)
+ munsell                0.5.0    2018-06-12 [2] CRAN (R 3.6.0)
+ ngsReports           * 1.1.2    2019-10-16 [1] Bioconductor  
+ nlme                   3.1-144  2020-02-06 [4] CRAN (R 3.6.2)
+ openssl                1.4.1    2019-07-18 [2] CRAN (R 3.6.1)
+ pander               * 0.6.3    2018-11-06 [2] CRAN (R 3.6.0)
+ pheatmap             * 1.0.12   2019-01-04 [2] CRAN (R 3.6.0)
+ pillar                 1.4.3    2019-12-20 [2] CRAN (R 3.6.2)
+ pkgbuild               1.0.6    2019-10-09 [2] CRAN (R 3.6.1)
+ pkgconfig              2.0.3    2019-09-22 [2] CRAN (R 3.6.1)
+ pkgload                1.0.2    2018-10-29 [2] CRAN (R 3.6.0)
+ plotly                 4.9.2    2020-02-12 [2] CRAN (R 3.6.2)
+ plyr                   1.8.5    2019-12-10 [2] CRAN (R 3.6.2)
+ png                    0.1-7    2013-12-03 [2] CRAN (R 3.6.0)
+ prettyunits            1.1.1    2020-01-24 [2] CRAN (R 3.6.2)
+ processx               3.4.2    2020-02-09 [2] CRAN (R 3.6.2)
+ progress               1.2.2    2019-05-16 [2] CRAN (R 3.6.0)
+ promises               1.1.0    2019-10-04 [2] CRAN (R 3.6.1)
+ ps                     1.3.2    2020-02-13 [2] CRAN (R 3.6.2)
+ purrr                * 0.3.3    2019-10-18 [2] CRAN (R 3.6.1)
+ R6                     2.4.1    2019-11-12 [2] CRAN (R 3.6.1)
+ rappdirs               0.3.1    2016-03-28 [2] CRAN (R 3.6.0)
+ RColorBrewer         * 1.1-2    2014-12-07 [2] CRAN (R 3.6.0)
+ Rcpp                   1.0.3    2019-11-08 [2] CRAN (R 3.6.1)
+ RCurl                  1.98-1.1 2020-01-19 [2] CRAN (R 3.6.2)
+ readr                * 1.3.1    2018-12-21 [2] CRAN (R 3.6.0)
+ readxl                 1.3.1    2019-03-13 [2] CRAN (R 3.6.0)
+ remotes                2.1.1    2020-02-15 [2] CRAN (R 3.6.2)
+ reprex                 0.3.0    2019-05-16 [2] CRAN (R 3.6.0)
+ reshape2               1.4.3    2017-12-11 [2] CRAN (R 3.6.0)
+ rlang                  0.4.4    2020-01-28 [2] CRAN (R 3.6.2)
+ rmarkdown              2.1      2020-01-20 [2] CRAN (R 3.6.2)
+ rprojroot              1.3-2    2018-01-03 [2] CRAN (R 3.6.0)
+ Rsamtools              2.2.3    2020-02-23 [2] Bioconductor  
+ RSQLite                2.2.0    2020-01-07 [2] CRAN (R 3.6.2)
+ rstudioapi             0.11     2020-02-07 [2] CRAN (R 3.6.2)
+ rtracklayer            1.46.0   2019-10-29 [2] Bioconductor  
+ rvest                  0.3.5    2019-11-08 [2] CRAN (R 3.6.1)
+ S4Vectors            * 0.24.3   2020-01-18 [2] Bioconductor  
+ scales               * 1.1.0    2019-11-18 [2] CRAN (R 3.6.1)
+ scatterplot3d          0.3-41   2018-03-14 [2] CRAN (R 3.6.1)
+ sessioninfo            1.1.1    2018-11-05 [2] CRAN (R 3.6.0)
+ ShortRead              1.44.3   2020-02-03 [2] Bioconductor  
+ statmod                1.4.34   2020-02-17 [2] CRAN (R 3.6.2)
+ stringi                1.4.6    2020-02-17 [2] CRAN (R 3.6.2)
+ stringr              * 1.4.0    2019-02-10 [2] CRAN (R 3.6.0)
+ SummarizedExperiment   1.16.1   2019-12-19 [2] Bioconductor  
+ testthat               2.3.1    2019-12-01 [2] CRAN (R 3.6.1)
+ tibble               * 2.1.3    2019-06-06 [2] CRAN (R 3.6.0)
+ tidyr                * 1.0.2    2020-01-24 [2] CRAN (R 3.6.2)
+ tidyselect             1.0.0    2020-01-27 [2] CRAN (R 3.6.2)
+ tidyverse            * 1.3.0    2019-11-21 [2] CRAN (R 3.6.1)
+ truncnorm              1.0-8    2018-02-27 [2] CRAN (R 3.6.0)
+ UpSetR               * 1.4.0    2019-05-22 [2] CRAN (R 3.6.0)
+ usethis                1.5.1    2019-07-04 [2] CRAN (R 3.6.1)
+ vctrs                  0.2.3    2020-02-20 [2] CRAN (R 3.6.2)
+ viridisLite            0.3.0    2018-02-01 [2] CRAN (R 3.6.0)
+ webshot                0.5.2    2019-11-22 [2] CRAN (R 3.6.1)
+ whisker                0.4      2019-08-28 [2] CRAN (R 3.6.1)
+ withr                  2.1.2    2018-03-15 [2] CRAN (R 3.6.0)
+ workflowr            * 1.6.0    2019-12-19 [2] CRAN (R 3.6.2)
+ xfun                   0.12     2020-01-13 [2] CRAN (R 3.6.2)
+ XML                    3.99-0.3 2020-01-20 [2] CRAN (R 3.6.2)
+ xml2                   1.2.2    2019-08-09 [2] CRAN (R 3.6.1)
+ XVector                0.26.0   2019-10-29 [2] Bioconductor  
+ yaml                   2.2.1    2020-02-01 [2] CRAN (R 3.6.2)
+ zlibbioc               1.32.0   2019-10-29 [2] Bioconductor  
+ zoo                    1.8-7    2020-01-10 [2] CRAN (R 3.6.2)
 
 [1] /home/steveped/R/x86_64-pc-linux-gnu-library/3.6
 [2] /usr/local/lib/R/site-library
