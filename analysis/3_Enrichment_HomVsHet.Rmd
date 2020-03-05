@@ -27,7 +27,6 @@ library(magrittr)
 library(edgeR)
 library(scales)
 library(pander)
-library(goseq)
 library(msigdbr)
 library(AnnotationDbi)
 library(RColorBrewer)
@@ -456,7 +455,7 @@ goMeta %>%
   mutate_at(vars(one_of(c("wilkinson_p", "FDR", "adjP"))), formatP) %>%
   dplyr::select(`Gene Set` = gs_name, `Number DE` = nDE, `Set Size` = gs_size, `Wilkinson~p~` = wilkinson_p, `p~FDR~` = FDR, `p~bonf~` = adjP) %>%
   pander(
-    caption = "Results from combining all above approaches for the GO Gene Sets. All terms are significant to an FDR of 0.05.",
+    caption = "Results from combining all above approaches for the GO Gene Sets. All terms are significant to a bonferroni-adjusted p-value < 0.05.",
     justify = "lrrrrr"
   )
 ```
