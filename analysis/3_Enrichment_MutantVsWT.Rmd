@@ -788,7 +788,7 @@ go %>%
 
 ### Genes Associated with Anion Transport
 
-```{r heatRibo, fig.height=7, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Anion Transport'.*"}
+```{r heatAnion, fig.height=7, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Anion Transport'.*"}
 go %>%
   dplyr::filter(
     gs_name == "GO_ANION_TRANSPORT",
