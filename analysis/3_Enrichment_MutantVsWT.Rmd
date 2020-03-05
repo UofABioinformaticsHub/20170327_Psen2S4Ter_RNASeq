@@ -475,20 +475,21 @@ hmMeta %>%
 
 ### Exploration of significant Hallmark Gene Sets
 
-```{r hmMetaUpset, fig.width=10, fig.cap = "*UpSet plot indicating distribution of DE genes within all significant HALLMARK gene sets. Most gene sets seem relatively independent of each other.*"}
+```{r hmMetaUpset, fig.width=10, fig.cap = "*UpSet plot indicating distribution of DE genes within all significant HALLMARK gene sets. Gene sets were restricted to those with an FDR < 0.05 and at least one DE gene. The plot is truncated at the right for simplicity. Most gene sets seem relatively independent of each other.*"}
 hmMeta %>% 
   dplyr::filter(nDE > 0, FDR < 0.05) %>%
   dplyr::select(gs_name, DE) %>%
   unnest(DE) %>% 
   mutate(
     gs_name = str_remove(gs_name, "HALLMARK_"),
-    gs_name = fct_lump(gs_name, n = 12)
+    gs_name = fct_lump(gs_name, n = 14)
     ) %>% 
   split(f = .$gs_name) %>% 
   lapply(magrittr::extract2, "DE") %>% 
   fromList() %>% 
   upset(
     nsets = length(.), 
+    nintersects = 20,
     order.by = "freq", 
     mb.ratio = c(0.6, 0.4)
     )
@@ -637,20 +638,21 @@ kgMeta %>%
 
 ### Exploration of Significant KEGG Gene Sets
 
-```{r kgMetaUpset, fig.width=10, fig.cap = "*UpSet plot indicating distribution of DE genes within all significant terms from the KEGG gene sets. There is considerable overlap between Oxidative Phosphorylation and both Parkinson's and Huntington's Disease, indicating that these terms essentially capture the same signal.*"}
+```{r kgMetaUpset, fig.width=8, fig.cap = "*UpSet plot indicating distribution of DE genes within all significant terms from the KEGG gene sets. Gene sets were restricted to those with an FDR < 0.05 and five or more DE genes. There is considerable overlap between DE genes in Oxidative Phosphorylation and both Parkinson's and Huntington's Disease, indicating that these terms essentially capture the same expression signal within this dataset.*"}
 kgMeta %>% 
-  dplyr::filter(nDE > 2, FDR < 0.05) %>%
+  dplyr::filter(nDE >= 5, FDR < 0.05) %>%
   dplyr::select(gs_name, DE) %>%
   unnest(DE) %>% 
   mutate(
     gs_name = str_remove(gs_name, "KEGG_"),
-    gs_name = fct_lump(gs_name, n = 8)
+    gs_name = fct_lump(gs_name, n = 9)
     ) %>% 
   split(f = .$gs_name) %>% 
   lapply(magrittr::extract2, "DE") %>% 
   fromList() %>% 
   upset(
     nsets = length(.), 
+    nintersects = 10,
     order.by = "freq",
     mb.ratio = c(0.6, 0.4)
     )
@@ -690,6 +692,9 @@ riboOx %>%
       GeneSet = riboOx$gs_name %>% str_replace("OXI.+", "OXPHOS"), 
       row.names = riboOx$gene_name
       ),
+    annotation_col =  dgeList$samples %>%
+      set_rownames(.$sampleID) %>%
+      dplyr::select(Genotype = genotype) ,
     color = viridis_pal(option = "magma")(100),
     legend_breaks = c(seq(-2, 8, by = 2), max(.)),
     legend_labels = c(seq(-2, 8, by = 2), "logCPM\n"),
@@ -779,41 +784,48 @@ goMeta <- goFry %>%
 
 ```{r}
 goMeta %>%
-  dplyr::filter(FDR < 0.01, nDE >= 10) %>%
+  left_join(distinct(go, gs_name, shortest_path)) %>%
+  dplyr::filter(
+    FDR < 0.01, nDE >= 10, shortest_path > 3
+  ) %>%
   mutate_at(vars(one_of(c("wilkinson_p", "FDR", "adjP"))), formatP) %>%
   mutate(gs_name = str_trunc(gs_name, 70)) %>%
   dplyr::select(`Gene Set` = gs_name, `Number DE` = nDE, `Set Size` = gs_size, `Wilkinson~p~` = wilkinson_p, `p~FDR~` = FDR, `p~bonf~` = adjP) %>%
   pander(
-    caption = "Results from combining all above approaches for the GO Gene Sets. All terms are significant using an FDR < 0.01. Only Gene Sets with at least ten DE genes are shown.",
+    caption = "Results from combining all above approaches for the GO Gene Sets. All terms are significant using an FDR < 0.01. Only Gene Sets with at least ten DE genes, and more than 3 steps back to the Ontology Root are shown.",
     justify = "lrrrrr"
   )
 ```
 
 ### Exploration of Significant GO Gene Sets
 
-```{r goMetaUpset, fig.height=6, fig.width=10, fig.cap = "*UpSet plot indicating distribution of DE genes within significant terms from the GO gene sets. For this visualisation, GO terms were restricted to those with 25 or more DE genes and an FDR < 0.05. A group of about 300 genes is widely spread across multiple terms and not shown, with the next largest group being 19 genes uniquely associated with RNA Metabolic Process. A group of 15 genes is shared by a large group of terms, indicating that these genes largely drive the signal for these terms. These genes tend to indicate Ribosomal activity (i.e. protein synthesis). However, a set of 14 genes seems to more uniquely indicate Mitochondrial activity, followed by 12 uniquely associated with Ion Transport, and a set of 9 genes associated with homeostasis followed by 25 (9 + + 8) involved with regulation of gene expression.*"}
+```{r goMetaUpset, fig.height=6, fig.width=10, fig.cap = "*UpSet plot indicating distribution of DE genes within significant terms from the GO gene sets. For this visualisation, GO terms were restricted to those with 27 or more DE genes, where this represented more than 5% of a gene set as being DE, along with an FDR < 0.05. The plot is also truncated at the right hand side for simplicity. The 20 largest GO terms are shown, with genes from smaller GO terms being collected together as 'Other'. A group of 30 genes is relatively unique to RNA Metabolic Process, with an additional 28 being uniquely attributed to the Mitochondrial Envelope. Following these are 25 genes, spread across two clusters of terms which largely represent Ribosomal activity. *"}
 goMeta %>% 
-  dplyr::filter(nDE >= 25, FDR < 0.05) %>%
-  dplyr::select(gs_name, DE) %>%
-  unnest(DE) %>% 
-  mutate(
-    gs_name = str_remove(gs_name, "GO_"),
-    gs_name = fct_lump(gs_name, n = 20)
+    mutate(propDE = nDE / gs_size) %>% 
+    dplyr::filter(
+      FDR < 0.05,
+      propDE > 0.05, 
+      nDE > 26
+    ) %>%
+    unnest(DE) %>% 
+    mutate(
+        gs_name = str_remove(gs_name, "GO_"),
+        gs_name = fct_lump(gs_name, n = 20)
     ) %>% 
-  split(f = .$gs_name) %>% 
-  lapply(magrittr::extract2, "DE") %>% 
-  .[setdiff(names(.), "Other")] %>%
-  fromList() %>% 
-  upset(
-    nsets = length(.), 
-    order.by = "freq", 
-    mb.ratio = c(0.55, 0.45)
-  )
+    split(f = .$gs_name) %>% 
+    lapply(magrittr::extract2, "DE") %>% 
+    fromList() %>% 
+    upset(
+        nsets = length(.), 
+        nintersects = 17,
+        order.by = "freq", 
+        mb.ratio = c(0.5, 0.5)
+    )
 ```
 
 ### Genes Associated with RNA Metabolic Process
 
-```{r heatDsDNA, fig.height=8, fig.width=8, fig.cap="*All DE genes associated with the GO term 'RNA Metabolic Process'.*"}
+```{r heatRnaMetab, fig.height=8, fig.width=8, fig.cap="*All DE genes associated with the GO term 'RNA Metabolic Process'.*"}
 go %>%
   dplyr::filter(
     gs_name == "GO_RNA_METABOLIC_PROCESS",
@@ -845,6 +857,8 @@ go %>%
       with(
         structure(sampleID, names = sample)
       ),
+    annotation_col = dgeList$samples %>%
+      dplyr::select(Genotype = genotype),
     cutree_rows = 4,
     cutree_cols = 2
   )
@@ -852,10 +866,10 @@ go %>%
 
 ### Genes Associated with the Mitochondrial Envelope
 
-```{r heatMitoEnvelope, fig.height=8, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Mitochondrion'.*"}
+```{r heatMito, fig.height=8, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Mitochondrial Envelope'.*"}
 go %>%
   dplyr::filter(
-    gs_name == "GO_MITOCHONDRION",
+    gs_name == "GO_MITOCHONDRIAL_ENVELOPE",
     gene_id %in% dplyr::filter(deTable, DE)$gene_id
   ) %>%
   dplyr::select(
@@ -884,23 +898,21 @@ go %>%
       with(
         structure(sampleID, names = sample)
       ),
-    cutree_rows = 5,
+    annotation_col = dgeList$samples %>%
+      dplyr::select(Genotype = genotype),
+    cutree_rows = 4,
     cutree_cols = 2
   )
 ```
 
-### Genes Associated with Ion Transport
+### Genes Associated with Ribosomal Activity
 
-```{r heatOrganoNitro, fig.height=6, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Ion Transport'.*"}
+```{r heatRibo, fig.height=7, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Ribosome'.*"}
 go %>%
   dplyr::filter(
-    gene_id %in% dplyr::filter(deTable, DE)$gene_id,
-    gs_name %in% c("GO_ION_TRANSPORT")
+    gs_name == "GO_RIBOSOME",
+    gene_id %in% dplyr::filter(deTable, DE)$gene_id
   ) %>%
-  group_by(gene_id, gene_name) %>%
-  tally() %>%
-  ungroup() %>%
-  dplyr::filter(n == 1) %>%
   dplyr::select(
     gene_id, gene_name
   ) %>%
@@ -927,93 +939,9 @@ go %>%
       with(
         structure(sampleID, names = sample)
       ),
-    cutree_rows = 4,
-    cutree_cols = 2
-  )
-```
-
-### Genes Associated with Homeostasis
-
-```{r heatHomeo, fig.height=8, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Homeostatic Process'.*"}
-go %>%
-  dplyr::filter(
-    gene_id %in% dplyr::filter(deTable, DE)$gene_id,
-    gs_name %in% c("GO_HOMEOSTATIC_PROCESS")
-  ) %>%
-  group_by(gene_id, gene_name) %>%
-  tally() %>%
-  ungroup() %>%
-  dplyr::filter(n == 1) %>%
-  dplyr::select(
-    gene_id, gene_name
-  ) %>%
-  left_join(
-    cpmPostNorm %>%
-      as.data.frame() %>%
-      rownames_to_column("gene_id")
-  ) %>%
-  dplyr::select(gene_name, starts_with("Ps")) %>%
-  as.data.frame() %>%
-  column_to_rownames("gene_name") %>%
-  as.matrix() %>%
-  pheatmap(
-    color = viridis_pal(option = "magma")(100),
-    legend_breaks = c(seq(-2, 8, by = 2), max(.)),
-    legend_labels = c(seq(-2, 8, by = 2), "logCPM\n"),
-    labels_col = hmHeat %>%
-      dplyr::select(starts_with("Ps")) %>% 
-      colnames() %>% 
-      enframe(name = NULL) %>% 
-      dplyr::rename(sample = value) %>%
-      left_join(dgeList$samples) %>%
-      dplyr::select(sample, sampleID) %>%
-      with(
-        structure(sampleID, names = sample)
-      ),
-    cutree_rows = 4,
-    cutree_cols = 2
-  )
-```
-
-### Genes Associated with Gene Regulation
-
-```{r heatReg, fig.height=8, fig.width=8, fig.cap="*All DE genes associated with the GO term 'Positive Regulation of Gene Expression'.*"}
-go %>%
-  dplyr::filter(
-    gene_id %in% dplyr::filter(deTable, DE)$gene_id,
-    gs_name %in% c("GO_POSITIVE_REGULATION_OF_GENE_EXPRESSION")
-  ) %>%
-  group_by(gene_id, gene_name) %>%
-  tally() %>%
-  ungroup() %>%
-  dplyr::filter(n == 1) %>%
-  dplyr::select(
-    gene_id, gene_name
-  ) %>%
-  left_join(
-    cpmPostNorm %>%
-      as.data.frame() %>%
-      rownames_to_column("gene_id")
-  ) %>%
-  dplyr::select(gene_name, starts_with("Ps")) %>%
-  as.data.frame() %>%
-  column_to_rownames("gene_name") %>%
-  as.matrix() %>%
-  pheatmap(
-    color = viridis_pal(option = "magma")(100),
-    legend_breaks = c(seq(-2, 8, by = 2), max(.)),
-    legend_labels = c(seq(-2, 8, by = 2), "logCPM\n"),
-    labels_col = hmHeat %>%
-      dplyr::select(starts_with("Ps")) %>% 
-      colnames() %>% 
-      enframe(name = NULL) %>% 
-      dplyr::rename(sample = value) %>%
-      left_join(dgeList$samples) %>%
-      dplyr::select(sample, sampleID) %>%
-      with(
-        structure(sampleID, names = sample)
-      ),
-    cutree_rows = 4,
+    annotation_col = dgeList$samples %>%
+      dplyr::select(Genotype = genotype),
+    cutree_rows = 3,
     cutree_cols = 2
   )
 ```
