@@ -375,7 +375,7 @@ goRiboGoseq %>%
   )
 ```
 
-# Enrichment Testing on Ranked Lists
+# Enrichment Testing on the Complete Set of Genes
 
 ## Hallmark Gene Sets
 
@@ -406,7 +406,8 @@ hmFry %>%
     PValue, FDR
     ) %>%
   pander(
-    caption = "Enriched Hallmark Gene Sets, using a threshold p < 0.01, which corresponds to an FDR of 0.02"
+    justify = "lrrlrr",
+    caption = "Enriched Hallmark Gene Sets, using a threshold of p < 0.01, which corresponds to an FDR of 0.02"
   )
 ```
 
@@ -520,6 +521,7 @@ kgFry %>%
     PValue, FDR
     ) %>%
   pander(
+    justify = "lrrlrr",
     caption = "Enriched KEGG Gene Sets, using a threshold p < 0.005, which corresponds to an FDR of 0.02"
   )
 ```
@@ -624,6 +626,7 @@ goFry %>%
     PValue, FDR
     ) %>%
   pander(
+    justify = "lrrlrr",
     caption = "Enriched GO Gene Sets, using the thresholds FDR < 0.01, at least 5 DE genes, a set size < 1000 and more than 3 steps back to the ontology root."
   )
 ```
