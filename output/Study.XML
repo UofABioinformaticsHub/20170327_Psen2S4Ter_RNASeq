@@ -1,0 +1,9 @@
+<PROJECT_SET>
+   <PROJECT alias='psen2S4Ter'>
+       <TITLE>Transcriptomic analysis of premature termination codon mutation in the zebrafish gene psen2</TITLE>
+       <DESCRIPTION>This study compared gene expression patterns in whole brain samples from zebrafish. Samples were homozygous or heterozygous for the psen2S4Ter mutation, or were wild-type at this locus.</DESCRIPTION>
+       <SUBMISSION_PROJECT>
+           <SEQUENCING_PROJECT/>
+       </SUBMISSION_PROJECT>
+   </PROJECT>
+</PROJECT_SET>
