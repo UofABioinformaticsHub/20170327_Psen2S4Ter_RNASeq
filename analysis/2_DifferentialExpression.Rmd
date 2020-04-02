@@ -115,7 +115,7 @@ dgeList <- file.path("data", "2_alignedData", "featureCounts", "genes.out") %>%
   column_to_rownames("Geneid") %>%
   as.matrix() %>% 
   set_colnames(str_remove(colnames(.), "Aligned.sortedByCoord.out.bam")) %>%
-  .[rowSums(cpm(.) >= minCPM) >= minCPM,] %>%
+  .[rowSums(cpm(.) >= minCPM) >= minSamples,] %>%
   DGEList(
     samples = tibble(sample = colnames(.)) %>%
       left_join(samples),
@@ -556,7 +556,7 @@ topTables %>%
   geom_point(aes(colour = DE)) +
   geom_text_repel(
     aes(label = gene_name, colour = DE),
-    data = . %>% dplyr::filter(DE & abs(logFC) > 3)
+    data = . %>% dplyr::filter(DE & abs(logFC) > 2.1)
   ) +
   geom_text_repel(
     aes(label = gene_name, colour = DE),
