@@ -7,6 +7,20 @@ navbar:
     href: index.html
   - text: About
     href: about.html
+  - text: QC and Pre-processing
+    menu:
+    - text: Bash Pipeline
+      href: 0_bashPipeline.html
+    - text: Quality Assessment
+      href: 1_QC.html
+  - text: Analysis
+    menu:
+    - text: Differential Expression
+      href: 2_DifferentialExpression.html
+    - text: Mutant Vs WildType Enrichment Analysis
+      href: 3_Enrichment_MutantVsWT.html
+    - text: Homozygous Vs Heterozygous Enricment Analysis
+      href: 3_Enrichment_HomVsHet.html
 output:
   workflowr::wflow_html:
     toc: yes

@@ -357,6 +357,39 @@ div.tocify {
 <li>
   <a href="about.html">About</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    QC and Pre-processing
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="0_bashPipeline.html">Bash Pipeline</a>
+    </li>
+    <li>
+      <a href="1_QC.html">Quality Assessment</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="2_DifferentialExpression.html">Differential Expression</a>
+    </li>
+    <li>
+      <a href="3_Enrichment_MutantVsWT.html">Mutant Vs WildType Enrichment Analysis</a>
+    </li>
+    <li>
+      <a href="3_Enrichment_HomVsHet.html">Homozygous Vs Heterozygous Enrichment Analysis</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -409,7 +442,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-02-17
+<strong>Last updated:</strong> 2020-04-02
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -440,10 +473,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree53ed0e30b1eff5b43093d31a0de4443f96125be6targetblank53ed0e3a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/53ed0e30b1eff5b43093d31a0de4443f96125be6" target="_blank">53ed0e3</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtreee928a97d3575cbc3bff3ff93fe3417b1a479682ftargetblanke928a97a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/e928a97d3575cbc3bff3ff93fe3417b1a479682f" target="_blank">e928a97</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree53ed0e30b1eff5b43093d31a0de4443f96125be6targetblank53ed0e3a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtreee928a97d3575cbc3bff3ff93fe3417b1a479682ftargetblanke928a97a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -452,6 +485,23 @@ Great! You are using Git for version control. Tracking code development and conn
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  basic_sample_checklist.txt
+    Untracked:  experiment_paired_fastq_spreadsheet_template.txt
+
+Unstaged changes:
+    Modified:   analysis/_site.yml
+    Modified:   data/cpmPostNorm.rds
+    Modified:   data/dgeList.rds
+    Modified:   data/fit.rds
+    Modified:   output/Enrichment_Hom_V_Het.csv
+    Modified:   output/Enrichment_Mutant_V_WT.csv
+    Modified:   output/psen2HomVsHet.csv
+    Modified:   output/psen2VsWT.csv
+
+Staged changes:
+    Modified:   analysis/_site.yml
 
 </code></pre>
 <p>
@@ -490,6 +540,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/876e40fc8b5e69e983e028d62c49f977da71a90d/docs/about.html" target="_blank">876e40f</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-02-17
+</td>
+<td>
+Compiled after minor corrections
+</td>
+</tr>
 <tr>
 <td>
 html

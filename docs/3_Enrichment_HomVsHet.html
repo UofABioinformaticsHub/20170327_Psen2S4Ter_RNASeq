@@ -358,6 +358,39 @@ div.tocify {
 <li>
   <a href="about.html">About</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    QC and Pre-processing
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="0_bashPipeline.html">Bash Pipeline</a>
+    </li>
+    <li>
+      <a href="1_QC.html">Quality Assessment</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="2_DifferentialExpression.html">Differential Expression</a>
+    </li>
+    <li>
+      <a href="3_Enrichment_MutantVsWT.html">Mutant Vs WildType Enrichment Analysis</a>
+    </li>
+    <li>
+      <a href="3_Enrichment_HomVsHet.html">Homozygous Vs Heterozygous Enrichment Analysis</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -387,7 +420,7 @@ div.section {
 
 <h1 class="title toc-ignore">Enrichment Analysis: Homozygous Vs Heterozygous Mutants</h1>
 <h4 class="author">Steve Pederson</h4>
-<h4 class="date">07 March, 2020</h4>
+<h4 class="date">02 April, 2020</h4>
 
 </div>
 
@@ -412,7 +445,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-03-07
+<strong>Last updated:</strong> 2020-04-02
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -503,10 +536,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree3b120d98a05b282f069d3c032b8255fabd97d32etargetblank3b120d9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/3b120d98a05b282f069d3c032b8255fabd97d32e" target="_blank">3b120d9</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtreee928a97d3575cbc3bff3ff93fe3417b1a479682ftargetblanke928a97a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/tree/e928a97d3575cbc3bff3ff93fe3417b1a479682f" target="_blank">e928a97</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtree3b120d98a05b282f069d3c032b8255fabd97d32etargetblank3b120d9a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomUofABioinformaticsHub20170327Psen2S4TerRNASeqtreee928a97d3575cbc3bff3ff93fe3417b1a479682ftargetblanke928a97a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -517,7 +550,19 @@ Ignored files:
     Ignored:    .Rproj.user/
 
 Untracked files:
-    Untracked:  output/AllResults.xlsx
+    Untracked:  basic_sample_checklist.txt
+    Untracked:  experiment_paired_fastq_spreadsheet_template.txt
+
+Unstaged changes:
+    Modified:   analysis/_site.yml
+    Modified:   data/cpmPostNorm.rds
+    Modified:   data/dgeList.rds
+    Modified:   data/fit.rds
+    Modified:   output/psen2HomVsHet.csv
+    Modified:   output/psen2VsWT.csv
+
+Staged changes:
+    Modified:   analysis/_site.yml
 
 </code></pre>
 <p>
@@ -556,6 +601,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/UofABioinformaticsHub/20170327_Psen2S4Ter_RNASeq/33f5f9381f8360ea4ef23125c75d34fab03be0ab/docs/3_Enrichment_HomVsHet.html" target="_blank">33f5f93</a>
+</td>
+<td>
+Steve Ped
+</td>
+<td>
+2020-03-07
+</td>
+<td>
+Updated html after minor formatting
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -618,7 +680,7 @@ Rmd
 Steve Ped
 </td>
 <td>
-2020-03-06
+2020-03-05
 </td>
 <td>
 Prepared to remove EGSEA-type approach
@@ -720,7 +782,7 @@ Rmd
 Steve Ped
 </td>
 <td>
-2020-03-05
+2020-03-04
 </td>
 <td>
 Fixed typo
@@ -953,7 +1015,7 @@ hmByGene &lt;- hm %&gt;%
 hmByID &lt;- hm %&gt;%
   split(f = .$gs_name) %&gt;%
   lapply(extract2, &quot;gene_id&quot;)</code></pre>
-<p>Mappings are required from gene to pathway, and Ensembl identifiers were used to map from gene to pathway, based on the mappings in the previously used annotations (Ensembl Release 98). A total of 3,459 Ensembl IDs were mapped to pathways from the hallmark gene sets.</p>
+<p>Mappings are required from gene to pathway, and Ensembl identifiers were used to map from gene to pathway, based on the mappings in the previously used annotations (Ensembl Release 98). A total of 3,375 Ensembl IDs were mapped to pathways from the hallmark gene sets.</p>
 </div>
 <div id="kegg-gene-sets" class="section level2">
 <h2>KEGG Gene Sets</h2>
@@ -967,7 +1029,7 @@ kgByGene &lt;- kg  %&gt;%
 kgByID &lt;- kg  %&gt;%
   split(f = .$gs_name) %&gt;%
   lapply(extract2, &quot;gene_id&quot;)</code></pre>
-<p>The same mapping process was applied to KEGG gene sets. A total of 3,614 Ensembl IDs were mapped to pathways from the KEGG gene sets.</p>
+<p>The same mapping process was applied to KEGG gene sets. A total of 3,530 Ensembl IDs were mapped to pathways from the KEGG gene sets.</p>
 </div>
 <div id="gene-ontology-gene-sets" class="section level2">
 <h2>Gene Ontology Gene Sets</h2>
@@ -991,7 +1053,7 @@ goByGene &lt;- go %&gt;%
 goByID &lt;- go %&gt;%
   split(f = .$gs_name) %&gt;%
   lapply(extract2, &quot;gene_id&quot;)</code></pre>
-<p>For analysis of gene-sets from the GO database, gene-sets were restricted to those with 3 or more steps back to the ontology root terms. A total of 11,245 Ensembl IDs were mapped to pathways from restricted database of 8,834 GO gene sets.</p>
+<p>For analysis of gene-sets from the GO database, gene-sets were restricted to those with 3 or more steps back to the ontology root terms. A total of 10,975 Ensembl IDs were mapped to pathways from restricted database of 8,825 GO gene sets.</p>
 <pre class="r"><code>gsSizes &lt;- bind_rows(hm, kg, go) %&gt;% 
   dplyr::select(gs_name, gene_symbol, gene_id) %&gt;% 
   chop(c(gene_symbol, gene_id)) %&gt;%
@@ -1019,7 +1081,7 @@ goByID &lt;- go %&gt;%
     ) %&gt;%
   rownames_to_column(&quot;gs_name&quot;) %&gt;%
   as_tibble()</code></pre>
-<p>Using the directional results from <code>fry</code>, no Hallmark Gene Sets were detected as different between mutant genotypes, with a minimum FDR being found as 65%. Similarly for a non-directional approach, no Hallmark Gene Sets were detected as different, with a minimum <code>FDR.Mixed</code> being 80%.</p>
+<p>Using the directional results from <code>fry</code>, no Hallmark Gene Sets were detected as different between mutant genotypes, with a minimum FDR being found as 64%. Similarly for a non-directional approach, no Hallmark Gene Sets were detected as different, with a minimum <code>FDR.Mixed</code> being 81%.</p>
 </div>
 <div id="kegg-gene-sets-1" class="section level2">
 <h2>KEGG Gene Sets</h2>
@@ -1032,7 +1094,7 @@ goByID &lt;- go %&gt;%
     ) %&gt;%
   rownames_to_column(&quot;gs_name&quot;) %&gt;%
   as_tibble()</code></pre>
-<p>Using the directional results from <code>fry</code>, no KEGG Gene Sets were detected as different between mutant genotypes, with a minimum FDR being found as 21%.</p>
+<p>Using the directional results from <code>fry</code>, no KEGG Gene Sets were detected as different between mutant genotypes, with a minimum FDR being found as 14%.</p>
 <pre class="r"><code>kgFry %&gt;% 
   arrange(PValue.Mixed) %&gt;%
   dplyr::select(gs_name, NGenes, contains(&quot;Mixed&quot;)) %&gt;%
@@ -1065,7 +1127,7 @@ goByID &lt;- go %&gt;%
 <td align="left">KEGG_GLYCINE_SERINE_AND_THREONINE_METABOLISM</td>
 <td align="right">24</td>
 <td align="right">0.0003</td>
-<td align="right">0.0473</td>
+<td align="right">0.0474</td>
 </tr>
 </tbody>
 </table>
@@ -1082,7 +1144,7 @@ goByID &lt;- go %&gt;%
     ) %&gt;%
   rownames_to_column(&quot;gs_name&quot;) %&gt;%
   as_tibble()</code></pre>
-<p>No GO Gene Sets were detected as different between mutant genotypes, with a minimum FDR being found as 14%.</p>
+<p>No GO Gene Sets were detected as different between mutant genotypes, with a minimum FDR being found as 15%.</p>
 <pre class="r"><code>goFry %&gt;% 
   arrange(PValue.Mixed) %&gt;%
   dplyr::select(gs_name, NGenes, contains(&quot;Mixed&quot;)) %&gt;%
@@ -1114,8 +1176,8 @@ goByID &lt;- go %&gt;%
 <tr class="odd">
 <td align="left">GO_REGULATION_OF_AUTOPHAGOSOME_MATURATION</td>
 <td align="right">11</td>
-<td align="right">5.17e-06</td>
-<td align="right">0.0457</td>
+<td align="right">5.05e-06</td>
+<td align="right">0.0446</td>
 </tr>
 </tbody>
 </table>
@@ -1173,8 +1235,8 @@ goByID &lt;- go %&gt;%
  language en_AU:en                    
  collate  en_AU.UTF-8                 
  ctype    en_AU.UTF-8                 
- tz       Australia/Melbourne         
- date     2020-03-07                  
+ tz       Australia/Adelaide          
+ date     2020-04-02                  
 
 ─ Packages ───────────────────────────────────────────────────────────────────
  package              * version  date       lib source        
