@@ -19,7 +19,7 @@ navbar:
       href: 2_DifferentialExpression.html
     - text: Mutant Vs WildType Enrichment Analysis
       href: 3_Enrichment_MutantVsWT.html
-    - text: Homozygous Vs Heterozygous Enricment Analysis
+    - text: Homozygous Vs Heterozygous Enrichment Analysis
       href: 3_Enrichment_HomVsHet.html
 output:
   workflowr::wflow_html:
