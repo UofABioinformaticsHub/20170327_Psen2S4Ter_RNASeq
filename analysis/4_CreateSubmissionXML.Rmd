@@ -38,15 +38,12 @@ This is the first step required and outlines the entire experiment.
 
 ```{r}
 alias <- "psen2S4Ter"
-title <- paste(
-    "Transcriptomic analysis of premature termination",
-    "codon mutation in the zebrafish gene psen2"
+title <- glue(
+    "Transcriptomic analysis of premature termination codon mutation in the zebrafish gene psen2"
 )
-description <- paste(
-    "This study compared gene expression patterns",
-    "in whole brain samples from zebrafish.",
-    "Samples were homozygous or heterozygous for the",
-    "psen2S4Ter mutation, or were wild-type at this locus."
+description <- glue(
+    "This study compared gene expression patterns in whole brain samples from zebrafish.
+    Samples were homozygous or heterozygous for the psen2S4Ter mutation, or were wild-type at this locus."
 )
 ```
 
