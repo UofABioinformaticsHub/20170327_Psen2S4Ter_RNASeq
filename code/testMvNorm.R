@@ -1,6 +1,7 @@
 library(tidyverse)
 library(mvtnorm)
 library(harmonicmeanp)
+library(metap)
 
 S <- hmFry %>%
     dplyr::select(gs_name, fry = PValue) %>%
@@ -176,3 +177,68 @@ hmFry %>%
         adjP = p.adjust(p, "bonf")
     ) %>%
     dplyr::filter(FDR < 0.05)
+
+## Contrast the harmonic mean with wilkinsons
+hmFry %>%
+    dplyr::select(gs_name, fry = PValue) %>%
+    left_join(
+        dplyr::select(hmCamera, gs_name, camera = PValue)
+    ) %>%
+    left_join(
+        dplyr::select(hmGsea, gs_name, gsea = PValue)
+    ) %>%
+    left_join(
+        dplyr::select(hmRiboGoseq, gs_name, goseq = PValue)
+    ) %>%
+    nest(p = any_of(c("fry", "camera", "gsea", "goseq"))) %>%
+    mutate(
+        n_p = vapply(p, function(x){sum(!is.na(unlist(x)))}, integer(1)),
+        wilkinson_rnp = vapply(p, function(x){
+            x <- unlist(x)
+            x <- x[!is.na(x)]
+            wilkinsonp(x, length(x) - 1)$p
+        }, numeric(1)),
+        wilkinson_r1p = vapply(p, function(x){
+            x <- unlist(x)
+            x <- x[!is.na(x)]
+            wilkinsonp(x)$p
+        }, numeric(1)),
+        FDR = p.adjust(wilkinson_r1p, "fdr"),
+        adjP = p.adjust(wilkinson_r1p, "bonferroni"),
+        hmp = vapply(p, function(x){
+            unlist(x) %>%
+                .[!is.na(.)] %>%
+                hmp.stat()
+        }, numeric(1)),
+        p.hmp = vapply(p, function(x){
+            unlist(x) %>%
+                .[!is.na(.)] %>%
+                p.hmp(L = length(.))
+        }, numeric(1)),
+        mvnorm_p = vapply(p, function(x){
+            x <- qnorm(unlist(x))
+            pmvnorm(upper = x[!is.na(x)], sigma = S[!is.na(x), !is.na(x)])
+        }, numeric(1)),
+        FDR = p.adjust(mvnorm_p, "fdr") # Currently on the mvnorm_p. Looks poor TBH
+    ) %>%
+    unnest(p) %>%
+    mutate_at(
+        vars(ends_with("p"), FDR), log10
+    ) %>%
+    dplyr::select(hmp, p.hmp, mvnorm_p, FDR, wilkinson_rnp, wilkinson_r1p) %>%
+    pairs(
+        lower.panel = function(x, y){
+            points(x, y)
+            abline(a = 0, b = 1)
+            abline(h = log10(0.05), v = log10(0.05), lty = 2)
+        },
+        upper.panel =  function(x, y, digits = 3, prefix = "", cex.cor, ...)
+        {
+            usr <- par("usr"); on.exit(par(usr))
+            par(usr = c(0, 1, 0, 1))
+            r <- abs(cor(x, y))
+            txt <- format(c(r, 0.123456789), digits = digits)[1]
+            txt <- paste0(prefix, txt)
+            text(0.5, 0.5, txt, cex = 2)
+        }
+    )
