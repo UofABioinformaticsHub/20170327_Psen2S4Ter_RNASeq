@@ -19,3 +19,4 @@ slurm/
 *abundance.tsv
 *cache*
 *files*
+data/5_salmon/salmon_index_drerio98/*

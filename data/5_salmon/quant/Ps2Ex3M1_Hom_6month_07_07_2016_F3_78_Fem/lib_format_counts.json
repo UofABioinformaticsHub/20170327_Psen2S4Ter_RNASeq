@@ -1,0 +1,22 @@
+{
+    "read_files": "[ /data/biohub/20170327_Psen2S4Ter_RNASeq/data/1_trimmedData/fastq/Ps2Ex3M1_Hom_6month_07_07_2016_F3_78_Fem_R1.fastq.gz, /data/biohub/20170327_Psen2S4Ter_RNASeq/data/1_trimmedData/fastq/Ps2Ex3M1_Hom_6month_07_07_2016_F3_78_Fem_R2.fastq.gz]",
+    "expected_format": "ISR",
+    "compatible_fragment_ratio": 1.0,
+    "num_compatible_fragments": 11309981,
+    "num_assigned_fragments": 11309981,
+    "num_frags_with_concordant_consistent_mappings": 11020135,
+    "num_frags_with_inconsistent_or_orphan_mappings": 292281,
+    "strand_mapping_bias": 0.0000538984308569787,
+    "MSF": 0,
+    "OSF": 0,
+    "ISF": 594,
+    "MSR": 0,
+    "OSR": 0,
+    "ISR": 11020135,
+    "SF": 138345,
+    "SR": 153342,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}

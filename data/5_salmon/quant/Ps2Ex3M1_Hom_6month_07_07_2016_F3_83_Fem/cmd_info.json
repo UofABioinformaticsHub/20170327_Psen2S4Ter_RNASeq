@@ -1,0 +1,11 @@
+{
+    "salmon_version": "1.1.0",
+    "index": "/data/biohub/20170327_Psen2S4Ter_RNASeq/data/5_salmon/salmon_index_drerio98",
+    "libType": "A",
+    "mates1": "/data/biohub/20170327_Psen2S4Ter_RNASeq/data/1_trimmedData/fastq/Ps2Ex3M1_Hom_6month_07_07_2016_F3_83_Fem_R1.fastq.gz",
+    "mates2": "/data/biohub/20170327_Psen2S4Ter_RNASeq/data/1_trimmedData/fastq/Ps2Ex3M1_Hom_6month_07_07_2016_F3_83_Fem_R2.fastq.gz",
+    "validateMappings": [],
+    "threads": "16",
+    "output": "/data/biohub/20170327_Psen2S4Ter_RNASeq/data/5_salmon/quant/Ps2Ex3M1_Hom_6month_07_07_2016_F3_83_Fem",
+    "auxDir": "aux_info"
+}
